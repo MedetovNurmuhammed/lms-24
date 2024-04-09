@@ -1,0 +1,4 @@
+spring:
+    application:
+        name: lms-b12
+
