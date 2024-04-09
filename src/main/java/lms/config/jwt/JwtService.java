@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 
-
 @Service
 public class JwtService {
     @Value("${app.jwt.secret}")
