@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: lms-b12
+  datasource:
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/lms_b12
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+app:
+  jwt:
+    secret: LMS-b12
