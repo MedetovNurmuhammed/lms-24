@@ -38,7 +38,6 @@ public class Student {
     private Long id;
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
-    private Boolean block;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 

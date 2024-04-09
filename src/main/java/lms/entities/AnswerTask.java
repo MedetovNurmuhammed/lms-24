@@ -28,11 +28,11 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerTask {
+public class AnswerTask{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_gen")
-    @SequenceGenerator(name = "answer_seq",sequenceName = "answer_seq", allocationSize = 1)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_task_gen")
+    @SequenceGenerator(name = "answer_task_seq",sequenceName = "answer_task_seq", allocationSize = 1)
+    private long id;
     private String text;
     private String image;
     private String comment;
