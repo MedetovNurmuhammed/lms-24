@@ -36,4 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-srs/main/resources/application-gulumkan.yml
+src/main/resources/application-gulumkan.yml
