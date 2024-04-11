@@ -1,5 +1,4 @@
 package lms.service.impl;
-
 import lms.config.jwt.JwtService;
 import lms.dto.request.SignInRequest;
 import lms.dto.response.SignInResponse;
@@ -17,6 +16,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+
 @RequiredArgsConstructor
 @Service
 @Validated
@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkEmail(String email){
+    public void checkEmail(String email) {
         boolean exists = userRepository.existsByEmail(email);
-        if (exists) throw new AlreadyExistsException("User with email: "+email + " already have");
+        if (exists) throw new AlreadyExistsException("User with email: " + email + " already have");
 
     }
 
@@ -78,8 +78,6 @@ public class UserServiceImpl implements UserService {
                 .message("Successful login")
                 .build();
     }
-
-
 }
 
 
