@@ -5,6 +5,7 @@ import jakarta.persistence.Enumerated;
 import lms.enums.Role;
 import lombok.Builder;
 import org.springframework.http.HttpStatus;
+
 @Builder
 public record SignInResponse(Long id,
                              String token,
