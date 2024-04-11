@@ -1,43 +1,43 @@
-insert into users (id, full_name, email, password, role, block, phone_number) values (1, 'Barbette', 'bgravatt0@soundcloud.com', 'dW3(bi{{~Mm5', 'INSTRUCTOR', 'FALSE', 'Golf Lima Juliett X-ray Quebec Whiskey India Oscar Echo Zulu Bravo Yankee Sierra Romeo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (2, 'Roseanna', 'rcrumpton1@marketwatch.com', 'zI7)`|(3>yGTpE=Z', 'INSTRUCTOR', 'TRUE', 'Oscar Kilo Zulu Uniform Alfa Delta Sierra November Bravo Golf Charlie Victor Quebec Romeo Mike Echo Papa');
-insert into users (id, full_name, email, password, role, block, phone_number) values (3, 'Gerianne', 'gheighton2@yahoo.co.jp', 'vT0%Lh>NP+fkRMj', 'INSTRUCTOR', 'FALSE', 'Hotel Oscar Lima Mike Bravo Alfa Papa Golf Zulu Uniform Tango Yankee Charlie Sierra Echo India Quebec');
-insert into users (id, full_name, email, password, role, block, phone_number) values (4, 'Derek', 'dtunny3@tripadvisor.com', 'cA0,I|4&s,HXIq', 'INSTRUCTOR', 'TRUE', 'Lima Sierra Quebec Charlie Oscar Echo Golf India Papa X-ray Victor');
-insert into users (id, full_name, email, password, role, block, phone_number) values (5, 'Jervis', 'jgoosnell4@alibaba.com', 'qZ8~\*bd''&}Z', 'INSTRUCTOR', 'TRUE', 'India Yankee Romeo Kilo Charlie Quebec Oscar Papa Golf Alfa Lima Hotel Mike Victor Echo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (6, 'May', 'mdepper5@businesswire.com', 'dJ7,J_?MJsS', 'INSTRUCTOR', 'TRUE', 'Sierra Foxtrot Zulu Quebec Yankee Delta Romeo Whiskey India Lima Juliett Alfa Golf Kilo Hotel Echo Oscar Mike X-ray Papa');
-insert into users (id, full_name, email, password, role, block, phone_number) values (7, 'Preston', 'pbraunle6@hubpages.com', 'pA7*}c@a', 'INSTRUCTOR', 'FALSE', 'Mike Romeo Foxtrot Yankee X-ray Kilo Tango Lima Oscar Zulu Echo Sierra Uniform');
-insert into users (id, full_name, email, password, role, block, phone_number) values (8, 'Dukie', 'dsuttie7@amazon.de', 'fI5!@#g(>DpU/D', 'INSTRUCTOR', 'TRUE', 'Juliett Charlie Sierra X-ray Mike Whiskey Oscar India Kilo Victor');
-insert into users (id, full_name, email, password, role, block, phone_number) values (9, 'Boote', 'bdering8@trellian.com', 'fG6!g1D&U`', 'INSTRUCTOR', 'FALSE', 'Whiskey Alfa Golf Bravo Charlie Mike Tango Yankee Quebec Echo Lima Victor India Foxtrot Papa');
-insert into users (id, full_name, email, password, role, block, phone_number) values (10, 'Gerladina', 'gadney9@earthlink.net', 'dR9|Z}AkhNv$P\t', 'INSTRUCTOR', 'TRUE', 'Hotel Romeo Mike Juliett Kilo Charlie Sierra Delta Papa Foxtrot');
-insert into users (id, full_name, email, password, role, block, phone_number) values (11, 'Jess', 'joskehana@biglobe.ne.jp', 'dB6%4FmWk0q', 'INSTRUCTOR', 'TRUE', 'Alfa Juliett X-ray Oscar Romeo Whiskey Kilo Charlie Uniform Quebec Lima Sierra Golf Mike Tango Zulu Echo Yankee');
-insert into users (id, full_name, email, password, role, block, phone_number) values (12, 'Madella', 'mfanstoneb@youtu.be', 'mA0~I29fC(8&%YhG', 'INSTRUCTOR', 'FALSE', 'Delta Uniform Echo Zulu Oscar Juliett Mike India Sierra Victor Kilo Tango');
-insert into users (id, full_name, email, password, role, block, phone_number) values (13, 'Bailey', 'bnorthernc@unblog.fr', 'xW8!)%|Xd#"oT', 'INSTRUCTOR', 'FALSE', 'Whiskey India Uniform Charlie Oscar Foxtrot Sierra Mike Papa X-ray Bravo Victor Lima Kilo Hotel November Echo Yankee');
-insert into users (id, full_name, email, password, role, block, phone_number) values (14, 'Chilton', 'cjamesond@nba.com', 'qV3*v2_(+kK(qyZ', 'INSTRUCTOR', 'FALSE', 'X-ray Yankee Uniform Hotel Lima Tango Foxtrot Zulu Juliett Echo Papa Charlie Alfa Bravo Whiskey');
-insert into users (id, full_name, email, password, role, block, phone_number) values (15, 'Sela', 'stowerseye@slate.com', 'lE8_Q4Xo0k', 'INSTRUCTOR', 'TRUE', 'Kilo Echo Alfa X-ray India November Bravo Romeo Papa Delta Uniform Quebec Whiskey Hotel Sierra Golf Mike Yankee');
-insert into users (id, full_name, email, password, role, block, phone_number) values (16, 'Hillery', 'hcouronnef@kickstarter.com', 'xL3"1vFKK3?s*', 'INSTRUCTOR', 'FALSE', 'Romeo Papa Alfa India Quebec Foxtrot Victor Golf Hotel Lima X-ray Kilo Juliett November Yankee Sierra Whiskey');
-insert into users (id, full_name, email, password, role, block, phone_number) values (17, 'Joachim', 'jcammoileg@hugedomains.com', 'rO0~!E$0)/O', 'INSTRUCTOR', 'TRUE', 'Delta Yankee Juliett Oscar Hotel Mike Foxtrot November Papa Alfa X-ray Tango Uniform Quebec');
-insert into users (id, full_name, email, password, role, block, phone_number) values (18, 'Ronnica', 'rmannoochh@fastcompany.com', 'zV0_8p63kB~N', 'INSTRUCTOR', 'FALSE', 'Sierra Charlie Oscar India Golf Bravo X-ray Juliett Kilo Yankee Tango Quebec Mike Lima Echo November');
-insert into users (id, full_name, email, password, role, block, phone_number) values (19, 'Miner', 'mdackei@geocities.com', 'tL3"k2k{q9', 'INSTRUCTOR', 'TRUE', 'Quebec Echo India Lima Yankee Sierra Romeo Delta Juliett November Whiskey Tango Uniform Kilo Zulu');
-insert into users (id, full_name, email, password, role, block, phone_number) values (20, 'Margarete', 'mlaundonj@homestead.com', 'yR9,aNf568', 'INSTRUCTOR', 'TRUE', 'Bravo Papa Juliett India X-ray Zulu Kilo Oscar Hotel Foxtrot');
-insert into users (id, full_name, email, password, role, block, phone_number) values (21, 'Torrie', 'trapi0@house.gov', 'rZ6"BUw8lc(=GU', 'STUDENT', 'TRUE', 'Quebec Zulu Foxtrot Hotel Kilo November Victor Echo Charlie Lima Mike Whiskey Golf Yankee India Sierra');
-insert into users (id, full_name, email, password, role, block, phone_number) values (22, 'Jecho', 'jhowler1@senate.gov', 'iF2.gya,pYQ', 'STUDENT', 'FALSE', 'Yankee Zulu Kilo Echo Tango Papa Whiskey Delta X-ray Oscar Sierra');
-insert into users (id, full_name, email, password, role, block, phone_number) values (23, 'Gretna', 'gliggons2@cmu.edu', 'eD8##<q98=@`XR.v', 'STUDENT', 'TRUE', 'Tango Golf Foxtrot Echo Papa Victor Romeo Hotel Mike Zulu November Bravo Uniform India Alfa Delta Sierra');
-insert into users (id, full_name, email, password, role, block, phone_number) values (24, 'Ephrayim', 'elampett3@jalbum.net', 'vO3{,)h\|")MU.g', 'STUDENT', 'FALSE', 'Uniform Charlie November Delta Victor Golf Papa Oscar Lima Hotel Foxtrot Zulu Echo X-ray Whiskey Romeo Kilo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (25, 'Travis', 'tpiel4@phpbb.com', 'sG5!Ru0K\G', 'STUDENT', 'TRUE', 'X-ray Bravo Charlie Papa India Quebec Hotel Echo Juliett Uniform');
-insert into users (id, full_name, email, password, role, block, phone_number) values (26, 'Perkin', 'pferfulle5@nifty.com', 'iT5)+`_F\N9UP', 'STUDENT', 'FALSE', 'Echo Kilo Juliett Victor Oscar Mike Alfa Yankee Charlie November Romeo Lima Papa Uniform Bravo Whiskey Delta Foxtrot');
-insert into users (id, full_name, email, password, role, block, phone_number) values (27, 'Raynell', 'rripon6@mysql.com', 'aJ0+}#R(OdWAlT.*', 'STUDENT', 'TRUE', 'Echo Lima Zulu India Alfa Yankee Bravo X-ray Sierra Foxtrot Charlie Romeo Delta Kilo Mike');
-insert into users (id, full_name, email, password, role, block, phone_number) values (28, 'Lizette', 'lhawkwood7@cpanel.net', 'pL2"h(i){!6', 'STUDENT', 'TRUE', 'Tango Kilo Charlie Foxtrot Bravo Hotel Papa Sierra Echo Zulu Uniform Romeo Lima');
-insert into users (id, full_name, email, password, role, block, phone_number) values (29, 'Julietta', 'jmacdearmaid8@theatlantic.com', 'qC7(!YMk0', 'STUDENT', 'FALSE', 'India Romeo Oscar Delta Charlie Echo Hotel Quebec Yankee Bravo Papa Zulu Uniform Kilo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (30, 'Brigg', 'bdietsche9@gnu.org', 'kV7\&cv!L(', 'STUDENT', 'FALSE', 'Alfa Oscar X-ray Hotel Foxtrot Victor Yankee Quebec Golf Tango Uniform November Whiskey Mike Lima Papa');
-insert into users (id, full_name, email, password, role, block, phone_number) values (31, 'Elli', 'eskarina@stumbleupon.com', 'fM6~~jy1LV', 'STUDENT', 'TRUE', 'Bravo Delta Golf Kilo Lima X-ray Quebec Mike Juliett Papa Sierra Whiskey');
-insert into users (id, full_name, email, password, role, block, phone_number) values (32, 'Celle', 'cbrimblecombeb@stumbleupon.com', 'cQ5*c?Rp<zHrH', 'STUDENT', 'TRUE', 'India Delta Charlie November Victor Lima Uniform Foxtrot Mike Alfa Romeo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (33, 'Allx', 'agrzelewskic@earthlink.net', 'aL4?i3{g)!g', 'STUDENT', 'FALSE', 'November Golf Tango Hotel Echo Victor Papa Sierra Quebec India Oscar Delta Mike');
-insert into users (id, full_name, email, password, role, block, phone_number) values (34, 'Celine', 'cseamand@w3.org', 'pS9"a}Siyh/Q', 'STUDENT', 'FALSE', 'Zulu Mike Charlie Bravo Oscar Echo Victor X-ray Whiskey Tango Papa Yankee Kilo Sierra Golf Juliett November Romeo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (35, 'Danice', 'dwinwoode@clickbank.net', 'uB2%B%7>y6P''', 'STUDENT', 'FALSE', 'Oscar Hotel Zulu Romeo Bravo Echo India Golf Foxtrot Victor Alfa Whiskey November Kilo Mike Yankee Sierra');
-insert into users (id, full_name, email, password, role, block, phone_number) values (36, 'Adi', 'atitef@house.gov', 'dP1\q/!SZW', 'STUDENT', 'FALSE', 'Juliett India Whiskey Foxtrot Hotel Delta Papa X-ray Kilo Sierra Charlie November Alfa Echo Uniform');
-insert into users (id, full_name, email, password, role, block, phone_number) values (37, 'Emmeline', 'eplantg@hostgator.com', 'bC8/_%&tJ', 'STUDENT', 'FALSE', 'Golf Hotel Bravo Juliett Echo X-ray Whiskey Quebec Mike Sierra Kilo Tango Yankee');
-insert into users (id, full_name, email, password, role, block, phone_number) values (38, 'Maurizia', 'malekseevh@epa.gov', 'oE7#XYZoNGZ/oQ$', 'STUDENT', 'FALSE', 'Bravo Alfa Uniform Victor Quebec Yankee Tango Whiskey Kilo Hotel Romeo Delta Mike Lima Zulu Foxtrot India Sierra Oscar Echo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (39, 'Vivia', 'vbraggi@dailymail.co.uk', 'nK5\fieZC"6OIG', 'STUDENT', 'TRUE', 'Juliett Delta Bravo Hotel Mike Whiskey Uniform Lima Echo November India Yankee Foxtrot Papa Victor Romeo');
-insert into users (id, full_name, email, password, role, block, phone_number) values (40, 'Ami', 'aoulettj@bloomberg.com', 'fC6&0afFElp0', 'STUDENT', 'FALSE', 'Lima Bravo Mike Papa Quebec X-ray Hotel Yankee Kilo Zulu Alfa Delta India Whiskey Echo Oscar Tango Victor Golf November');
+insert into users (id, full_name, email, password, role, block, phone_number) values (1, 'admin', 'admin@gmail.com', '$2a$12$ETwPTjTxa5o8Rok7TSqLmeex/cRtWSfMXYtlQ1DQTChy5DkXwzgHK', 'ADMIN', 'FALSE', 'Golf Lima Juliett X-ray Quebec Whiskey India Oscar Echo Zulu Bravo Yankee Sierra Romeo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (2, 'instructor', 'instructor@gmail.com', '$2a$12$C7tCVrsJMMUlQZ2x3/drp.r2OdntFYaL9OJ8cK2KVde8myUAF5xlm', 'INSTRUCTOR', 'FALSE', 'Oscar Kilo Zulu Uniform Alfa Delta Sierra November Bravo Golf Charlie Victor Quebec Romeo Mike Echo Papa');
+insert into users (id, full_name, email, password, role, block, phone_number) values (3, 'student', 'student@gmail.com', '$2a$12$PH8Sb7l275Af68N0d/49o.fStIU4pzuYUdOHiVkVnvzlzdxmrmOza', 'STUDENT', 'FALSE', 'Hotel Oscar Lima Mike Bravo Alfa Papa Golf Zulu Uniform Tango Yankee Charlie Sierra Echo India Quebec');
+insert into users (id, full_name, email, password, role, block, phone_number) values (4, 'Derek', 'dtunny3@gmail.com', '$2a$12$CetPa30U0d5fHbe2xn1UGurrR1eSYKsDeudVsihhRU5inKAO6FmAG', 'INSTRUCTOR', 'TRUE', 'Lima Sierra Quebec Charlie Oscar Echo Golf India Papa X-ray Victor');
+insert into users (id, full_name, email, password, role, block, phone_number) values (5, 'Jervis', 'jgoosnell4@gmail.com', '$2a$12$c34.DpY6pluuOGddMtgqzOunBtQIGqanvTgh7p.Howc7w2ziH5hUq', 'INSTRUCTOR', 'TRUE', 'India Yankee Romeo Kilo Charlie Quebec Oscar Papa Golf Alfa Lima Hotel Mike Victor Echo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (6, 'May', 'mdepper5@gmail.com', '$2a$12$kbWolVsK/Kp6wmcRKvdv2eH/V3kga1rA7t5IsvWsm8fVxFnOPKbiW', 'INSTRUCTOR', 'TRUE', 'Sierra Foxtrot Zulu Quebec Yankee Delta Romeo Whiskey India Lima Juliett Alfa Golf Kilo Hotel Echo Oscar Mike X-ray Papa');
+insert into users (id, full_name, email, password, role, block, phone_number) values (7, 'Preston', 'pbraunle6@gmail.com', '$2a$12$rCjGrV7L4H/dw9l2FtVfRe0jvwxYxalFIA/4m834nQZWapBcJLyKG', 'INSTRUCTOR', 'FALSE', 'Mike Romeo Foxtrot Yankee X-ray Kilo Tango Lima Oscar Zulu Echo Sierra Uniform');
+insert into users (id, full_name, email, password, role, block, phone_number) values (8, 'Dukie', 'dsuttie7@gmail.com', '$2a$12$ZkCFlxDpWLzzRiqiDh7DBuaeqhKEozHfqk4dMe.sGDhPGQrpk7HMK', 'INSTRUCTOR', 'TRUE', 'Juliett Charlie Sierra X-ray Mike Whiskey Oscar India Kilo Victor');
+insert into users (id, full_name, email, password, role, block, phone_number) values (9, 'Boote', 'bdering8@gmail.com', '$2a$12$K2QkNSNQvf.bPaM2vu2p1.KRaINiz1ZOAU/lxK83/Ay9OJ5t/3NOK`', 'INSTRUCTOR', 'FALSE', 'Whiskey Alfa Golf Bravo Charlie Mike Tango Yankee Quebec Echo Lima Victor India Foxtrot Papa');
+insert into users (id, full_name, email, password, role, block, phone_number) values (10, 'Gerladina', 'gadney9@gmail.com', '$2a$12$XK0/fmiXfQrt/4dCglyRPuUWR5VgAlL9E/qHHmRcyW6lnv3eJgxPy', 'INSTRUCTOR', 'TRUE', 'Hotel Romeo Mike Juliett Kilo Charlie Sierra Delta Papa Foxtrot');
+insert into users (id, full_name, email, password, role, block, phone_number) values (11, 'Jess', 'joskehana@gmail.com', '$2a$12$5YU8LD0PjHHWMncif6GVyu6X0yHnUTPKNI1B6RTwY79o4D0qqhBZW', 'INSTRUCTOR', 'TRUE', 'Alfa Juliett X-ray Oscar Romeo Whiskey Kilo Charlie Uniform Quebec Lima Sierra Golf Mike Tango Zulu Echo Yankee');
+insert into users (id, full_name, email, password, role, block, phone_number) values (12, 'Madella', 'mfanstoneb@gmail.com', '$2a$12$hT6uCQR3kV2W4hK6yDx02O1W7NoKPCEPs1rhludCLKST/5dPb04OW', 'INSTRUCTOR', 'FALSE', 'Delta Uniform Echo Zulu Oscar Juliett Mike India Sierra Victor Kilo Tango');
+insert into users (id, full_name, email, password, role, block, phone_number) values (13, 'Bailey', 'bnorthernc@gmail.com', '$2a$12$ulZDnOyp1N2KsT1om76qkew5UNQ7YbgdRd4ddBANHOhixld1y3oyq', 'INSTRUCTOR', 'FALSE', 'Whiskey India Uniform Charlie Oscar Foxtrot Sierra Mike Papa X-ray Bravo Victor Lima Kilo Hotel November Echo Yankee');
+insert into users (id, full_name, email, password, role, block, phone_number) values (14, 'Chilton', 'cjamesond@gmail.com', '$2a$12$lVD2AyWgJ2Ypzgk9ljOBxezQ6zkAD3Sn56xjkyYi/I3VTuHOOjnoO', 'INSTRUCTOR', 'FALSE', 'X-ray Yankee Uniform Hotel Lima Tango Foxtrot Zulu Juliett Echo Papa Charlie Alfa Bravo Whiskey');
+insert into users (id, full_name, email, password, role, block, phone_number) values (15, 'Sela', 'stowerseye@gmail.com', '$2a$12$vGXxPO74z2e2rxAeM/seIuvnv9s9PADhLzdpSFZh0VZUZuElEFl2W', 'INSTRUCTOR', 'TRUE', 'Kilo Echo Alfa X-ray India November Bravo Romeo Papa Delta Uniform Quebec Whiskey Hotel Sierra Golf Mike Yankee');
+insert into users (id, full_name, email, password, role, block, phone_number) values (16, 'Hillery', 'hcouronnef@gmail.com', '$2a$12$C6QrQ16obu.2MobSNS5jWOQv5aNAPQHCzZVx8.S16NFj554qbHoUq', 'INSTRUCTOR', 'FALSE', 'Romeo Papa Alfa India Quebec Foxtrot Victor Golf Hotel Lima X-ray Kilo Juliett November Yankee Sierra Whiskey');
+insert into users (id, full_name, email, password, role, block, phone_number) values (17, 'Joachim', 'jcammoileg@gmail.com', '$2a$12$SCIxOXpKeVz/ZFzSU8ZBT.Bvi1mEuEQ7r1lHYYiVd9WC7g8QvHZVK', 'INSTRUCTOR', 'TRUE', 'Delta Yankee Juliett Oscar Hotel Mike Foxtrot November Papa Alfa X-ray Tango Uniform Quebec');
+insert into users (id, full_name, email, password, role, block, phone_number) values (18, 'Ronnica', 'rmannoochh@gmail.com', '$2a$12$GPY1/JLL/DOXnmRpIObbeOGcU4KgZyqvzvUEJxAho0wHOKB6d0HMq', 'INSTRUCTOR', 'FALSE', 'Sierra Charlie Oscar India Golf Bravo X-ray Juliett Kilo Yankee Tango Quebec Mike Lima Echo November');
+insert into users (id, full_name, email, password, role, block, phone_number) values (19, 'Miner', 'mdackei@gmail.com', '$2a$12$vfsQ.Fzk/SHQx9DbNgNDf.2PMO0UtctCfsgFv.viXxqSFlj.v9fx6', 'INSTRUCTOR', 'TRUE', 'Quebec Echo India Lima Yankee Sierra Romeo Delta Juliett November Whiskey Tango Uniform Kilo Zulu');
+insert into users (id, full_name, email, password, role, block, phone_number) values (20, 'Margarete', 'mlaundonj@gmail.com', '$2a$12$l0t97cung/VftD/8piszNus5AlnFtXNENVcTd88SGuGpjiLjGgjfi', 'INSTRUCTOR', 'TRUE', 'Bravo Papa Juliett India X-ray Zulu Kilo Oscar Hotel Foxtrot');
+insert into users (id, full_name, email, password, role, block, phone_number) values (21, 'Torrie', 'trapi0@gmail.com', '$2a$12$MD5QVCndF1mscnMee159Ie9tMepgxIkMi4YTKfhbQ.zdda2Y/7djy', 'STUDENT', 'TRUE', 'Quebec Zulu Foxtrot Hotel Kilo November Victor Echo Charlie Lima Mike Whiskey Golf Yankee India Sierra');
+insert into users (id, full_name, email, password, role, block, phone_number) values (22, 'Jecho', 'jhowler1@gmail.com', '$2a$12$XVySJPMFrbHLEXe6kOiB/OhDDjsd7QQTxfGfIQnLHOQ1dtyaqX.DS', 'STUDENT', 'FALSE', 'Yankee Zulu Kilo Echo Tango Papa Whiskey Delta X-ray Oscar Sierra');
+insert into users (id, full_name, email, password, role, block, phone_number) values (23, 'Gretna', 'gliggons2@gmail.comu', '$2a$12$Iw69zPsNVIuOuxb9XIgTauMS1Y3QoZ3ttdenlY2vWIcdfGaXwEp8a', 'STUDENT', 'TRUE', 'Tango Golf Foxtrot Echo Papa Victor Romeo Hotel Mike Zulu November Bravo Uniform India Alfa Delta Sierra');
+insert into users (id, full_name, email, password, role, block, phone_number) values (24, 'Ephrayim', 'elampett3@gmail.com', '$2a$12$zfneK6CGwBLnJ6ibhHEfq.j4xSdXMU.eDJCOG8Vy1znmjNxhryma.', 'STUDENT', 'FALSE', 'Uniform Charlie November Delta Victor Golf Papa Oscar Lima Hotel Foxtrot Zulu Echo X-ray Whiskey Romeo Kilo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (25, 'Travis', 'tpiel4@gmail.com', '$2a$12$neZL9hs5HgCTl3Z.oLBVOeALqX4tIR4XSwSM1hOQne.xdc/O8dGXa', 'STUDENT', 'TRUE', 'X-ray Bravo Charlie Papa India Quebec Hotel Echo Juliett Uniform');
+insert into users (id, full_name, email, password, role, block, phone_number) values (26, 'Perkin', 'pferfulle5@gmail.com', '$2a$12$CtjwEOY62rNmg2WPUxCSeOPkkJ2dzxb2mOfSUrPA8UXnhEabVShOm', 'STUDENT', 'FALSE', 'Echo Kilo Juliett Victor Oscar Mike Alfa Yankee Charlie November Romeo Lima Papa Uniform Bravo Whiskey Delta Foxtrot');
+insert into users (id, full_name, email, password, role, block, phone_number) values (27, 'Raynell', 'rripon6@gmail.com', '$2a$12$bvkd1OQD3F7sfx1URl7RHuaqMj8K0zBGS9Re9Q4ZMESsdW1yQ1/42', 'STUDENT', 'TRUE', 'Echo Lima Zulu India Alfa Yankee Bravo X-ray Sierra Foxtrot Charlie Romeo Delta Kilo Mike');
+insert into users (id, full_name, email, password, role, block, phone_number) values (28, 'Lizette', 'lhawkwood7@gmail.com', '$2a$12$caoYq90FkzjJt5NttqBnme/xg5aRHbXmSarmfKnHPFWJFjc7kXGOq', 'STUDENT', 'TRUE', 'Tango Kilo Charlie Foxtrot Bravo Hotel Papa Sierra Echo Zulu Uniform Romeo Lima');
+insert into users (id, full_name, email, password, role, block, phone_number) values (29, 'Julietta', 'jmacdearmaid8@gmail.com', '$2a$12$.MktJzvlQDOFomQc.Vm8a.VlyK0CjaUZ2jjsWL1CPGdUvxgjAiOUy', 'STUDENT', 'FALSE', 'India Romeo Oscar Delta Charlie Echo Hotel Quebec Yankee Bravo Papa Zulu Uniform Kilo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (30, 'Brigg', 'bdietsche9@gmail.com', '$2a$12$7VyDiCwqsZBxfU2lxpYRnOqp7LvLhv336agNdSBpcF0oLcEQ1Ec.O', 'STUDENT', 'FALSE', 'Alfa Oscar X-ray Hotel Foxtrot Victor Yankee Quebec Golf Tango Uniform November Whiskey Mike Lima Papa');
+insert into users (id, full_name, email, password, role, block, phone_number) values (31, 'Elli', 'eskarina@gmail.com', '$2a$12$3gpZR.esouEUhQ3fCeBC0.LjWL2lhvszIugDFVFA86yrhFM8Zjb02', 'STUDENT', 'TRUE', 'Bravo Delta Golf Kilo Lima X-ray Quebec Mike Juliett Papa Sierra Whiskey');
+insert into users (id, full_name, email, password, role, block, phone_number) values (32, 'Celle', 'cbrimblecombeb@gmail.com', '$2a$12$AhW18waWqHGVRhRLVaNI9O/SN8i21fZUQbf10DsDl0fNi2.U5I9RO', 'STUDENT', 'TRUE', 'India Delta Charlie November Victor Lima Uniform Foxtrot Mike Alfa Romeo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (33, 'Allx', 'agrzelewskic@gmail.com', '$2a$12$gs0xbtaWQLNc7jOLHR1s5eXgrpQJFSXytfOBYsoFMxtJQswCBBP8O', 'STUDENT', 'FALSE', 'November Golf Tango Hotel Echo Victor Papa Sierra Quebec India Oscar Delta Mike');
+insert into users (id, full_name, email, password, role, block, phone_number) values (34, 'Celine', 'cseamand@gmail.com', '$2a$12$oDB8al0vBB/KTlzLXh2ErOptdDsLkme5D3vFV8cluemMatviAX3vW', 'STUDENT', 'FALSE', 'Zulu Mike Charlie Bravo Oscar Echo Victor X-ray Whiskey Tango Papa Yankee Kilo Sierra Golf Juliett November Romeo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (35, 'Danice', 'dwinwoode@gmail.com', '$2a$12$c3/EDftzHQ5Xf7KH8DPOpOmN5TxlzpzLWafPQWlQFWQnqjYNQP.e2', 'STUDENT', 'FALSE', 'Oscar Hotel Zulu Romeo Bravo Echo India Golf Foxtrot Victor Alfa Whiskey November Kilo Mike Yankee Sierra');
+insert into users (id, full_name, email, password, role, block, phone_number) values (36, 'Adi', 'atitef@gmail.com', '$2a$12$KrTcc2u.2NFkRCgcJXlUj.NK7cjRtDXk3svpDinBhs9uwi7URMYe.', 'STUDENT', 'FALSE', 'Juliett India Whiskey Foxtrot Hotel Delta Papa X-ray Kilo Sierra Charlie November Alfa Echo Uniform');
+insert into users (id, full_name, email, password, role, block, phone_number) values (37, 'Emmeline', 'eplantg@gmail.com', '$2a$12$r8hC0MnmCBxyTsnuExm6EuJtF50/e7azn3MVg7pRhtWbdooilFYKW', 'STUDENT', 'FALSE', 'Golf Hotel Bravo Juliett Echo X-ray Whiskey Quebec Mike Sierra Kilo Tango Yankee');
+insert into users (id, full_name, email, password, role, block, phone_number) values (38, 'Maurizia', 'malekseevh@gmail.com', '$2a$12$WTL9Ha0wsTBd.Y6VsK7AY.L2lDPb4Z6wcmGLo3a537c1g0ofNiSw6', 'STUDENT', 'FALSE', 'Bravo Alfa Uniform Victor Quebec Yankee Tango Whiskey Kilo Hotel Romeo Delta Mike Lima Zulu Foxtrot India Sierra Oscar Echo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (39, 'Vivia', 'vbraggi@gmail.com', '$2a$12$CG3ByY1D6m2xsQ0MWWVUMe6OD74wO0V.YmwSH9y4CgCCR1i4QQ0C2', 'STUDENT', 'TRUE', 'Juliett Delta Bravo Hotel Mike Whiskey Uniform Lima Echo November India Yankee Foxtrot Papa Victor Romeo');
+insert into users (id, full_name, email, password, role, block, phone_number) values (40, 'Ami', 'aoulettj@gmail.com', '$2a$12$VA5y7.IQeF9CAwKScf70AOw99K0bDnNxHaFxJw6q/OzNy/9yZkClC', 'STUDENT', 'FALSE', 'Lima Bravo Mike Papa Quebec X-ray Hotel Yankee Kilo Zulu Alfa Delta India Whiskey Echo Oscar Tango Victor Golf November');
 
 insert into students (id,user_id, study_format, created_at) values (1,21, 'OFFLINE', '2024-4-12');
 insert into students (id,user_id, study_format, created_at) values (2,22, 'ONLINE', '2024-4-12');
@@ -81,9 +81,6 @@ insert into instructors (id, specialization, created_at, user_id) values (18, 'j
 insert into instructors (id, specialization, created_at, user_id) values (19, 'javaScript', '2024/04/04', 19);
 insert into instructors (id, specialization, created_at, user_id) values (20, 'javaScript', '2024/04/08', 20);
 
-
-
-
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (1, 'java1', '2024/04/03', '2025-04-09', 'Excision of Left Cephalic Vein, Open Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (2, 'java2', '2024/04/06', '2025-04-09', 'Drainage of Bilateral Breast with Drainage Device, Via Natural or Artificial Opening', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (3, 'java3', '2024/04/03', '2025-04-09', 'Drainage of Right Upper Femur, Percutaneous Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
@@ -104,8 +101,6 @@ insert into groups (id, title, date_of_start, date_of_end, description, image) v
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (18, 'js8', '2024/04/04', '2025-04-09', 'Excision of Hypoglossal Nerve, Percutaneous Endoscopic Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (19, 'js9', '2024/04/03', '2025-04-09', 'Drainage of Right Conjunctiva, External Approach, Diagnostic', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 insert into groups (id, title, date_of_start, date_of_end, description, image) values (20, 'js10', '2024/04/08', '2025-04-09', 'Revision of Synthetic Substitute in Left Patella, Open Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
-
-
 
 insert into courses (id, title, date_of_start, date_of_end, description, image, group_id) values (1, 'java1', '2024/04/08', '2025-04-09', 'Dilation of Innominate Artery with Two Drug-eluting Intraluminal Devices, Open Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 1);
 insert into courses (id, title, date_of_start, date_of_end, description, image, group_id) values (2, 'java2', '2024/04/07', '2025-04-09', 'Immobilization of Left Toe using Brace', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 2);
@@ -128,8 +123,6 @@ insert into courses (id, title, date_of_start, date_of_end, description, image, 
 insert into courses (id, title, date_of_start, date_of_end, description, image, group_id) values (19, 'js9', '2024/04/04', '2025-04-09', 'Bypass Coronary Artery, Four or More Arteries from Coronary Artery with Autologous Arterial Tissue, Open Approach', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 19);
 insert into courses (id, title, date_of_start, date_of_end, description, image, group_id) values (20, 'js10', '2024/04/06', '2025-04-09', 'Drainage of Sacrococcygeal Joint, Open Approach, Diagnostic', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 20);
 
-
-
 insert into lessons (id, title, created_at, course_id) values (1, 'java1', '2024/04/05', 1);
 insert into lessons (id, title, created_at, course_id) values (2, 'java2', '2024/04/06', 2);
 insert into lessons (id, title, created_at, course_id) values (3, 'java3', '2024/04/03', 3);
@@ -150,8 +143,6 @@ insert into lessons (id, title, created_at, course_id) values (17, 'js7', '2024/
 insert into lessons (id, title, created_at, course_id) values (18, 'js8', '2024/04/05', 18);
 insert into lessons (id, title, created_at, course_id) values (19, 'js9', '2024/04/08', 19);
 insert into lessons (id, title, created_at, course_id) values (20, 'js10', '2024/04/03', 20);
-
-
 
 insert into links (id, title, created_at, url) values (1, 'java1', '2024/04/03', 'http://diigo.com/odio/elementum/eu.jpg?mauris=volutpat&laoreet=erat&ut=quisque&rhoncus=erat&al');
 insert into links (id, title, created_at, url) values (2, 'java2', '2024/04/03', 'http://goodreads.com/dis.png?dis=eleifend&parturient=quam&montes=a&nascetur=odio&ridiculus=in&mus=hac&etiam=');
@@ -174,7 +165,6 @@ insert into links (id, title, created_at, url) values (18, 'js8', '2024/04/04', 
 insert into links (id, title, created_at, url) values (19, 'js9', '2024/04/05', 'https://archive.org/nulla/tellus.png?lectus=sed&suspendisse=justo&potenti=pellentesque&in=viverra&eleifend=pm=potenti');
 insert into links (id, title, created_at, url) values (20, 'js10', '2024/04/06', 'http://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
 
-
 insert into lessons_links (lesson_id, links_id) values (1, 1);
 insert into lessons_links (lesson_id, links_id) values (2, 2);
 insert into lessons_links (lesson_id, links_id) values (3, 3);
@@ -195,8 +185,6 @@ insert into lessons_links (lesson_id, links_id) values (17, 17);
 insert into lessons_links (lesson_id, links_id) values (18, 18);
 insert into lessons_links (lesson_id, links_id) values (19, 19);
 insert into lessons_links (lesson_id, links_id) values (20, 20);
-
-
 
 insert into tasks (id, lesson_id, instructor_id, created_at, deadline, code, description, file, image, title) values (1, 1, 1, '2024-04-09', '2024-05-09', '5051', 'Displaced transverse fracture of shaft of right fibula, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion', 'Rhoncus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'huffingtonpost.com');
 insert into tasks (id, lesson_id, instructor_id, created_at, deadline, code, description, file, image, title) values (2, 2, 2, '2024-04-09', '2024-05-09', '6142', 'Major laceration of left vertebral artery, initial encounter', 'InLectus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'edublogs.org');
@@ -219,8 +207,6 @@ insert into tasks (id, lesson_id, instructor_id, created_at, deadline, code, des
 insert into tasks (id, lesson_id, instructor_id, created_at, deadline, code, description, file, image, title) values (19, 19, 19, '2024-04-09', '2024-05-09', '5539', 'Spastic entropion of left upper eyelid', 'LacusPurus.jpeg', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'jalbum.net');
 insert into tasks (id, lesson_id, instructor_id, created_at, deadline, code, description, file, image, title) values (20, 20, 20, '2024-04-09', '2024-05-09', '8104', 'Abrasion of right elbow, initial encounter', 'Id.jpeg', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'virginia.edu');
 
-
-
 insert into videos (id, link_id, created_at, description) values (1, 1, '2024-04-09', 'Unspecified injury of unspecified external jugular vein, initial encounter');
 insert into videos (id, link_id, created_at, description) values (2, 2, '2024-04-09', 'Unspecified physeal fracture of lower end of ulna, unspecified arm, subsequent encounter for fracture with delayed healing');
 insert into videos (id, link_id, created_at, description) values (3, 3, '2024-04-09', 'Family history of malignant neoplasm of urinary tract');
@@ -241,7 +227,6 @@ insert into videos (id, link_id, created_at, description) values (17, 17, '2024-
 insert into videos (id, link_id, created_at, description) values (18, 18, '2024-04-09', 'Anterior subluxation of right ulnohumeral joint, sequela');
 insert into videos (id, link_id, created_at, description) values (19, 19, '2024-04-09', 'Laceration of extensor muscle, fascia and tendon of right middle finger at wrist and hand level, subsequent encounter');
 insert into videos (id, link_id, created_at, description) values (20, 20, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee');
-
 
 insert into tasks_links (task_id, links_id) values (1, 1);
 insert into tasks_links (task_id, links_id) values (2, 2);
@@ -264,8 +249,6 @@ insert into tasks_links (task_id, links_id) values (18, 18);
 insert into tasks_links (task_id, links_id) values (19, 19);
 insert into tasks_links (task_id, links_id) values (20, 20);
 
-
-
 insert into presentations (id, created_at, description, file, title) values (1, '2023-10-18', 'Other contact with pig', 'AcTellus.avi', 'Interior Live Oak');
 insert into presentations (id, created_at, description, file, title) values (2, '2023-10-02', 'Displaced fracture of shaft of first metacarpal bone, unspecified hand, initial encounter for open fracture', 'PorttitorLorem.xls', 'Ray Goldenweed');
 insert into presentations (id, created_at, description, file, title) values (3, '2023-09-02', 'Toxic effect of other tobacco and nicotine, intentional self-harm, sequela', 'SedAccumsan.png', 'Globe Fimbry');
@@ -286,8 +269,6 @@ insert into presentations (id, created_at, description, file, title) values (17,
 insert into presentations (id, created_at, description, file, title) values (18, '2024-01-13', 'Corrosion of first degree of right upper arm, initial encounter', 'Non.tiff', 'Shortleaf Crabgrass');
 insert into presentations (id, created_at, description, file, title) values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', 'LobortisConvallis.mov', 'Cylinder Jointtail Grass');
 insert into presentations (id, created_at, description, file, title) values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
-
-
 
 insert into lessons_presentations (lesson_id, presentations_id) values (1, 1);
 insert into lessons_presentations (lesson_id, presentations_id) values (2, 2);
@@ -310,11 +291,6 @@ insert into lessons_presentations (lesson_id, presentations_id) values (18, 18);
 insert into lessons_presentations (lesson_id, presentations_id) values (19, 19);
 insert into lessons_presentations (lesson_id, presentations_id) values (20, 20);
 
-
-
-
-
-
 insert into lessons_videos (lesson_id, videos_id) values (1, 1);
 insert into lessons_videos (lesson_id, videos_id) values (2, 2);
 insert into lessons_videos (lesson_id, videos_id) values (3, 3);
@@ -335,8 +311,6 @@ insert into lessons_videos (lesson_id, videos_id) values (17, 17);
 insert into lessons_videos (lesson_id, videos_id) values (18, 18);
 insert into lessons_videos (lesson_id, videos_id) values (19, 19);
 insert into lessons_videos (lesson_id, videos_id) values (20, 20);
-
-
 
 insert into tests (id, lesson_id, is_active, creation_date, title) values (1, 1, 'FALSE', '2024-04-26', 'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae');
 insert into tests (id, lesson_id, is_active, creation_date, title) values (2, 2, 'FALSE', '2024-05-01', 'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu');
@@ -359,7 +333,6 @@ insert into tests (id, lesson_id, is_active, creation_date, title) values (18, 1
 insert into tests (id, lesson_id, is_active, creation_date, title) values (19, 19, 'TRUE', '2024-04-11', 'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum');
 insert into tests (id, lesson_id, is_active, creation_date, title) values (20, 20, 'FALSE', '2024-05-08', 'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum');
 
-
 insert into questions (id, test_id, question_type, title) values (1, 1, 'MULTIPLE', 'Legal Assistant');
 insert into questions (id, test_id, question_type, title) values (2, 2, 'MULTIPLE', 'Systems Administrator IV');
 insert into questions (id, test_id, question_type, title) values (3, 3, 'MULTIPLE', 'Teacher');
@@ -380,9 +353,6 @@ insert into questions (id, test_id, question_type, title) values (17, 17, 'SINGL
 insert into questions (id, test_id, question_type, title) values (18, 18, 'SINGLE', 'Payment Adjustment Coordinator');
 insert into questions (id, test_id, question_type, title) values (19, 19, 'SINGLE', 'Account Representative IV');
 insert into questions (id, test_id, question_type, title) values (20, 20, 'SINGLE', 'Paralegal');
-
-
-
 
 insert into options (id, is_true, question_id, option) values (1, 'TRUE', 1, 'edu');
 insert into options (id, is_true, question_id, option) values (2, 'FALSE', 2, 'edu');
@@ -405,7 +375,6 @@ insert into options (id, is_true, question_id, option) values (18, 'TRUE', 18, '
 insert into options (id, is_true, question_id, option) values (19, 'TRUE', 19, 'name');
 insert into options (id, is_true, question_id, option) values (20, 'FALSE', 20, 'net');
 
-
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (1, 1, 'LATE', '2024-04-12',  1, 'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus', 'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi', 'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit', 1);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (2, 2, 'REJECTED', '2024-04-15',  2, 'suspendisse ornare consequat lectus in est risus auctor sed tristique in', 'nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis', 'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum', 2);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (3, 3, 'WAITING', '2024-04-11',  3, 'suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero', 'nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio', 'curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu', 3);
@@ -426,7 +395,6 @@ insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  tas
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (18, 18, 'WAITING', '2024-04-28', 18, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id', 'tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est', 'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec', 18);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (19, 19, 'LATE', '2024-04-30', 19, 'sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec', 'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper', 'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 19);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, comment, image, link_id) values (20, 20, 'WAITING', '2024-04-18',  20, 'in felis donec semper sapien a libero nam dui proin leo odio porttitor', 'ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante', 20);
-
 
 insert into result_tasks (id,  created_at, instructor_id, comment, point) values (1,  '2024-04-25', 1, 'vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum', 1);
 insert into result_tasks (id,  created_at, instructor_id, comment, point) values (2,  '2024-04-30', 2, 'ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci', 5);
@@ -449,7 +417,6 @@ insert into result_tasks (id,created_at, instructor_id, comment, point) values (
 insert into result_tasks (id, created_at, instructor_id, comment, point) values (19,  '2024-04-21', 19, 'vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa', 10);
 insert into result_tasks (id,  created_at, instructor_id, comment, point) values (20,  '2024-04-24', 20, 'mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis', 2);
 
-
 insert into result_tests (id, test_id, creation_date, student_id, point) values (1, 1, '2024-04-16', 1, 5);
 insert into result_tests (id, test_id, creation_date, student_id, point) values (2, 2, '2024-05-08', 2, 1);
 insert into result_tests (id, test_id, creation_date, student_id, point) values (3, 3, '2024-05-04', 3, 4);
@@ -471,10 +438,6 @@ insert into result_tests (id, test_id, creation_date, student_id, point) values 
 insert into result_tests (id, test_id, creation_date, student_id, point) values (19, 19, '2024-04-20', 19, 6);
 insert into result_tests (id, test_id, creation_date, student_id, point) values (20, 20, '2024-04-10', 20, 10);
 
-
-
-
-
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (1, '2023-08-01', 'Nondisplaced fracture of first metatarsal bone, left foot, subsequent encounter for fracture with malunion',1, 'Rosary Snoutbean', 1, 1, 1, 'FALSE');
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (2, '2023-12-27', 'Contact with other nonpowered hand tool, initial encounter',2, 'Pacific Lovegrass', 2, 2, 2, 'TRUE');
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (3, '2023-12-25', 'Complete physeal arrest, right proximal tibia',3, 'Spiritweed', 3, 3, 3, 'TRUE');
@@ -495,7 +458,6 @@ insert into notifications (id, created_at, description, result_task_id, title, i
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (18, '2023-10-26', 'Car driver injured in collision with heavy transport vehicle or bus in nontraffic accident, sequela',18, 'Patagonia Mountain Leatherpetal', 18, 18, 18, 'FALSE');
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (19, '2023-09-28', 'Kidney dialysis as the cause of abnormal reaction of the patient, or of later complication, without mention of misadventure at the time of the procedure',19, 'Big Chickweed', 19, 19, 19, 'TRUE');
 insert into notifications (id, created_at, description, result_task_id, title, instructor_id, student_id, task_id, is_view) values (20, '2023-05-09', 'Other specified pregnancy related conditions, unspecified trimester',20, 'Melaspilea Lichen', 20, 20, 20, 'FALSE');
-
 
 insert into instructors_notifications (instructor_id, notifications_id) values (1, 1);
 insert into instructors_notifications (instructor_id, notifications_id) values (2, 2);
@@ -539,7 +501,6 @@ insert into result_tests_options (result_test_id, options_id) values (18, 18);
 insert into result_tests_options (result_test_id, options_id) values (19, 19);
 insert into result_tests_options (result_test_id, options_id) values (20, 20);
 
-
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (1, 1);
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (2, 2);
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (3, 3);
@@ -560,7 +521,6 @@ insert into tasks_answer_tasks (answer_tasks_id, task_id) values (17, 17);
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (18, 18);
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (19, 19);
 insert into tasks_answer_tasks (answer_tasks_id, task_id) values (20, 20);
-
 
 update  answer_tasks set result_task_id =1 where id =1;
 update  answer_tasks set result_task_id =2 where id =2;
