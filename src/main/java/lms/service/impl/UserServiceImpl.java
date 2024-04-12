@@ -27,38 +27,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void sendEmailSms(String to) {
-        String from = "nurmuhammedmedetov03@gmail.com";
-        String host = "smtp.gmail.com";
-        String smtpPort = "465";
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.socketFactory.port", smtpPort);
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", "true");
-        Session session = Session.getInstance(
-                properties,
-                new Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, "xaua cdpi sxhl ydlz");
-                    }
-                }
-        );
-        session.setDebug(true);
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject("LMS");
-            message.setText("add password");
-            Transport.send(message);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
     public void checkEmail(String email) {
         boolean exists = userRepository.existsByEmail(email);
         if (exists) throw new AlreadyExistsException("User with email: " + email + " already have");
