@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
         return findByEmail(email).orElseThrow(() ->
                 new NotFoundException("User with: "+email+" not found"));
     }
+
 }
