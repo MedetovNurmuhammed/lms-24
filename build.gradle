@@ -18,7 +18,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
     implementation 'com.auth0:java-jwt:4.4.0'
@@ -27,9 +26,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation 'javax.mail:javax.mail-api:1.6.2'
-    implementation 'com.sun.mail:javax.mail:1.6.2'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.sun.mail:jakarta.mail:2.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.3'
 
 }
 

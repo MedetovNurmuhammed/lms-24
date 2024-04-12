@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: lms-b12
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: nurkamilkamchiev@gmail.com
+        password: akst vqxz graa hzfe
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
