@@ -2,7 +2,7 @@ package lms.exceptions.handler;
 
 
 import lms.exceptions.AlreadyExistsException;
-import lms.exceptions.BedRequestException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.response.ExceptionResponse;
@@ -42,11 +42,11 @@ public class HandlerException {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.ALREADY_REPORTED)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ExceptionResponse alreadyExists(AlreadyExistsException e){
         log.error(e.getMessage());
         return ExceptionResponse.builder()
-                .httpStatus(HttpStatus.ALREADY_REPORTED)
+                .httpStatus(HttpStatus.CONFLICT)
                 .exceptionClassName(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .build();
@@ -54,12 +54,12 @@ public class HandlerException {
 
 
     // 400
-    @ExceptionHandler(BedRequestException.class)
+    @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionResponse badRequest(BedRequestException e){
+    public ExceptionResponse badRequest(BadRequestException e){
         log.error(e.getMessage());
         return ExceptionResponse.builder()
-                .httpStatus(HttpStatus.FORBIDDEN)
+                .httpStatus(HttpStatus.BAD_REQUEST)
                 .exceptionClassName(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .build();
@@ -85,6 +85,4 @@ public class HandlerException {
                 .message(e.getMessage())
                 .build();
     }
-
-
 }
