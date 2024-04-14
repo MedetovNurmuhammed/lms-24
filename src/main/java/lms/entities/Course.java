@@ -29,7 +29,7 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_gen")
-    @SequenceGenerator(name = "course_seq",sequenceName = "course_seq", allocationSize = 1)
+    @SequenceGenerator(name = "course_gen",sequenceName = "course_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     private String description;
