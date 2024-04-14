@@ -34,7 +34,7 @@ public class Video {
     private LocalDate updatedAt;
 
     //*************************************** Link ***************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Link link ;
 
     @PrePersist
