@@ -42,15 +42,15 @@ public class Student {
     private LocalDate updatedAt;
 
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
     private Group group;
 
     //********************************* ResultTest ****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************

@@ -1,18 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lms.enums.TaskAnswerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,19 +30,19 @@ public class AnswerTask{
     private LocalDate updatedAt;
 
     //*************************************** Student **************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
     private Student student;
 
     //*************************************** Task *****************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
     private Task task;
 
     //*************************************** Link *****************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Link link;
 
     //*************************************** ResultTask ************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private ResultTask resultTask;
 
     @PrePersist

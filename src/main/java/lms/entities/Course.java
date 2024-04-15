@@ -1,6 +1,16 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.FetchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +44,7 @@ public class Course {
 
     //*************************************** Group ******************************************
     @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
-    private List<Group> groups;
+    private List<Group> groups = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
     @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER,orphanRemoval = true)

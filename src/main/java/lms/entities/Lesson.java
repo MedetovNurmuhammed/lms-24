@@ -1,6 +1,17 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,11 +46,11 @@ public class Lesson {
     private List<Video> videos = new ArrayList<>();
 
     //*************************************** Presentation ********************************
-    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Presentation> presentations = new ArrayList<>();
 
     //*************************************** Link *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************

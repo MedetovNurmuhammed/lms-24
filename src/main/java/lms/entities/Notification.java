@@ -27,7 +27,7 @@ import java.time.LocalDate;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notification_gen")
-    @SequenceGenerator(name = "notification_gen",sequenceName = "notification_seq", allocationSize = 1)
+    @SequenceGenerator(name = "notification_gen",sequenceName = "notification_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     private String description;
@@ -35,19 +35,19 @@ public class Notification {
     private LocalDate createdAt;
 
     //*************************************** Instructor ************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
     private Instructor instructor;
 
     //*************************************** Student ***************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
     private Student student;
 
     //*************************************** Task ******************************************
-    @OneToOne(cascade = CascadeType.DETACH,optional = false)
+    @OneToOne(cascade = CascadeType.DETACH, optional = false)
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH,optional = false)
+    @OneToOne(cascade = CascadeType.DETACH, optional = false)
     private ResultTask resultTask;
 
     @PrePersist

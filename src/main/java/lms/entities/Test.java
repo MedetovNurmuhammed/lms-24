@@ -38,11 +38,11 @@ public class Test {
     private LocalDate updateDate;
 
     //*************************************** ResultTest **************************************
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "test",orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "test", orphanRemoval = true)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //*************************************** Question ****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "test",orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "test", orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
