@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -31,17 +29,17 @@ public class AuthApi {
     }
 
     @PutMapping("/forgotPassword")
-    public SimpleResponse forgotPassword (@RequestParam String email) throws  MessagingException {
+    public SimpleResponse forgotPassword(@RequestParam String email) throws MessagingException {
         return userService.forgotPassword(email);
     }
 
     @PutMapping("/checkCode")
-    public SimpleResponse checking(@RequestParam int code){
+    public SimpleResponse checking(@RequestParam int code) {
         return userService.checkCode(code);
     }
 
     @PutMapping("/setPassword")
-    public SimpleResponse setPassword(@RequestBody PasswordRequest passwordRequest){
+    public SimpleResponse setPassword(@RequestBody PasswordRequest passwordRequest) {
         return userService.setPassword(passwordRequest);
     }
 }
