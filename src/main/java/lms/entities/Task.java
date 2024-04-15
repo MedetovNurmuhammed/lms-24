@@ -46,11 +46,11 @@ public class Task {
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Link ******************************************
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Lesson ****************************************

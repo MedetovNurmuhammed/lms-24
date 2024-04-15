@@ -16,14 +16,12 @@ import lms.repository.InstructorRepository;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -78,7 +76,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public SimpleResponse deleteCourseById(Long courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
+        Course course = courseRepository.findById(courseId).orElseThrow(()
+                -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
+        List<Instructor> instructors = course.getInstructors();
+        for (Instructor instructor : instructors) {
+            instructor.setCourse(null);
+        }
+        course.setInstructors(null);
         courseRepository.deleteById(course.getId());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -87,7 +91,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<FindAllResponseCourse> findAllCourse(int page,int size) {
+    public Page<FindAllResponseCourse> findAllCourse(int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
         return courseRepository.findAllCourse(pageable);
@@ -99,7 +103,7 @@ public class CourseServiceImpl implements CourseService {
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа с id: " + groupId + " не найден!"));
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не найден!"));
         group.getCourses().add(course);
-        course.setGroup(group);
+        course.getGroups().add(group);
         courseRepository.save(course);
         groupRepository.save(group);
         return SimpleResponse.builder()
@@ -122,5 +126,4 @@ public class CourseServiceImpl implements CourseService {
                 .message("Инструктор успешно добавлен!")
                 .build();
     }
-
 }

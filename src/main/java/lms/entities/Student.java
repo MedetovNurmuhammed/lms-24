@@ -50,15 +50,15 @@ public class Student {
     private Group group;
 
     //********************************* ResultTest ****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
 
     @PrePersist

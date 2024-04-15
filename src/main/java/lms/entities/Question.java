@@ -37,7 +37,7 @@ public class Question {
     private QuestionType questionType;
 
     //*************************************** Option ***************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question",orphanRemoval = true)
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Test ******************************************

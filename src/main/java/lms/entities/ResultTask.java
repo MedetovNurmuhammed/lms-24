@@ -40,7 +40,7 @@ public class ResultTask {
     private AnswerTask answerTask;
 
     //*************************************** Notification ****************************************
-    @OneToOne(mappedBy = "resultTask", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "resultTask", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Notification notification;
 
     //*************************************** Instructor ******************************************

@@ -5,8 +5,6 @@ import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface CourseService {
 
     SimpleResponse createCourse(CourseRequest courseRequest);
@@ -20,4 +18,5 @@ public interface CourseService {
     SimpleResponse assignInGroupToCourse(Long groupId, Long courseId);
 
     SimpleResponse assignInInstructorToCourse(Long courseId, Long instructorId);
+
 }

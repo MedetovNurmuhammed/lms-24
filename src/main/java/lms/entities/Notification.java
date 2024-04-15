@@ -35,19 +35,19 @@ public class Notification {
     private LocalDate createdAt;
 
     //*************************************** Instructor ************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
     private Instructor instructor;
 
     //*************************************** Student ***************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
     private Student student;
 
     //*************************************** Task ******************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.DETACH,optional = false)
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.DETACH,optional = false)
     private ResultTask resultTask;
 
     @PrePersist
