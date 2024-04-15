@@ -1,13 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,16 +22,16 @@ public class Link {
     private Long id;
     private String title;
     private String url;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDate.now();
-    }
+    //***************************************** AnswerTask *********************************
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private Lesson lesson;
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDate.now();
-    }
+    //***************************************** Task *********************************
+    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private Task task;
+
+    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private Video video;
+
 }
