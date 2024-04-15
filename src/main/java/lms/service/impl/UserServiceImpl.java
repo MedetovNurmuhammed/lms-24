@@ -65,7 +65,11 @@ public class UserServiceImpl implements UserService {
         mimeMessageHelper.setTo(toEmail);
         Random r = new Random();
         num = r.nextInt(+9000) + 1000;
-        mimeMessageHelper.setText("<div style='font-size: 20px;'>Одноразовый код: <span style='font-size: 24px;'>" + num + "</span></div>", true);
+        mimeMessageHelper.setText("""
+                 <div>
+                          <a href="http://localhost:8080/verify-account?email=%s" target="_blank">CREATE NEW PASSWORD</a>
+                        </div>
+                """.formatted(email), true);
         mimeMessageHelper.setSubject("PEAKSOFT PROGRAMMING COURSES");
         FileSystemResource file = new FileSystemResource(new File("C:\\Users\\asus\\OneDrive\\Изображения\\peaksoft.jpg"));
         mimeMessageHelper.addInline("image", file);
