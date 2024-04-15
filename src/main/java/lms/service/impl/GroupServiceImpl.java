@@ -5,7 +5,6 @@ import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
 import lms.dto.response.GroupWithStudentsResponse;
 import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
 import lms.entities.Course;
 import lms.entities.Group;
 import lms.entities.Student;
@@ -21,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,34 +45,6 @@ public class GroupServiceImpl implements GroupService {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.ACCEPTED)
                 .message("Группа успешно создана!")
-                .build();
-    }
-
-    @Override
-    public GroupWithStudentsResponse findById(int size, int page, long id) {
-        Group group = groupRepository.getById(id);
-
-        List<StudentResponse> students = new ArrayList<>();
-        for (Student student : group.getStudents()) {
-            students.add(
-                    StudentResponse.builder()
-                            .fullName(student.getUser().getFullName())
-                            .studyFormat(student.getStudyFormat())
-                            .phoneNumber(student.getUser().getPhoneNumber())
-                            .email(student.getUser().getEmail())
-                            .build()
-            );
-        }
-        Pageable pageable = PageRequest.of(page - 1, size);
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), students.size());
-        Page<StudentResponse> studentResponsePage = new PageImpl<>
-                (students.subList(start, end), pageable, students.size());
-
-        return GroupWithStudentsResponse.builder()
-                .id(group.getId())
-                .title(group.getTitle())
-                .students(studentResponsePage)
                 .build();
     }
 
