@@ -37,7 +37,7 @@ out/
 .vscode/
 
 /src/main/resources/application-ajybek.yml
-src/main/resources/application-gulumkan.yml
+src/main/resources/application-gulum.yml
 src/main/resources/application-nurmuhammed.yml
 src/main/resources/application-nurkamil.yml
 

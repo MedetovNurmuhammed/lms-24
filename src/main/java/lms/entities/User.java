@@ -1,6 +1,13 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Id;
 import lms.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +30,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
-    @SequenceGenerator(name = "user_gen",sequenceName = "user_seq", allocationSize = 1, initialValue = 41)
+    @SequenceGenerator(name = "user_gen",sequenceName = "user_seq", allocationSize = 1,initialValue = 41)
     private Long id;
     private String fullName;
     private String email;
@@ -38,6 +45,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
     @Override
     public String getUsername() {
         return email;

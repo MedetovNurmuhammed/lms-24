@@ -38,15 +38,15 @@ public class Instructor {
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     private Course course;
 
     //********************************* Notification *******************************
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
 
    @PrePersist
