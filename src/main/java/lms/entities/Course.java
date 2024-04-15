@@ -1,15 +1,16 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,15 +39,15 @@ public class Course {
     private LocalDate dateOfEnd;
 
     //*************************************** Instructor *************************************
-    @OneToMany(mappedBy = "course",cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     private List<Instructor> instructors = new ArrayList<>();
 
     //*************************************** Group ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private Group group;
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private List<Group> groups = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 
     @PrePersist
