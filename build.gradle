@@ -28,8 +28,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'com.sun.mail:jakarta.mail:2.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.3'
-
 }
 
 tasks.named('test') {

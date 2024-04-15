@@ -5,10 +5,16 @@ spring:
         host: smtp.gmail.com
         port: 587
         username: nurkamilkamchiev@gmail.com
-        password: akst vqxz graa hzfe
+        password: "akst vqxz graa hzfe"
         properties:
             mail:
                 smtp:
                     auth: true
                     starttls:
                         enable: true
+    jpa:
+        defer-datasource-initialization: true
+    sql:
+        init:
+            data-locations: classpath:datainit/dataInit.sql
+            mode: always
