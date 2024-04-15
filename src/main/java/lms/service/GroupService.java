@@ -2,7 +2,7 @@ package lms.service;
 
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
-import lms.dto.response.GroupResponse;
+import lms.dto.response.GroupWithStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import org.springframework.data.domain.Page;
 
@@ -12,7 +12,7 @@ public interface GroupService {
 
     SimpleResponse save(GroupRequest groupRequest);
 
-    GroupResponse findById(int size,int page,long id);
+    GroupWithStudentsResponse findById(int size, int page, long id);
 
     SimpleResponse update(long groupId, GroupRequest groupRequest);
 

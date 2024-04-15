@@ -1,9 +1,10 @@
 package lms.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
-import lms.dto.response.GroupResponse;
+import lms.dto.response.GroupWithStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,9 @@ public class GroupApi {
     }
 
     @Secured("ADMIN")
+    @Operation(description = "get students by group id")
     @GetMapping("/findById/{groupId}")
-    public GroupResponse findById(@PathVariable long groupId,@RequestParam int page, @RequestParam int size) {
+    public GroupWithStudentsResponse findById(@PathVariable long groupId, @RequestParam int page, @RequestParam int size) {
       return groupService.findById(size,page,groupId);
     }
 

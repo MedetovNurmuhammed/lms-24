@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class Group {
     private LocalDate dateOfEnd;
 
     //*************************************** Course ******************************************
-    @OneToMany(mappedBy = "group",cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "groups",cascade = CascadeType.DETACH)
     private List<Course> courses = new ArrayList<>();
 
     //*************************************** Student ******************************************

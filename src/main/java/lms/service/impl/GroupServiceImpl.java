@@ -3,7 +3,7 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
-import lms.dto.response.GroupResponse;
+import lms.dto.response.GroupWithStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Course;
@@ -51,7 +51,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupResponse findById(int size, int page, long id) {
+    public GroupWithStudentsResponse findById(int size, int page, long id) {
         Group group = groupRepository.getById(id);
 
         List<StudentResponse> students = new ArrayList<>();
@@ -71,7 +71,7 @@ public class GroupServiceImpl implements GroupService {
         Page<StudentResponse> studentResponsePage = new PageImpl<>
                 (students.subList(start, end), pageable, students.size());
 
-        return GroupResponse.builder()
+        return GroupWithStudentsResponse.builder()
                 .id(group.getId())
                 .title(group.getTitle())
                 .students(studentResponsePage)
@@ -80,12 +80,13 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public SimpleResponse update(long groupId, GroupRequest groupRequest) {
-
-        boolean exists = groupRepository.existsByTitle(groupRequest.title());
-        if (exists) throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует");
-
         Group updatedGroup = groupRepository.getById(groupId);
 
+        if (!updatedGroup.getTitle().equals(groupRequest.title())) {
+            boolean exists = groupRepository.existsByTitle(groupRequest.title());
+            if (exists)
+                throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует");
+        }
         updatedGroup.setTitle(groupRequest.title());
         updatedGroup.setDescription(groupRequest.description());
         updatedGroup.setImage(groupRequest.image());
@@ -109,7 +110,7 @@ public class GroupServiceImpl implements GroupService {
 
         List<Course> courses = deletedGroup.getCourses();
         for (Course course : courses) {
-            course.setGroup(null);
+            course.setGroups(null);
         }
         deletedGroup.setCourses(null);
 
