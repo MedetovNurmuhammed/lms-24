@@ -115,46 +115,61 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
 
         List<Instructor> foundInstructors = instructorRepository.findAllById(instructorIds);
         List<Long> notFoundInstructorIds = new ArrayList<>();
         List<Long> existingInstructorIds = new ArrayList<>();
+        List<Long> addedInstructorIds = new ArrayList<>();
+        boolean allInstructorsExist = true;
 
         for (Long instructorId : instructorIds) {
             boolean found = false;
             for (Instructor instructor : foundInstructors) {
                 if (instructor.getId().equals(instructorId)) {
                     found = true;
-                    if (course.getInstructors().contains(instructor)) {
-                        existingInstructorIds.add(instructorId);
-                    } else {
-                        course.getInstructors().add(instructor);
-                        instructor.setCourse(course);
-                        instructorRepository.save(instructor);
-                    }
                     break;
                 }
             }
             if (!found) {
                 notFoundInstructorIds.add(instructorId);
+                allInstructorsExist = false;
             }
         }
 
-        courseRepository.save(course);
+        if (allInstructorsExist) {
+            for (Instructor instructor : foundInstructors) {
+                if (!course.getInstructors().contains(instructor)) {
+                    course.getInstructors().add(instructor);
+                    instructor.setCourse(course);
+                    instructorRepository.save(instructor);
+                    addedInstructorIds.add(instructor.getId());
+                } else {
+                    existingInstructorIds.add(instructor.getId());
+                }
+            }
+            courseRepository.save(course);
 
-        StringBuilder messageBuilder = new StringBuilder("Инструкторы успешно добавлены!");
-        if (!existingInstructorIds.isEmpty()) {
-            messageBuilder.append(" Инструкторы с id: ").append(existingInstructorIds).append(" уже привязаны к этому курсу.");
+            StringBuilder messageBuilder = new StringBuilder("Инструкторы успешно добавлены!");
+            if (!existingInstructorIds.isEmpty()) {
+                messageBuilder.append(" Инструкторы с id: ").append(existingInstructorIds).append(" уже привязаны к этому курсу.");
+            }
+            if (!addedInstructorIds.isEmpty()) {
+                messageBuilder.append(" Добавлены инструкторы с id: ").append(addedInstructorIds);
+            }
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message(messageBuilder.toString())
+                    .build();
+        } else {
+            StringBuilder errorMessageBuilder = new StringBuilder("Инструкторы с предоставленными id: ");
+            errorMessageBuilder.append(notFoundInstructorIds).append(" не найдены.");
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.NOT_FOUND)
+                    .message(errorMessageBuilder.toString())
+                    .build();
         }
-        if (!notFoundInstructorIds.isEmpty()) {
-            messageBuilder.append(" Инструкторы с предоставленными id: ").append(notFoundInstructorIds).append(" не найдены.");
-        }
-
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message(messageBuilder.toString())
-                .build();
     }
 }
 
