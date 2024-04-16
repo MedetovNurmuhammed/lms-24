@@ -8,12 +8,15 @@ import com.amazonaws.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -34,16 +37,22 @@ public class StorageService {
     }
 
 
-    public byte[] downloadFile(String fileName) {
+    public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
         S3Object s3Object = s3Client.getObject(bucketName, fileName);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
+        byte[] content ;
         try {
-            byte[] content = IOUtils.toByteArray(inputStream);
-            return content;
+             content = IOUtils.toByteArray(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw  new IOException(e.getMessage());
         }
-        return null;
+        ByteArrayResource resource = new ByteArrayResource(content);
+        return ResponseEntity
+                .ok()
+                .contentLength(content.length)
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
+                .body(resource);
     }
 
 
@@ -54,7 +63,7 @@ public class StorageService {
 
 
     private File convertMultiPartFileToFile(MultipartFile file) {
-        File convertedFile = new File(file.getOriginalFilename());
+        File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
             fos.write(file.getBytes());
         } catch (IOException e) {

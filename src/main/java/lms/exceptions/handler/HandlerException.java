@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -95,6 +96,17 @@ public class HandlerException {
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .exceptionClassName(noSuchElementException.getClass().getSimpleName())
                 .message(noSuchElementException.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ExceptionResponse notFoundFile(IOException ioException){
+        log.error(ioException.getMessage());
+        return ExceptionResponse.builder()
+                .httpStatus(HttpStatus.NOT_FOUND)
+                .exceptionClassName(ioException.getClass().getSimpleName())
+                .message(ioException.getMessage())
                 .build();
     }
 }
