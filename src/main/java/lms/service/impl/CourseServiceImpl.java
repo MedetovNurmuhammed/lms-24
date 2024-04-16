@@ -163,7 +163,7 @@ public class CourseServiceImpl implements CourseService {
                     .message(messageBuilder.toString())
                     .build();
         } else {
-            StringBuilder errorMessageBuilder = new StringBuilder("Инструкторы с предоставленными id: ");
+            StringBuilder errorMessageBuilder = new StringBuilder("Инструкторы с предоставленными  id: ");
             errorMessageBuilder.append(notFoundInstructorIds).append(" не найдены.");
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.NOT_FOUND)
