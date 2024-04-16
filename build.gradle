@@ -29,6 +29,8 @@ dependencies {
     implementation 'com.sun.mail:jakarta.mail:2.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3' // Используйте актуальную версию
+
 
 }
 

@@ -3,17 +3,14 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
-import lms.dto.response.GroupWithStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Course;
 import lms.entities.Group;
-import lms.entities.Student;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
 import lms.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -55,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
         if (!updatedGroup.getTitle().equals(groupRequest.title())) {
             boolean exists = groupRepository.existsByTitle(groupRequest.title());
             if (exists)
-                throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует");
+                throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует!");
         }
         updatedGroup.setTitle(groupRequest.title());
         updatedGroup.setDescription(groupRequest.description());
@@ -64,7 +61,7 @@ public class GroupServiceImpl implements GroupService {
 
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно обнавлено")
+                .message("Успешно обнавлено!")
                 .build();
     }
 
@@ -88,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
 
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Группа успешно удалена!")
+                .message("Группа успешно удалено!")
                 .build();
     }
 
