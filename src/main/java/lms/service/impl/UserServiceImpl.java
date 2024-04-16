@@ -22,6 +22,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 .message("Successful login")
                 .build();
     }
+
 
     public void sendEmail(String toEmail) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

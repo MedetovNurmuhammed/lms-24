@@ -52,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
         if (!updatedGroup.getTitle().equals(groupRequest.title())) {
             boolean exists = groupRepository.existsByTitle(groupRequest.title());
             if (exists)
-                throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует");
+                throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует!");
         }
         updatedGroup.setTitle(groupRequest.title());
         updatedGroup.setDescription(groupRequest.description());
@@ -61,7 +61,7 @@ public class GroupServiceImpl implements GroupService {
 
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно обнавлено")
+                .message("Успешно обнавлено!")
                 .build();
     }
 
@@ -85,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
 
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Группа успешно удалена!")
+                .message("Группа успешно удалено!")
                 .build();
     }
 

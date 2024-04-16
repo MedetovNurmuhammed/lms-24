@@ -20,24 +20,24 @@ import org.springframework.web.bind.annotation.*;
 public class AuthApi {
     private final UserService userService;
 
-    @PostMapping("/signIn")
+    @PostMapping("/SignIn")
     @Operation(description = "SignIn")
     public SignInResponse signIn(@RequestBody @Valid SignInRequest signInRequest) {
         return userService.signIn(signInRequest);
     }
 
     @PutMapping("/forgotPassword")
-    public SimpleResponse forgotPassword (@RequestParam String email) throws  MessagingException {
+    public SimpleResponse forgotPassword(@RequestParam String email) throws MessagingException {
         return userService.forgotPassword(email);
     }
 
     @PutMapping("/checkCode")
-    public SimpleResponse checking(@RequestParam int code){
+    public SimpleResponse checking(@RequestParam int code) {
         return userService.checkCode(code);
     }
 
     @PutMapping("/setPassword")
-    public SimpleResponse setPassword(@RequestBody PasswordRequest passwordRequest){
+    public SimpleResponse setPassword(@RequestBody PasswordRequest passwordRequest) {
         return userService.setPassword(passwordRequest);
     }
     @PostMapping("/createPassword")
