@@ -85,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
 
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Группа успешно удалена!")
+                .message("Группа успешно удалено!")
                 .build();
     }
 
