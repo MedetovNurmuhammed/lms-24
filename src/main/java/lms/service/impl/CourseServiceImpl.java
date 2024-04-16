@@ -28,8 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
-    private final GroupRepository groupRepository;//очуруш керек созсуз
-    private final InstructorRepository instructorRepository;//очуруш керек созсуз
+    private final GroupRepository groupRepository;
+    private final InstructorRepository instructorRepository;
 
     private void checkTitle(String courseTitle) {
         boolean exists = courseRepository.existsByTitle(courseTitle);
