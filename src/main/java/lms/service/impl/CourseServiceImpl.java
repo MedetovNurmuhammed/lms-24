@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -112,18 +113,50 @@ public class CourseServiceImpl implements CourseService {
                 .build();
     }
 
-    @Transactional
     @Override
-    public SimpleResponse assignInInstructorToCourse(Long courseId, Long instructorId) {
+    public SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds) {
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
-        Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() -> new NotFoundException("Инструктор с id: " + instructorId + " не существует!"));
-        course.getInstructors().add(instructor);
-        instructor.setCourse(course);
-        instructorRepository.save(instructor);
+
+        List<Instructor> foundInstructors = instructorRepository.findAllById(instructorIds);
+        List<Long> notFoundInstructorIds = new ArrayList<>();
+        List<Long> existingInstructorIds = new ArrayList<>();
+
+        for (Long instructorId : instructorIds) {
+            boolean found = false;
+            for (Instructor instructor : foundInstructors) {
+                if (instructor.getId().equals(instructorId)) {
+                    found = true;
+                    if (course.getInstructors().contains(instructor)) {
+                        existingInstructorIds.add(instructorId);
+                    } else {
+                        course.getInstructors().add(instructor);
+                        instructor.setCourse(course);
+                        instructorRepository.save(instructor);
+                    }
+                    break;
+                }
+            }
+            if (!found) {
+                notFoundInstructorIds.add(instructorId);
+            }
+        }
+
         courseRepository.save(course);
+
+        StringBuilder messageBuilder = new StringBuilder("Инструкторы успешно добавлены!");
+        if (!existingInstructorIds.isEmpty()) {
+            messageBuilder.append(" Инструкторы с id: ").append(existingInstructorIds).append(" уже привязаны к этому курсу.");
+        }
+        if (!notFoundInstructorIds.isEmpty()) {
+            messageBuilder.append(" Инструкторы с предоставленными id: ").append(notFoundInstructorIds).append(" не найдены.");
+        }
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Инструктор успешно добавлен!")
+                .message(messageBuilder.toString())
                 .build();
     }
 }
+
+
+

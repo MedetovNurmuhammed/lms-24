@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/course")
@@ -56,10 +58,10 @@ public class CourseApi {
     @Secured("ADMIN")
     @PostMapping("/assignInInstructorToCourse/{courseId}/{instructorId}")
     @Operation(description = "AssignIn Instructor to Course")
-    public SimpleResponse assignInInstructorToCourse(@PathVariable Long courseId, @PathVariable Long instructorId) {
-        return courseService.assignInInstructorToCourse(courseId, instructorId);
-    }
+    public SimpleResponse assignInstructorsToCourse(@PathVariable Long courseId, @RequestParam List<Long> instructorIds) {
+        return courseService.assignInstructorsToCourse(courseId, instructorIds);
 
+    }
 }
 
 
