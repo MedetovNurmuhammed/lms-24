@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +47,7 @@ public class Instructor {
     private Course course;
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
 
    @PrePersist

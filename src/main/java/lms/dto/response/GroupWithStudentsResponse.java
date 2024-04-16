@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 @Builder
 public record GroupWithStudentsResponse(
         Long id,
-        String title,
-        Page<StudentResponse> students
+        String title
+      //  Page<StudentResponse> students
 ) {
 }

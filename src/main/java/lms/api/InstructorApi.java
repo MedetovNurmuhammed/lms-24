@@ -25,7 +25,7 @@ public class InstructorApi {
     private final InstructorService instructorService;
     @Operation(summary = "добавляет инструктора.")
     @PostMapping("/addInstructor")
-    public SimpleResponse addInstructor(@RequestBody @Valid InstructorRequest instructorRequest) throws MessagingException {
+    public SimpleResponse addInstructor(@RequestBody InstructorRequest instructorRequest) throws MessagingException {
         return instructorService.addInstructor(instructorRequest);
     }
     @Operation(summary = "добавляет password инструктора.")

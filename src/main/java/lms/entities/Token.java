@@ -34,5 +34,7 @@ public class Token {
         this.localDateTime = localDateTime;
         this.user = user;
     }
-    public boolean isExpired(){return localDateTime.isBefore(LocalDateTime.now());}
+    public boolean isExpired(){
+        return localDateTime.isBefore(LocalDateTime.now());
+    }
 }
