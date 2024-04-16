@@ -8,17 +8,15 @@ import lms.dto.request.SignInRequest;
 import lms.dto.response.SignInResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.UserService;
+import lms.validation.password.PasswordValidation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PutMapping;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@Slf4j
 public class AuthApi {
     private final UserService userService;
 
@@ -41,5 +39,12 @@ public class AuthApi {
     @PutMapping("/setPassword")
     public SimpleResponse setPassword(@RequestBody PasswordRequest passwordRequest){
         return userService.setPassword(passwordRequest);
+    }
+    @PostMapping("/createPassword")
+    public SimpleResponse createPassword(@RequestParam @PasswordValidation String password,
+                                         @RequestParam @PasswordValidation String confirm,
+                                         @RequestParam String uuid) {
+        log.error("Password created for !");
+        return userService.createPassword(uuid,password,confirm);
     }
 }

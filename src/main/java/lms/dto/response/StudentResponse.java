@@ -5,9 +5,11 @@ import lombok.Builder;
 
 @Builder
 public record StudentResponse(
-  String fullName,
-  String phoneNumber,
-  String email,
-  String groupName,
-  StudyFormat studyFormat
-){}
+        Long id,
+        String fullName,
+        String phoneNumber,
+        String email,
+        String groupName,
+        StudyFormat studyFormat
+) {
+}

@@ -2,6 +2,7 @@ package lms.service.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import lms.config.jwt.JwtService;
 import lms.dto.request.PasswordRequest;
 import lms.dto.request.SignInRequest;
@@ -22,7 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.io.File;
+import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -75,7 +78,28 @@ public class UserServiceImpl implements UserService {
         mimeMessageHelper.addInline("image", file);
         javaMailSender.send(mimeMessage);
     }
-
+    public void emailSender(String toEmail) throws MessagingException {
+        String uuid = UUID.randomUUID().toString();
+        User user = userRepository.getByEmail(toEmail);
+        user.setUuid(uuid);
+        String link = "http://192.168.0.14:9090/createPassword.html?uuid=" + uuid; // Constructing the link
+        String htmlContent = String.format("""
+                <html>
+                <body>
+                    <p>Для установки пароля, перейдите по следующей ссылке:</p>
+                    <a href="%s">УСТАНОВИТЬ ПАРОЛЬ</a>
+                </body>
+                </html>
+                """, link);
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        mimeMessageHelper.setFrom("PEAKSOFT");
+        mimeMessageHelper.setTo(toEmail);
+        mimeMessageHelper.setText(uuid);
+        mimeMessageHelper.setText(htmlContent, true);
+        mimeMessageHelper.setSubject("PEAKSOFT PROGRAMMING COURSES");
+        javaMailSender.send(mimeMessage);
+    }
     @Override
     public SimpleResponse forgotPassword(String email) throws MessagingException {
         User foundEmail = userRepository.getByEmail(email);
@@ -117,6 +141,22 @@ public class UserServiceImpl implements UserService {
                 .message("Success updated password!").
                 build();
     }
+    @Override
+    @Transactional
+    public SimpleResponse createPassword(String uuid, String password, String confirm) {
+        if (!password.equals(confirm)) {
+            throw new IllegalArgumentException("Пароли не совпадают");
+        } else {
+            User user = userRepository.findByUuid(uuid).orElseThrow(() -> new NoSuchElementException("User not found"));
+            user.setPassword(passwordEncoder.encode(password));
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Created password!")
+                    .build();
+        }
+    }
+
+
 }
 
 

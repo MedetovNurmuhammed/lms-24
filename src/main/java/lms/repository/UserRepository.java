@@ -3,6 +3,8 @@ package lms.repository;
 import lms.entities.User;
 import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -16,4 +18,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
                 new NotFoundException("User with: "+email+" not found"));
     }
 
+    @Query("select u from User u where u.uuid =:uuid")
+    Optional<User> findByUuid( String uuid);
 }
