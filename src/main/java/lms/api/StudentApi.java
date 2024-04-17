@@ -8,6 +8,7 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
