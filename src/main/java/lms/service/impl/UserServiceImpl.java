@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-
     public void sendEmail(String toEmail) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         email = toEmail;
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
         mimeMessageHelper.setTo(toEmail);
         mimeMessageHelper.setText(uuid);
         mimeMessageHelper.setText(htmlContent, true);
-        mimeMessageHelper.setSubject("PEAKSOFT PROGRAMMING COURSES");
+        mimeMessageHelper.setSubject("КУРСЫ ПРОГРАММИРОВАНИЕ PEAKSOFT!");
         javaMailSender.send(mimeMessage);
     }
     @Override
@@ -108,13 +107,13 @@ public class UserServiceImpl implements UserService {
         if (foundEmail == null) {
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.NOT_FOUND)
-                    .message("User with the provided email does not exist.")
+                    .message("Пользователь: "+email+" не найден!")
                     .build();
         } else {
             sendEmail(email);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Please check your email to set password!!!")
+                    .message("Проверьте почту!")
                     .build();
         }
     }
@@ -122,11 +121,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public SimpleResponse checkCode(int code) {
         if (code != num) {
-            throw new BadRequestException("Not equal code!!!");
+            throw new BadRequestException("Не правильный подтвердающий код!!!");
         } else {
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("OTP is true!")
+                    .message("Верно!")
                     .build();
         }
     }
@@ -135,12 +134,12 @@ public class UserServiceImpl implements UserService {
     public SimpleResponse setPassword(PasswordRequest passwordRequest) {
         User user = userRepository.getByEmail(email);
         if (!passwordRequest.code().equals(passwordRequest.confirmCode())) {
-            throw new BadRequestException("Not equal to confirm password");
+            throw new BadRequestException("Пароли не совпадают");
         }
         user.setPassword(passwordEncoder.encode(passwordRequest.code()));
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Success updated password!").
+                .message("Пароль успешно обновлен!").
                 build();
     }
     @Override
@@ -153,7 +152,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(password));
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Created password!")
+                    .message("Пароль успешно создан!")
                     .build();
         }
     }

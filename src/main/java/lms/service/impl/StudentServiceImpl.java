@@ -18,24 +18,24 @@ import lms.repository.UserRepository;
 import lms.service.StudentService;
 import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final UserService userService;
+
     @Override
     @Transactional
     public SimpleResponse save(StudentRequest studentRequest) throws MessagingException {
@@ -57,10 +57,11 @@ public class StudentServiceImpl implements StudentService {
             userService.emailSender(user.getEmail());
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Saved!!!")
+                    .message("Успешно сохранен!")
                     .build();
         }
-        throw new BadRequestException("Group with name " + studentRequest.groupName() + " not found!");
+        log.error("Группа не найден!");
+        throw new BadRequestException("Группа: " + studentRequest.groupName() + " не найден!");
     }
 
     private AllStudentsResponse getAllStudentsResponse(List<StudentResponse> studentResponses, Page<Student> allStudUnblock) {
@@ -92,7 +93,7 @@ public class StudentServiceImpl implements StudentService {
     public AllStudentsResponse findAllGroupStud(int page, int size, Long groupId) {
         List<StudentResponse> studentResponses = new ArrayList<>();
         Group group = groupRepository.findById(groupId).
-                orElseThrow(() -> new NotFoundException("Not found group with name " + groupId));
+                orElseThrow(() -> new NotFoundException("Группа не найден!"));
         for (Student student : group.getStudents()) {
             StudentResponse studentResponse = StudentResponse.builder()
                     .id(student.getId())
@@ -113,7 +114,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public SimpleResponse update(Long studId, StudentRequest studentRequest) {
         Student student = studentRepository.findById(studId).
-                orElseThrow(() -> new NotFoundException("Student not found with id " + studId));
+                orElseThrow(() -> new NotFoundException("Студент не найден! "));
         student.getUser().setFullName(studentRequest.firstName() + ' ' + studentRequest.lastName());
         student.getUser().setPhoneNumber(studentRequest.phoneNumber());
         student.getUser().setEmail(studentRequest.email());
@@ -121,12 +122,13 @@ public class StudentServiceImpl implements StudentService {
         if (group != null) {
             group.getStudents().add(student);
             student.setGroup(group);
-        } else throw new NotFoundException("Not found group with name " + studentRequest.groupName());
+        }
+        else throw new NotFoundException("Группа: " + studentRequest.groupName()+ " не найден!");
         student.getGroup().setTitle(studentRequest.groupName());
         student.setStudyFormat(studentRequest.studyFormat());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Updated!!!")
+                .message("Студент успешно обновлен!")
                 .build();
     }
 
@@ -134,7 +136,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public SimpleResponse delete(Long studId) {
         Student student = studentRepository.findById(studId).
-                orElseThrow(() -> new NotFoundException("Not found student with id " + studId));
+                orElseThrow(() -> new NotFoundException("Студент не найден! " ));
         Group group = student.getGroup();
         student.setGroup(null);
         group.getStudents().remove(student);
@@ -143,14 +145,14 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.delete(student);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Delete!")
+                .message("Успешно удален!")
                 .build();
     }
 
     @Override
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
-                orElseThrow(() -> new NotFoundException("Not found Student with id " + studId));
+                orElseThrow(() -> new NotFoundException("Студент не найден! "));
         return StudentResponse.builder()
                 .id(student.getId())
                 .fullName(student.getUser().getFullName())

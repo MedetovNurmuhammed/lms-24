@@ -29,7 +29,6 @@ public class GroupServiceImpl implements GroupService {
     public SimpleResponse save(GroupRequest groupRequest) {
         boolean exists = groupRepository.existsByTitle(groupRequest.title());
         if (exists) throw new AlreadyExistsException("Группа с названием " + groupRequest.title() + " уже существует");
-
         groupRepository.save(
                 Group.builder()
                         .image(groupRequest.image())
