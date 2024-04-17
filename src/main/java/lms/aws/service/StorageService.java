@@ -1,6 +1,7 @@
 package lms.aws.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -28,12 +30,22 @@ public class StorageService {
     @Autowired
     private AmazonS3 s3Client;
 
-    public String uploadFile(MultipartFile file) {
-        File fileObj = convertMultiPartFileToFile(file);
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
-        fileObj.delete();
-        return "File uploaded : " + fileName;
+    public void uploadFile(MultipartFile multipartFile) {
+        File file = convertMultiPartFileToFile(multipartFile);
+
+        String key = generateUniqueKey();
+        s3Client.putObject(new PutObjectRequest(bucketName, key, file).withCannedAcl(CannedAccessControlList.PublicRead));
+        String fileUrl = getAmazonS3FileUrl(key);
+        log.error(fileUrl);
+        file.delete();
+
+    }
+
+    private String generateUniqueKey() {
+        return UUID.randomUUID().toString();
+    }
+    public String getAmazonS3FileUrl(String key) {
+        return s3Client.getUrl(bucketName, key).toString();
     }
 
 

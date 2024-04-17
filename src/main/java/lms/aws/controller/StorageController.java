@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 
 @RestController
@@ -20,7 +19,8 @@ public class StorageController {
     @Secured("ADMIN")
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) {
-        return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
+        service.uploadFile(file);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 //    @Secured("ADMIN")
     @GetMapping("/download/{fileName}")
