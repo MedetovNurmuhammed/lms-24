@@ -8,8 +8,6 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
-@Slf4j
 public class StudentApi {
     private final StudentService studentService;
 
@@ -35,7 +31,6 @@ public class StudentApi {
     @Operation(summary = "Сохранить студента",
             description = "Метод для сохранение студента и отправка сообщение почту чтобы создать студент создал себе пароль!")
     public SimpleResponse saveStudent(@RequestBody StudentRequest studentRequest) throws MessagingException {
-        log.info("Успешно " + studentRequest.email()+" сохранен!");
         return studentService.save(studentRequest);
     }
 
@@ -72,7 +67,6 @@ public class StudentApi {
     @PutMapping("/update/{studId}")
     public SimpleResponse update(@PathVariable Long studId,
                                  @RequestBody StudentRequest studentRequest) {
-        log.info("Успешно обновлен!");
         return studentService.update(studId, studentRequest);
     }
 
@@ -81,7 +75,6 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/delete/{studId}")
     public SimpleResponse delete(@PathVariable Long studId) {
-        log.info("Успешно удален!");
         return studentService.delete(studId);
     }
 }

@@ -55,6 +55,7 @@ public class StudentServiceImpl implements StudentService {
             studentRepository.save(student);
             userRepository.save(user);
             userService.emailSender(user.getEmail());
+            log.info("Успешно " + studentRequest.email()+" сохранен!");
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
                     .message("Успешно сохранен!")
@@ -126,6 +127,7 @@ public class StudentServiceImpl implements StudentService {
         else throw new NotFoundException("Группа: " + studentRequest.groupName()+ " не найден!");
         student.getGroup().setTitle(studentRequest.groupName());
         student.setStudyFormat(studentRequest.studyFormat());
+        log.info("Успешно обновлен!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Студент успешно обновлен!")
@@ -143,6 +145,7 @@ public class StudentServiceImpl implements StudentService {
         User user = student.getUser();
         userRepository.delete(user);
         studentRepository.delete(student);
+        log.info("Успешно удален!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удален!")

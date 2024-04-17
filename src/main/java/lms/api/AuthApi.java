@@ -44,7 +44,6 @@ public class AuthApi {
     public SimpleResponse createPassword(@RequestParam @PasswordValidation String password,
                                          @RequestParam @PasswordValidation String confirm,
                                          @RequestParam String uuid) {
-        log.error("Password created for !");
         return userService.createPassword(uuid,password,confirm);
     }
 }
