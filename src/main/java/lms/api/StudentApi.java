@@ -29,40 +29,45 @@ public class StudentApi {
     @Secured("ADMIN")
     @PostMapping("/save")
     @Operation(summary = "Сохранить студента",
-            description = "Метод для сохранение студента и отправка сообщение почту чтобы создать студент создал себе пароль!")
+            description = "Метод для сохранение студента и отправка сообщение почту чтобы создать студент создал себе пароль! " +
+                    " Авторизация: администратор!")
     public SimpleResponse saveStudent(@RequestBody StudentRequest studentRequest) throws MessagingException {
         return studentService.save(studentRequest);
     }
 
     @Operation(summary = "Получить все студенты!",
-            description = "Метод для получение всу студенты с пагинацией !")
+            description = "Метод для получение всу студенты с пагинацией !" +
+                    " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAll")
-    public AllStudentsResponse findAll(@RequestParam int page,
-                                       @RequestParam int size) {
+    public AllStudentsResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "6") int size) {
         return studentService.findAll(page, size);
     }
 
     @Operation(summary = "Получить все студенты!",
-            description = "Метод для получение всу студенты по их group_id с пагинацией!")
+            description = "Метод для получение всу студенты по их group_id с пагинацией!" +
+                    " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAllGroupStud/{groupId}")
-    public AllStudentsResponse findAllGroupStud(@RequestParam int page,
-                                                @RequestParam int size,
+    public AllStudentsResponse findAllGroupStud(@RequestParam (required = false,defaultValue = "1")int page,
+                                                @RequestParam (required = false,defaultValue = "1")int size,
                                                 @PathVariable Long groupId) {
         return studentService.findAllGroupStud(page, size, groupId);
     }
 
-    @Operation(summary = "Получить информацию о студенте по идентификатору",
-            description = "Метод для получения информации о студенте по его идентификатору")
+    @Operation(summary = "Получить информацию о студенте по идентификатору ",
+            description = "Метод для получения информации о студенте по его идентификатору." +
+                    " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findById/{studId}")
-    public StudentResponse findById(@PathVariable Long studId){
+    public StudentResponse findById(@PathVariable Long studId) {
         return studentService.findById(studId);
     }
 
     @Operation(summary = "Обновить информацию о студенте",
-            description = "Метод для обновления информации о студенте по его идентификатору ")
+            description = "Метод для обновления информации о студенте по его идентификатору." +
+                    " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @PutMapping("/update/{studId}")
     public SimpleResponse update(@PathVariable Long studId,
@@ -71,7 +76,8 @@ public class StudentApi {
     }
 
     @Operation(summary = "Удалить cтудента",
-            description = "Метод для удаления cтудента по его идентификатору")
+            description = "Метод для удаления cтудента по его идентификатору." +
+                    " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/delete/{studId}")
     public SimpleResponse delete(@PathVariable Long studId) {

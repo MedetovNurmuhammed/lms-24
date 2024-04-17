@@ -55,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
             studentRepository.save(student);
             userRepository.save(user);
             userService.emailSender(user.getEmail());
-            log.info("Успешно " + studentRequest.email()+" сохранен!");
+            log.info("Успешно " + studentRequest.email() + " сохранен!");
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
                     .message("Успешно сохранен!")
@@ -123,9 +123,7 @@ public class StudentServiceImpl implements StudentService {
         if (group != null) {
             group.getStudents().add(student);
             student.setGroup(group);
-        }
-        else throw new NotFoundException("Группа: " + studentRequest.groupName()+ " не найден!");
-        student.getGroup().setTitle(studentRequest.groupName());
+        } else throw new NotFoundException("Группа: " + studentRequest.groupName() + " не найден!");
         student.setStudyFormat(studentRequest.studyFormat());
         log.info("Успешно обновлен!");
         return SimpleResponse.builder()
@@ -138,12 +136,10 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public SimpleResponse delete(Long studId) {
         Student student = studentRepository.findById(studId).
-                orElseThrow(() -> new NotFoundException("Студент не найден! " ));
+                orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Group group = student.getGroup();
         student.setGroup(null);
         group.getStudents().remove(student);
-        User user = student.getUser();
-        userRepository.delete(user);
         studentRepository.delete(student);
         log.info("Успешно удален!");
         return SimpleResponse.builder()
@@ -164,6 +160,5 @@ public class StudentServiceImpl implements StudentService {
                 .groupName(student.getGroup().getTitle())
                 .studyFormat(student.getStudyFormat())
                 .build();
-
     }
 }

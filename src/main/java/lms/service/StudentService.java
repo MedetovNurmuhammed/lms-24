@@ -5,7 +5,6 @@ import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
-import lms.exceptions.BadRequestException;
 import org.springframework.stereotype.Service;
 
 @Service
