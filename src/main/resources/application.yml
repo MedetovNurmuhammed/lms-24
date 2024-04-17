@@ -12,3 +12,16 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+cloud:
+    aws:
+        credentials:
+            access-key:
+            secret-key:
+        region:
+            static:
+        stack:
+            auto: false
+
+application:
+    bucket:
+        name:
