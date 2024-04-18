@@ -19,6 +19,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -35,24 +37,24 @@ public class UserServiceImpl implements UserService {
     public void checkEmail(String email) {
         boolean exists = userRepository.existsByEmail(email);
         if (exists) throw new AlreadyExistsException("User with email: " + email + " already have");
-
     }
 
     @Override
-    public SignInResponse signIn(SignInRequest signInRequest) {
-        User user = userRepository.getByEmail(signInRequest.getLogin());
+    public SignInResponse signIn(SignInRequest signInRequest) throws AccessDeniedException {
+        User user = userRepository.findByEmail(signInRequest.getLogin()).orElseThrow(()
+                -> new AccessDeniedException("Пользователь с электронной почтой " + signInRequest.getLogin() + " не найден"));
         boolean matches = passwordEncoder.matches(signInRequest.getPassword(), user.getPassword());
-        if (!matches) throw new NotFoundException("Invalid Password");
+        if (!matches) throw new NotFoundException("Неверный пароль");
+        if (user.getBlock()) throw new AccessDeniedException("Вам закрыли доступ");
         return SignInResponse.builder()
                 .token(jwtService.createToken(user))
                 .id(user.getId())
                 .email(user.getEmail())
                 .role(user.getRole())
                 .httpStatus(HttpStatus.OK)
-                .message("Successful login")
+                .message("Успешный вход")
                 .build();
     }
-
 
     public SimpleResponse emailSender(String toEmail) throws MessagingException {
         String uuid = UUID.randomUUID().toString();
