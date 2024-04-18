@@ -4,8 +4,8 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: ajybeksadykov@gmail.com
-        password: "akst vqxz graa hzfe"
+        username: nurkamilkamchiev@gmail.com
+        password: akst vqxz graa hzfe
         properties:
             mail:
                 smtp:
@@ -18,3 +18,16 @@ spring:
         init:
             data-locations: classpath:datainit/dataInit.sql
             mode: always
+cloud:
+    aws:
+        credentials:
+            access-key:
+            secret-key:
+        region:
+            static:
+        stack:
+            auto: false
+
+application:
+    bucket:
+        name:

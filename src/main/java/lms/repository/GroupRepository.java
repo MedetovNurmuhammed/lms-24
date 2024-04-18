@@ -29,4 +29,5 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select g.title from Group g ")
     List<String> getAllGroupName();
+
 }

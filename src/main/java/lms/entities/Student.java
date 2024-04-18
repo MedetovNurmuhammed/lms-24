@@ -34,7 +34,7 @@ import java.util.List;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_gen")
-    @SequenceGenerator(name = "student_seq",sequenceName = "student_seq", allocationSize = 1)
+    @SequenceGenerator(name = "student_gen",sequenceName = "student_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
