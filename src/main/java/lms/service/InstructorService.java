@@ -3,14 +3,15 @@ package lms.service;
 import jakarta.mail.MessagingException;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
+import lms.dto.response.AllInstructorResponse;
 import lms.dto.response.InstructorResponse;
-import lms.dto.response.PageInstructorResponses;
 import lms.dto.response.SimpleResponse;
+import org.springframework.data.domain.Page;
 
 public interface InstructorService {
     SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
 
-    PageInstructorResponses findAll(int page, int size);
+    Page<AllInstructorResponse> findAll(int page, int size);
 
     SimpleResponse update(InstructorUpdateRequest instructorRequest, Long instructorId);
 
@@ -18,5 +19,4 @@ public interface InstructorService {
 
     InstructorResponse findById(Long instructorId);
 
-    PageInstructorResponses findByCourse(Long courseId, int page, int size);
 }

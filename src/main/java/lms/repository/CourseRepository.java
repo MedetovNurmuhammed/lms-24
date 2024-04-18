@@ -21,6 +21,4 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             """)
     Page<FindAllResponseCourse> findAllCourse(Pageable pageable);
 
-    @Query("select c from Course c where c.title =:courseName")
-    Optional<Course> findByName(String courseName);
 }

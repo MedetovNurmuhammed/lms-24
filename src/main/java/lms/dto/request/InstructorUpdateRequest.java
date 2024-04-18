@@ -22,6 +22,6 @@ public class InstructorUpdateRequest {
     private String email;
     @NotBlank
     private String specialization;
-    private List<String> courseNames;
+    private List<Long> courseIds;
 
 }
