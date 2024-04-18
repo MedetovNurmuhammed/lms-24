@@ -4,7 +4,6 @@ import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
 import lms.dto.response.SimpleResponse;
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 
 public interface GroupService {
