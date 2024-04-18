@@ -12,10 +12,12 @@ import lms.entities.ResultTask;
 import lms.entities.Task;
 import lms.entities.User;
 import lms.entities.Notification;
+import lms.enums.Role;
 import lms.exceptions.NotFoundException;
 import lms.repository.InstructorRepository;
 import lms.repository.UserRepository;
 import lms.service.InstructorService;
+import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,11 +39,28 @@ public class InstructorServiceImpl implements InstructorService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
+    private final UserService userService;
 
 
     @Override
     public SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException {
-        return null;
+       Instructor instructor = new Instructor();
+       User user = new User();
+       user.setFullName(instructorRequest.getFirstName()+" "+ instructorRequest.getLastName());
+       instructor.setSpecialization(instructorRequest.getSpecialization());
+       user.setRole(Role.INSTRUCTOR);
+       user.setEmail(instructorRequest.getEmail());
+       user.setBlock(false);
+       user.setPhoneNumber(instructorRequest.getPhoneNumber());
+       instructor.setUser(user);
+
+            userRepository.save(user);
+            userService.emailSender(user.getEmail());
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Saved!!!")
+                    .build();
+
     }
 
     @Override

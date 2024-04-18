@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/instructors")
+@RequestMapping("/api/instructor")
 public class InstructorApi {
 
     private final UserService userService;
@@ -33,8 +33,6 @@ public class InstructorApi {
     SimpleResponse createPassword(@RequestBody CreatePasswordRequest createPasswordRequest){
         return instructorService.createPassword(createPasswordRequest.token(), createPasswordRequest.password());
     }
-
-
 
     @Operation(summary = "Возвращает пагинированный список всех инструкторов.")
     @GetMapping("/findAll")

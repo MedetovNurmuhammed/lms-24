@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InstructorRequest {
-//    @NotBlank
+    @NotBlank
     private String firstName;
-//    @NotBlank
+    @NotBlank
     private String lastName;
-//    @PasswordValidation
+    @PasswordValidation
     private String phoneNumber;
-//    @EmailValidation
+    @EmailValidation
     private String email;
-//
+    @NotBlank
     private String specialization;
 }
