@@ -7,13 +7,11 @@ import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.InstructorResponse;
 import lms.dto.response.PageInstructorResponses;
 import lms.dto.response.SimpleResponse;
-import lms.entities.Instructor;
-import lms.entities.ResultTask;
-import lms.entities.Task;
-import lms.entities.User;
-import lms.entities.Notification;
+import lms.entities.*;
 import lms.enums.Role;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
+import lms.repository.CourseRepository;
 import lms.repository.InstructorRepository;
 import lms.repository.UserRepository;
 import lms.service.InstructorService;
@@ -27,8 +25,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -40,7 +38,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
     private final UserService userService;
-
+    private final CourseRepository courseRepository;
 
     @Override
     public SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException {
@@ -64,11 +62,6 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public SimpleResponse createPassword(String token, String password) {
-        return null;
-    }
-
-    @Override
     public PageInstructorResponses findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Instructor> usersPage = instructorRepository.findAllIns(pageable);
@@ -89,11 +82,23 @@ public class InstructorServiceImpl implements InstructorService {
         Instructor instructor = instructorRepository.findById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Instructor not found!!!"));
         User user = instructor.getUser();
+       if(!user.getEmail().equals(instructorRequest.getEmail())){
+           boolean b = userRepository.existsByEmail(instructorRequest.getEmail());
+           if(b) throw new AlreadyExistsException("email already exist");
+        }
         String fullName = instructorRequest.getFirstName() + " " + instructorRequest.getLastName();
         user.setFullName(fullName);
+        user.setEmail(instructorRequest.getEmail());
         user.setPhoneNumber(instructorRequest.getPhoneNumber());
-        userRepository.save(user);
+
         instructor.setSpecialization(instructorRequest.getSpecialization());
+        List<Course> courses = new ArrayList<>();
+        for (String courseName : instructorRequest.getCourseNames()) {
+             courses .add(courseRepository.findByName(courseName).orElseThrow(()->
+                     new NotFoundException("Course title with " +courseName+ " not found")));
+        }
+        instructor.setCourses(courses);
+        userRepository.save(user);
         instructorRepository.save(instructor);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -130,7 +135,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public PageInstructorResponses findByCoure(Long courseId, int page, int size) {
+    public PageInstructorResponses findByCourse(Long courseId, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Instructor> usersPage = instructorRepository.findAllInstructorOfCourse(pageable, courseId);
         List<InstructorResponse> responses = new ArrayList<>();

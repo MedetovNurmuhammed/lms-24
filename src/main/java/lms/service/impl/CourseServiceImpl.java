@@ -81,7 +81,7 @@ public class CourseServiceImpl implements CourseService {
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
         List<Instructor> instructors = course.getInstructors();
         for (Instructor instructor : instructors) {
-            instructor.setCourse(null);
+            instructor.setCourses(null);
         }
         course.setInstructors(null);
         courseRepository.deleteById(course.getId());
@@ -142,7 +142,7 @@ public class CourseServiceImpl implements CourseService {
             for (Instructor instructor : foundInstructors) {
                 if (!course.getInstructors().contains(instructor)) {
                     course.getInstructors().add(instructor);
-                    instructor.setCourse(course);
+                    instructor.getCourses().add(course);
                     instructorRepository.save(instructor);
                     addedInstructorIds.add(instructor.getId());
                 } else {

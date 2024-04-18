@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import lms.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

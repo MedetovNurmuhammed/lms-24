@@ -12,8 +12,6 @@ import lms.dto.response.SimpleResponse;
 import lms.service.InstructorService;
 import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,11 +25,6 @@ public class InstructorApi {
     @PostMapping("/addInstructor")
     public SimpleResponse addInstructor(@RequestBody InstructorRequest instructorRequest) throws MessagingException {
         return instructorService.addInstructor(instructorRequest);
-    }
-    @Operation(summary = "добавляет password инструктора.")
-    @PostMapping("/create/password")
-    SimpleResponse createPassword(@RequestBody CreatePasswordRequest createPasswordRequest){
-        return instructorService.createPassword(createPasswordRequest.token(), createPasswordRequest.password());
     }
 
     @Operation(summary = "Возвращает пагинированный список всех инструкторов.")
@@ -49,7 +42,7 @@ public class InstructorApi {
     @GetMapping("/findByCourseId/{courseId}")
     public PageInstructorResponses findAllByCourseId(@PathVariable Long courseId, @RequestParam int page,
                                                      @RequestParam int size) {
-        return instructorService.findByCoure(courseId, page, size);
+        return instructorService.findByCourse(courseId, page, size);
     }
     @PutMapping("/updateInstructor/{instructorId}")
     @Operation(summary = "Обновляет информацию о инструкторе.")

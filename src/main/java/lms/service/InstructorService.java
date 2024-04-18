@@ -9,7 +9,6 @@ import lms.dto.response.SimpleResponse;
 
 public interface InstructorService {
     SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
-     SimpleResponse createPassword(String token,String password);
 
     PageInstructorResponses findAll(int page, int size);
 
@@ -19,5 +18,5 @@ public interface InstructorService {
 
     InstructorResponse findById(Long instructorId);
 
-    PageInstructorResponses findByCoure(Long courseId,int page, int size);
+    PageInstructorResponses findByCourse(Long courseId, int page, int size);
 }

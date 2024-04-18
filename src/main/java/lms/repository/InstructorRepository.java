@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select s from Instructor s inner join User i on i.id = s.user.id where i.role = 'INSTRUCTOR'")
     Page<Instructor> findAllIns(Pageable pageable);
-    @Query("select s from Instructor s inner join User i on i.id = s.user.id where s.course.id = :courseId")
+    @Query("select s from Instructor s inner join User i on i.id = s.user.id join s.courses c where c.id = :courseId")
     Page<Instructor> findAllInstructorOfCourse(@Param("courseId")Pageable pageable, Long courseId);
 
     @Transactional
