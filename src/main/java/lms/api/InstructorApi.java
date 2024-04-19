@@ -11,39 +11,48 @@ import lms.dto.response.SimpleResponse;
 import lms.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/instructor")
+@RequestMapping("/api/instructors")
 public class InstructorApi {
     private final InstructorService instructorService;
-    @Operation(summary = "добавляет инструктора.")
+
+    @Secured("ADMIN")
+    @Operation(summary = "добавляет инструктора.(Авторизация: администратор)")
     @PostMapping("/addInstructor")
     public SimpleResponse addInstructor(@RequestBody InstructorRequest instructorRequest) throws MessagingException {
         return instructorService.addInstructor(instructorRequest);
     }
 
-    @Operation(summary = "Возвращает пагинированный список всех инструкторов.")
+    @Secured("ADMIN")
+    @Operation(summary = "Возвращает пагинированный список всех инструкторов.(Авторизация: администратор)")
     @GetMapping("/findAll")
     public Page<AllInstructorResponse> findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "6") int size) {
         return instructorService.findAll(page, size);
     }
-    @Operation(summary = "Возвращает инструктора.")
+
+    @Secured("ADMIN")
+    @Operation(summary = "Возвращает инструктора.(Авторизация: администратор)")
     @GetMapping("/findById/{instructorId}")
     public InstructorResponse findById(@PathVariable Long instructorId) {
         return instructorService.findById(instructorId);
     }
 
+    @Secured("ADMIN")
     @PutMapping("/updateInstructor/{instructorId}")
-    @Operation(summary = "Обновляет информацию о инструкторе.")
+    @Operation(summary = "Обновляет информацию о инструкторе.(Авторизация: администратор)")
     public SimpleResponse update(
             @RequestBody @Valid InstructorUpdateRequest instructorRequest, @PathVariable Long instructorId) {
         return instructorService.update(instructorRequest, instructorId);
     }
+
+    @Secured("ADMIN")
     @DeleteMapping("/delete/{instructorId}")
-    @Operation(summary = "Удаляет текущего инструкторa.")
+    @Operation(summary = "Удаляет текущего инструкторa.(Авторизация: администратор)")
     public SimpleResponse delete(@PathVariable Long instructorId) {
         return instructorService.delete(instructorId);
     }
