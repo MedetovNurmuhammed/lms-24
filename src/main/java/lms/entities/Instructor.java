@@ -20,7 +20,7 @@ import java.util.List;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
-    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1)
+    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String specialization;
     private LocalDate createdAt;
@@ -35,7 +35,7 @@ public class Instructor {
     private List<Course> courses;
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
 
    @PrePersist

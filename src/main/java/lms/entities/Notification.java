@@ -35,7 +35,7 @@ public class Notification {
     private LocalDate createdAt;
 
     //*************************************** Instructor ************************************
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Instructor instructor;
 
     //*************************************** Student ***************************************
