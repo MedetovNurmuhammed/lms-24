@@ -4,19 +4,19 @@ import jakarta.mail.MessagingException;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.InstructorResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.SimpleResponse;
 import org.springframework.data.domain.Page;
 
 public interface InstructorService {
     SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
 
-    Page<AllInstructorResponse> findAll(int page, int size);
+    AllInstructorResponse findAll(int page, int size);
 
     SimpleResponse update(InstructorUpdateRequest instructorRequest, Long instructorId);
 
     SimpleResponse delete(Long instructorId);
 
-    InstructorResponse findById(Long instructorId);
+    FindByIdInstructorResponse findById(Long instructorId);
 
 }

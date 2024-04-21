@@ -1,15 +1,19 @@
 package lms.service.impl;
 
 import jakarta.mail.MessagingException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.CourseResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.*;
+import lms.entities.User;
+import lms.entities.Instructor;
+import lms.entities.ResultTask;
+import lms.entities.Task;
+import lms.entities.Notification;
+import lms.entities.Course;
 import lms.enums.Role;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
@@ -25,7 +29,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,13 +63,24 @@ public class InstructorServiceImpl implements InstructorService {
                 .httpStatus(HttpStatus.OK)
                 .message("Saved!!!")
                 .build();
+    }
 
+    private AllInstructorResponse getAllInstructorsResponse(List<InstructorResponse> instructorResponses, Page<Instructor> allInstructors) {
+        for (Instructor allInstructor : allInstructors) {
+            InstructorResponse instructorResponse = new InstructorResponse(allInstructor.getId(), allInstructor.getUser().getFullName(), allInstructor.getSpecialization(), allInstructor.getUser().getPhoneNumber(), allInstructor.getUser().getEmail());
+            instructorResponses.add(instructorResponse);
+        }
+        return AllInstructorResponse.builder()
+                .instructorResponses(instructorResponses)
+                .build();
     }
 
     @Override
-    public Page<AllInstructorResponse> findAll(int page, int size) {
+    public AllInstructorResponse findAll(int page, int size) {
+        List<InstructorResponse> instructorResponses = new ArrayList<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-        return instructorRepository.findAllIns(pageable);
+        Page<Instructor> instructors = instructorRepository.findAll(pageable);
+        return getAllInstructorsResponse(instructorResponses, instructors);
     }
 
     @Override
@@ -125,24 +139,19 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public InstructorResponse findById(Long instructorId) {
+    public FindByIdInstructorResponse findById(Long instructorId) {
         Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() -> new NotFoundException("instructor not found!!!"));
-        List<CourseResponse> courseResponses = new ArrayList<>();
+        List<String> courseNames = new ArrayList<>();
         for (Course course : instructor.getCourses()) {
-            courseResponses.add(
-                    CourseResponse.builder()
-                            .id(course.getId())
-                            .courseName(course.getTitle())
-                            .build());
-        }return InstructorResponse.builder()
+            courseNames.add(course.getTitle());
+        }
+        return FindByIdInstructorResponse.builder()
                 .id(instructor.getId())
                 .fullName(instructor.getUser().getFullName())
                 .specialization(instructor.getSpecialization())
                 .phoneNumber(instructor.getUser().getPhoneNumber())
                 .email(instructor.getUser().getEmail())
-                .courses(courseResponses)
+                .courseNames(courseNames)
                 .build();
-
     }
-
 }

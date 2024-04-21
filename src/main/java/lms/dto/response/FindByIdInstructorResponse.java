@@ -5,11 +5,12 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record InstructorResponse(
+public record FindByIdInstructorResponse(
         Long id,
         String fullName,
         String specialization,
         String phoneNumber,
-        String email
+        String email,
+        List<String>courseNames
 ) {
 }

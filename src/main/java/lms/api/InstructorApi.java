@@ -6,11 +6,10 @@ import jakarta.validation.Valid;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.InstructorResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.InstructorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/instructors")
 public class InstructorApi {
     private final InstructorService instructorService;
-
     @Secured("ADMIN")
     @Operation(summary = "добавляет инструктора.(Авторизация: администратор)")
     @PostMapping("/addInstructor")
@@ -30,15 +28,15 @@ public class InstructorApi {
     @Secured("ADMIN")
     @Operation(summary = "Возвращает пагинированный список всех инструкторов.(Авторизация: администратор)")
     @GetMapping("/findAll")
-    public Page<AllInstructorResponse> findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                               @RequestParam(required = false, defaultValue = "6") int size) {
+    public AllInstructorResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "6") int size) {
         return instructorService.findAll(page, size);
     }
 
     @Secured("ADMIN")
     @Operation(summary = "Возвращает инструктора.(Авторизация: администратор)")
     @GetMapping("/findById/{instructorId}")
-    public InstructorResponse findById(@PathVariable Long instructorId) {
+    public FindByIdInstructorResponse findById(@PathVariable Long instructorId) {
         return instructorService.findById(instructorId);
     }
 
