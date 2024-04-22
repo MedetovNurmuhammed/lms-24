@@ -65,22 +65,17 @@ public class InstructorServiceImpl implements InstructorService {
                 .build();
     }
 
-    private AllInstructorResponse getAllInstructorsResponse(List<InstructorResponse> instructorResponses, Page<Instructor> allInstructors) {
-        for (Instructor allInstructor : allInstructors) {
-            InstructorResponse instructorResponse = new InstructorResponse(allInstructor.getId(), allInstructor.getUser().getFullName(), allInstructor.getSpecialization(), allInstructor.getUser().getPhoneNumber(), allInstructor.getUser().getEmail());
-            instructorResponses.add(instructorResponse);
-        }
-        return AllInstructorResponse.builder()
-                .instructorResponses(instructorResponses)
-                .build();
-    }
+
 
     @Override
     public AllInstructorResponse findAll(int page, int size) {
-        List<InstructorResponse> instructorResponses = new ArrayList<>();
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Instructor> instructors = instructorRepository.findAll(pageable);
-        return getAllInstructorsResponse(instructorResponses, instructors);
+        Page<InstructorResponse> allInstructors = instructorRepository.findAllInstructorsss(pageable);
+        return AllInstructorResponse.builder()
+                .page(allInstructors.getNumber() + 1)
+                .size(allInstructors.getSize())
+                .instructorResponses(allInstructors.getContent())
+                .build();
     }
 
     @Override
