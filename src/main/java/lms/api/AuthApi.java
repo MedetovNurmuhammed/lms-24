@@ -10,12 +10,9 @@ import lms.service.UserService;
 import lms.validation.password.PasswordValidation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.AccessDeniedException;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthApi {
     private final UserService userService;
 
-    @PostMapping("/SignIn")
-    @Operation(description = "SignIn")
-    public SignInResponse signIn(@RequestBody @Valid SignInRequest signInRequest) {
+    @Operation(summary = "sign-in")
+    @PostMapping("/signIn")
+    public SignInResponse signIn(@RequestBody @Valid SignInRequest signInRequest) throws AccessDeniedException {
         return userService.signIn(signInRequest);
     }
-
+    @Operation(summary = "забыли пароль")
     @PutMapping("/forgotPassword")
     public SimpleResponse forgotPassword(@RequestParam String email) throws MessagingException {
         return userService.emailSender(email);
     }
-
+    @Operation(summary = "создать пароль")
     @PostMapping("/createPassword")
     public SimpleResponse createPassword(@RequestParam @PasswordValidation String password,
                                          @RequestParam @PasswordValidation String confirm,

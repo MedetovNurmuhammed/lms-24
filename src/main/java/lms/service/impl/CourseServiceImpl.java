@@ -2,6 +2,8 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
+import lms.dto.response.AllInstructorResponse;
+import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Course;
@@ -24,8 +26,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +35,6 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
     private final InstructorRepository instructorRepository;
-    private final TrashRepository trashRepository;
 
     private void checkTitle(String courseTitle) {
         boolean exists = courseRepository.existsByTitle(courseTitle);
@@ -84,6 +83,12 @@ public class CourseServiceImpl implements CourseService {
     public SimpleResponse deleteCourseById(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
+        List<Instructor> instructors = course.getInstructors();
+        for (Instructor instructor : instructors) {
+            instructor.setCourses(null);
+        }
+        course.setInstructors(null);
+        courseRepository.deleteById(course.getId());
         Trash trash = new Trash();
         trash.setName(course.getTitle());
         trash.setType(course.getType());
@@ -146,7 +151,7 @@ public class CourseServiceImpl implements CourseService {
             for (Instructor instructor : foundInstructors) {
                 if (!course.getInstructors().contains(instructor)) {
                     course.getInstructors().add(instructor);
-                    instructor.setCourse(course);
+                    instructor.getCourses().add(course);
                     instructorRepository.save(instructor);
                     addedInstructorIds.add(instructor.getId());
                 } else {

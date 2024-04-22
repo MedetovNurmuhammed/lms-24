@@ -35,7 +35,7 @@ public class Course {
     }
 
     //*************************************** Instructor *************************************
-    @OneToMany(mappedBy = "course",cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     private List<Instructor> instructors = new ArrayList<>();
 
     //*************************************** Group ******************************************

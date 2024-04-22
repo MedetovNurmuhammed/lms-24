@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -107,6 +108,17 @@ public class HandlerException {
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .exceptionClassName(ioException.getClass().getSimpleName())
                 .message(ioException.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse notFoundFile(AccessDeniedException accessDeniedException){
+        log.error(accessDeniedException.getMessage());
+        return ExceptionResponse.builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .exceptionClassName(accessDeniedException.getClass().getSimpleName())
+                .message(accessDeniedException.getMessage())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package lms.entities;
 
+import jakarta.persistence.*;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,27 +34,22 @@ import java.util.List;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
-    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1)
+    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private Type type;
-
-    public Type getType() {
-        return type = Type.INSTRUCTOR;
-    }
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
-    private Course course;
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private List<Course> courses;
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
 
    @PrePersist
