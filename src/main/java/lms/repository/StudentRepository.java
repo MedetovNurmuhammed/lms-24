@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
                  where (:groupId is null or s.group.id = :groupId)
                    and ( s.studyFormat in (:studyFormats))
                    and ( s.user.fullName ilike concat('%',:searchTerm,'%') or s.user.phoneNumber ilike concat('%',:searchTerm,'%') or s.user.email
-                    ilike concat ('%',:searchTerm,'%') or s.group.title ilike concat('%',:searchTerm,'%'))
+                    ilike concat ('%',:searchTerm,'%') or s.group.title ilike concat('%',:searchTerm,'%') or :searchTerm is null )
             """)
     List<StudentResponse> findAllBySearchTerm(String searchTerm, List<StudyFormat> studyFormats, Long groupId);
 
