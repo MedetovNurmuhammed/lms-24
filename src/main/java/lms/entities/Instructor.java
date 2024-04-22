@@ -13,6 +13,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +38,11 @@ public class Instructor {
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
+
+    public Type getType() {
+        return type = Type.INSTRUCTOR;
+    }
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)

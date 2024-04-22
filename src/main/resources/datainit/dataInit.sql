@@ -71,11 +71,11 @@ insert into students (id,user_id, study_format,group_id, created_at) values (8, 
 insert into students (id,user_id, study_format,group_id, created_at) values (9, 29,'OFFLINE',9, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (10, 30,'ONLINE', 10,'2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (11, 31,'OFFLINE',11, '2024-4-12');
-insert into students (id, user_id,study_format, group_id, created_at) values (12, 32,'OFFLINE',12, '2024-4-12');
+insert into students (id, user_id,study_format,group_id, created_at) values (12, 32,'OFFLINE',12, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (13, 33,'ONLINE', 13,'2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (14, 34,'OFFLINE',14, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (15, 35,'OFFLINE',15, '2024-4-12');
- insert into students (id,user_id, study_format, group_id, created_at) values (16, 36,'OFFLINE',15, '2024-4-12');
+insert into students (id,user_id, study_format,group_id, created_at) values (16, 36,'OFFLINE',15, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (17, 37,'OFFLINE',16, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (18, 40,'ONLINE',17, '2024-4-12');
 insert into students (id,user_id, study_format,group_id, created_at) values (19, 38,'ONLINE', 18,'2024-4-12');

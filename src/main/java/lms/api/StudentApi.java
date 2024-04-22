@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentsResponse;
+import lms.dto.response.FindAllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.service.StudentService;
@@ -41,12 +42,12 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAll")
     public AllStudentsResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                       @RequestParam(required = false, defaultValue = "6") int size) {
+                                           @RequestParam(required = false, defaultValue = "6") int size) {
         return studentService.findAll(page, size);
     }
 
     @Operation(summary = "Получить все студенты!",
-            description = "Метод для получение всу студенты по их group_id с пагинацией!" +
+            description = "Метод для получение всe студенты по их group_id с пагинацией!" +
                     " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAllGroupStud/{groupId}")

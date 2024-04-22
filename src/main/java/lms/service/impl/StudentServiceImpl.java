@@ -6,15 +6,11 @@ import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
-import lms.entities.Group;
-import lms.entities.Student;
-import lms.entities.User;
+import lms.entities.*;
 import lms.enums.Role;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.GroupRepository;
-import lms.repository.StudentRepository;
-import lms.repository.UserRepository;
+import lms.repository.*;
 import lms.service.StudentService;
 import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +20,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -35,6 +34,7 @@ public class StudentServiceImpl implements StudentService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final UserService userService;
+    private final TrashRepository trashRepository;
 
     @Override
     @Transactional
@@ -67,15 +67,17 @@ public class StudentServiceImpl implements StudentService {
 
     private AllStudentsResponse getAllStudentsResponse(List<StudentResponse> studentResponses, Page<Student> allStudUnblock) {
         for (Student student : allStudUnblock) {
-            StudentResponse studentResponse = StudentResponse.builder()
-                    .id(student.getId())
-                    .fullName(student.getUser().getFullName())
-                    .phoneNumber(student.getUser().getPhoneNumber())
-                    .email(student.getUser().getEmail())
-                    .groupName(student.getGroup().getTitle())
-                    .studyFormat(student.getStudyFormat())
-                    .build();
-            studentResponses.add(studentResponse);
+            if (student.getTrash() == null) {
+                StudentResponse studentResponse = StudentResponse.builder()
+                        .id(student.getId())
+                        .fullName(student.getUser().getFullName())
+                        .phoneNumber(student.getUser().getPhoneNumber())
+                        .email(student.getUser().getEmail())
+                        .groupName(student.getGroup().getTitle())
+                        .studyFormat(student.getStudyFormat())
+                        .build();
+                studentResponses.add(studentResponse);
+            }
         }
         return AllStudentsResponse.builder()
                 .studentResponses(studentResponses)
@@ -96,15 +98,17 @@ public class StudentServiceImpl implements StudentService {
         Group group = groupRepository.findById(groupId).
                 orElseThrow(() -> new NotFoundException("Группа не найден!"));
         for (Student student : group.getStudents()) {
-            StudentResponse studentResponse = StudentResponse.builder()
-                    .id(student.getId())
-                    .fullName(student.getUser().getFullName())
-                    .phoneNumber(student.getUser().getPhoneNumber())
-                    .email(student.getUser().getPassword())
-                    .groupName(student.getGroup().getTitle())
-                    .studyFormat(student.getStudyFormat())
-                    .build();
-            studentResponses.add(studentResponse);
+            if (student.getTrash() == null) {
+                StudentResponse studentResponse = StudentResponse.builder()
+                        .id(student.getId())
+                        .fullName(student.getUser().getFullName())
+                        .phoneNumber(student.getUser().getPhoneNumber())
+                        .email(student.getUser().getPassword())
+                        .groupName(student.getGroup().getTitle())
+                        .studyFormat(student.getStudyFormat())
+                        .build();
+                studentResponses.add(studentResponse);
+            }
         }
         return AllStudentsResponse.builder()
                 .studentResponses(studentResponses)
@@ -137,10 +141,14 @@ public class StudentServiceImpl implements StudentService {
     public SimpleResponse delete(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        Group group = student.getGroup();
-        student.setGroup(null);
-        group.getStudents().remove(student);
-        studentRepository.delete(student);
+        Trash trash = new Trash();
+        trash.setName(student.getUser().getFullName());
+        trash.setStudent(student);
+        trash.setType(student.getType());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setStudent(student);
+        student.setTrash(trash);
+        trashRepository.save(trash);
         log.info("Успешно удален!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -148,17 +156,19 @@ public class StudentServiceImpl implements StudentService {
                 .build();
     }
 
-    @Override
+    @Override @Transactional
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        return StudentResponse.builder()
-                .id(student.getId())
-                .fullName(student.getUser().getFullName())
-                .phoneNumber(student.getUser().getPhoneNumber())
-                .email(student.getUser().getEmail())
-                .groupName(student.getGroup().getTitle())
-                .studyFormat(student.getStudyFormat())
-                .build();
+        if (student.getTrash() == null) {
+            return StudentResponse.builder()
+                    .id(student.getId())
+                    .fullName(student.getUser().getFullName())
+                    .phoneNumber(student.getUser().getPhoneNumber())
+                    .email(student.getUser().getEmail())
+                    .groupName(student.getGroup().getTitle())
+                    .studyFormat(student.getStudyFormat())
+                    .build();
+        }else throw new NotFoundException("Студент не найден!");
     }
 }

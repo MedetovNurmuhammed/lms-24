@@ -15,6 +15,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.CascadeType;
 import lms.enums.StudyFormat;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +41,12 @@ public class Student {
     private StudyFormat studyFormat;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
+
+
+    public Type getType() {
+        return type = Type.STUDENT;
+    }
 
     //********************************* User **********************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
@@ -60,6 +67,9 @@ public class Student {
     //********************************* Notification ***************************************
     @OneToMany(mappedBy = "student",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
+
+    @OneToOne
+    private Trash trash;
 
     @PrePersist
     protected void onCreate() {
