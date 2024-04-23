@@ -44,6 +44,7 @@ public class StorageService {
     private String generateUniqueKey() {
         return UUID.randomUUID().toString();
     }
+
     public String getAmazonS3FileUrl(String key) {
         return s3Client.getUrl(bucketName, key).toString();
     }
@@ -52,11 +53,11 @@ public class StorageService {
     public ResponseEntity<ByteArrayResource> downloadFile(String fileName) throws IOException {
         S3Object s3Object = s3Client.getObject(bucketName, fileName);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
-        byte[] content ;
+        byte[] content;
         try {
-             content = IOUtils.toByteArray(inputStream);
+            content = IOUtils.toByteArray(inputStream);
         } catch (IOException e) {
-            throw  new IOException(e.getMessage());
+            throw new IOException(e.getMessage());
         }
         ByteArrayResource resource = new ByteArrayResource(content);
         return ResponseEntity
