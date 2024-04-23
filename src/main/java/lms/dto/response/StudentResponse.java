@@ -10,8 +10,8 @@ public record StudentResponse(
         Type type,
         String fullName,
         String phoneNumber,
-        String email,
         String groupName,
-        StudyFormat studyFormat
+        StudyFormat studyFormat,
+        String email
 ) {
 }
