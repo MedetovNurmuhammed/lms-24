@@ -8,7 +8,12 @@ import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/trash")
@@ -36,16 +41,12 @@ public class TrashApi {
         return trashService.delete(trashId);
     }
 
-    @Operation(summary = "Удалить  из корзины.",
-            description = "Метод для получение удаление из корзины!" +
+    @Operation(summary = "Возвращать из корзины.",
+            description = "Метод для получение  из корзины и удаление из корзины!" +
                     " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("return/{trashId}")
     public SimpleResponse returnToBase(@PathVariable Long trashId) {
         return trashService.returnToBase(trashId);
-    }
-    @GetMapping("find/{trashId}")
-    public TrashResponse find(@PathVariable Long trashId){
-        return trashService.find(trashId);
     }
 }

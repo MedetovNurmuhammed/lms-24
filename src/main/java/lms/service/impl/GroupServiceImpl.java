@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.Course;
 import lms.entities.Group;
 import lms.entities.Trash;
 import lms.exceptions.AlreadyExistsException;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;

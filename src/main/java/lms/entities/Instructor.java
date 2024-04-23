@@ -39,6 +39,7 @@ public class Instructor {
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
@@ -46,11 +47,15 @@ public class Instructor {
 
     //********************************* Course *************************************
     @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
+
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
 
    @PrePersist
     protected void onCreate() {

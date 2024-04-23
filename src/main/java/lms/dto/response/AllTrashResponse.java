@@ -1,8 +1,9 @@
 package lms.dto.response;
 
-
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,5 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AllTrashResponse {
-    public List<TrashResponse> trashResponses = new ArrayList<>();
+    private int page;
+    private int size;
+    private List<TrashResponse> trashResponses = new ArrayList<>();
 }

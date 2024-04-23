@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentsResponse;
-import lms.dto.response.FindAllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.service.StudentService;
@@ -42,7 +41,7 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAll")
     public AllStudentsResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                           @RequestParam(required = false, defaultValue = "6") int size) {
+                                       @RequestParam(required = false, defaultValue = "6") int size) {
         return studentService.findAll(page, size);
     }
 
@@ -51,8 +50,8 @@ public class StudentApi {
                     " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAllGroupStud/{groupId}")
-    public AllStudentsResponse findAllGroupStud(@RequestParam (required = false,defaultValue = "1")int page,
-                                                @RequestParam (required = false,defaultValue = "1")int size,
+    public AllStudentsResponse findAllGroupStud(@RequestParam(required = false, defaultValue = "1") int page,
+                                                @RequestParam(required = false, defaultValue = "1") int size,
                                                 @PathVariable Long groupId) {
         return studentService.findAllGroupStud(page, size, groupId);
     }

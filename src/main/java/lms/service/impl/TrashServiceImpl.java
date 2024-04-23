@@ -4,12 +4,17 @@ import jakarta.transaction.Transactional;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
-import lms.entities.Course;
-import lms.entities.Group;
-import lms.entities.Student;
 import lms.entities.Trash;
+import lms.entities.Course;
+import lms.entities.Instructor;
+import lms.entities.Group;
+import lms.entities.Notification;
+import lms.entities.ResultTask;
+import lms.entities.Task;
+import lms.entities.Student;
+import lms.enums.Type;
 import lms.exceptions.NotFoundException;
-import lms.repository.*;
+import lms.repository.TrashRepository;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,16 +31,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TrashServiceImpl implements TrashService {
-    private final TrashRepository trashRepository;
-    private final UserRepository userRepository;
-    private final GroupRepository groupRepository;
-    private final CourseRepository courseRepository;
-    private final InstructorRepository instructorRepository;
-    private final StudentRepository studentRepository;
 
-    Student student = new Student();
-    Course course = new Course();
-    Group group = new Group();
+    private final TrashRepository trashRepository;
 
     @Override
     public AllTrashResponse findAll(int page, int size) {
@@ -43,17 +40,52 @@ public class TrashServiceImpl implements TrashService {
         Page<Trash> trashes = trashRepository.findAll(pageable);
         List<TrashResponse> trashResponses = new ArrayList<>();
         for (Trash trash : trashes) {
-            trashResponses.add(new TrashResponse(trash.getId(),trash.getType(),trash.getName(), trash.getDateOfDelete()));
+            trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
         }
         AllTrashResponse allTrashResponse = new AllTrashResponse();
+        allTrashResponse.setPage(page);
+        allTrashResponse.setSize(size);
         allTrashResponse.setTrashResponses(trashResponses);
         return allTrashResponse;
     }
 
     @Override
     public SimpleResponse delete(Long trashId) {
-        Trash trash = trashRepository.findTrashById(trashId);
-        trashRepository.delete(trash);
+            Trash trash = trashRepository.findTrashById(trashId);
+            if (trash.getType().equals(Type.COURSE)) {
+                Course course1 = trash.getCourse();
+                for (Instructor instructor1 : course1.getInstructors()) {
+                    instructor1.setCourses(null);
+                }
+                course1.setInstructors(null);
+            }
+            if (trash.getType().equals(Type.GROUP)) {
+                Group group1 = trash.getGroup();
+                for (Course course : group1.getCourses()) {
+                    course.setGroups(null);
+                }
+                group1.setCourses(null);
+            }
+            if (trash.getType().equals(Type.INSTRUCTOR)) {
+                for (Course course : trash.getInstructor().getCourses()) {
+                    course.setInstructors(null);
+                }
+                for (Notification notification : trash.getInstructor().getNotifications()) {
+                    ResultTask resultTask = notification.getResultTask();
+                    resultTask.setInstructor(null);
+                }
+                for (Notification notification : trash.getInstructor().getNotifications()) {
+                    Task task = notification.getTask();
+                    task.setInstructor(null);
+                }
+                trash.getInstructor().setCourses(null);
+                for (Notification notification : trash.getInstructor().getNotifications()) {
+                    notification.setInstructor(null);
+                }
+                trash.getInstructor().setNotifications(null);
+
+            }
+            trashRepository.delete(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Удален!")
@@ -64,20 +96,29 @@ public class TrashServiceImpl implements TrashService {
     @Transactional
     public SimpleResponse returnToBase(Long trashId) {
         Trash trash = trashRepository.findTrashById(trashId);
+        if (trash == null) {
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.NOT_FOUND)
+                    .message(trashId + " ID не найден!")
+                    .build();
+        }
         if (trash.getStudent() != null) {
-            student = trash.getStudent();
+            Student student = trash.getStudent();
             student.setTrash(null);
             trash.setStudent(null);
         } else if (trash.getGroup() != null) {
-            group = trash.getGroup();
+            Group group = trash.getGroup();
             group.setTrash(null);
-            trash.setGroup(null);// Remove reference to trash
+            trash.setGroup(null);
         } else if (trash.getCourse() != null) {
-            course = trash.getCourse();
+            Course course = trash.getCourse();
             course.setTrash(null);
             trash.setCourse(null);
+        } else if (trash.getInstructor() != null) {
+            Instructor instructor = trash.getInstructor();
+            instructor.setTrash(null);
+            trash.setInstructor(null);
         }
-
         trashRepository.delete(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -85,36 +126,16 @@ public class TrashServiceImpl implements TrashService {
                 .build();
     }
 
-    @Override
-    public TrashResponse find(Long trashId) {
-        try {
-            Trash trash = trashRepository.findTrashById(trashId);
-            return TrashResponse.builder()
-                    .id(trash.getId())
-                    .type(trash.getType())
-                    .name(trash.getName())
-                    .dateOfDelete(trash.getDateOfDelete())
-                    .build();
-        }catch (Exception e){
-            throw new NotFoundException("Not found with id  " + trashId);
-        }
-    }
-
-    private int count = 0;
     @Transactional
     @Scheduled(fixedDelay = 60000)
-    public void cleanupExpiredTrash(){
-        count++;
+    public void cleanupExpiredTrash() {
         ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500);
-        System.out.println("halfAnHourAgo = " + fiveMinutesAgo);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
         for (Trash expiredTrash : expiredTrashes) {
-            if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)){
+            if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
                 trashRepository.delete(expiredTrash);
             }
         }
-        System.out.println(count);
-        System.out.println("Size of expiredTrashes:               " + expiredTrashes.size());
     }
 }
 

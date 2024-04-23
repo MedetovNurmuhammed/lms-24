@@ -43,6 +43,7 @@ public class Group {
     @OneToMany(mappedBy = "group",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Student> students = new ArrayList<>();
 
+    //*************************************** Trash ********************************************
     @OneToOne
     private Trash trash;
 }

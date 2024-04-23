@@ -19,7 +19,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 import java.util.UUID;

@@ -68,6 +68,7 @@ public class Student {
     @OneToMany(mappedBy = "student",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
 
+    //********************************* Course *********************************************
     @OneToOne
     private Trash trash;
 
