@@ -2,6 +2,8 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
+import lms.dto.response.AllInstructorResponse;
+import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Course;

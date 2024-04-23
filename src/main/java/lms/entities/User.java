@@ -1,6 +1,14 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import lms.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,7 +77,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-
     }
 }
-
