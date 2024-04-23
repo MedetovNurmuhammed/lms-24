@@ -3,6 +3,7 @@ package lms.service.impl;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.StudentRequest;
+import lms.dto.response.AllStudentResponse;
 import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
@@ -10,6 +11,7 @@ import lms.entities.Group;
 import lms.entities.Student;
 import lms.entities.User;
 import lms.enums.Role;
+import lms.enums.StudyFormat;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.GroupRepository;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -65,29 +68,29 @@ public class StudentServiceImpl implements StudentService {
         throw new BadRequestException("Группа: " + studentRequest.groupName() + " не найден!");
     }
 
-    private AllStudentsResponse getAllStudentsResponse(List<StudentResponse> studentResponses, Page<Student> allStudUnblock) {
-        for (Student student : allStudUnblock) {
-            StudentResponse studentResponse = StudentResponse.builder()
-                    .id(student.getId())
-                    .fullName(student.getUser().getFullName())
-                    .phoneNumber(student.getUser().getPhoneNumber())
-                    .email(student.getUser().getEmail())
-                    .groupName(student.getGroup().getTitle())
-                    .studyFormat(student.getStudyFormat())
-                    .build();
-            studentResponses.add(studentResponse);
-        }
-        return AllStudentsResponse.builder()
-                .studentResponses(studentResponses)
-                .build();
-    }
 
     @Override
-    public AllStudentsResponse findAll(int page, int size) {
-        List<StudentResponse> studentResponses = new ArrayList<>();
+    public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Student> allStudents = studentRepository.findAll(pageable);
-        return getAllStudentsResponse(studentResponses, allStudents);
+        log.error(search);
+        List<StudyFormat> studyFormats = new ArrayList<>();
+        if (search.equalsIgnoreCase("ONLINE")) {
+            search = null;
+            studyFormats.add(StudyFormat.ONLINE);
+        } else if (search.equalsIgnoreCase("OFFLINE")) {
+            search = null;
+            studyFormats.add(StudyFormat.OFFLINE);
+        } else if ("".equals(studyFormat)) {
+            studyFormats.addAll(List.of(StudyFormat.values()));
+        } else studyFormats.add(StudyFormat.valueOf(studyFormat));
+
+        Page<StudentResponse> allStudent = studentRepository.searchAll(search, studyFormats, groupId, pageable);
+
+        return AllStudentResponse.builder()
+                .page(allStudent.getNumber() + 1)
+                .size(allStudent.getSize())
+                .students(allStudent.getContent())
+                .build();
     }
 
     @Override

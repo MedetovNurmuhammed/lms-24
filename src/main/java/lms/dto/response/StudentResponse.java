@@ -8,8 +8,8 @@ public record StudentResponse(
         Long id,
         String fullName,
         String phoneNumber,
-        String email,
         String groupName,
-        StudyFormat studyFormat
+        StudyFormat studyFormat,
+        String email
 ) {
 }
