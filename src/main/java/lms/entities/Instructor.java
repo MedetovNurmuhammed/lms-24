@@ -1,6 +1,20 @@
 package lms.entities;
 
 import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +39,7 @@ public class Instructor {
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
@@ -32,11 +47,15 @@ public class Instructor {
 
     //********************************* Course *************************************
     @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
+
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
 
    @PrePersist
     protected void onCreate() {

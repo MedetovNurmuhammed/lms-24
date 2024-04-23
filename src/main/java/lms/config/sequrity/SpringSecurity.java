@@ -5,6 +5,7 @@ import lms.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
+@EnableScheduling
 public class SpringSecurity {
     private final UserRepository userRepository;
     private final JwtFilter jwtFilter;
