@@ -194,18 +194,10 @@ public class CourseServiceImpl implements CourseService {
                         .size(allInstructorsByCourseId.getSize())
                         .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
                         .build();
-            } else {
-                return AllInstructorsOrStudentsOfCourse.builder()
-                        .page(allInstructorsByCourseId.getNumber() + 1) // Adjusted to 1-index
-                        .size(allInstructorsByCourseId.getSize())
-                        .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
-                        .build();
             }
-        } else {
-            throw new NotFoundException("Course not found or role is null");
         }
+        throw new NotFoundException("Course not found or role is null");
     }
-
 }
 
 
