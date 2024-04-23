@@ -4,7 +4,6 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
-import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Group;
@@ -73,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
+    public AllStudentResponse  findAll(String search, String studyFormat, Long groupId, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         log.error(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
@@ -97,25 +96,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public AllStudentsResponse findAllGroupStud(int page, int size, Long groupId) {
-        List<StudentResponse> studentResponses = new ArrayList<>();
-        Group group = groupRepository.findById(groupId).
-                orElseThrow(() -> new NotFoundException("Группа не найден!"));
-        for (Student student : group.getStudents()) {
-            if (student.getTrash() == null) {
-                StudentResponse studentResponse = StudentResponse.builder()
-                        .id(student.getId())
-                        .fullName(student.getUser().getFullName())
-                        .phoneNumber(student.getUser().getPhoneNumber())
-                        .email(student.getUser().getPassword())
-                        .groupName(student.getGroup().getTitle())
-                        .studyFormat(student.getStudyFormat())
-                        .build();
-                studentResponses.add(studentResponse);
-            }
-        }
-        return AllStudentsResponse.builder()
-                .studentResponses(studentResponses)
+    public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable,groupId);
+        return AllStudentResponse.builder()
+                .page(page)
+                .size(size)
+                .students(studentResponses)
                 .build();
     }
 

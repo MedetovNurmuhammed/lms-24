@@ -7,7 +7,6 @@ import lombok.Builder;
 @Builder
 public record StudentResponse(
         Long id,
-        Type type,
         String fullName,
         String phoneNumber,
         String groupName,

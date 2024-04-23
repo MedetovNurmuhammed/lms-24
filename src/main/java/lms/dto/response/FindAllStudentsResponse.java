@@ -10,5 +10,5 @@ import lombok.Setter;
 public class FindAllStudentsResponse {
     private int page;
     private int size;
-    private AllStudentsResponse allStudentsResponse;
+    private AllStudentResponse allStudentsResponse;
 }
