@@ -12,6 +12,12 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+    jpa:
+        defer-datasource-initialization: true
+    sql:
+        init:
+            data-locations: classpath:datainit/dataInit.sql
+            mode: always
 cloud:
     aws:
         credentials:

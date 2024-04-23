@@ -11,10 +11,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsByTitle(String courseName);
 
     @Query("""
-    select new lms.dto.response.FindAllResponseCourse
-    (c.id, c.title, c.description, c.image,c.dateOfStart)
-    from Course c
-""")
+                select new lms.dto.response.FindAllResponseCourse
+                (c.id, c.title, c.description, c.image,c.dateOfStart)
+                from Course c
+            """)
     Page<FindAllResponseCourse> findAllCourse(Pageable pageable);
 
 
