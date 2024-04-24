@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
 
-    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(i.id, c.title, i.user.fullName, '', i.user.phoneNumber, i.user.email) from Student i join i.group g join g.courses c where c.id = :courseId")
+    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(i.id, c.title, i.user.fullName, '', i.user.phoneNumber, i.user.email) from Student i join i.group g join g.courses c where c.id = :courseId and i.trash is null")
     List<InstructorsOrStudentsOfCourse> StudentsByCourseId(Long courseId);
 
     default Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(Long courseId, Pageable pageable){
