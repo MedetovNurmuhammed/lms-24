@@ -12,10 +12,7 @@ import lms.entities.Course;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.LessonRepository;
-import lms.repository.VideoRepository;
 import lms.repository.NotificationRepository;
-import lms.repository.PresentationRepository;
-import lms.repository.LinkRepository;
 import lms.repository.TaskRepository;
 import lms.repository.TestRepository;
 import lms.service.LessonService;
@@ -36,9 +33,6 @@ public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
     private final NotificationRepository notificationRepository;
     private final TaskRepository taskRepository;
-    private final PresentationRepository presentationRepository;
-    private final VideoRepository videoRepository;
-    private final LinkRepository linkRepository;
     private final TestRepository testRepository;
 
     @Override
@@ -94,9 +88,6 @@ public class LessonServiceImpl implements LessonService {
         lesson.getVideos().clear();
         lesson.getLinks().clear();
         lesson.setTest(null);
-        presentationRepository.deleteAll(lesson.getPresentations());
-        videoRepository.deleteAll(lesson.getVideos());
-        linkRepository.deleteAll(lesson.getLinks());
         if (lesson.getTest() != null) {
             testRepository.delete(lesson.getTest());
         }

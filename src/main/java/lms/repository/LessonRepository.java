@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    @Query("select distinct new lms.dto.response.LessonResponse(i.id, i.title) from Lesson i order by i.id asc")
+    @Query("select new lms.dto.response.LessonResponse(i.id, i.title) from Lesson i order by i.id asc")
     List<LessonResponse> findLessons();
     default Page<LessonResponse> findAllLessons(Pageable pageable){
         List<LessonResponse> lessons = findLessons();
