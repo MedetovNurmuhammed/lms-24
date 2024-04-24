@@ -1,7 +1,21 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.CascadeType;
 import lms.enums.StudyFormat;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +43,12 @@ public class Student {
     private StudyFormat studyFormat;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
+
+
+    public Type getType() {
+        return type = Type.STUDENT;
+    }
 
     //********************************* User **********************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
@@ -53,6 +73,10 @@ public class Student {
     //********************************* Announcement ***************************************
     @ElementCollection
     private Map<Announcement,Boolean> announcements = new HashMap<>();
+
+    //********************************* Course *********************************************
+    @OneToOne
+    private Trash trash;
 
     @PrePersist
     protected void onCreate() {

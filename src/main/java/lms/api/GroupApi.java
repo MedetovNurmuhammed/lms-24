@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import java.util.List;
 
 @RestController
@@ -34,13 +35,13 @@ public class GroupApi {
     @Secured("ADMIN")
     @PutMapping("/update/{groupId}")
     public SimpleResponse update(@PathVariable long groupId, @RequestBody @Valid GroupRequest groupRequest) {
-        return groupService.update(groupId,groupRequest);
+        return groupService.update(groupId, groupRequest);
     }
 
     @Secured("ADMIN")
     @GetMapping("/findAll")
     public Page<AllGroupResponse> findAll(@RequestParam int page, @RequestParam int size) {
-        return groupService.findAllGroup(size,page);
+        return groupService.findAllGroup(size, page);
     }
 
     @Secured("ADMIN")

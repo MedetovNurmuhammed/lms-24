@@ -29,20 +29,23 @@ public class AnswerTask{
     private LocalDate dateOfSend;
     private LocalDate updatedAt;
 
+    @ManyToOne()
+    private Trash trash;
+
     //*************************************** Student **************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Student student;
 
     //*************************************** Task *****************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Task task;
 
     //*************************************** Link *****************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Link link;
 
     //*************************************** ResultTask ************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private ResultTask resultTask;
 
     @PrePersist

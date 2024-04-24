@@ -2,19 +2,20 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
-import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Course;
 import lms.entities.Group;
 import lms.entities.Instructor;
+import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.IllegalArgumentException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.GroupRepository;
 import lms.repository.InstructorRepository;
+import lms.repository.TrashRepository;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
     private final InstructorRepository instructorRepository;
+    private final TrashRepository trashRepository;
 
     private void checkTitle(String courseTitle) {
         boolean exists = courseRepository.existsByTitle(courseTitle);
@@ -76,16 +79,16 @@ public class CourseServiceImpl implements CourseService {
                 .build();
     }
 
-    @Override
+    @Override @Transactional
     public SimpleResponse deleteCourseById(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
-        List<Instructor> instructors = course.getInstructors();
-        for (Instructor instructor : instructors) {
-            instructor.setCourses(null);
-        }
-        course.setInstructors(null);
-        courseRepository.deleteById(course.getId());
+        Trash trash = new Trash();
+        course.setTrash(trash);
+        trash.setName(course.getTitle());
+        trash.setType(Type.COURSE);
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удалено!")

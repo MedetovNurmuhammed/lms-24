@@ -8,17 +8,14 @@ import lms.dto.response.AllInstructorResponse;
 import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.User;
-import lms.entities.Instructor;
-import lms.entities.ResultTask;
-import lms.entities.Task;
-import lms.entities.Notification;
-import lms.entities.Course;
+import lms.entities.*;
 import lms.enums.Role;
+import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.InstructorRepository;
+import lms.repository.TrashRepository;
 import lms.repository.UserRepository;
 import lms.service.InstructorService;
 import lms.service.UserService;
@@ -29,6 +26,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +39,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final CourseRepository courseRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     public SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException {
@@ -116,20 +116,16 @@ public class InstructorServiceImpl implements InstructorService {
     public SimpleResponse delete(Long instructorId) {
         Instructor instructor = instructorRepository.findById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Instructor not found!!!"));
-        Notification notifications = instructorRepository.findNotificationByInstructorId(instructor.getId());
-        notifications.setInstructor(null);
-        instructor.setNotifications(null);
-        ResultTask resultTasks = instructorRepository.findResultTaskByInstructorId(instructor.getId());
-        resultTasks.setInstructor(null);
-        Task task = instructorRepository.findTaskByInstructorId(instructor.getId());
-        task.setInstructor(null);
-        User user = userRepository.findById(instructor.getUser().getId())
-                .orElseThrow(() -> new NotFoundException("User not found!!!"));
-        userRepository.delete(user);
-        instructorRepository.delete(instructor);
+        Trash trash = new Trash();
+        trash.setInstructor(instructor);
+        trash.setType(Type.INSTRUCTOR);
+        trash.setName(instructor.getUser().getFullName());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        instructor.setTrash(trash);
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Instructor successfully deleted")
+                .message("Инструктор успешно удалено!")
                 .build();
     }
 

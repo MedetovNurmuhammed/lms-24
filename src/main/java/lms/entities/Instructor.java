@@ -1,12 +1,25 @@
 package lms.entities;
 
 import jakarta.persistence.*;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,31 +34,36 @@ import java.util.List;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
-    @SequenceGenerator(name = "instructor_gen", sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    private Type type;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    private List<Course> courses;
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDate.now();
-    }
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
 
-    @PreUpdate
+   @PrePersist
+    protected void onCreate() {
+       this.createdAt = LocalDate.now();
+   }
+
+   @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDate.now();
-    }
+       this.updatedAt = LocalDate.now();
+   }
 }

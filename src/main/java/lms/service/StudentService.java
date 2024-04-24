@@ -3,7 +3,6 @@ package lms.service;
 import jakarta.mail.MessagingException;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
-import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public interface StudentService {
 
     AllStudentResponse findAll(String keyword, String studyFormat, Long groupId, int page, int size);
 
-    AllStudentsResponse findAllGroupStud(int page, int size, Long groupId);
+    AllStudentResponse findAllGroupStud(int page, int size, Long groupId);
 
     SimpleResponse update(Long studId, StudentRequest studentRequest);
 
