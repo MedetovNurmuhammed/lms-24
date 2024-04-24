@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,31 +21,31 @@ import java.util.List;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
-    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "instructor_gen", sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<Course> courses;
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();
 
-   @PrePersist
+    @PrePersist
     protected void onCreate() {
-       this.createdAt = LocalDate.now();
-   }
+        this.createdAt = LocalDate.now();
+    }
 
-   @PreUpdate
+    @PreUpdate
     protected void onUpdate() {
-       this.updatedAt = LocalDate.now();
-   }
+        this.updatedAt = LocalDate.now();
+    }
 }

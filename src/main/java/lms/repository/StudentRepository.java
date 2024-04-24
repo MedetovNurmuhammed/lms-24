@@ -31,4 +31,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
         return new PageImpl<>(allBySearchTerm.subList(start, end), pageable, allBySearchTerm.size());
     }
 
+    @Query("select s from Student  s where s.user.id = :id")
+    Student findByUserId(Long id);
 }

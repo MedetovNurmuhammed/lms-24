@@ -1,19 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lms.enums.StudyFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "students")
@@ -60,6 +49,10 @@ public class Student {
     //********************************* Notification ***************************************
     @OneToMany(mappedBy = "student",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
+
+    //********************************* Announcement ***************************************
+    @ElementCollection
+    private Map<Announcement,Boolean> announcements = new HashMap<>();
 
     @PrePersist
     protected void onCreate() {
