@@ -20,7 +20,7 @@ public class LessonApi {
     @Secured("INSTRUCTOR")
     @Operation(summary = "добавляет урок.(Авторизация: инструктор)")
     @PostMapping("/addLesson/{courseId}")
-    public SimpleResponse addLesson(@RequestBody LessonRequest lessonRequest, @PathVariable Long courseId) throws MessagingException {
+    public SimpleResponse addLesson(@RequestBody @Valid LessonRequest lessonRequest, @PathVariable Long courseId) throws MessagingException {
         return lessonService.addLesson(lessonRequest, courseId);
     }
 
