@@ -4,18 +4,19 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
-import lms.dto.response.AllStudentsResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Group;
-import lms.entities.Student;
 import lms.entities.User;
+import lms.entities.Student;
+import lms.entities.Trash;
 import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.GroupRepository;
 import lms.repository.StudentRepository;
+import lms.repository.GroupRepository;
+import lms.repository.TrashRepository;
 import lms.repository.UserRepository;
 import lms.service.StudentService;
 import lms.service.UserService;
@@ -26,7 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class StudentServiceImpl implements StudentService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final UserService userService;
+    private final TrashRepository trashRepository;
 
     @Override
     @Transactional
@@ -70,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
+    public AllStudentResponse  findAll(String search, String studyFormat, Long groupId, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         log.error(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
@@ -94,23 +96,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public AllStudentsResponse findAllGroupStud(int page, int size, Long groupId) {
-        List<StudentResponse> studentResponses = new ArrayList<>();
-        Group group = groupRepository.findById(groupId).
-                orElseThrow(() -> new NotFoundException("Группа не найден!"));
-        for (Student student : group.getStudents()) {
-            StudentResponse studentResponse = StudentResponse.builder()
-                    .id(student.getId())
-                    .fullName(student.getUser().getFullName())
-                    .phoneNumber(student.getUser().getPhoneNumber())
-                    .email(student.getUser().getPassword())
-                    .groupName(student.getGroup().getTitle())
-                    .studyFormat(student.getStudyFormat())
-                    .build();
-            studentResponses.add(studentResponse);
-        }
-        return AllStudentsResponse.builder()
-                .studentResponses(studentResponses)
+    public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable,groupId);
+        return AllStudentResponse.builder()
+                .page(page)
+                .size(size)
+                .students(studentResponses)
                 .build();
     }
 
@@ -140,10 +132,14 @@ public class StudentServiceImpl implements StudentService {
     public SimpleResponse delete(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        Group group = student.getGroup();
-        student.setGroup(null);
-        group.getStudents().remove(student);
-        studentRepository.delete(student);
+        Trash trash = new Trash();
+        trash.setName(student.getUser().getFullName());
+        trash.setStudent(student);
+        trash.setType(student.getType());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setStudent(student);
+        student.setTrash(trash);
+        trashRepository.save(trash);
         log.info("Успешно удален!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -155,13 +151,15 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        return StudentResponse.builder()
-                .id(student.getId())
-                .fullName(student.getUser().getFullName())
-                .phoneNumber(student.getUser().getPhoneNumber())
-                .email(student.getUser().getEmail())
-                .groupName(student.getGroup().getTitle())
-                .studyFormat(student.getStudyFormat())
-                .build();
+        if (student.getTrash() == null) {
+            return StudentResponse.builder()
+                    .id(student.getId())
+                    .fullName(student.getUser().getFullName())
+                    .phoneNumber(student.getUser().getPhoneNumber())
+                    .email(student.getUser().getEmail())
+                    .groupName(student.getGroup().getTitle())
+                    .studyFormat(student.getStudyFormat())
+                    .build();
+        }else throw new NotFoundException("Студент не найден!");
     }
 }

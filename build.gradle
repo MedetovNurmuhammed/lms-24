@@ -33,6 +33,10 @@ dependencies {
     implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.701'
   // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
+
+
 }
 
 tasks.named('test') {
