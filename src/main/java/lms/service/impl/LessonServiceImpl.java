@@ -32,7 +32,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс не найден"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс c " + courseId + " не найден"));
         Lesson lesson = new Lesson();
         lesson.setCourse(course);
         lesson.setTitle(lessonRequest.getTitle());
@@ -43,7 +43,7 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.save(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно сохранено")
+                .message("урок "+lesson.getTitle()+" успешно сохранено")
                 .build();
     }
     @Override
@@ -59,7 +59,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponse findById(Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("lesson not found"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
         return LessonResponse.builder()
                 .id(lesson.getId())
                 .title(lesson.getTitle())
@@ -70,11 +70,11 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse update(LessonRequest lessonRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("lesson not found"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
         lesson.setTitle(lessonRequest.getTitle());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("успешно обнолён")
+                .message("урок "+lesson.getTitle()+" успешно обнолён")
                 .build();
     }
 
@@ -82,7 +82,7 @@ public class LessonServiceImpl implements LessonService {
     @Transactional
     public SimpleResponse delete(Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new NotFoundException("Урок не найден"));
+                .orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
         lessonRepository.delete(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
