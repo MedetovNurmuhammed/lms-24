@@ -5,7 +5,6 @@ import lms.dto.request.SignInRequest;
 import lms.dto.response.SignInResponse;
 import lms.dto.response.SimpleResponse;
 import lms.exceptions.BadRequestException;
-
 import java.nio.file.AccessDeniedException;
 
 public interface UserService {

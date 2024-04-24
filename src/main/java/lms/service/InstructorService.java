@@ -6,6 +6,7 @@ import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.AllInstructorResponse;
 import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.SimpleResponse;
+
 public interface InstructorService {
     SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
 

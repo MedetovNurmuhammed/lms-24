@@ -4,10 +4,11 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.Course;
 import lms.entities.Group;
+import lms.entities.Trash;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
+import lms.repository.TrashRepository;
 import lms.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,8 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     public SimpleResponse save(GroupRequest groupRequest) {
@@ -72,16 +74,14 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public SimpleResponse delete(long groupId) {
-        Group deletedGroup = groupRepository.getById(groupId);
-
-        List<Course> courses = deletedGroup.getCourses();
-        for (Course course : courses) {
-            course.setGroups(null);
-        }
-        deletedGroup.setCourses(null);
-
-        groupRepository.delete(deletedGroup);
-
+        Group group = groupRepository.getById(groupId);
+        Trash trash = new Trash();
+        trash.setName(group.getTitle());
+        trash.setType(group.getType());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setGroup(group);
+        group.setTrash(trash);
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Группа успешно удалено!")
