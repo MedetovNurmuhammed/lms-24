@@ -103,8 +103,6 @@ public class LessonServiceImpl implements LessonService {
         for (Task task : lesson.getTasks()) {
             Notification notification = notificationRepository.findByTaskId(task.getId());
                 notification.setTask(null);
-               // notificationRepository.save(notification);
-           // log.error(String.valueOf(notification.getTask().getId()));
             taskRepository.deleteById(task.getId());
         }
         lessonRepository.delete(lesson);

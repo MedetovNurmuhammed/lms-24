@@ -1,6 +1,5 @@
 package lms.repository;
 
-import lms.dto.response.InstructorResponse;
 import lms.dto.response.LessonResponse;
 import lms.entities.Lesson;
 import org.springframework.data.domain.Page;
