@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    @Query("select new lms.dto.response.LessonResponse(i.id, i.title) from Lesson i where i.course.id = :courseId order by i.createdAt asc")
+    @Query("select new lms.dto.response.LessonResponse(i.id, i.title, i.createdAt) from Lesson i where i.course.id = :courseId order by i.createdAt asc")
     List<LessonResponse> findLessons(@Param("courseId") Long courseId);
     default Page<LessonResponse> findAllLessons(Pageable pageable , Long courseId){
         List<LessonResponse> lessons = findLessons(courseId);
