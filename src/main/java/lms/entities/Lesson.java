@@ -32,7 +32,7 @@ import java.util.List;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_gen")
-    @SequenceGenerator(name = "lesson_seq",sequenceName = "lesson_seq", allocationSize = 1)
+    @SequenceGenerator(name = "lesson_gen",sequenceName = "lesson_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private LocalDate createdAt;
