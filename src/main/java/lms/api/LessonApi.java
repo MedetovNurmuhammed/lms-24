@@ -26,10 +26,10 @@ public class LessonApi {
 
     @Secured("INSTRUCTOR")
     @Operation(summary = "Возвращает пагинированный список всех уроков.(Авторизация: инструктор)")
-    @GetMapping("/findAll")
+    @GetMapping("/findAll/{courseId}")
     public AllLessonsResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                      @RequestParam(required = false, defaultValue = "6") int size) {
-        return lessonService.findAll(page, size);
+                                      @RequestParam(required = false, defaultValue = "6") int size, @PathVariable Long courseId) {
+        return lessonService.findAll(page, size,courseId);
     }
 
     @Secured("INSTRUCTOR")

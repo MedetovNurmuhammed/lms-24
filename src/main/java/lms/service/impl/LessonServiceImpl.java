@@ -49,9 +49,9 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public AllLessonsResponse findAll(int page, int size) {
+    public AllLessonsResponse findAll(int page, int size, Long courseId) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<LessonResponse> allLessons = lessonRepository.findAllLessons(pageable);
+        Page<LessonResponse> allLessons = lessonRepository.findAllLessons(pageable, courseId);
         return AllLessonsResponse.builder()
                 .page(allLessons.getNumber() + 1)
                 .size(allLessons.getSize())

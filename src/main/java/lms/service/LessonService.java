@@ -8,7 +8,7 @@ import lms.dto.response.SimpleResponse;
 public interface LessonService {
     SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId);
 
-    AllLessonsResponse findAll(int page, int size);
+    AllLessonsResponse findAll(int page, int size, Long courseId);
 
     LessonResponse findById(Long lessonId);
 
