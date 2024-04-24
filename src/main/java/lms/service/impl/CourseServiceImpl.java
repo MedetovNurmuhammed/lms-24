@@ -201,7 +201,7 @@ public class CourseServiceImpl implements CourseService {
                         .build();
             }
         }
-        throw new NotFoundException("Course not found or role is null");
+        throw new NotFoundException("Course with id: "+courseId+" not found or role is null");
     }
 }
 
