@@ -84,18 +84,6 @@ public class LessonServiceImpl implements LessonService {
     public SimpleResponse delete(Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок не найден"));
-        lesson.getPresentations().clear();
-        lesson.getVideos().clear();
-        lesson.getLinks().clear();
-        lesson.setTest(null);
-        if (lesson.getTest() != null) {
-            testRepository.delete(lesson.getTest());
-        }
-        for (Task task : lesson.getTasks()) {
-            Notification notification = notificationRepository.findByTaskId(task.getId());
-                notification.setTask(null);
-            taskRepository.deleteById(task.getId());
-        }
         lessonRepository.delete(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
