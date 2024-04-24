@@ -1,7 +1,7 @@
 package lms.service.impl;
-
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
+import lms.dto.request.ExcelUser;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
@@ -22,14 +22,24 @@ import lms.service.StudentService;
 import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.apache.poi.ss.usermodel.Cell;
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ArrayList;
+
+import static java.sql.JDBCType.NUMERIC;
+import static javax.management.openmbean.SimpleType.STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +50,7 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final UserService userService;
     private final TrashRepository trashRepository;
+    private final UserServiceImpl userServiceImpl;
 
     @Override
     @Transactional
@@ -162,4 +173,78 @@ public class StudentServiceImpl implements StudentService {
                     .build();
         }else throw new NotFoundException("Студент не найден!");
     }
-}
+
+    @Override
+    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file) {
+        Group group = groupRepository.getById(groupId);
+        try {
+            Workbook workbook = WorkbookFactory.create(file.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+            List<ExcelUser> students = new ArrayList<>();
+            for (Row row : sheet) {
+                ExcelUser student = new ExcelUser();
+                for (Cell cell : row) {
+                    switch (cell.getColumnIndex()) {
+                        case 0:
+                            student.setFullName(getStringValue(cell));
+                            break;
+                        case 1:
+                            student.setEmail(getStringValue(cell));
+                            break;
+                        case 2:
+                            student.setPhoneNumber(getStringValue(cell));
+                            break;
+                        case 3:
+                            student.setStudyFormat(StudyFormat.fromString(getStringValue(cell)));
+                            break;
+                        default:
+
+                    }
+                }
+                students.add(student);
+            }
+            for (ExcelUser student : students) {
+                User newUser = new User();
+                Student newStudent = new Student();
+                newUser.setFullName(student.getFullName());
+                newUser.setEmail(student.getEmail());
+                userServiceImpl.checkEmail(newUser.getEmail());
+                newUser.setRole(Role.STUDENT);
+                newUser.setPhoneNumber(student.getPhoneNumber());
+                newUser.setBlock(false);
+                newStudent.setStudyFormat(student.getStudyFormat());
+                group.getStudents().add(newStudent);
+                newStudent.setUser(newUser);
+                newStudent.setGroup(group);
+                newStudent.setUser(newUser);
+                userServiceImpl.emailSender(newUser.getEmail());
+                userRepository.save(newUser);
+                studentRepository.save(newStudent);
+                groupRepository.save(group);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Не удалось импортировать студентов из Excel");
+        } catch (MessagingException e) {
+            throw new RuntimeException("Произошла ошибка при отправке или получении сообщения по почте: " + e.getMessage(), e);
+        }
+
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Успешно импортировано!")
+                .build();
+    }
+
+
+    private String getStringValue(org.apache.poi.ss.usermodel.Cell cell) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                return String.valueOf(cell.getNumericCellValue());
+            default:
+                return "";
+        }
+    }
+    }
+

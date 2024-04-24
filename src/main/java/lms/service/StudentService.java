@@ -6,6 +6,7 @@ import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface StudentService {
@@ -21,4 +22,6 @@ public interface StudentService {
     SimpleResponse delete(Long studId);
 
     StudentResponse findById(Long studId);
+
+    SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file);
 }
