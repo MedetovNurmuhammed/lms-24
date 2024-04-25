@@ -2,6 +2,7 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
@@ -25,7 +26,7 @@ public class StudentApi {
     @Operation(summary = "Сохранить студента",
             description = "Метод для сохранение студента и отправка сообщение почту чтобы создать студент создал себе пароль! " +
                     " Авторизация: администратор!")
-    public SimpleResponse saveStudent(@RequestBody StudentRequest studentRequest) throws MessagingException {
+    public SimpleResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) throws MessagingException {
         return studentService.save(studentRequest);
     }
 
@@ -82,8 +83,10 @@ public class StudentApi {
     public SimpleResponse delete(@PathVariable Long studId) {
         return studentService.delete(studId);
     }
+    @Operation(description = "Import student to group")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SimpleResponse importStudents(@PathVariable Long groupId,@RequestPart("file") MultipartFile file) {
+    public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file) {
         return studentService.importStudentsFromExcel(groupId,file);
     }
 }
