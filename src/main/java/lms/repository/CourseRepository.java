@@ -16,4 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
                 from Course c
             """)
     Page<FindAllResponseCourse> findAllCourse(Pageable pageable);
+
+
 }
+

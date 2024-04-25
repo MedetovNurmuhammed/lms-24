@@ -4,9 +4,12 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.AllInstructorsOrStudentsOfCourse;
+import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.entities.Course;
 import lms.entities.Group;
 import lms.entities.Instructor;
+import lms.enums.Role;
 import lms.entities.Trash;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
@@ -15,6 +18,7 @@ import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.GroupRepository;
 import lms.repository.InstructorRepository;
+import lms.repository.StudentRepository;
 import lms.repository.TrashRepository;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +38,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
     private final InstructorRepository instructorRepository;
+    private final StudentRepository studentRepository;
     private final TrashRepository trashRepository;
 
     private void checkTitle(String courseTitle) {
@@ -174,6 +179,29 @@ public class CourseServiceImpl implements CourseService {
                     .message(errorMessageBuilder.toString())
                     .build();
         }
+    }
+
+    @Override
+    public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if (role.equals(Role.STUDENT)) {
+            Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(courseId, pageable);
+            return AllInstructorsOrStudentsOfCourse.builder()
+                    .page(allStudentByCourseId.getNumber() + 1)
+                    .size(allStudentByCourseId.getSize())
+                    .getAllInstructorsOfCourses(allStudentByCourseId.getContent())
+                    .build();
+        } else if (role.equals(Role.INSTRUCTOR)) {
+            Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.findAllInstructorsByCourseId(courseId, pageable);
+            if (allInstructorsByCourseId.getContent().isEmpty()) {
+                return AllInstructorsOrStudentsOfCourse.builder()
+                        .page(allInstructorsByCourseId.getNumber() + 1)
+                        .size(allInstructorsByCourseId.getSize())
+                        .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
+                        .build();
+            }
+        }
+        throw new NotFoundException("Course with id: "+courseId+" not found or role is null");
     }
 }
 

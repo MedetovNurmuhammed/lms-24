@@ -1,8 +1,10 @@
 package lms.service;
 
 import lms.dto.request.CourseRequest;
+import lms.dto.response.AllInstructorsOrStudentsOfCourse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
+import lms.enums.Role;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -20,4 +22,6 @@ public interface CourseService {
     SimpleResponse assignInGroupToCourse(Long groupId, Long courseId);
 
     SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds);
+
+    AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);
 }
