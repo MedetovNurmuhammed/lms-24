@@ -3,8 +3,10 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.CourseRequest;
+import lms.dto.response.AllInstructorsOrStudentsOfCourse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
+import lms.enums.Role;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -67,6 +69,16 @@ public class CourseApi {
     @Operation(description = "AssignIn Instructor to Course")
     public SimpleResponse assignInstructorsToCourse(@PathVariable Long courseId, @RequestParam List<Long> instructorIds) {
         return courseService.assignInstructorsToCourse(courseId, instructorIds);
+    }
+
+    @Secured("ADMIN")
+    @Operation(summary = "Возвращает пагинированный список всех инструкторов одного курса.(Авторизация: администратор)")
+    @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
+    public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "6") int size,
+            @PathVariable Long courseId, @RequestParam Role role) {
+        return courseService.findAllInstructorsOrStudentsByCourseId(page, size, courseId, role);
     }
 }
 
