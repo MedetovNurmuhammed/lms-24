@@ -2,7 +2,6 @@ package lms.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lms.validation.phoneNumber.PhoneNumberValidation;
 
 public record VideoRequest(
         @NotBlank
@@ -14,5 +13,6 @@ public record VideoRequest(
         @NotBlank
         @NotNull
         String linkOfVideo
+
 ) {
 }

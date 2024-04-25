@@ -1,13 +1,51 @@
 package lms.api;
 
+import jakarta.validation.Valid;
+import lms.dto.request.VideoRequest;
+import lms.dto.response.AllVideoResponse;
+import lms.dto.response.SimpleResponse;
+import lms.dto.response.StudentResponse;
+import lms.dto.response.VideoResponse;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/videos")
 @RequiredArgsConstructor
 public class VideoApi {
     private final VideoService videoService;
+    @Secured("INSTRUCTOR")
+    @PostMapping("/save/{lessonId}")
+    public SimpleResponse save(@RequestBody @Valid VideoRequest videoRequest, @PathVariable Long lessonId) {
+        return videoService.save(videoRequest, lessonId);
+    }
+
+    @Secured("INSTRUCTOR")
+    @PutMapping("/update/{lessonId}")
+    public SimpleResponse update(@PathVariable Long lessonId, @RequestBody @Valid VideoRequest videoRequest) {
+        return videoService.update(lessonId, videoRequest);
+    }
+
+    @Secured("INSTRUCTOR")
+    @GetMapping("/findAll/{lessonId}")
+    public Page<AllVideoResponse> findAll(@RequestParam int page, @RequestParam int size, @PathVariable Long lessonId) {
+        return videoService.findAllVideoByLessonId(size, page, lessonId);
+    }
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("/findById/{videoId}")
+    public VideoResponse findById(@PathVariable Long videoId) {
+        return videoService.findById(videoId);
+    }
+
+
+    @Secured("INSTRUCTOR")
+    @DeleteMapping("/delete/{videoId}")
+    public SimpleResponse delete(@PathVariable Long videoId) {
+        return videoService.delete(videoId);
+    }
+
 }
