@@ -9,10 +9,12 @@ import lms.entities.Lesson;
 import lms.entities.Link;
 import lms.entities.Trash;
 import lms.entities.Video;
+import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.LinkRepository;
+import lms.repository.TrashRepository;
 import lms.repository.VideoRepository;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class VideoServiceImpl implements VideoService {
     private final VideoRepository videoRepository;
     private final LessonRepository lessonRepository;
     private final LinkRepository linkRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     @Transactional
@@ -100,15 +103,21 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse delete(Long videoId) {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         Trash trash = new Trash();
         trash.setName(video.getDescription());
         trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setType(Type.VIDEO);
+        trash.setVideo(video);
+        video.setTrash(trash);
+        video.getLink().setTrash(trash);
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Видео с названием " + video.getLink().getTitle() + " успешно обновлено")
+                .message("Видео с названием " + video.getLink().getTitle() + " успешно добавлено в карзину")
                 .build();
     }
 }

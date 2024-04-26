@@ -36,7 +36,9 @@ public class Video {
     //*************************************** Link ***************************************
     @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Link link;
-
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDate.now();
