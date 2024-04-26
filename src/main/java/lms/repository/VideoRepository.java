@@ -12,7 +12,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface VideoRepository extends JpaRepository<Video, Long> {
-    @Query("select new lms.dto.response.VideoResponse(v.id, v.link.title,v.description, v.link.url, v.createdAt) from Lesson l  join l.videos v where l.id = :lessonId order by v.createdAt asc")
+    @Query("select new lms.dto.response.VideoResponse(v.id, v.link.title,v.description, v.link.url, v.createdAt) " +
+            "from Lesson l  join l.videos v where l.id = :lessonId order by v.createdAt asc")
     List<VideoResponse> findAllVideo(@Param("lessonId") Long lessonId);
     default Page<VideoResponse> findAllVideosByLessonId(Long lessonId, Pageable pageable){
         List<VideoResponse> videos = findAllVideo(lessonId);

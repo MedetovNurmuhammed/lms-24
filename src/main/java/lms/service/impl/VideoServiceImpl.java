@@ -64,16 +64,8 @@ public class VideoServiceImpl implements VideoService {
         video.setDescription(videoRequest.description());
         video.setCreatedAt(videoRequest.createdAt());
         Link link = video.getLink();
-        if (link == null) {
-            link = new Link();
-            link.setUrl(videoRequest.linkOfVideo());
-            link.setTitle(videoRequest.titleOfVideo());
-            link.setVideo(video);
-            video.setLink(link);
-        } else {
-            link.setUrl(videoRequest.linkOfVideo());
-            link.setTitle(videoRequest.titleOfVideo());
-        }
+        link.setUrl(videoRequest.linkOfVideo());
+        link.setTitle(videoRequest.titleOfVideo());
         linkRepository.save(link);
         videoRepository.save(video);
         return SimpleResponse.builder()
@@ -99,18 +91,9 @@ public class VideoServiceImpl implements VideoService {
     public VideoResponse findById(Long videoId) {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
-        Link link = video.getLink();
-        if (link != null) {
-            return VideoResponse.builder()
-                    .titleOfVideo(video.getLink().getTitle())
-                    .linkOfVideo(video.getLink().getUrl())
-                    .description(video.getDescription())
-                    .createdAt(video.getCreatedAt())
-                    .build();
-        }
         return VideoResponse.builder()
-                .titleOfVideo(null)
-                .linkOfVideo(null)
+                .titleOfVideo(video.getLink().getTitle())
+                .linkOfVideo(video.getLink().getUrl())
                 .description(video.getDescription())
                 .createdAt(video.getCreatedAt())
                 .build();
