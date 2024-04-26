@@ -2,6 +2,7 @@ package lms.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 public record VideoRequest(
         @NotBlank
@@ -12,7 +13,9 @@ public record VideoRequest(
         String description,
         @NotBlank
         @NotNull
-        String linkOfVideo
+        String linkOfVideo,
+        @NotNull
+        LocalDate createdAt
 
 ) {
 }

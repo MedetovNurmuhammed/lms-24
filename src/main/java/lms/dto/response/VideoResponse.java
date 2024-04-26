@@ -1,4 +1,14 @@
 package lms.dto.response;
 
-public record VideoResponse() {
+import lombok.Builder;
+import java.time.LocalDate;
+
+@Builder
+public record VideoResponse(
+        Long id,
+        String titleOfVideo,
+        String description,
+        String linkOfVideo,
+        LocalDate createdAt
+) {
 }
