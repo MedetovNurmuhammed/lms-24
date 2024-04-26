@@ -54,11 +54,11 @@ public class UserServiceImpl implements UserService {
                 .message("Успешный вход")
                 .build();
     }
-
     public SimpleResponse emailSender(String toEmail) throws MessagingException {
         String uuid = UUID.randomUUID().toString();
         User user = userRepository.getByEmail(toEmail);
         user.setUuid(uuid);
+        userRepository.save(user);
         String link = "http://192.168.0.14:9090/createPassword.html?uuid=" + uuid;  // Constructing the link
         String htmlContent = String.format("""
                 <html>
