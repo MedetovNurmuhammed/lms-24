@@ -27,16 +27,18 @@ import java.time.LocalDate;
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "video_gen")
-    @SequenceGenerator(name = "video_seq",sequenceName = "video_seq", allocationSize = 1)
+    @SequenceGenerator(name = "video_gen", sequenceName = "video_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
     //*************************************** Link ***************************************
-    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE,orphanRemoval = true)
-    private Link link ;
-
+    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Link link;
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDate.now();
