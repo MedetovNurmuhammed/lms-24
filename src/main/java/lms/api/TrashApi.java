@@ -3,7 +3,6 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
-import lms.dto.response.TrashResponse;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

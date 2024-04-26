@@ -47,4 +47,10 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Instructor instructor;
+
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    private Video video;
+
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    private Link link;
 }

@@ -31,7 +31,11 @@ public class Link {
     @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     private Task task;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    //********************************* Trash ***************************************
+    @OneToOne
+    private Trash trash;
+
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Video video;
 
 }

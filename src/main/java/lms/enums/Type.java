@@ -4,5 +4,7 @@ public enum Type {
     STUDENT,
     INSTRUCTOR,
     GROUP,
-    COURSE
+    COURSE,
+    LINK,
+    VIDEO
 }

@@ -18,6 +18,10 @@ spring:
         init:
             data-locations: classpath:datainit/dataInit.sql
             mode: always
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 10MB
 cloud:
     aws:
         credentials:
