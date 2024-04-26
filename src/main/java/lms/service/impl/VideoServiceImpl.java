@@ -92,7 +92,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoResponse findById(Long videoId) {
-        Video video = videoRepository.findById(videoId)
+        Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         return VideoResponse.builder()
                 .titleOfVideo(video.getLink().getTitle())
@@ -113,6 +113,7 @@ public class VideoServiceImpl implements VideoService {
         trash.setType(Type.VIDEO);
         trash.setVideo(video);
         video.setTrash(trash);
+        trash.setLink(video.getLink());
         video.getLink().setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()
