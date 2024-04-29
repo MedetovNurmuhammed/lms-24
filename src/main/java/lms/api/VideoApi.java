@@ -4,17 +4,40 @@ import io.swagger.v3.oas.annotations.Operation;
 import lms.dto.response.SimpleResponse;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/video")
 @RequiredArgsConstructor
 public class VideoApi {
     private final VideoService videoService;
+
+    @Secured("INSTRUCTOR")
+    @PostMapping("/save/{lessonId}")
+    public SimpleResponse save(@RequestBody @Valid VideoRequest videoRequest, @PathVariable Long lessonId) {
+        return videoService.save(videoRequest, lessonId);
+    }
+
+    @Secured("INSTRUCTOR")
+    @PutMapping("/update/{videoId}")
+    public SimpleResponse update(@PathVariable Long videoId, @RequestBody @Valid VideoRequest videoRequest) {
+        return videoService.update(videoId, videoRequest);
+    }
+
+    @Secured("INSTRUCTOR")
+    @GetMapping("/findAll/{lessonId}")
+    public AllVideoResponse findAll(@RequestParam int page, @RequestParam int size, @PathVariable Long lessonId) {
+        return videoService.findAllVideoByLessonId(size, page, lessonId);
+    }
+
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'STUDENT')")
+    @GetMapping("/findById/{videoId}")
+    public VideoResponse findById(@PathVariable Long videoId) {
+        return videoService.findById(videoId);
+    }
+
 
     @Operation(summary = "Удалить видеоурока",
             description = "Метод для удаления видеоурока по его идентификатору." +
@@ -23,6 +46,6 @@ public class VideoApi {
     @DeleteMapping("/delete/{studId}")
     public SimpleResponse delete(@PathVariable Long studId) {
         return videoService.delete(studId);
-    }
+
 
 }

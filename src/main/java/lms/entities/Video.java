@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "video_gen")
-    @SequenceGenerator(name = "video_seq",sequenceName = "video_seq", allocationSize = 1)
+    @SequenceGenerator(name = "video_gen", sequenceName = "video_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String description;
     private LocalDate createdAt;

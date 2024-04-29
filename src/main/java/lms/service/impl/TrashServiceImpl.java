@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,7 @@ public class TrashServiceImpl implements TrashService {
         Page<Trash> trashes = trashRepository.findAll(pageable);
         List<TrashResponse> trashResponses = new ArrayList<>();
         for (Trash trash : trashes) {
-            if (trash.getType().equals(Type.INSTRUCTOR) ||
-                    trash.getType().equals(Type.STUDENT) ||
-                    trash.getType().equals(Type.COURSE) ||
-                    trash.getType().equals(Type.GROUP)) {
-                trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
-            }
+            trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
         }
         AllTrashResponse allTrashResponse = new AllTrashResponse();
         allTrashResponse.setPage(page);
