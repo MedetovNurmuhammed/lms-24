@@ -1,10 +1,7 @@
 package lms.exceptions.handler;
 
 
-import lms.exceptions.AlreadyExistsException;
-import lms.exceptions.BadRequestException;
-import lms.exceptions.ForbiddenException;
-import lms.exceptions.NotFoundException;
+import lms.exceptions.*;
 import lms.exceptions.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
 import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 
@@ -119,6 +117,16 @@ public class HandlerException {
                 .httpStatus(HttpStatus.UNAUTHORIZED)
                 .exceptionClassName(accessDeniedException.getClass().getSimpleName())
                 .message(accessDeniedException.getMessage())
+                .build();
+    }
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse validationException(ValidationException validationException){
+        log.error(validationException.getMessage());
+        return ExceptionResponse.builder()
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .exceptionClassName(validationException.getClass().getSimpleName())
+                .message(validationException.getMessage())
                 .build();
     }
 }

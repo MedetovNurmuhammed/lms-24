@@ -13,7 +13,6 @@ import lms.entities.ResultTask;
 import lms.entities.Task;
 import lms.entities.Student;
 import lms.enums.Type;
-import lms.exceptions.NotFoundException;
 import lms.repository.TrashRepository;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
