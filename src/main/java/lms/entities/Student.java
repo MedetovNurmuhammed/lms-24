@@ -41,6 +41,7 @@ public class Student {
     private StudyFormat studyFormat;
     private LocalDate createdAt;
     private LocalDate updatedAt;
+    @Enumerated(EnumType.STRING)
     private Type type;
 
 

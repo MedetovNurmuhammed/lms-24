@@ -1,6 +1,7 @@
 package lms.entities;
 
 import jakarta.persistence.*;
+import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,16 +23,23 @@ public class Link {
     private Long id;
     private String title;
     private String url;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     //***************************************** AnswerTask *********************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
     //***************************************** Task *********************************
-    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Task task;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Video video;
 
+    @OneToOne(mappedBy = "link",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    private AnswerTask answerTask;
+
+    @OneToOne
+    private Trash trash;
 }

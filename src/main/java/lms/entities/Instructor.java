@@ -42,19 +42,19 @@ public class Instructor {
     private Type type;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private List<Notification> notifications = new ArrayList<>();
 
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
    @PrePersist

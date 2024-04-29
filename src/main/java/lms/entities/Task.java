@@ -1,16 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,20 +32,23 @@ public class Task {
     private LocalDate updatedAt;
 
     //*************************************** Instructor ***********************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Link ******************************************
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Lesson ****************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
+
+    @OneToOne()
+    private Trash trash;
 
     @PrePersist
     protected void onCreate() {

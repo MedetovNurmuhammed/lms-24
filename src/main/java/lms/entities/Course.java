@@ -35,19 +35,19 @@ public class Course {
     }
 
     //*************************************** Instructor *************************************
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private List<Instructor> instructors = new ArrayList<>();
 
     //*************************************** Group ******************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private List<Group> groups = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 
     //*************************************** Trash *******************************************
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

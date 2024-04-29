@@ -1,15 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lms.enums.Type;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +27,7 @@ public class Trash {
     private Type type;
     private ZonedDateTime dateOfDelete;
 
+
     @OneToOne(mappedBy = "trash", cascade = {CascadeType.REMOVE}, optional = false)
     private Student student;
 
@@ -47,4 +39,22 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Instructor instructor;
+
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE,optional = false)
+    private Lesson lesson;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Link link;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    private Video video;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Presentation presentation;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Test test;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private Task task;
 }

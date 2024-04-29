@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TrashRepository extends JpaRepository<Trash, Long> {
 
     List<Trash> findByDateOfDeleteBefore(ZonedDateTime now);
 
-    @Query("select t from Trash t where t.id = ?1")
-    Trash findTrashById(Long trashId);
+//    @Query("select t from Trash t where t.id = :trashId")
+//    Optional<Trash> findTrashById(Long trashId);
 }

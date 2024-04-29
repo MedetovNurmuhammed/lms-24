@@ -7,10 +7,13 @@ import lms.dto.response.LessonResponse;
 import lms.dto.response.AllLessonsResponse;
 import lms.entities.Lesson;
 import lms.entities.Course;
+import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.LessonRepository;
+import lms.repository.TrashRepository;
 import lms.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ import java.time.LocalDate;
 public class LessonServiceImpl implements LessonService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {
@@ -59,7 +64,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponse findById(Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
+        Lesson lesson = lessonRepository.takeById(lessonId);
         return LessonResponse.builder()
                 .id(lesson.getId())
                 .title(lesson.getTitle())
@@ -79,14 +84,19 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    @Transactional
     public SimpleResponse delete(Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
-        lessonRepository.delete(lesson);
+        Lesson lesson = lessonRepository.getLessonById(lessonId);
+        Trash trash = new Trash();
+        trash.setName(lesson.getTitle());
+        trash.setType(Type.LESSON);
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setLesson(lesson);
+        lesson.setTrash(trash);
+        trashRepository.save(trash);
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Урок и связанные задачи успешно удалены")
+                .message("Урок успешно добавлено в корзину")
                 .build();
     }
 }

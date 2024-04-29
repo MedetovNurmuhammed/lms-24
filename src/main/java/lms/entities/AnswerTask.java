@@ -41,7 +41,7 @@ public class AnswerTask{
     private Task task;
 
     //*************************************** Link *****************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Link link;
 
     //*************************************** ResultTask ************************************

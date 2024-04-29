@@ -6,6 +6,7 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api/trash")
 @RequiredArgsConstructor
+@Slf4j
 public class TrashApi {
 
     private final TrashService trashService;
@@ -49,4 +51,34 @@ public class TrashApi {
     public SimpleResponse returnToBase(@PathVariable Long trashId) {
         return trashService.returnToBase(trashId);
     }
+
+    @Operation(summary = "Получить все,  в корзине инструктора !",
+            description = "Метод для получение все,  в корзине инструктора с пагинацией !" +
+                    " Авторизация: администратор и инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @GetMapping(value = "/findAllInstructorTrash", produces = MediaType.APPLICATION_JSON_VALUE)
+    public AllTrashResponse findAllInstructorTrash(@RequestParam(required = false, defaultValue = "1") int page,
+                                    @RequestParam(required = false, defaultValue = "6") int size) {
+        return trashService.findAllInstructorTrash(page, size);
+    }
+
+    @Operation(summary = "Возвращать из корзины инструктора.",
+            description = "Метод для получение  из корзины инструктора и удаление из корзины инструктора!" +
+                    " Авторизация: администратор и инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @DeleteMapping("returnInstructorTrash/{trashId}")
+    public SimpleResponse returnInstructorTrashToBase(@PathVariable Long trashId) {
+        return trashService.returnInstructorTrashToBase(trashId);
+    }
+
+    @Operation(summary = "Удалить из корзины инструктора.",
+              description = "Метод для получение удаление из корзины инструктора!" +
+                      " Авторизация: администратор и инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @DeleteMapping("/deleteInstructorTrash/{trashId}")
+    public SimpleResponse deleteInstructorTrash(@PathVariable Long trashId){
+        log.info(String.valueOf(trashId));
+        return trashService.deleteInstructorTrash(trashId);
+    }
+
 }

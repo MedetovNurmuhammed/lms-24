@@ -137,7 +137,6 @@ public class StudentServiceImpl implements StudentService {
         trash.setStudent(student);
         trash.setType(student.getType());
         trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setStudent(student);
         student.setTrash(trash);
         trashRepository.save(trash);
         log.info("Успешно удален!");

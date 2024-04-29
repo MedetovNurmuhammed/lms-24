@@ -49,6 +49,9 @@ public class Test {
     @OneToOne(cascade = CascadeType.DETACH)
     private Lesson lesson;
 
+    @OneToOne()
+    private Trash trash;
+
     @PrePersist
     protected void onCreate() {
         creationDate = LocalDate.now();

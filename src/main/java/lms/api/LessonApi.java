@@ -10,6 +10,7 @@ import lms.dto.response.SimpleResponse;
 import lms.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +33,7 @@ public class LessonApi {
         return lessonService.findAll(page, size,courseId);
     }
 
-    @Secured("INSTRUCTOR")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(summary = "Возвращает урок.(Авторизация: инструктор)")
     @GetMapping("/findById/{lessonId}")
     public LessonResponse findById(@PathVariable Long lessonId) {
@@ -46,9 +47,9 @@ public class LessonApi {
             @RequestBody @Valid LessonRequest lessonRequest, @PathVariable Long lessonId) {
         return lessonService.update(lessonRequest, lessonId);
     }
-    @Secured("INSTRUCTOR")
-    @DeleteMapping("/delete/{lessonId}")
+
     @Operation(summary = "Удаляет текущий урок.(Авторизация: инструктор)")
+    @DeleteMapping("/delete/{lessonId}")
     public SimpleResponse delete(@PathVariable Long lessonId) {
         return lessonService.delete(lessonId);
     }

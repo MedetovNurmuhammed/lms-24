@@ -12,4 +12,10 @@ public interface TrashService {
     SimpleResponse delete(Long trashId);
 
     SimpleResponse returnToBase(Long trashId);
+
+    AllTrashResponse findAllInstructorTrash(int page, int size);
+
+    SimpleResponse returnInstructorTrashToBase(Long trashId);
+
+    SimpleResponse deleteInstructorTrash(Long trashId);
 }
