@@ -8,7 +8,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
@@ -31,4 +33,10 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email) from Student s where s.group.id = :groupId and s.trash is null")
     List<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
+
+    @Query("select s from Student s where s.user.id =:id ")
+    Optional<Student> findByUserId(Long id);
+
+    @Query("select  s from  Student  s where s.user.email=:email")
+    Optional<Student> getStudentByEmail(String email);
 }

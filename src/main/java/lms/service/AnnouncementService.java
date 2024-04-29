@@ -1,9 +1,7 @@
 package lms.service;
 
-import lms.dto.response.AllAnnouncementResponse;
-import lms.dto.response.AnnouncementRequest;
-import lms.dto.response.AnnouncementResponse;
-import lms.dto.response.SimpleResponse;
+import jakarta.validation.Valid;
+import lms.dto.response.*;
 
 public interface AnnouncementService {
 
@@ -17,5 +15,11 @@ public interface AnnouncementService {
 
     SimpleResponse isPublished(Long announcementId, boolean isPublished);
 
-    AllAnnouncementResponse findAllAnnouncementByGroupId(int page, int size, long groupId);
+    AllAnnouncementResponse findAllAnnouncementByGroupId(int page, int size, Long groupId);
+
+    SimpleResponse deleteById(long announcementId);
+
+    SimpleResponse update(long announcementId, @Valid AnnouncementRequest announcementRequest);
+
+    AllAnnouncementOfStudentResponse allAnnouncementOfStudent(Boolean isView);
 }
