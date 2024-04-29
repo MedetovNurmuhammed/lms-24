@@ -3,6 +3,7 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.response.*;
 import lms.entities.*;
+import lms.enums.Role;
 import lms.exceptions.NotFoundException;
 import lms.repository.AnnouncementRepository;
 import lms.repository.GroupRepository;
@@ -10,10 +11,7 @@ import lms.repository.StudentRepository;
 import lms.repository.UserRepository;
 import lms.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,39 +58,47 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public SimpleResponse viewAnnouncement(Long announcementId) {
+    public AnnouncementResponse viewAnnouncement(Long announcementId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
-
-        Student student = studentRepository.findByUserId(currentUser.getId()).orElseThrow(() -> new NotFoundException("Student not found"));
-        Announcement announcement = announcementRepository.findById(announcementId).orElseThrow(() -> new NoSuchElementException("announcement not found"));
-        student.getAnnouncements().put(announcement, true);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Объявление просмотрено")
-                .build();
-    }
-
-    @Override
-    public AnnouncementResponse findById(long announcementId) {
-        Announcement announcement = announcementRepository.getById(announcementId);
+        Announcement announcement = getById(announcementId);
+        if (currentUser.getRole().equals(Role.STUDENT)) {
+            Student student = studentRepository.findByUserId(currentUser.getId()).orElseThrow(() -> new NotFoundException("Student not found"));
+            student.getAnnouncements().put(announcement, true);
+        }
         return AnnouncementResponse.builder()
                 .id(announcement.getId())
                 .content(announcement.getAnnouncementContent())
+                .owner(announcement.getUser().getFullName())
                 .isPublished(announcement.getIsPublished())
                 .publishDate(announcement.getPublishedDate())
                 .endDate(announcement.getExpirationDate())
                 .build();
     }
 
-    @Override
+
     public AllAnnouncementResponse findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("publishedDate").descending());
-        Page<AnnouncementResponse> announcementResponses = announcementRepository.findAllAnnouncement(pageable);
+        Page<Announcement> announcementPage = announcementRepository.findAll(pageable);
+
+        List<AnnouncementResponse> announcementResponses = announcementPage.getContent().stream()
+                .map(announcement -> AnnouncementResponse.builder()
+                        .id(announcement.getId())
+                        .content(announcement.getAnnouncementContent())
+                        .owner(announcement.getUser().getUsername())
+                        .groupNames(announcement.getGroups().stream()
+                                .map(Group::getTitle)
+                                .collect(Collectors.toList()))
+                        .isPublished(announcement.getIsPublished())
+                        .publishDate(announcement.getPublishedDate())
+                        .endDate(announcement.getExpirationDate())
+                        .build())
+                .collect(Collectors.toList());
+
         return AllAnnouncementResponse.builder()
-                .page(announcementResponses.getNumber() + 1)
-                .size(announcementResponses.getNumberOfElements())
-                .announcements(announcementResponses.getContent())
+                .page(announcementPage.getNumber() +1)
+                .size(announcementPage.getNumberOfElements())
+                .announcements(announcementResponses)
                 .build();
     }
 
@@ -115,20 +122,39 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .build();
     }
 
-    @Override
     public AllAnnouncementResponse findAllAnnouncementByGroupId(int page, int size, Long groupId) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("publishedDate").descending());
+
         if (groupId == null) {
             return findAll(page, size);
         }
-        Group group = groupRepository.getById(groupId);
-        Page<AnnouncementResponse> announcementResponses = announcementRepository.findAllByGroupId(group.getId(), pageable);
+
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new NotFoundException("Group not found"));
+
+        Page<Announcement> announcementPage = announcementRepository.findAllByGroupId(group.getId(), pageable);
+
+        List<AnnouncementResponse> announcementResponses = announcementPage.getContent().stream()
+                .map(announcement -> AnnouncementResponse.builder()
+                        .id(announcement.getId())
+                        .content(announcement.getAnnouncementContent())
+                        .owner(announcement.getUser().getUsername())
+                        .groupNames(announcement.getGroups().stream()
+                                .map(Group::getTitle)
+                                .collect(Collectors.toList()))
+                        .isPublished(announcement.getIsPublished())
+                        .publishDate(announcement.getPublishedDate())
+                        .endDate(announcement.getExpirationDate())
+                        .build())
+                .collect(Collectors.toList());
+
         return AllAnnouncementResponse.builder()
-                .page(announcementResponses.getNumber() + 1)
-                .size(announcementResponses.getNumberOfElements())
-                .announcements(announcementResponses.getContent())
+                .page(announcementPage.getNumber() +1)
+                .size(announcementPage.getNumberOfElements())
+                .announcements(announcementResponses)
                 .build();
     }
+
 
     @Override
     public SimpleResponse deleteById(long announcementId) {
@@ -159,11 +185,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public AllAnnouncementOfStudentResponse allAnnouncementOfStudent(Boolean isView) {
+    public AllAnnouncementOfStudentResponse allAnnouncementOfStudent(int page, int size, Boolean isView) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student student = studentRepository.getStudentByEmail(email).orElseThrow(() -> new NotFoundException("Студент не найден"));
+        Student student = studentRepository.getStudentByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Студент не найден"));
+
         Map<Announcement, Boolean> announcements = student.getAnnouncements();
         List<AnnouncementOfStudent> announcementOfStudents = new ArrayList<>();
+
         announcements.forEach((announcement, aBoolean) -> {
             announcementOfStudents.add(
                     AnnouncementOfStudent.builder()
@@ -173,11 +202,24 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                             .build()
             );
         });
-        List<AnnouncementOfStudent> announcementsIsView = announcementOfStudents.stream().filter(announcementOfStudent -> announcementOfStudent.isView().equals(isView)).toList();
+
+        List<AnnouncementOfStudent> announcementsIsView = announcementOfStudents.stream()
+                .filter(announcementOfStudent -> announcementOfStudent.isView().equals(isView))
+                .collect(Collectors.toList());
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), announcementsIsView.size());
+        Page<AnnouncementOfStudent> announcementPage = new PageImpl<>(announcementsIsView.subList(start, end), pageable, announcementsIsView.size());
+
         return AllAnnouncementOfStudentResponse.builder()
-                .announcements(announcementsIsView)
+                .page(announcementPage.getNumber() + 1)
+                .size(announcementPage.getNumberOfElements())
+                .announcements(announcementPage.getContent())
                 .build();
     }
+
 
     @Transactional
     @Scheduled(cron = "0 1 12 * * *")

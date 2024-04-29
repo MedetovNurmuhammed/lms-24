@@ -8,17 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
 
-    @Query("select new lms.dto.response.AnnouncementResponse(a.id,a.announcementContent,a.publishedDate,a.expirationDate,a.isPublished) from Announcement  a  ")
-    Page<AnnouncementResponse> findAllAnnouncement(Pageable pageable);
-
-    @Query("select new lms.dto.response.AnnouncementResponse(a.id,a.announcementContent,a.publishedDate,a.expirationDate,a.isPublished) from Announcement  a join a.groups g where g.id =:groupId ")
-    Page<AnnouncementResponse> findAllByGroupId(Long groupId, Pageable pageable);
+    @Query("select a from Announcement  a join a.groups g where g.id =:groupId ")
+    Page<Announcement> findAllByGroupId(Long groupId, Pageable pageable);
 
     @Transactional
     @Modifying

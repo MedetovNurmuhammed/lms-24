@@ -7,9 +7,7 @@ public interface AnnouncementService {
 
     SimpleResponse createAnnouncement(AnnouncementRequest announcementRequest);
 
-    SimpleResponse viewAnnouncement(Long announcementId);
-
-    AnnouncementResponse findById(long announcementId);
+    AnnouncementResponse viewAnnouncement(Long announcementId);
 
     AllAnnouncementResponse findAll(int page, int size);
 
@@ -21,5 +19,5 @@ public interface AnnouncementService {
 
     SimpleResponse update(long announcementId, @Valid AnnouncementRequest announcementRequest);
 
-    AllAnnouncementOfStudentResponse allAnnouncementOfStudent(Boolean isView);
+    AllAnnouncementOfStudentResponse allAnnouncementOfStudent(int page,int size,Boolean isView);
 }

@@ -21,18 +21,11 @@ public class AnnouncementApi {
         return announcementService.createAnnouncement(announcementRequest);
     }
 
-    @Secured("STUDENT")
+    @Secured({"ADMIN", "INSTRUCTOR", "STUDENT"})
     @Operation(summary = "Просмотр объявления по идентификатору")
     @PutMapping("/viewAnnouncementById/{announcementId}")
-    public SimpleResponse viewAnnouncementById(@PathVariable("announcementId") long announcementId) {
+    public AnnouncementResponse viewAnnouncementById(@PathVariable("announcementId") long announcementId) {
         return announcementService.viewAnnouncement(announcementId);
-    }
-
-    @Secured({"ADMIN", "INSTRUCTOR", "STUDENT"})
-    @Operation(summary = "Поиск объявления по идентификатору")
-    @GetMapping("/findById/{announcementId}")
-    public AnnouncementResponse findById(@PathVariable("announcementId") long announcementId) {
-        return announcementService.findById(announcementId);
     }
 
     @Secured("ADMIN")
@@ -69,7 +62,7 @@ public class AnnouncementApi {
             @RequestParam(required = false, defaultValue = "4") int size,
             @RequestParam(required = false,defaultValue = "false") boolean isView
     ) {
-        return announcementService.allAnnouncementOfStudent(isView);
+        return announcementService.allAnnouncementOfStudent(page,size,isView);
     }
 
     @Secured({"INSTRUCTOR", "ADMIN"})
