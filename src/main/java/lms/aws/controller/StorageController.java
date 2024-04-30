@@ -20,15 +20,16 @@ public class StorageController {
     private StorageService service;
     @Autowired
     private GenericParameterService parameterBuilder;
-
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, params = "file")
+    @Secured("ADMIN")
+    @PostMapping
+//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, params = "file")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         service.uploadFile(file);
         return new ResponseEntity<>("File uploaded successfully", HttpStatus.OK);
     }
 
 
-    //    @Secured("ADMIN")
+        @Secured("ADMIN")
     @GetMapping("/download/{fileName}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) throws IOException {
         return service.downloadFile(fileName);
