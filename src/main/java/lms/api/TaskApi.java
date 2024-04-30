@@ -13,11 +13,5 @@ import org.springframework.web.bind.annotation.*;
 public class TaskApi {
     private final TaskService taskService;
 
-//    @PostMapping("/create/{lessonId}")
-//    public SimpleResponse createTask(@PathVariable("lessonId") Long lessonId, @RequestBody TaskRequest taskRequest) {
-//        return taskService.createTask(lessonId,taskRequest);
-//    }
-//
-//    @GetMapping("/findById/{taskId}")
-//    public TaskResponse findById(@PathVariable("taskId") Long taskId) {}
+
 }
