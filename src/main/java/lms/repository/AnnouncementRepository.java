@@ -1,7 +1,6 @@
 package lms.repository;
 
 import jakarta.transaction.Transactional;
-import lms.dto.response.AnnouncementResponse;
 import lms.entities.Announcement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +22,6 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
 
     List<Announcement> findByExpirationDateBefore(LocalDate publishedDate);
 
+    @Query("select a from Announcement a join a.groups g where g.id in(:ids)")
+    Page<Announcement> findAllInstructorAnnouncement(List<Long> ids, Pageable pageable);
 }

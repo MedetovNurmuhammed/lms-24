@@ -2,6 +2,7 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lms.dto.request.AnnouncementRequest;
 import lms.dto.response.*;
 import lms.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +29,6 @@ public class AnnouncementApi {
         return announcementService.viewAnnouncement(announcementId);
     }
 
-    @Secured("ADMIN")
-    @Operation(summary = "Получение всех объявлений")
-    @GetMapping("/findAllAnnouncement")
-    public AllAnnouncementResponse findAllAnnouncement(
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "4") int size
-    ) {
-        return announcementService.findAll(page, size);
-    }
-
     @Secured({"ADMIN", "INSTRUCTOR"})
     @Operation(summary = "Публикация/снятие с публикации объявления")
     @PutMapping("/isPublished/{announcementId}")
@@ -50,19 +41,19 @@ public class AnnouncementApi {
     @GetMapping("/findAllAnnouncementByGroupId")
     public AllAnnouncementResponse findAllAnnouncementByGroupId(
             @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "4") int size,
+            @RequestParam(required = false, defaultValue = "6") int size,
             @RequestParam(required = false) Long groupId) {
-        return announcementService.findAllAnnouncementByGroupId(page,size, groupId);
+        return announcementService.findAllAnnouncementByGroupId(page, size, groupId);
     }
+
     @Secured("STUDENT")
     @Operation(summary = "Поиск всех объявлений для студента")
     @GetMapping("/findAllAnnouncementOfStudent")
     public AllAnnouncementOfStudentResponse findAllByGroupId(
             @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "4") int size,
-            @RequestParam(required = false,defaultValue = "false") boolean isView
-    ) {
-        return announcementService.allAnnouncementOfStudent(page,size,isView);
+            @RequestParam(required = false, defaultValue = "6") int size,
+            @RequestParam(required = false, defaultValue = "false") boolean isView ) {
+        return announcementService.allAnnouncementOfStudent(page, size, isView);
     }
 
     @Secured({"INSTRUCTOR", "ADMIN"})
@@ -75,7 +66,8 @@ public class AnnouncementApi {
     @Secured({"ADMIN", "INSTRUCTOR"})
     @Operation(summary = "Обновление объявления по идентификатору")
     @PatchMapping("/update/{announcementId}")
-    public SimpleResponse update(@PathVariable long announcementId, @RequestBody @Valid AnnouncementRequest announcementRequest) {
-        return announcementService.update(announcementId,announcementRequest);
+    public SimpleResponse update(@PathVariable long announcementId,
+                                 @RequestBody @Valid AnnouncementRequest announcementRequest) {
+        return announcementService.update(announcementId, announcementRequest);
     }
 }

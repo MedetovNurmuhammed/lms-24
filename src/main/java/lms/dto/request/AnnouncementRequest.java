@@ -1,4 +1,4 @@
-package lms.dto.response;
+package lms.dto.request;
 
 import jakarta.validation.constraints.*;
 
