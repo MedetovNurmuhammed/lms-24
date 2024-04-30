@@ -530,12 +530,5 @@ update  links set video_id =9 where id =9;
 update  links set lesson_id =10 where id =10;
 update  links set video_id =11 where id =11;
 update  links set lesson_id =12 where id =12;
-update  links set task_id =13 where id =13;
-update links set task_id =14 where id =14;
-update  links set task_id=15 where id =15;
-update links set task_id =16 where id =16;
-update  links set task_id =17 where id =17;
-update links set task_id =18 where id =18;
-update  links set task_id =19 where id =19;
-update links set task_id =20 where id =20;
+
 

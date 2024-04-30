@@ -1,6 +1,6 @@
 package lms.dto.request;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record TaskRequest(
@@ -9,7 +9,7 @@ public record TaskRequest(
         String file,
         String image,
         String code,
-        LocalDate deadline,
+        LocalDateTime deadline,
         List<String> links
 ) {
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Task {
     private String code;
     @ElementCollection
     private List<String> links = new ArrayList<>();
-    private LocalDate deadline;
+    private LocalDateTime deadline;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
