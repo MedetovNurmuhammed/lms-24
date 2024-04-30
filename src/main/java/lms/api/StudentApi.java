@@ -83,6 +83,7 @@ public class StudentApi {
     public SimpleResponse delete(@PathVariable Long studId) {
         return studentService.delete(studId);
     }
+
     @Operation(description = "Import student to group")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

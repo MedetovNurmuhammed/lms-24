@@ -28,4 +28,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
         int end = Math.min((start + pageable.getPageSize()), instructorsOrStudentsOfCourses.size());
         return new PageImpl<>(instructorsOrStudentsOfCourses.subList(start, end), pageable, instructorsOrStudentsOfCourses.size());
     }
+
+    Instructor findByUserId(Long id);
 }
