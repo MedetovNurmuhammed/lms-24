@@ -9,7 +9,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface TrashRepository extends JpaRepository<Trash, Long> {
 
     List<Trash> findByDateOfDeleteBefore(ZonedDateTime now);

@@ -47,7 +47,7 @@ public class Task {
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

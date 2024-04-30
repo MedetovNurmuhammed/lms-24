@@ -76,8 +76,6 @@ public class TrashApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/deleteInstructorTrash/{trashId}")
     public SimpleResponse deleteInstructorTrash(@PathVariable Long trashId){
-        log.info(String.valueOf(trashId));
         return trashService.deleteInstructorTrash(trashId);
     }
-
 }

@@ -37,8 +37,6 @@ public class Video {
     @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
-
-
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDate.now();

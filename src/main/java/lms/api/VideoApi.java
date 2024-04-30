@@ -1,7 +1,11 @@
 package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lms.dto.request.VideoRequest;
+import lms.dto.response.AllVideoResponse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.VideoResponse;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -46,6 +50,5 @@ public class VideoApi {
     @DeleteMapping("/delete/{studId}")
     public SimpleResponse delete(@PathVariable Long studId) {
         return videoService.delete(studId);
-
-
+    }
 }

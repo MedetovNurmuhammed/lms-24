@@ -1,7 +1,6 @@
 package lms.entities;
 
 import jakarta.persistence.*;
-import lms.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,8 +21,6 @@ public class Link {
     private Long id;
     private String title;
     private String url;
-    @Enumerated(EnumType.STRING)
-    private Type type;
 
     //***************************************** AnswerTask *********************************
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
@@ -34,7 +31,7 @@ public class Link {
     private Task task;
 
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
@@ -43,6 +40,4 @@ public class Link {
     @OneToOne(mappedBy = "link",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private AnswerTask answerTask;
 
-    @OneToOne
-    private Trash trash;
 }

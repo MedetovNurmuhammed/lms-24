@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
@@ -48,9 +49,10 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.save(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("урок "+lesson.getTitle()+" успешно сохранено")
+                .message("урок " + lesson.getTitle() + " успешно сохранено")
                 .build();
     }
+
     @Override
     public AllLessonsResponse findAll(int page, int size, Long courseId) {
         Pageable pageable = PageRequest.of(page - 1, size);
@@ -75,29 +77,31 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse update(LessonRequest lessonRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c "+ lessonId +" не найден"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         lesson.setTitle(lessonRequest.getTitle());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("урок "+lesson.getTitle()+" успешно обнолён")
+                .message("урок " + lesson.getTitle() + " успешно обнолён")
                 .build();
     }
 
     @Override
+    @Transactional
     public SimpleResponse delete(Long lessonId) {
         Lesson lesson = lessonRepository.getLessonById(lessonId);
-        Trash trash = new Trash();
-        trash.setName(lesson.getTitle());
-        trash.setType(Type.LESSON);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setLesson(lesson);
-        lesson.setTrash(trash);
-        trashRepository.save(trash);
-
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Урок успешно добавлено в корзину")
-                .build();
+        if (lesson != null) {
+            Trash trash = new Trash();
+            trash.setName(lesson.getTitle());
+            trash.setType(Type.LESSON);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setLesson(lesson);
+            lesson.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Урок успешно добавлено в корзину")
+                    .build();
+        }else throw new NotFoundException("Урок не найден!!!");
     }
 }
 
