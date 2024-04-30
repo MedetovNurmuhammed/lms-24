@@ -2,19 +2,19 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.TaskRequest;
+import lms.dto.response.TaskResponse;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/task")
+@RequestMapping("/api/tasks")
 @RequiredArgsConstructor
 public class TaskApi {
     private final TaskService taskService;
+
 
     @Operation(summary = "Удалить задачку",
             description = "Метод для удаления задачку по его идентификатору." +

@@ -30,4 +30,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("select g.title from Group g ")
     List<String> getAllGroupName();
 
+    @Query("select g.id from Group g join g.courses c join c.instructors i where i.id = :id")
+    List<Long> findAllByInstructorId(Long id);
 }
