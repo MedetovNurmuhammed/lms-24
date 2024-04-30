@@ -24,18 +24,18 @@ public class Link {
     private String url;
 
     //***************************************** AnswerTask *********************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
     //***************************************** Task *********************************
-    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Task task;
 
     //********************************* Trash ***************************************
     @OneToOne
     private Trash trash;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Video video;
 
 }

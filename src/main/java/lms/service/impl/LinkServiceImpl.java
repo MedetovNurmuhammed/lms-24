@@ -1,12 +1,18 @@
 package lms.service.impl;
 
+import jakarta.transaction.Transactional;
 import lms.dto.request.LinkRequest;
-import lms.dto.response.*;
+import lms.dto.response.LinkResponse;
+import lms.dto.response.AllLinkResponse;
+import lms.dto.response.SimpleResponse;
 import lms.entities.Lesson;
 import lms.entities.Link;
+import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.LinkRepository;
+import lms.repository.TrashRepository;
 import lms.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Validated
@@ -24,6 +34,8 @@ import org.springframework.validation.annotation.Validated;
 public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final LessonRepository lessonRepository;
+    private final TrashRepository trashRepository;
+
     @Override
     public SimpleResponse addLink(LinkRequest linkRequest, Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
@@ -33,36 +45,82 @@ public class LinkServiceImpl implements LinkService {
         link.setLesson(lesson);
         lesson.getLinks().add(link);
         linkRepository.save(link);
-        return  SimpleResponse.builder()
+        return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно ccылка с названием "+ link.getTitle()+" сохранен!")
+                .message("Ccылка с названием " + link.getTitle() + " успешно сохранен!")
                 .build();
     }
 
     @Override
     public AllLinkResponse findAll(int page, int size, Long lessonId) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<LinkResponse> allLinks = linkRepository.findAllLinkByLessonId(pageable, lessonId);
+        Page<Link> allLinks = linkRepository.findAllLinksByLessonId(pageable, lessonId);
+        List<LinkResponse> linkResponses = new ArrayList<>();
+        for (Link allLink : allLinks) {
+            String link = allLink.getUrl();
+            String title = allLink.getTitle();
+            String titleWithLink = String.format(
+                    """
+                            <html>
+                            <body>
+                                <a href="%s">"%s"</a>
+                            </body>
+                            </html>
+                            """, link, title);
 
+            linkResponses.add(new LinkResponse(allLink.getId(), titleWithLink));
+        }
         return AllLinkResponse.builder()
                 .page(allLinks.getNumber() + 1)
                 .size(allLinks.getSize())
-                .linkResponses(allLinks.getContent())
+                .linkResponses(linkResponses)
                 .build();
     }
 
     @Override
     public LinkResponse findById(Long linkId) {
-        return null;
+        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        String titleWithLink = String.format(
+                """
+                        <html>
+                        <body>
+                            <a href="%s">"%s"</a>
+                        </body>
+                        </html>
+                        """, link.getUrl(), link.getTitle());
+        return LinkResponse.builder()
+                .id(link.getId())
+                .titleAndLink(titleWithLink)
+                .build();
     }
 
     @Override
+    @Transactional
     public SimpleResponse update(LinkRequest linkRequest, Long linkId) {
-        return null;
+        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        link.setTitle(linkRequest.title());
+        link.setUrl(linkRequest.url());
+        linkRepository.save(link);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Сcылка с названием " + link.getTitle() + " успешно обновлён!")
+                .build();
     }
 
     @Override
-    public SimpleResponse delete(Long lessonId) {
-        return null;
+    @Transactional
+    public SimpleResponse delete(Long linkId) {
+        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Trash trash = new Trash();
+        trash.setName(link.getTitle());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setType(Type.LINK);
+        trash.setLink(link);
+        link.setTrash(trash);
+        trashRepository.save(trash);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Ссылка с названием " + link.getTitle() + " успешно добавлено в карзину")
+                .build();
     }
 }

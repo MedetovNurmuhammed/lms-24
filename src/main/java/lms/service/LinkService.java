@@ -14,5 +14,5 @@ public interface LinkService {
 
     SimpleResponse update(LinkRequest linkRequest, Long linkId);
 
-    SimpleResponse delete(Long lessonId);
+    SimpleResponse delete(Long linkId);
 }
