@@ -26,10 +26,6 @@ public class Link {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Lesson lesson;
 
-    //***************************************** Task *********************************
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    private Task task;
-
     //********************************* Trash ***************************************
     @OneToOne
     private Trash trash;

@@ -1,7 +1,7 @@
 package lms.service.impl;
 
 import lms.dto.response.SimpleResponse;
-import lms.dto.response.TaskRequest;
+import lms.dto.request.TaskRequest;
 import lms.repository.LessonRepository;
 import lms.repository.TaskRepository;
 import lms.service.TaskService;
