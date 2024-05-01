@@ -11,5 +11,7 @@ public class PresentationRequest {
     private String title;
     @NotBlank
     private String description;
+    @NotBlank
+    private String file;
 
 }

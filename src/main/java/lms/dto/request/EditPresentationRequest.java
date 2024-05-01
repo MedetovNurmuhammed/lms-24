@@ -8,4 +8,5 @@ import lombok.Data;
 public class EditPresentationRequest {
     private String title;
     private String description;
+    private String file;
 }

@@ -7,9 +7,9 @@ import lms.dto.response.SimpleResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface PresentationService {
-    SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest, MultipartFile file);
+    SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest);
 
-    SimpleResponse editPresentation(Long presentationId, EditPresentationRequest presentationRequest, MultipartFile file);
+    SimpleResponse editPresentation(Long presentationId, EditPresentationRequest presentationRequest);
 
     PresentationResponse findById(Long presentationId);
 

@@ -38,16 +38,12 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     @Transactional
-    public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest, MultipartFile file) {
+    public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + "не существует!"));
-        if (!file.getContentType().equals("application/pdf")) {
-            throw new IllegalArgumentException("Файл должен быть формата PDF");
-        }
         Presentation presentation = new Presentation();
         presentation.setTitle(presentationRequest.getTitle());
         presentation.setDescription(presentationRequest.getDescription());
-        String url = storageService.uploadFile(file);
-        presentation.setFile(url);
+        presentation.setFile(presentationRequest.getFile());
         lesson.getPresentations().add(presentation);
         presentationRepository.save(presentation);
         lessonRepository.save(lesson);
@@ -60,7 +56,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     @Transactional
-    public SimpleResponse editPresentation(Long presentationId, EditPresentationRequest presentationRequest, MultipartFile file) {
+    public SimpleResponse editPresentation(Long presentationId, EditPresentationRequest presentationRequest) {
         Presentation presentation = presentationRepository.findById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не существует!"));
 
@@ -72,14 +68,9 @@ public class PresentationServiceImpl implements PresentationService {
         }
 
 
-        if (!file.isEmpty()) {
-            storageService.deleteFile(presentation.getFile());
+        if (presentationRequest.getFile() != null) {
+            presentation.setFile(presentationRequest.getFile());
         }
-        if (!file.getContentType().equals("application/pdf")) {
-            throw new IllegalArgumentException("Файл должен быть формата PDF");
-        }
-        String url = storageService.uploadFile(file);
-        presentation.setFile(url);
         presentationRepository.save(presentation);
 
         return SimpleResponse.builder()
@@ -103,7 +94,6 @@ Presentation presentation = presentationRepository.findById(presentationId).orEl
     public SimpleResponse deletePresentationById(Long presentationId) {
         Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(()->new NotFoundException("Презентация с id: "+presentationId+ "не найден!"));
         presentationRepository.deleteById(presentationId);
-        storageService.deleteFile(presentation.getFile());
         Trash trash = new Trash();
         trash.setName(presentation.getTitle());
         trash.setDateOfDelete(ZonedDateTime.now());
