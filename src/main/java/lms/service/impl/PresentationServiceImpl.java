@@ -1,13 +1,11 @@
 package lms.service.impl;
 
 import jakarta.transaction.Transactional;
-import lms.aws.service.StorageService;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Lesson;
-import lms.entities.Link;
 import lms.entities.Presentation;
 import lms.entities.Trash;
 import lms.enums.Type;
@@ -16,13 +14,11 @@ import lms.repository.LessonRepository;
 import lms.repository.PresentationRepository;
 import lms.repository.TrashRepository;
 import lms.service.PresentationService;
-import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZonedDateTime;
 
@@ -32,7 +28,6 @@ import java.time.ZonedDateTime;
 @Slf4j
 public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
-    private final StorageService storageService;
     private final PresentationRepository presentationRepository;
     private final TrashRepository trashRepository;
 
@@ -81,7 +76,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse findById(Long presentationId) {
-Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(()->new NotFoundException("Презентация с id: "+presentationId+" не найден!"));
+        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
         return PresentationResponse.builder()
                 .id(presentation.getId())
                 .title(presentation.getTitle())
@@ -92,7 +87,7 @@ Presentation presentation = presentationRepository.findById(presentationId).orEl
 
     @Override
     public SimpleResponse deletePresentationById(Long presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(()->new NotFoundException("Презентация с id: "+presentationId+ "не найден!"));
+        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
         presentationRepository.deleteById(presentationId);
         Trash trash = new Trash();
         trash.setName(presentation.getTitle());
