@@ -7,17 +7,24 @@ import lms.dto.request.PresentationRequest;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Lesson;
+import lms.entities.Link;
 import lms.entities.Presentation;
+import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.PresentationRepository;
+import lms.repository.TrashRepository;
 import lms.service.PresentationService;
+import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +34,7 @@ public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
     private final StorageService storageService;
     private final PresentationRepository presentationRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     @Transactional
@@ -96,6 +104,13 @@ Presentation presentation = presentationRepository.findById(presentationId).orEl
         Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(()->new NotFoundException("Презентация с id: "+presentationId+ "не найден!"));
         presentationRepository.deleteById(presentationId);
         storageService.deleteFile(presentation.getFile());
+        Trash trash = new Trash();
+        trash.setName(presentation.getTitle());
+        trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setType(Type.PRESENTATION);
+        trash.setPresentation(presentation);
+        presentation.setTrash(trash);
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Презентация успешно удален!")

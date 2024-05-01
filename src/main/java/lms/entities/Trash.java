@@ -53,4 +53,6 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Link link;
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+    private Presentation presentation;
 }
