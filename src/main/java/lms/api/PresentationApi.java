@@ -8,6 +8,7 @@ import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,25 +16,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/presentation")
 public class PresentationApi {
     private final PresentationService presentationService;
-
+@Secured("INSTRUCTOR")
     @Operation(description = "create presentation")
     @PostMapping(value = "/createPresentation/{lessonId}")
     public SimpleResponse createPresentation(@PathVariable Long lessonId, @RequestBody @Valid PresentationRequest presentationRequest) {
         return presentationService.createPresentation(lessonId, presentationRequest);
     }
-
+    @Secured("INSTRUCTOR")
     @Operation(description = "Update Presentation")
     @PatchMapping(value = "updatePresentation/{presentationId}")
     public SimpleResponse editPresentation(@PathVariable Long presentationId, @RequestBody EditPresentationRequest editPresentationRequest) {
         return presentationService.editPresentation(presentationId, editPresentationRequest);
     }
-
+    @Secured("INSTRUCTOR")
     @GetMapping(value = "findById/{presentationId}")
     @Operation(description = "find By presentation")
     public PresentationResponse findById(@PathVariable Long presentationId) {
         return presentationService.findById(presentationId);
     }
-
+    @Secured("INSTRUCTOR")
     @DeleteMapping(value = "delete/{presentationId}")
     @Operation(description = "delete presentation by id")
     public SimpleResponse deleteById(@PathVariable Long presentationId) {
