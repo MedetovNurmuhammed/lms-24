@@ -33,8 +33,8 @@ public class LinkApi {
         return linkService.addLink(linkRequest, lessonId);
     }
 
-    @Secured("INSTRUCTOR")
-    @Operation(summary = "Возвращает пагинированный список всех ссылок урока.(Авторизация: инструктор)")
+    @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
+    @Operation(summary = "Возвращает пагинированный список всех ссылок урока.(Авторизация: инструктор, студент)")
     @GetMapping("/findAll/{lessonId}")
     public AllLinkResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                    @RequestParam(required = false, defaultValue = "6") int size, @PathVariable Long lessonId) {

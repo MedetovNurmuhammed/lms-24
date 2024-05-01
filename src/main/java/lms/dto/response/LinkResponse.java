@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record LinkResponse(
         Long id,
-        String titleAndLink
+        String title,
+        String url
 ) {
 }

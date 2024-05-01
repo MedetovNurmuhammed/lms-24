@@ -19,13 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,44 +51,22 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public AllLinkResponse findAll(int page, int size, Long lessonId) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Link> allLinks = linkRepository.findAllLinksByLessonId(pageable, lessonId);
-        List<LinkResponse> linkResponses = new ArrayList<>();
-        for (Link allLink : allLinks) {
-            String link = allLink.getUrl();
-            String title = allLink.getTitle();
-            String titleWithLink = String.format(
-                    """
-                            <html>
-                            <body>
-                                <a href="%s">"%s"</a>
-                            </body>
-                            </html>
-                            """, link, title);
-
-            linkResponses.add(new LinkResponse(allLink.getId(), titleWithLink));
-        }
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
+        Page<LinkResponse> allLinks = linkRepository.findAllLinksByLesson(lessonId, pageable);
         return AllLinkResponse.builder()
                 .page(allLinks.getNumber() + 1)
-                .size(allLinks.getSize())
-                .linkResponses(linkResponses)
+                .size(allLinks.getNumberOfElements())
+                .linkResponses(allLinks.getContent())
                 .build();
     }
 
     @Override
     public LinkResponse findById(Long linkId) {
         Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
-        String titleWithLink = String.format(
-                """
-                        <html>
-                        <body>
-                            <a href="%s">"%s"</a>
-                        </body>
-                        </html>
-                        """, link.getUrl(), link.getTitle());
         return LinkResponse.builder()
                 .id(link.getId())
-                .titleAndLink(titleWithLink)
+                .title(link.getTitle())
+                .url(link.getUrl())
                 .build();
     }
 
