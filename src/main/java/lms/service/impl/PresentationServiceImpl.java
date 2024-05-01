@@ -3,6 +3,7 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
+import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Lesson;
@@ -16,6 +17,10 @@ import lms.repository.TrashRepository;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -99,6 +104,17 @@ public class PresentationServiceImpl implements PresentationService {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Презентация успешно удален!")
+                .build();
+    }
+
+    @Override
+    public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
+        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
+        return FindAllPresentationResponse.builder()
+                .page(allPresentation.getNumber() + 1)
+                .size(allPresentation.getSize())
+                .presentationResponseList(allPresentation.getContent())
                 .build();
     }
 }
