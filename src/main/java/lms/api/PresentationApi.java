@@ -19,24 +19,22 @@ public class PresentationApi {
     private final PresentationService presentationService;
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "Создать презентацию")
+    @Operation(description = "create presentation")
     @PostMapping(value = "/createPresentation/{lessonId}")
-    public SimpleResponse createPresentation(@PathVariable Long lessonId,
-                                             @RequestBody @Valid PresentationRequest presentationRequest) {
+    public SimpleResponse createPresentation(@PathVariable Long lessonId, @RequestBody @Valid PresentationRequest presentationRequest) {
         return presentationService.createPresentation(lessonId, presentationRequest);
     }
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "Обновить презентацию")
+    @Operation(description = "Update Presentation")
     @PatchMapping(value = "updatePresentation/{presentationId}")
-    public SimpleResponse editPresentation(@PathVariable Long presentationId,
-                                           @RequestBody EditPresentationRequest editPresentationRequest) {
+    public SimpleResponse editPresentation(@PathVariable Long presentationId, @RequestBody EditPresentationRequest editPresentationRequest) {
         return presentationService.editPresentation(presentationId, editPresentationRequest);
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
     @GetMapping(value = "findById/{presentationId}")
-    @Operation(description = "Возвращает презентацию по id")
+    @Operation(description = "find By presentation")
     public PresentationResponse findById(@PathVariable Long presentationId) {
         return presentationService.findById(presentationId);
     }
