@@ -52,7 +52,6 @@ public class PresentationServiceImpl implements PresentationService {
                 .message("Успешно загружено!")
                 .build();
     }
-
     @Override
     @Transactional
     public SimpleResponse editPresentation(Long presentationId,
