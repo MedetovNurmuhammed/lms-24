@@ -84,7 +84,7 @@ public class StudentApi {
         return studentService.delete(studId);
     }
 
-    @Operation(description = "Import student to group")
+    @Operation(description = "Импортировать студентов в группу")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file) {
