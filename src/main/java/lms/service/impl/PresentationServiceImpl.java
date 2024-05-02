@@ -39,7 +39,7 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + "не существует!"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок с id:  " + lessonId + "не существует!"));
         Presentation presentation = new Presentation();
         presentation.setTitle(presentationRequest.getTitle());
         presentation.setDescription(presentationRequest.getDescription());
@@ -47,7 +47,6 @@ public class PresentationServiceImpl implements PresentationService {
         lesson.getPresentations().add(presentation);
         presentationRepository.save(presentation);
         lessonRepository.save(lesson);
-
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно загружено!")
@@ -56,7 +55,8 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     @Transactional
-    public SimpleResponse editPresentation(Long presentationId, EditPresentationRequest presentationRequest) {
+    public SimpleResponse editPresentation(Long presentationId,
+                                           EditPresentationRequest presentationRequest) {
         Presentation presentation = presentationRepository.findById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не существует!"));
 
