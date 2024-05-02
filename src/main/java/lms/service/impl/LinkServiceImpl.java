@@ -30,6 +30,7 @@ import java.time.ZonedDateTime;
 public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final TrashRepository trashRepository;
+    private final LessonRepository lessonRepository;
 
     @Override
     @Transactional

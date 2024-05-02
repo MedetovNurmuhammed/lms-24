@@ -1,6 +1,10 @@
 package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lms.dto.request.LinkRequest;
+import lms.dto.response.AllLinkResponse;
+import lms.dto.response.LinkResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.LinkService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/api/links")
@@ -26,7 +29,7 @@ public class LinkApi {
     @Secured("INSTRUCTOR")
     @Operation(summary = "добавляет ссылку.(Авторизация: инструктор)")
     @PostMapping("/addLink/{lessonId}")
-    public SimpleResponse addLesson(@RequestBody @Valid LinkRequest linkRequest, @PathVariable Long lessonId) throws MessagingException {
+    public SimpleResponse addLesson(@RequestBody @Valid LinkRequest linkRequest, @PathVariable Long lessonId) {
         return linkService.addLink(linkRequest, lessonId);
     }
 
@@ -51,13 +54,6 @@ public class LinkApi {
     public SimpleResponse update(
             @RequestBody @Valid LinkRequest linkRequest, @PathVariable Long linkId) {
         return linkService.update(linkRequest, linkId);
-    }
-
-    @Secured("INSTRUCTOR")
-    @DeleteMapping("/delete/{linkId}")
-    @Operation(summary = "Удаляет текущую ссылку.(Авторизация: инструктор)")
-    public SimpleResponse delete(@PathVariable Long linkId) {
-        return linkService.delete(linkId);
     }
 
     @Operation(summary = "Удалить ссылку",
