@@ -47,7 +47,7 @@ public class PresentationApi {
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
-    @GetMapping("findAll presentation/{lessonId}")
+    @GetMapping("findAllPresentations/{lessonId}")
     public FindAllPresentationResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "6") int size,
                                                @PathVariable Long lessonId) {
