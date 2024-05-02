@@ -49,7 +49,7 @@ public class Test {
     @OneToOne(cascade = CascadeType.DETACH)
     private Lesson lesson;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Trash trash;
 
     @PrePersist

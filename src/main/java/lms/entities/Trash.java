@@ -1,13 +1,20 @@
 package lms.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.OneToOne;
 import lms.enums.Type;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
-
 import java.time.ZonedDateTime;
 
 @Entity
@@ -28,33 +35,33 @@ public class Trash {
     private ZonedDateTime dateOfDelete;
 
 
-    @OneToOne(mappedBy = "trash", cascade = {CascadeType.REMOVE}, optional = false)
+    @OneToOne(mappedBy = "trash")
     private Student student;
 
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    @OneToOne(mappedBy = "trash")
     private Group group;
 
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    @OneToOne(mappedBy = "trash")
     private Course course;
 
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    @OneToOne(mappedBy = "trash")
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE,optional = false)
+    @OneToOne(mappedBy = "trash") //cascade = CascadeType.REMOVE,optional = false)
     private Lesson lesson;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Link link;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     private Video video;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Presentation presentation;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Test test;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Task task;
 }

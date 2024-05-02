@@ -20,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +35,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) {
-        lessonRepository.findById(lessonId).orElseThrow(()-> new IllegalArgumentException("Lesson does not exist"));
+        lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Lesson does not exist"));
         return null;
-
+    }
 
     @Override
     public SimpleResponse delete(Long taskId) {
+        taskRepository.findAll();
         Task task = taskRepository.findById(taskId).
                 orElseThrow(() -> new NotFoundException("Задача не найдена!"));
         Trash trash = new Trash();

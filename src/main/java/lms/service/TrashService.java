@@ -13,9 +13,7 @@ public interface TrashService {
 
     SimpleResponse returnToBase(Long trashId);
 
-    AllTrashResponse findAllInstructorTrash(int page, int size);
-
-    SimpleResponse returnInstructorTrashToBase(Long trashId);
-
     SimpleResponse deleteInstructorTrash(Long trashId);
+
+    SimpleResponse returnFromInstructorTrashToBase(Long trashId);
 }
