@@ -34,7 +34,7 @@ public class ResultTask {
     private Notification notification;
 
     //*************************************** Instructor ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Instructor instructor;
 
     @PrePersist

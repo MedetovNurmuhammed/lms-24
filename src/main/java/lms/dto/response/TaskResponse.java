@@ -1,8 +1,7 @@
 package lms.dto.response;
 
 import lombok.Builder;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -13,7 +12,7 @@ public record TaskResponse(
     String file,
     String image,
     String code,
-    LocalDate deadline,
+    LocalDateTime deadline,
     List<String> links
     ) {
 }

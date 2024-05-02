@@ -21,7 +21,7 @@ import java.util.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_gen")
-    @SequenceGenerator(name = "task_seq",sequenceName = "task_seq", allocationSize = 1)
+    @SequenceGenerator(name = "task_gen",sequenceName = "task_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     private String description;
@@ -35,7 +35,7 @@ public class Task {
     private LocalDate updatedAt;
 
     //*************************************** Instructor ***********************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************
@@ -43,8 +43,11 @@ public class Task {
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Lesson ****************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
+
+    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    private Trash trash;
 
     @PrePersist
     protected void onCreate() {

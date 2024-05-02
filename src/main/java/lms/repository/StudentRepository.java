@@ -50,4 +50,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("select  s from  Student  s where s.user.email=:email")
     Optional<Student> getStudentByEmail(String email);
+
+    @Query("select s from Student s join s.group.courses c where c.id = :courseId")
+    List<Student> findByCourseId(Long courseId);
 }

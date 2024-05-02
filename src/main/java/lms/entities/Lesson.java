@@ -39,7 +39,7 @@ public class Lesson {
     private LocalDate updatedAt;
 
     //********************************* Course ********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY,optional = false)
     private Course course;
 
     //*************************************** Video ***************************************
