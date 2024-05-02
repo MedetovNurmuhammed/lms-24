@@ -19,34 +19,37 @@ public class PresentationApi {
     private final PresentationService presentationService;
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "create presentation")
+    @Operation(description = "Создать презентацию")
     @PostMapping(value = "/createPresentation/{lessonId}")
-    public SimpleResponse createPresentation(@PathVariable Long lessonId, @RequestBody @Valid PresentationRequest presentationRequest) {
+    public SimpleResponse createPresentation(@PathVariable Long lessonId,
+                                             @RequestBody @Valid PresentationRequest presentationRequest) {
         return presentationService.createPresentation(lessonId, presentationRequest);
     }
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "Update Presentation")
+    @Operation(description = "Обновить презентацию")
     @PatchMapping(value = "updatePresentation/{presentationId}")
-    public SimpleResponse editPresentation(@PathVariable Long presentationId, @RequestBody EditPresentationRequest editPresentationRequest) {
+    public SimpleResponse editPresentation(@PathVariable Long presentationId,
+                                           @RequestBody EditPresentationRequest editPresentationRequest) {
         return presentationService.editPresentation(presentationId, editPresentationRequest);
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
     @GetMapping(value = "findById/{presentationId}")
-    @Operation(description = "find By presentation")
+    @Operation(description = "Возвращает презентацию по id")
     public PresentationResponse findById(@PathVariable Long presentationId) {
         return presentationService.findById(presentationId);
     }
 
     @Secured({"INSTRUCTOR"})
     @DeleteMapping(value = "delete/{presentationId}")
-    @Operation(description = "delete presentation by id")
+    @Operation(description = "Удаляет презинтацию по id")
     public SimpleResponse deleteById(@PathVariable Long presentationId) {
         return presentationService.deletePresentationById(presentationId);
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
+    @Operation(description = "Возвращает все презентации урока по id")
     @GetMapping("findAll presentation/{lessonId}")
     public FindAllPresentationResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                                @RequestParam(required = false, defaultValue = "6") int size,
