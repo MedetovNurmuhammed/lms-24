@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "links")
@@ -17,24 +18,24 @@ import lombok.Setter;
 public class Link {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "link_gen")
-    @SequenceGenerator(name = "link_gen", sequenceName = "link_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "link_gen",sequenceName = "link_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private String url;
 
     //***************************************** AnswerTask *********************************
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
     //***************************************** Task *********************************
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Task task;
 
     //********************************* Trash ***************************************
     @OneToOne
     private Trash trash;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Video video;
 
 }
