@@ -39,8 +39,8 @@ public class StudentApi {
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "6") int size,
             @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false,defaultValue = "") String studyFormat,
-            @RequestParam(required = false,defaultValue = "") Long groupId
+            @RequestParam(required = false, defaultValue = "") String studyFormat,
+            @RequestParam(required = false, defaultValue = "") Long groupId
     ) {
         return studentService.findAll(search, studyFormat, groupId, page, size);
     }
@@ -51,8 +51,8 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findAllGroupStud/{groupId}")
     public AllStudentResponse findAllGroupStud(@RequestParam(required = false, defaultValue = "1") int page,
-                                                @RequestParam(required = false, defaultValue = "6") int size,
-                                                @PathVariable Long groupId) {
+                                               @RequestParam(required = false, defaultValue = "6") int size,
+                                               @PathVariable Long groupId) {
         return studentService.findAllGroupStud(page, size, groupId);
     }
 
@@ -88,6 +88,6 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file) {
-        return studentService.importStudentsFromExcel(groupId,file);
+        return studentService.importStudentsFromExcel(groupId, file);
     }
 }

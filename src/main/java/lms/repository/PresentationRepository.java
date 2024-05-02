@@ -12,6 +12,6 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     @Query("SELECT new lms.dto.response.PresentationResponse(p.id, p.title, p.description, p.file) " +
             "FROM Presentation p " +
             "WHERE p.id = :lessonId")
-    Page<PresentationResponse> findAllPresentationsByLesson(@Param("lessonId")Long lessonId, Pageable pageable);
+    Page<PresentationResponse> findAllPresentationsByLesson(@Param("lessonId") Long lessonId, Pageable pageable);
 
 }
