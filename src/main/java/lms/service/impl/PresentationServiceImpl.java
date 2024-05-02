@@ -57,7 +57,7 @@ public class PresentationServiceImpl implements PresentationService {
     public SimpleResponse editPresentation(Long presentationId,
                                            EditPresentationRequest presentationRequest) {
         Presentation presentation = presentationRepository.findById(presentationId)
-                .orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не существует!"));
+                .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
 
         if (presentationRequest.getTitle() != null) {
             presentation.setTitle(presentationRequest.getTitle());
