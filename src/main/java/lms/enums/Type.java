@@ -6,5 +6,6 @@ public enum Type {
     GROUP,
     COURSE,
     LINK,
+    PRESENTATION,
     VIDEO
 }
