@@ -25,13 +25,13 @@ spring:
 cloud:
     aws:
         credentials:
-            access-key:
-            secret-key:
+            access-key: AKIA47CR3RLOPKMXXMMT
+            secret-key: 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
         region:
-            static:
+            static: eu-north-1
         stack:
             auto: false
 
 application:
     bucket:
-        name:
+        name: lmsb12

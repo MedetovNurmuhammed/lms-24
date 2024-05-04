@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import lms.entities.Presentation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,14 +31,14 @@ public class StorageService {
     @Autowired
     private AmazonS3 s3Client;
 
-    public void uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile) {
         File file = convertMultiPartFileToFile(multipartFile);
-
         String key = generateUniqueKey();
         s3Client.putObject(new PutObjectRequest(bucketName, key, file).withCannedAcl(CannedAccessControlList.PublicRead));
         String fileUrl = getAmazonS3FileUrl(key);
         log.error(fileUrl);
         file.delete();
+        return fileUrl;
 
     }
 
@@ -71,7 +72,7 @@ public class StorageService {
 
     public String deleteFile(String fileName) {
         s3Client.deleteObject(bucketName, fileName);
-        return fileName + " removed ...";
+        return fileName ;
     }
 
 
