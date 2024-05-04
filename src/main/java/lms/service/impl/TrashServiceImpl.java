@@ -149,7 +149,7 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getPresentation() != null) {
                 Presentation presentation = trash.getPresentation();
-                storageService.deleteFile(presentation.getFile());
+//                storageService.deleteFile(presentation.getFile());
                 presentationRepository.deleteById(presentation.getId());
             } else if (trash.getTest() != null) {
                 Test test = trash.getTest();
@@ -247,32 +247,43 @@ public class TrashServiceImpl implements TrashService {
 
 
     @Transactional
-    @Scheduled(fixedDelay = 500000000)
+    @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
-        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500);
+        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(2);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
         for (Trash expiredTrash : expiredTrashes) {
-            if (expiredTrash.getType().equals(Type.COURSE)) {
-                for (Instructor instructor : expiredTrash.getCourse().getInstructors()) {
-                    instructor.getCourses().remove(expiredTrash.getCourse());
-                }
-            } else if (expiredTrash.getType().equals(Type.INSTRUCTOR)) {
-                for (Course course : expiredTrash.getInstructor().getCourses()) {
-                    course.setInstructors(null);
-                }
-                for (Notification notification : expiredTrash.getInstructor().getNotifications()) {
-                    ResultTask resultTask = notification.getResultTask();
-                    resultTask.setInstructor(null);
-                }
-                for (Notification notification : expiredTrash.getInstructor().getNotifications()) {
-                    Task task = notification.getTask();
-                    task.setInstructor(null);
-                }
-                expiredTrash.getInstructor().setCourses(null);
-                for (Notification notification : expiredTrash.getInstructor().getNotifications()) {
-                    notification.setInstructor(null);
-                }
-                expiredTrash.getInstructor().setNotifications(null);
+            if (expiredTrash.getCourse() != null) {
+                Course course = expiredTrash.getCourse();
+                courseRepository.deleteById(course.getId());
+            } else if (expiredTrash.getInstructor() != null) {
+                Instructor instructor = expiredTrash.getInstructor();
+                instructorRepository.deleteById(instructor.getId());
+            }else if (expiredTrash.getGroup() != null) {
+                Group group = expiredTrash.getGroup();
+                groupRepository.deleteById(group.getId());
+            } else if (expiredTrash.getStudent() != null) {
+                Student student = expiredTrash.getStudent();
+                studentRepository.deleteById(student.getId());
+            }else if (expiredTrash.getPresentation() != null) {
+                Presentation presentation = expiredTrash.getPresentation();
+//                storageService.deleteFile(presentation.getFile());
+                presentationRepository.deleteById(presentation.getId());
+            } else if (expiredTrash.getTest() != null) {
+                Test test = expiredTrash.getTest();
+                testRepository.deleteById(test.getId());
+            } else if (expiredTrash.getVideo() != null) {
+                Video video = expiredTrash.getVideo();
+                videoRepository.deleteById(video.getId());
+            } else if (expiredTrash.getTask() != null) {
+                Task task = expiredTrash.getTask();
+                taskRepository.deleteById(task.getId());
+            } else if (expiredTrash.getLesson() != null) {
+                Lesson lesson = expiredTrash.getLesson();
+                lessonRepository.deleteById(lesson.getId());
+            } else if (expiredTrash.getLink() != null) {
+                Link link = expiredTrash.getLink();
+                linkRepository.deleteById(link.getId());
+
             }
             if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
                 trashRepository.delete(expiredTrash);

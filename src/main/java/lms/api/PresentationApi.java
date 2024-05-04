@@ -8,7 +8,6 @@ import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.PresentationService;
-import lms.service.impl.PresentationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/presentation")
 public class PresentationApi {
     private final PresentationService presentationService;
-    private final PresentationServiceImpl presentationService;
 
     @Secured("INSTRUCTOR")
     @Operation(description = "create presentation")
@@ -46,23 +44,21 @@ public class PresentationApi {
         return presentationService.findById(presentationId);
     }
 
+    @Secured({"INSTRUCTOR", "STUDENT"})
+    @Operation(description = "Возвращает все презентации урока по id")
+    @GetMapping("findAll presentation/{lessonId}")
+    public FindAllPresentationResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
+                                               @RequestParam(required = false, defaultValue = "6") int size,
+                                               @PathVariable Long lessonId) {
+        return presentationService.findAllPresentationByLessonId(page, size, lessonId);
+    }
 
-}
-
-@Secured({"INSTRUCTOR", "STUDENT"})
-@Operation(description = "Возвращает все презентации урока по id")
-@GetMapping("findAll presentation/{lessonId}")
-public FindAllPresentationResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                           @RequestParam(required = false, defaultValue = "6") int size,
-                                           @PathVariable Long lessonId) {
-    return presentationService.findAllPresentationByLessonId(page, size, lessonId);
-}
-
-@Operation(summary = "Удалить презентацию",
-        description = "Метод для удаления презентацию по его идентификатору." +
-                " Авторизация:  инструктор!")
-@PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-@DeleteMapping("/delete/{presentationId}")
-public SimpleResponse delete(@PathVariable Long presentationId) {
-    return presentationService.delete(presentationId);
+    @Operation(summary = "Удалить презентацию",
+            description = "Метод для удаления презентацию по его идентификатору." +
+                    " Авторизация:  инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @DeleteMapping("/delete/{presentationId}")
+    public SimpleResponse delete(@PathVariable Long presentationId) {
+        return presentationService.delete(presentationId);
+    }
 }
