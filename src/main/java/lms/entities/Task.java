@@ -34,10 +34,6 @@ public class Task {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    //*************************************** Instructor ***********************************
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    private Instructor instructor;
-
     //*************************************** AnswerTask ***********************************
     @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<AnswerTask> answerTasks = new ArrayList<>();

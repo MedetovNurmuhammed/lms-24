@@ -31,16 +31,7 @@ public class Notification {
     private Long id;
     private String title;
     private String description;
-    private Boolean isView;
     private LocalDate createdAt;
-
-    //*************************************** Instructor ************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private Instructor instructor;
-
-    //*************************************** Student ***************************************
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
-    private Student student;
 
     //*************************************** Task ******************************************
     @OneToOne(cascade = CascadeType.DETACH, optional = false)
@@ -49,6 +40,10 @@ public class Notification {
     //*************************************** ResultTask *************************************
     @OneToOne(cascade = CascadeType.DETACH)
     private ResultTask resultTask;
+
+    //*************************************** ResultTask *************************************
+    @OneToOne(cascade = CascadeType.DETACH)
+    private AnswerTask answerTask;
 
     @PrePersist
     protected void onCreate() {

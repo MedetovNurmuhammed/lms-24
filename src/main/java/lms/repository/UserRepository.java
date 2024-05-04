@@ -1,12 +1,9 @@
 package lms.repository;
 
-import lms.dto.response.NotificationResponse;
 import lms.entities.User;
 import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Long> {
@@ -22,7 +19,4 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select u from User u where u.uuid =:uuid")
     Optional<User> findByUuid( String uuid);
-
-    @Query("select n from Notification  n where n.instructor.user.id = :id or n.student.user.id = :id")
-    List<NotificationResponse> findAllByUserId(Long userId);
 }

@@ -8,14 +8,12 @@ import lms.dto.response.TaskResponse;
 import lms.entities.*;
 import lms.enums.Type;
 import lms.repository.*;
-import lms.service.NotificationService;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,6 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepository userRepository;
     private final InstructorRepository instructorRepository;
     private final NotificationRepository notificationRepository;
-    private final NotificationService notificationService;
     private final StudentRepository studentRepository;
     private final TrashRepository trashRepository;
 
@@ -44,7 +41,6 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskRequest.description());
         task.setFile(taskRequest.file());
         task.setImage(taskRequest.image());
-        task.setInstructor(instructor);
         task.setDeadline(taskRequest.deadline());
         task.setLinks(taskRequest.links());
 

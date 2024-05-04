@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class ResultTask {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "res_task_gen")
-    @SequenceGenerator(name = "res_task_seq",sequenceName = "res_task_seq", allocationSize = 1)
+    @SequenceGenerator(name = "res_task_gen",sequenceName = "res_task_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private int point;
     private String comment;
@@ -32,10 +32,6 @@ public class ResultTask {
     //*************************************** Notification ****************************************
     @OneToOne(mappedBy = "resultTask", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Notification notification;
-
-    //*************************************** Instructor ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
-    private Instructor instructor;
 
     @PrePersist
     protected void onCreate() {

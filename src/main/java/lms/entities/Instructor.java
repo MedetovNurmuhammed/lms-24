@@ -20,9 +20,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "instructors")
@@ -34,7 +37,7 @@ import java.util.List;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
-    @SequenceGenerator(name = "instructor_gen",sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "instructor_gen", sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String specialization;
     private LocalDate createdAt;
@@ -42,28 +45,28 @@ public class Instructor {
     private Type type;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private User user;
 
     //********************************* Course *************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @OneToMany(mappedBy = "instructor", cascade = CascadeType.DETACH, fetch =  FetchType.EAGER)
-    private List<Notification> notifications = new ArrayList<>();
+    @ElementCollection
+    private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
     @OneToOne
     private Trash trash;
 
-   @PrePersist
+    @PrePersist
     protected void onCreate() {
-       this.createdAt = LocalDate.now();
-   }
+        this.createdAt = LocalDate.now();
+    }
 
-   @PreUpdate
+    @PreUpdate
     protected void onUpdate() {
-       this.updatedAt = LocalDate.now();
-   }
+        this.updatedAt = LocalDate.now();
+    }
 }
