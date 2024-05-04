@@ -10,18 +10,15 @@ import lms.dto.response.SimpleResponse;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/api/presentation")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/presentation")
 public class PresentationApi {
     private final PresentationService presentationService;
+
 
     @Secured("INSTRUCTOR")
     @Operation(description = "create presentation")
@@ -60,5 +57,5 @@ public class PresentationApi {
     @DeleteMapping("/delete/{presentationId}")
     public SimpleResponse delete(@PathVariable Long presentationId) {
         return presentationService.delete(presentationId);
-    }
-}
+            }
+        }

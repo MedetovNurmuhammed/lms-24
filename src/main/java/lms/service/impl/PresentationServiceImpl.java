@@ -1,8 +1,5 @@
 package lms.service.impl;
 
-import jakarta.transaction.TransactionScoped;
-import jakarta.transaction.Transactional;
-import lms.dto.response.SimpleResponse;
 import jakarta.transaction.Transactional;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
@@ -20,12 +17,12 @@ import lms.repository.TrashRepository;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.ZonedDateTime;
 
@@ -34,7 +31,6 @@ import java.time.ZonedDateTime;
 @Validated
 @Slf4j
 public class PresentationServiceImpl implements PresentationService {
-
     private final LessonRepository lessonRepository;
     private final PresentationRepository presentationRepository;
     private final TrashRepository trashRepository;
@@ -55,7 +51,6 @@ public class PresentationServiceImpl implements PresentationService {
                 .message("Успешно загружено!")
                 .build();
     }
-
     @Override
     @Transactional
     public SimpleResponse editPresentation(Long presentationId,
@@ -118,7 +113,7 @@ public class PresentationServiceImpl implements PresentationService {
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно добавлено в корзину!")
+                .message("Презентация успешно удален!")
                 .build();
     }
 }
