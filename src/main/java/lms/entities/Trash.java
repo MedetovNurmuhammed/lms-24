@@ -34,7 +34,6 @@ public class Trash {
     private Type type;
     private ZonedDateTime dateOfDelete;
 
-
     @OneToOne(mappedBy = "trash")
     private Student student;
 
@@ -47,21 +46,21 @@ public class Trash {
     @OneToOne(mappedBy = "trash")
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "trash") //cascade = CascadeType.REMOVE,optional = false)
+    @OneToOne(mappedBy = "trash") 
     private Lesson lesson;
 
-    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")
     private Link link;
 
-    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "trash")
     private Video video;
 
-    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")
     private Presentation presentation;
 
-    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")
     private Test test;
 
-    @OneToOne(mappedBy = "trash")//,cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(mappedBy = "trash")
     private Task task;
 }

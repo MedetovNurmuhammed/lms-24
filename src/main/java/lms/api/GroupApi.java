@@ -27,7 +27,7 @@ public class GroupApi {
     private final GroupService groupService;
 
     @Secured("ADMIN")
-    @PostMapping("/save")
+    @PostMapping("/Создать группу")
     public SimpleResponse save(@RequestBody @Valid GroupRequest groupRequest) {
         return groupService.save(groupRequest);
     }
