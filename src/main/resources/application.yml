@@ -12,12 +12,12 @@ spring:
                     auth: true
                     starttls:
                         enable: true
-    jpa:
-        defer-datasource-initialization: true
-    sql:
-        init:
-            data-locations: classpath:datainit/dataInit.sql
-            mode: always
+#    jpa:
+#        defer-datasource-initialization: true
+#    sql:
+#        init:
+#            data-locations: classpath:datainit/dataInit.sql
+#            mode: always
     servlet:
         multipart:
             max-file-size: 10MB

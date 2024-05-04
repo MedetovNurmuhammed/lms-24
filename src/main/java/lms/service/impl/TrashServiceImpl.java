@@ -1,18 +1,29 @@
 package lms.service.impl;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import lms.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
-import lms.entities.*;
+import lms.entities.User;
+import lms.entities.Trash;
+import lms.entities.Course;
+import lms.entities.Instructor;
+import lms.entities.Group;
+import lms.entities.Student;
+import lms.entities.Presentation;
+import lms.entities.Test;
+import lms.entities.Task;
+import lms.entities.Lesson;
+import lms.entities.Link;
+import lms.entities.Video;
+import lms.entities.Notification;
+import lms.entities.ResultTask;
 import lms.enums.Role;
 import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
 import lms.exceptions.NotFoundException;
-
-
 import lms.repository.TrashRepository;
 import lms.repository.UserRepository;
 import lms.repository.TestRepository;
@@ -55,42 +66,40 @@ public class TrashServiceImpl implements TrashService {
     private final LessonRepository lessonRepository;
     private final VideoRepository videoRepository;
     private final LinkRepository linkRepository;
+    private final StorageService storageService;
 
     @Override
     public AllTrashResponse findAll(int page, int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
-
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Trash> trashes = trashRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TrashResponse> trashes = trashRepository.findAllTrashes(pageable);
         List<TrashResponse> trashResponses = new ArrayList<>();
-        if (currentUser.getRole().equals(Role.ADMIN)) {
-            for (Trash trash : trashes) {
-                if (trash.getType().equals(Type.COURSE) ||
-                        trash.getType().equals(Type.GROUP) ||
-                        trash.getType().equals(Type.INSTRUCTOR)
-                        || trash.getType().equals(Type.STUDENT)) {
-                    trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
-                }
-            }
-        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            for (Trash trash : trashes) {
-                if (trash.getType().equals(Type.VIDEO) ||
-                        trash.getType().equals(Type.PRESENTATION) ||
-                        trash.getType().equals(Type.LINK)
-                        || trash.getType().equals(Type.TEST) ||
-                        trash.getType().equals(Type.TASK) ||
-                        trash.getType().equals(Type.LESSON)) {
-                    trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
-                }
+        for (TrashResponse trashResponse : trashes) {
+            if (currentUser.getRole().equals(Role.ADMIN) &&
+                    (trashResponse.getType().equals(Type.COURSE) ||
+                            trashResponse.getType().equals(Type.GROUP) ||
+                            trashResponse.getType().equals(Type.INSTRUCTOR) ||
+                            trashResponse.getType().equals(Type.STUDENT))) {
+                trashResponses.add(new TrashResponse(trashResponse.getId(), trashResponse.getType(), trashResponse.getName(), trashResponse.getDateOfDelete()));
+            } else if (currentUser.getRole().equals(Role.INSTRUCTOR) &&
+                    (trashResponse.getType().equals(Type.VIDEO) ||
+                            trashResponse.getType().equals(Type.PRESENTATION) ||
+                            trashResponse.getType().equals(Type.LINK) ||
+                            trashResponse.getType().equals(Type.TEST) ||
+                            trashResponse.getType().equals(Type.TASK) ||
+                            trashResponse.getType().equals(Type.LESSON))) {
+                trashResponses.add(new TrashResponse(trashResponse.getId(), trashResponse.getType(), trashResponse.getName(), trashResponse.getDateOfDelete()));
             }
         }
+
         AllTrashResponse allTrashResponse = new AllTrashResponse();
-        allTrashResponse.setPage(page);
-        allTrashResponse.setSize(trashResponses.size());
+        allTrashResponse.setPage(trashes.getNumber());
+        allTrashResponse.setSize(trashes.getSize());
         allTrashResponse.setTrashResponses(trashResponses);
         return allTrashResponse;
     }
+
 
     @Override
     @Transactional
@@ -116,6 +125,7 @@ public class TrashServiceImpl implements TrashService {
                 groupRepository.deleteById(group.getId());
             } else if (trash.getInstructor() != null) {
                 Instructor instructor = trash.getInstructor();
+                trash.getInstructor().setNotifications(null);
                 instructorRepository.deleteById(instructor.getId());
             } else if (trash.getStudent() != null) {
                 Student student = trash.getStudent();
@@ -139,24 +149,26 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getPresentation() != null) {
                 Presentation presentation = trash.getPresentation();
+                storageService.deleteFile(presentation.getFile());
                 presentationRepository.deleteById(presentation.getId());
-            } else if (trash.getType().equals(Type.TEST)) {
+            } else if (trash.getTest() != null) {
                 Test test = trash.getTest();
                 testRepository.deleteById(test.getId());
-            } else if (trash.getType().equals(Type.VIDEO)) {
+            } else if (trash.getVideo() != null) {
                 Video video = trash.getVideo();
                 videoRepository.deleteById(video.getId());
             } else if (trash.getTask() != null) {
                 Task task = trash.getTask();
                 taskRepository.deleteById(task.getId());
-            } else if (trash.getType().equals(Type.LESSON)) {
+            } else if (trash.getLesson() != null) {
                 Lesson lesson = trash.getLesson();
                 lessonRepository.deleteById(lesson.getId());
-            } else if (trash.getType().equals(Type.LINK)) {
+            } else if (trash.getLink() != null) {
                 Link link = trash.getLink();
                 linkRepository.deleteById(link.getId());
             } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
-            trashRepository.delete(trash);
+
+            trashRepository.deleteById(trashId);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
                     .message("Удален!")
@@ -167,11 +179,11 @@ public class TrashServiceImpl implements TrashService {
 
     @Override
     public SimpleResponse returnFromInstructorTrashToBase(Long trashId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
         List<Trash> all = trashRepository.findAll();
         Trash trash = trashRepository.findById(trashId)
                 .orElseThrow(() -> new NotFoundException(trashId + " не найден!"));
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getVideo() != null) {
                 Video video = trash.getVideo();
@@ -191,14 +203,14 @@ public class TrashServiceImpl implements TrashService {
             } else if (trash.getLesson() != null) {
                 Lesson lesson = trash.getLesson();
                 lesson.setTrash(null);
-            }
-        } else throw new BadRequestException("Вы не можете удалить Id " + trashId);
-
-        trashRepository.deleteById(trashId);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Успешно возвращен!")
-                .build();
+            } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
+            trashRepository.deleteById(trashId);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message(trashId + " удален!")
+                    .build();
+        }
+        throw new ForbiddenException("Доступ запрещен!");
     }
 
     @Override

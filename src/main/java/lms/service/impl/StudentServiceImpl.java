@@ -144,9 +144,9 @@ public class StudentServiceImpl implements StudentService {
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
-        trash.setStudent(student);
         trash.setType(student.getType());
         trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setStudent(student);
         student.setTrash(trash);
         trashRepository.save(trash);
         log.info("Успешно удален!");
