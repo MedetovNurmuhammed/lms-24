@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select distinct new lms.dto.response.InstructorsOrStudentsOfCourse(i.id, c.title, i.user.fullName, i.specialization, i.user.phoneNumber, i.user.email) from Instructor i join i.courses c where c.id = :courseId and i.trash is null")
@@ -29,5 +30,5 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
         return new PageImpl<>(instructorsOrStudentsOfCourses.subList(start, end), pageable, instructorsOrStudentsOfCourses.size());
     }
 
-    Instructor findByUserId(Long id);
+    Optional<Instructor> findByUserId(Long id);
 }

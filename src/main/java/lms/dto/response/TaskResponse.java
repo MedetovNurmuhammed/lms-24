@@ -1,18 +1,22 @@
 package lms.dto.response;
 
-import lombok.Builder;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Builder
-public record TaskResponse(
-    Long id,
-    String title,
-    String description,
-    String file,
-    String image,
-    String code,
-    LocalDateTime deadline,
-    List<String> links
-    ) {
+public class TaskResponse{
+       private Long id;
+       private String title;
+       private String description;
+       private String file;
+       private String image;
+       private String code;
+       private LocalDateTime deadline;
+       private List<String> links;
 }
