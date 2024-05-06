@@ -51,7 +51,7 @@ public class Lesson {
     private List<Presentation> presentations = new ArrayList<>();
 
     //*************************************** Link *****************************************
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************

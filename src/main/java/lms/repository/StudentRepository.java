@@ -53,11 +53,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("select  s from  Student  s where s.user.email=:email")
     Optional<Student> getStudentByEmail(String email);
 
-    @Query("select s from Student s join s.group.courses c where c.id = :courseId")
+    @Query("select s from Student s join s.group.courses c where c.id = :courseId and s.trash is null ")
     List<Student> findByCourseId(Long courseId);
 
-    @Transactional
-    @Modifying
-    @Query(value = "delete from student_notification_states where student_id = :id", nativeQuery = true)
-    void deleteStudentNative(Long id);
 }
