@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -17,6 +18,7 @@ public class FlywayConfig {
     private String dataSourceUsername;
     @Value("${flyway.password}")
     private String dataSourcePassword;
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -25,6 +27,7 @@ public class FlywayConfig {
         dataSource.setPassword(dataSourcePassword);
         return dataSource;
     }
+
     @Bean(initMethod = "migrate")
     @DependsOn("dataSource")
     public Flyway flyway(DataSource dataSource) {
@@ -34,6 +37,7 @@ public class FlywayConfig {
                 .baselineOnMigrate(true)
                 .load();
     }
+
     @Bean
     public FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
         return new FlywayMigrationInitializer(flyway, null);
