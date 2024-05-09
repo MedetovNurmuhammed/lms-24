@@ -2,8 +2,6 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lms.dto.response.SimpleResponse;
-import lms.dto.response.TaskRequest;
-import lms.dto.response.TaskResponse;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -103,7 +103,7 @@ public class TrashServiceImpl implements TrashService {
 
     @Override
     @Transactional
-    public SimpleResponse delete(Long trashId) {
+    public SimpleResponse  delete(Long trashId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
         Trash trash = trashRepository.findById(trashId).
