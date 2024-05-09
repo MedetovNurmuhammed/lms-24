@@ -38,10 +38,6 @@ public class Notification {
 
     //*************************************** ResultTask *************************************
     @OneToOne(cascade = CascadeType.DETACH)
-    private ResultTask resultTask;
-
-    //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH)
     private AnswerTask answerTask;
 
     @PrePersist
