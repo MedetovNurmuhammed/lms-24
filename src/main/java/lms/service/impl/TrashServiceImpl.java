@@ -149,7 +149,7 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getPresentation() != null) {
                 Presentation presentation = trash.getPresentation();
-//                storageService.deleteFile(presentation.getFile());
+//                storageService.deleteFile(presentation 
                 presentationRepository.deleteById(presentation.getId());
             } else if (trash.getTest() != null) {
                 Test test = trash.getTest();
