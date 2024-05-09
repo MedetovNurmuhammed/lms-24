@@ -132,11 +132,11 @@ public class NotificationServiceImpl implements NotificationService {
 
         User currentUser = getCurrentUser();
         if (currentUser.getRole().equals(Role.STUDENT)) {
-            Student student = studentRepository.findByUserId(currentUser.getId())
+            studentRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
             notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
         } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
+            instructorRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
             notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId());
         }

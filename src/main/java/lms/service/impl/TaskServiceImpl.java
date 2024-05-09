@@ -31,6 +31,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +53,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
-                new NoSuchElementException("Инструктор с id:" + currentUser.getId() + " не найден"));
+        Instructor instructor = getCurrentInstructor();
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new  IllegalArgumentException("Урок не существует"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
         Task task = new Task();
         task.setLesson(lesson);
         task.setTitle(taskRequest.title());
@@ -70,6 +68,14 @@ public class TaskServiceImpl implements TaskService {
 
         Task savedTask = taskRepository.save(task);
         String message = instructor.getUser().getFullName() + " добавил(a) новую задачу для урока " + lesson.getTitle();
+        getStudentsByCourse(lesson, savedTask, message);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Успешно создана")
+                .build();
+    }
+
+    private void getStudentsByCourse(Lesson lesson, Task savedTask, String message) throws MessagingException {
         List<Student> students = studentRepository.findByCourseId(lesson.getCourse().getId());
 
         for (Student student : students) {
@@ -82,14 +88,10 @@ public class TaskServiceImpl implements TaskService {
             student.getNotificationStates().put(notification, false);
             notificationService.emailMessage(message, student.getUser().getEmail());
         }
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Успешно создана")
-                .build();
     }
 
     @Override
-    public SimpleResponse updateTask(Long taskId, TaskRequest taskRequest) {
+    public SimpleResponse updateTask(Long taskId, TaskRequest taskRequest) throws MessagingException {
         Task task = getById(taskId);
         task.setTitle(taskRequest.title());
         task.setCode(taskRequest.code());
@@ -99,6 +101,11 @@ public class TaskServiceImpl implements TaskService {
         task.setDeadline(LocalDateTime.from(taskRequest.deadline()));
         task.setLinks(taskRequest.links());
 
+        Instructor instructor = getCurrentInstructor();
+        Task savedTask = taskRepository.save(task);
+        Lesson lesson = savedTask.getLesson();
+        String message = instructor.getUser().getFullName() + " именил(a) задачу для урока " + lesson.getTitle();
+        getStudentsByCourse(lesson, savedTask, message);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно обновлено")
@@ -163,5 +170,12 @@ public class TaskServiceImpl implements TaskService {
 
     Task getById(Long taskId) {
         return taskRepository.findById(taskId).orElseThrow(() -> new IllegalArgumentException("Задание не существует"));
+    }
+
+    Instructor getCurrentInstructor() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        return instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
+                new NoSuchElementException("Инструктор с id:" + currentUser.getId() + " не найден"));
     }
 }

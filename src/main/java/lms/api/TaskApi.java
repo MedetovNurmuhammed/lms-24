@@ -2,6 +2,7 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lms.dto.request.TaskRequest;
 import lms.dto.response.AllTaskResponse;
 import lms.dto.response.SimpleResponse;
@@ -21,7 +22,7 @@ public class TaskApi {
     @Operation(summary = "Создание задания для урока", description = "Создает новое задание для указанного урока.")
     @PostMapping(value = "/create/{lessonId}")
     public SimpleResponse createTask(@PathVariable("lessonId") Long lessonId,
-                                     @RequestBody TaskRequest taskRequest) throws MessagingException {
+                                     @RequestBody @Valid TaskRequest taskRequest) throws MessagingException {
         return taskService.createTask(lessonId, taskRequest);
     }
 
@@ -35,7 +36,7 @@ public class TaskApi {
     @Secured("INSTRUCTOR")
     @Operation(summary = "Обновление задания по идентификатору", description = "Обновляет существующее задание по указанному идентификатору.")
     @PatchMapping("/update/{taskId}")
-    public SimpleResponse update(@PathVariable Long taskId, @RequestBody TaskRequest taskRequest) {
+    public SimpleResponse update(@PathVariable Long taskId, @RequestBody  @Valid TaskRequest taskRequest) throws MessagingException {
         return taskService.updateTask(taskId, taskRequest);
     }
 
