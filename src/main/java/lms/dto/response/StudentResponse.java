@@ -1,7 +1,6 @@
 package lms.dto.response;
 
 import lms.enums.StudyFormat;
-import lms.enums.Type;
 import lombok.Builder;
 
 @Builder

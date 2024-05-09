@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class Presentation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "presentation_gen")
-    @SequenceGenerator(name = "presentation_gen",sequenceName = "presentation_seq", allocationSize = 1,initialValue = 21)
+    @SequenceGenerator(name = "presentation_gen", sequenceName = "presentation_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private String description;
@@ -29,15 +29,16 @@ public class Presentation {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-@OneToOne
-private Trash trash;
+    @OneToOne
+    private Trash trash;
+
     @PrePersist
-    private void prePersist(){
+    private void prePersist() {
         createdAt = LocalDate.now();
     }
 
     @PreUpdate
-    private void preUpdate(){
+    private void preUpdate() {
         updatedAt = LocalDate.now();
     }
 }

@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
-
 import java.time.ZonedDateTime;
 
 @Entity
@@ -53,6 +52,10 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Link link;
+
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    private Task task;
+
     @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
     private Presentation presentation;
 }
