@@ -1,5 +1,6 @@
 package lms.service.impl;
 
+import com.amazonaws.services.cloudfront.model.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lms.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
@@ -20,6 +21,7 @@ import lms.entities.Video;
 import lms.entities.Notification;
 import lms.entities.ResultTask;
 import lms.enums.Role;
+import lms.entities.Student;
 import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
@@ -45,10 +47,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -149,7 +151,7 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getPresentation() != null) {
                 Presentation presentation = trash.getPresentation();
-//                storageService.deleteFile(presentation 
+//                storageService.deleteFile(presentation
                 presentationRepository.deleteById(presentation.getId());
             } else if (trash.getTest() != null) {
                 Test test = trash.getTest();

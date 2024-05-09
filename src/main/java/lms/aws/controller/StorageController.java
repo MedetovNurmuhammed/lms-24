@@ -21,8 +21,7 @@ public class StorageController {
     @Autowired
     private GenericParameterService parameterBuilder;
     @Secured("ADMIN")
-    @PostMapping
-//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, params = "file")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, params = "file")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         service.uploadFile(file);
         return new ResponseEntity<>("File uploaded successfully", HttpStatus.OK);

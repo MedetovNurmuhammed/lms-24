@@ -29,15 +29,15 @@ public class AnswerTask{
     private LocalDate dateOfSend;
     private LocalDate updatedAt;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     private Trash trash;
 
     //*************************************** Student **************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Student student;
 
     //*************************************** Task *****************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Task task;
 
     //*************************************** Link *****************************************

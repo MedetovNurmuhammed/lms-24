@@ -52,8 +52,8 @@ public class Student {
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @OneToMany(mappedBy = "student",cascade = CascadeType.REMOVE,orphanRemoval = true)
-    private List<Notification> notifications = new ArrayList<>();
+    @ElementCollection
+    private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.EAGER)

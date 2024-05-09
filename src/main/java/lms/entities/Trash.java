@@ -9,12 +9,14 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
 import lms.enums.Type;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
+
 import java.time.ZonedDateTime;
 
 @Entity
@@ -57,11 +59,13 @@ public class Trash {
     private Video video;
 
     @OneToOne(mappedBy = "trash")
+    private Task task;
+
+    @OneToOne(mappedBy = "trash")
     private Presentation presentation;
 
     @OneToOne(mappedBy = "trash")
     private Test test;
 
-    @OneToOne(mappedBy = "trash")
-    private Task task;
+
 }
