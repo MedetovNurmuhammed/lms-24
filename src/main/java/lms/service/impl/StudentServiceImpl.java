@@ -14,6 +14,7 @@ import lms.entities.Trash;
 import lms.entities.User;
 import lms.enums.Role;
 import lms.enums.StudyFormat;
+import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -140,16 +141,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
+        System.out.println("Test code variant");
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
-        trash.setName(student.getUser().getFullName());
-        trash.setType(student.getType());
-        trash.setDateOfDelete(ZonedDateTime.now());
         trash.setStudent(student);
+        trash.setName(student.getUser().getFullName());
+        trash.setType(Type.STUDENT);
+        trash.setDateOfDelete(ZonedDateTime.now());
         student.setTrash(trash);
         trashRepository.save(trash);
-        log.info("Успешно удален!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удален!")

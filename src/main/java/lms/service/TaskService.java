@@ -7,7 +7,7 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.TaskResponse;
 
 public interface TaskService {
-    SimpleResponse createTask(Long lessonId, TaskRequest taskRequest);
+    SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException;
 
     SimpleResponse delete(Long taskId);
 

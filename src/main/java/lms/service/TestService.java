@@ -4,4 +4,6 @@ import lms.dto.response.SimpleResponse;
 
 public interface TestService {
     SimpleResponse createTest();
+
+    SimpleResponse delete(Long testId);
 }

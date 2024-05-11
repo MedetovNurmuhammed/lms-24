@@ -6,6 +6,7 @@ import lms.dto.response.SimpleResponse;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,4 +24,14 @@ public class TestApi {
                                       @RequestBody TestRequest testRequest){
           return testService.createTest();
      }
+
+     @Operation(summary = "Удалить теста",
+             description = "Метод для удаления теста по его идентификатору." +
+                     " Авторизация: администратор и инструктор!")
+     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+     @DeleteMapping("/delete/{testId}")
+     public SimpleResponse delete(@PathVariable Long testId){
+          return testService.delete(testId);
+     }
+
 }

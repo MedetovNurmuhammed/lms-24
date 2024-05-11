@@ -25,8 +25,8 @@ public class TrashApi {
     @Operation(summary = "Получить все, кто в корзине!",
             description = "Метод для получение все, кто в корзине с пагинацией !" +
                     " Авторизация: администратор и инструктор!")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @GetMapping("/findAll")
     public AllTrashResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                     @RequestParam(required = false, defaultValue = "6") int size) {
         return trashService.findAll(page, size);

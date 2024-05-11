@@ -15,7 +15,16 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
 
     List<Trash> findByDateOfDeleteBefore(ZonedDateTime now);
 
-    @Query("select  new lms.dto.response.TrashResponse (t.id, t.type, t.name, t.dateOfDelete) " +
-            "from Trash t")
+    @Query("SELECT NEW lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) " +
+            "FROM Trash t where (t.type = lms.enums.Type.COURSE or t.type = lms.enums.Type.STUDENT or t.type = lms.enums.Type.INSTRUCTOR or t.type = lms.enums.Type.GROUP) ")
     Page<TrashResponse> findAllTrashes(Pageable pageable);
+
+    @Query("SELECT NEW lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) " +
+            "FROM Trash t where (t.type = lms.enums.Type.VIDEO or" +
+            " t.type = lms.enums.Type.PRESENTATION or " +
+            "t.type = lms.enums.Type.LINK or " +
+            "t.type = lms.enums.Type.TEST or " +
+            "t.type = lms.enums.Type.TASK or " +
+            "t.type = lms.enums.Type.LESSON  ) ")
+    Page<TrashResponse> findAllInstructorTrashes(Pageable pageable);
 }

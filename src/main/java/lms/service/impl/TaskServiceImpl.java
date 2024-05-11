@@ -23,6 +23,7 @@ import lms.repository.TrashRepository;
 import lms.repository.UserRepository;
 import lms.service.NotificationService;
 import lms.service.TaskService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,6 +58,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
+@Getter
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final LessonRepository lessonRepository;
@@ -69,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) {
+    public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException {
         Instructor instructor = getCurrentInstructor();
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
@@ -197,5 +199,16 @@ public class TaskServiceImpl implements TaskService {
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно добавлено в корзину")
                 .build();
+    }
+    public String deleteTaskById(Long taskId){
+        Task task = taskRepository.findById(taskId).
+                orElseThrow(()-> new NotFoundException("Not found"));
+        Notification notification = task.getNotification();
+        notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+        notification.setTask(null);
+        task.setNotification(null);
+        taskRepository.deleteById(task.getId());
+        taskRepository.deleteById(taskId);
+        return "Deleted";
     }
 }

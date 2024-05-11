@@ -1,43 +1,17 @@
 package lms.service.impl;
 
-import com.amazonaws.services.cloudfront.model.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lms.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
-import lms.entities.User;
-import lms.entities.Trash;
-import lms.entities.Course;
-import lms.entities.Instructor;
-import lms.entities.Group;
-import lms.entities.Student;
-import lms.entities.Presentation;
-import lms.entities.Test;
-import lms.entities.Task;
-import lms.entities.Lesson;
-import lms.entities.Link;
-import lms.entities.Video;
-import lms.entities.Notification;
-import lms.entities.ResultTask;
+import lms.entities.*;
 import lms.enums.Role;
-import lms.entities.Student;
-import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
 import lms.exceptions.NotFoundException;
-import lms.repository.TrashRepository;
-import lms.repository.UserRepository;
-import lms.repository.TestRepository;
-import lms.repository.PresentationRepository;
-import lms.repository.GroupRepository;
-import lms.repository.CourseRepository;
-import lms.repository.InstructorRepository;
-import lms.repository.StudentRepository;
-import lms.repository.TaskRepository;
-import lms.repository.LessonRepository;
-import lms.repository.VideoRepository;
-import lms.repository.LinkRepository;
+import lms.repository.*;
+import lms.service.TaskService;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,10 +21,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -68,44 +41,37 @@ public class TrashServiceImpl implements TrashService {
     private final LessonRepository lessonRepository;
     private final VideoRepository videoRepository;
     private final LinkRepository linkRepository;
+    private final TaskServiceImpl taskService;
     private final StorageService storageService;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public AllTrashResponse findAll(int page, int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
-        Pageable pageable = PageRequest.of(page, size);
-        Page<TrashResponse> trashes = trashRepository.findAllTrashes(pageable);
-        List<TrashResponse> trashResponses = new ArrayList<>();
-        for (TrashResponse trashResponse : trashes) {
-            if (currentUser.getRole().equals(Role.ADMIN) &&
-                    (trashResponse.getType().equals(Type.COURSE) ||
-                            trashResponse.getType().equals(Type.GROUP) ||
-                            trashResponse.getType().equals(Type.INSTRUCTOR) ||
-                            trashResponse.getType().equals(Type.STUDENT))) {
-                trashResponses.add(new TrashResponse(trashResponse.getId(), trashResponse.getType(), trashResponse.getName(), trashResponse.getDateOfDelete()));
-            } else if (currentUser.getRole().equals(Role.INSTRUCTOR) &&
-                    (trashResponse.getType().equals(Type.VIDEO) ||
-                            trashResponse.getType().equals(Type.PRESENTATION) ||
-                            trashResponse.getType().equals(Type.LINK) ||
-                            trashResponse.getType().equals(Type.TEST) ||
-                            trashResponse.getType().equals(Type.TASK) ||
-                            trashResponse.getType().equals(Type.LESSON))) {
-                trashResponses.add(new TrashResponse(trashResponse.getId(), trashResponse.getType(), trashResponse.getName(), trashResponse.getDateOfDelete()));
-            }
-        }
-
-        AllTrashResponse allTrashResponse = new AllTrashResponse();
-        allTrashResponse.setPage(trashes.getNumber());
-        allTrashResponse.setSize(trashes.getSize());
-        allTrashResponse.setTrashResponses(trashResponses);
-        return allTrashResponse;
+        System.out.println("test " + currentUser);
+        Pageable pageable = PageRequest.of(page - 1, size);// Пагинация начинается с 0
+        if (currentUser.getRole().equals(Role.ADMIN)) {
+            Page<TrashResponse> trashResponses = trashRepository.findAllTrashes(pageable);
+            AllTrashResponse allTrashResponse = new AllTrashResponse();
+            allTrashResponse.setPage(trashResponses.getNumber() + 1);
+            allTrashResponse.setSize(trashResponses.getNumberOfElements());
+            allTrashResponse.setTrashResponses(trashResponses.getContent());
+            return allTrashResponse;
+        }else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable);
+            AllTrashResponse allTrashResponse = new AllTrashResponse();
+            allTrashResponse.setPage(allInstructorTrashes.getNumber() + 1);
+            allTrashResponse.setSize(allInstructorTrashes.getNumberOfElements());
+            allTrashResponse.setTrashResponses(allInstructorTrashes.getContent());
+            return allTrashResponse;
+        } else throw new ForbiddenException("Нет доступа!!!");
     }
 
 
     @Override
     @Transactional
-    public SimpleResponse  delete(Long trashId) {
+    public SimpleResponse delete(Long trashId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
         Trash trash = trashRepository.findById(trashId).
@@ -113,8 +79,14 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.ADMIN)) {
             if (trash.getCourse() != null) {
                 Course course = trash.getCourse();
+                for (Lesson lesson : course.getLessons()) {
+                    for (Task task : lesson.getTasks()) {
+                        taskService.deleteTaskById(task.getId());
+                    }
+                }
                 for (Instructor instructor : course.getInstructors()) {
                     instructor.getCourses().remove(course);
+
                 }
                 course.setInstructors(null);
                 courseRepository.deleteById(course.getId());
@@ -127,7 +99,7 @@ public class TrashServiceImpl implements TrashService {
                 groupRepository.deleteById(group.getId());
             } else if (trash.getInstructor() != null) {
                 Instructor instructor = trash.getInstructor();
-                trash.getInstructor().setNotifications(null);
+                trash.getInstructor().setNotificationStates(null);
                 instructorRepository.deleteById(instructor.getId());
             } else if (trash.getStudent() != null) {
                 Student student = trash.getStudent();
@@ -143,6 +115,7 @@ public class TrashServiceImpl implements TrashService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse deleteInstructorTrash(Long trashId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
@@ -160,8 +133,7 @@ public class TrashServiceImpl implements TrashService {
                 Video video = trash.getVideo();
                 videoRepository.deleteById(video.getId());
             } else if (trash.getTask() != null) {
-                Task task = trash.getTask();
-                taskRepository.deleteById(task.getId());
+                taskService.deleteTaskById(trash.getTask().getId());
             } else if (trash.getLesson() != null) {
                 Lesson lesson = trash.getLesson();
                 lessonRepository.deleteById(lesson.getId());
@@ -260,15 +232,15 @@ public class TrashServiceImpl implements TrashService {
             } else if (expiredTrash.getInstructor() != null) {
                 Instructor instructor = expiredTrash.getInstructor();
                 instructorRepository.deleteById(instructor.getId());
-            }else if (expiredTrash.getGroup() != null) {
+            } else if (expiredTrash.getGroup() != null) {
                 Group group = expiredTrash.getGroup();
                 groupRepository.deleteById(group.getId());
             } else if (expiredTrash.getStudent() != null) {
                 Student student = expiredTrash.getStudent();
                 studentRepository.deleteById(student.getId());
-            }else if (expiredTrash.getPresentation() != null) {
+            } else if (expiredTrash.getPresentation() != null) {
                 Presentation presentation = expiredTrash.getPresentation();
-//                storageService.deleteFile(presentation.getFile());
+                storageService.deleteFile(presentation.getFile());
                 presentationRepository.deleteById(presentation.getId());
             } else if (expiredTrash.getTest() != null) {
                 Test test = expiredTrash.getTest();
