@@ -189,7 +189,7 @@ values (40, 'Elebesov Muktar', 'muktar@gmail.com', '$2a$12$VA5y7.IQeF9CAwKScf70A
         'STUDENT', 'FALSE', '+996707174093');
 
 insert into students (id, user_id, study_format, group_id, created_at)
-values (1, 21, 'OFFLINE', 1, '2024-4-12');
+values (1, 3, 'OFFLINE', 1, '2024-4-12');
 insert into students (id, user_id, study_format, group_id, created_at)
 values (2, 22, 'ONLINE', 2, '2024-4-12');
 insert into students (id, user_id, study_format, group_id, created_at)
@@ -234,7 +234,7 @@ values (1, 'java', '2024/04/07', 1);
 insert into instructors (id, specialization, created_at, user_id)
 values (2, 'javaScript', '2024/04/04', 2);
 insert into instructors (id, specialization, created_at, user_id)
-values (3, 'java', '2024/04/06', 3);
+values (3, 'java', '2024/04/06', 21);
 insert into instructors (id, specialization, created_at, user_id)
 values (4, 'java', '2024/04/07', 4);
 insert into instructors (id, specialization, created_at, user_id)

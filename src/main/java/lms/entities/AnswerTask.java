@@ -7,9 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +31,9 @@ public class AnswerTask{
     private TaskAnswerStatus taskAnswerStatus;
     private int point = 0;
     @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE,orphanRemoval = true)
-    private List<Comment> comment = new ArrayList<>();
-    private LocalDate dateOfSend;
-    private LocalDate updatedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Trash trash;
+    private List<Comment> comments = new ArrayList<>();
+    private LocalDateTime dateOfSend;
+    private LocalDateTime updatedAt;
 
     //*************************************** Student **************************************
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
@@ -49,11 +45,11 @@ public class AnswerTask{
 
     @PrePersist
     protected void onCreate() {
-        dateOfSend = LocalDate.now();
+        dateOfSend = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        dateOfSend = LocalDate.now();
+        dateOfSend = LocalDateTime.now();
     }
 }
