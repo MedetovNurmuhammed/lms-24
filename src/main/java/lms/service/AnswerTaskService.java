@@ -1,6 +1,7 @@
 package lms.service;
 
 import jakarta.mail.MessagingException;
+import lms.dto.request.CheckAnswerRequest;
 import lms.dto.response.FilterAnswerOfTaskResponse;
 import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
@@ -18,4 +19,8 @@ public interface AnswerTaskService {
     AnswerTaskResponse findAnswerByTaskId(Long taskId);
 
     AnswerTaskResponse getAnswerById(Long answerId);
+
+    SimpleResponse checkAnswer(Long answerId, CheckAnswerRequest checkAnswerRequest) throws MessagingException;
+
+    List<String> getNotAnswered(Long taskId);
 }

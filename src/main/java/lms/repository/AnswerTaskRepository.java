@@ -5,7 +5,9 @@ import lms.entities.AnswerTask;
 import lms.enums.TaskAnswerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 
 public interface AnswerTaskRepository extends JpaRepository<AnswerTask, Long> {
 
@@ -14,5 +16,6 @@ public interface AnswerTaskRepository extends JpaRepository<AnswerTask, Long> {
    List<FilterAnswerOfTaskResponse> filterAnswerTask(Long taskId, TaskAnswerStatus answerStatus);
 
    @Query("select a from AnswerTask  a where a.task.id = :taskId and a.student.user.email=:email")
-   AnswerTask findByTaskId(Long taskId, String email);
+   Optional<AnswerTask> findByTaskId(Long taskId, String email);
+
 }
