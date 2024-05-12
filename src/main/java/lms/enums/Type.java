@@ -7,5 +7,6 @@ public enum Type {
     COURSE,
     LINK,
     PRESENTATION,
-    VIDEO
+    VIDEO,
+    TASK
 }

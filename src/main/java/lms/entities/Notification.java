@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.CascadeType;
@@ -31,24 +30,19 @@ public class Notification {
     private Long id;
     private String title;
     private String description;
-    private Boolean isView;
     private LocalDate createdAt;
-
-    //*************************************** Instructor ************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private Instructor instructor;
-
-    //*************************************** Student ***************************************
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
-    private Student student;
 
     //*************************************** Task ******************************************
     @OneToOne(cascade = CascadeType.DETACH, optional = false)
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH, optional = false)
+    @OneToOne(cascade = CascadeType.DETACH)
     private ResultTask resultTask;
+
+    //*************************************** ResultTask *************************************
+    @OneToOne(cascade = CascadeType.DETACH)
+    private AnswerTask answerTask;
 
     @PrePersist
     protected void onCreate() {

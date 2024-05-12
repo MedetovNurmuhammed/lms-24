@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -181,7 +180,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         if (currentUser.getRole() == Role.ADMIN) {
             announcementPage = announcementRepository.findAll(pageable);
         } else if (currentUser.getRole() == Role.INSTRUCTOR) {
-            Instructor instructor = instructorRepository.findByUserId(currentUser.getId());
+            Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
+                    new NotFoundException("Instructor with id:" + currentUser.getId() + " not found"));
             List<Long> groupsIds = groupRepository.findAllByInstructorId(instructor.getId());
             announcementPage = announcementRepository.findAllInstructorAnnouncement(groupsIds, pageable);
         } else {
