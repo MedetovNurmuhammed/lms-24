@@ -35,7 +35,7 @@ public class Question {
     private String title;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
-
+    private int point;
     //*************************************** Option ***************************************
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question",orphanRemoval = true)
     private List<Option> options = new ArrayList<>();

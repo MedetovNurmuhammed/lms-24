@@ -16,6 +16,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,8 @@ public class Test {
     private Boolean isActive;
     private LocalDate creationDate;
     private LocalDate updateDate;
+    private int hour;
+    private int minute;
 
     //*************************************** ResultTest **************************************
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "test", orphanRemoval = true)
