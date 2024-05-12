@@ -30,7 +30,7 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_gen")
-    @SequenceGenerator(name = "question_seq",sequenceName = "question_seq", allocationSize = 1)
+    @SequenceGenerator(name = "question_gen",sequenceName = "question_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     @Enumerated(EnumType.STRING)

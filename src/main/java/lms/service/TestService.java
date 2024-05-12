@@ -5,4 +5,6 @@ import lms.dto.response.SimpleResponse;
 
 public interface TestService {
     SimpleResponse  saveTest(Long lessonId, TestRequest testRequest);
+
+    SimpleResponse update(Long testId, TestRequest testRequest);
 }

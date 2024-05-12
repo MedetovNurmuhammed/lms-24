@@ -9,9 +9,10 @@ import java.util.List;
 
 public record QuestionRequest(
         @NotNull
-        String title,
+        String titlebek,
         @Min(0)
-        int point,
-        QuestionType questionType
+        int pointbek,
+        QuestionType questionType,
+        List<OptionRequest> optionRequests
 ) {
 }

@@ -19,9 +19,7 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -45,28 +43,36 @@ public class TestServiceImpl implements TestService {
         test.setLesson(lesson);
         lesson.setTest(test);
         testRepository.save(test);
-
-        testRequest.questionRequests().forEach((questionRequest, optionRequests) -> {
+        for (QuestionRequest questionRequest : testRequest.questionRequests()) {
             Question question = new Question();
-            question.setTitle(questionRequest.title());
+            question.setTitle(questionRequest.titlebek());
             question.setQuestionType(questionRequest.questionType());
-            question.setPoint(questionRequest.point());
+            question.setPoint(questionRequest.pointbek());
             question.setTest(test);
             test.getQuestions().add(question);
             questionRepository.save(question);
-
-            optionRequests.forEach(optionRequest -> {
+            for (OptionRequest optionRequest : questionRequest.optionRequests()) {
                 Option option = new Option();
                 option.setOption(optionRequest.option());
                 option.setIsTrue(optionRequest.isTrue());
                 option.setQuestion(question);
                 question.getOptions().add(option);
                 optionRepository.save(option);
-            });
-        });
+            }
+        }
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Тест успешно создан!!!")
                 .build();
+    }
+
+    @Override
+    public SimpleResponse update(Long testId, TestRequest testRequest) {
+        Test test = testRepository.findById(testId).
+                orElseThrow(() -> new NotFoundException("Not found test "));
+        test.setTitle(testRequest.title());
+        test.setIsActive(false);
+
+        return null;
     }
 }

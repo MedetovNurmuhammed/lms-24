@@ -32,7 +32,7 @@ import java.util.List;
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_gen")
-    @SequenceGenerator(name = "test_seq",sequenceName = "test_seq", allocationSize = 1)
+    @SequenceGenerator(name = "test_gen",sequenceName = "test_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     private Boolean isActive;

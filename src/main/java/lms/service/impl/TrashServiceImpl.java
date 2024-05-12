@@ -1,6 +1,5 @@
 package lms.service.impl;
 
-import com.amazonaws.services.cloudfront.model.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
