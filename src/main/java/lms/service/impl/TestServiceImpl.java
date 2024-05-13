@@ -1,10 +1,7 @@
 package lms.service.impl;
 
-import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
-import lms.dto.request.OptionRequest;
-import lms.dto.request.QuestionRequest;
-import lms.dto.request.TestRequest;
+import lms.dto.request.*;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Lesson;
 import lms.entities.Option;
@@ -19,10 +16,15 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final LessonRepository lessonRepository;
@@ -45,9 +47,9 @@ public class TestServiceImpl implements TestService {
         testRepository.save(test);
         for (QuestionRequest questionRequest : testRequest.questionRequests()) {
             Question question = new Question();
-            question.setTitle(questionRequest.titlebek());
+            question.setTitle(questionRequest.title());
             question.setQuestionType(questionRequest.questionType());
-            question.setPoint(questionRequest.pointbek());
+            question.setPoint(questionRequest.point());
             question.setTest(test);
             test.getQuestions().add(question);
             questionRepository.save(question);
@@ -66,13 +68,82 @@ public class TestServiceImpl implements TestService {
                 .build();
     }
 
+
     @Override
-    public SimpleResponse update(Long testId, TestRequest testRequest) {
-        Test test = testRepository.findById(testId).
-                orElseThrow(() -> new NotFoundException("Not found test "));
+    @Transactional
+    public SimpleResponse update(Long testId, UpdateTestRequest testRequest) {
+
+        Test test = testRepository.findById(testId)
+                .orElseThrow(() -> new NotFoundException("Test not found"));
         test.setTitle(testRequest.title());
         test.setIsActive(false);
+        test.setHour(testRequest.hour());
+        test.setMinute(testRequest.minute());
 
-        return null;
+        for (UpdateQuestionRequest questionRequest : testRequest.updateQuestionRequests()) {
+
+            Question question = questionRequest.questionId() != null ?
+                    questionRepository.findById(questionRequest.questionId())
+                            .orElseThrow(() -> new NotFoundException("Question not found")) :
+                    new Question();
+
+            question.setTitle(questionRequest.title());
+            question.setQuestionType(questionRequest.questionType());
+            question.setPoint(questionRequest.point());
+            question.setTest(test);
+
+            for (UpdateOptionRequest optionRequest : questionRequest.updateOptionRequest()) {
+                Option option = optionRequest.optionId() != null ?
+                        optionRepository.findById(optionRequest.optionId())
+                                .orElseThrow(() -> new NotFoundException("Option not found")) :
+                        new Option();
+
+                option.setOption(optionRequest.option());
+                option.setIsTrue(optionRequest.isTrue());
+                option.setQuestion(question);
+                optionRepository.save(option);
+            }
+            questionRepository.save(question);
+        }
+        testRepository.save(test);
+
+
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Test successfully updated")
+                .build();
+    }
+
+
+    @Transactional
+    public void updateOption(Long questionId, List<Long> optionId, UpdateOptionRequest updateOptionRequest) {
+        Question question = questionRepository.findById(questionId).
+                orElseThrow(() -> new NotFoundException("Не найден!"));
+        for (Option option : question.getOptions()) {
+            for (Long ids : optionId) {
+                if (Objects.equals(option.getId(), ids)) {
+                    option.setOption(updateOptionRequest.option());
+                    option.setIsTrue(updateOptionRequest.isTrue());
+//                    option.setQuestion(question);
+//                    question.getOptions().add();
+                }
+            }
+        }
+        SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Обновлен!")
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public SimpleResponse enableToStart(Long testId) {
+        Test test = testRepository.findById(testId).
+                orElseThrow(() -> new NotFoundException("Не найден!!!"));
+        test.setIsActive(true);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Готов к тесту")
+                .build();
     }
 }

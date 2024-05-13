@@ -20,6 +20,9 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
+
 @Entity
 @Table(name = "questions")
 @Getter
@@ -37,11 +40,10 @@ public class Question {
     private QuestionType questionType;
     private int point;
     //*************************************** Option ***************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question",orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST,MERGE}, mappedBy = "question",orphanRemoval = true)
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Test ******************************************
     @ManyToOne(cascade = CascadeType.DETACH)
     private Test test;
-
 }
