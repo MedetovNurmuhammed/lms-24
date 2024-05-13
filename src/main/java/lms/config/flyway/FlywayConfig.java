@@ -1,4 +1,4 @@
-package lms.config.flyway;
+package lms.config.flyWay;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
