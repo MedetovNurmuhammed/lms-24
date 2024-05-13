@@ -1,4 +1,4 @@
-package lms.config.flyWay;
+package lms.config.flyway;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +33,7 @@ public class FlywayConfig {
     public Flyway flyway(DataSource dataSource) {
         return Flyway.configure()
                 .dataSource(dataSource)
-                .locations("classpath:db/migration")
+                .locations("classpath:db.migration")
                 .baselineOnMigrate(true)
                 .load();
     }
