@@ -1,0 +1,1 @@
+create table testttt(id int);

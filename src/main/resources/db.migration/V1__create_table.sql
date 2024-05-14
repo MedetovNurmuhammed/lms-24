@@ -1,0 +1,1 @@
+create table java(id int);
