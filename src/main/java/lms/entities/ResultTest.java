@@ -22,7 +22,7 @@ public class ResultTest {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "res_test_gen")
     @SequenceGenerator(name = "res_test_seq", sequenceName = "res_test_seq", allocationSize = 1)
     private Long id;
-    private int point;
+    private double point;
     private LocalDate creationDate;
     private LocalDate updateDate;
 

@@ -24,11 +24,11 @@ import lombok.Setter;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "option_gen")
-    @SequenceGenerator(name = "option_seq",sequenceName = "option_seq", allocationSize = 1)
+    @SequenceGenerator(name = "option_gen", sequenceName = "option_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String option;
     private Boolean isTrue;
-
+    private double optionPoint;
     //*************************************** Question *************************************
     @ManyToOne(cascade = CascadeType.DETACH)
     private Question question;

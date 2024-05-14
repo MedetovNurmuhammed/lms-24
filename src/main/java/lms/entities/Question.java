@@ -35,6 +35,7 @@ public class Question {
     private String title;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
+    private double point;
 
     //*************************************** Option ***************************************
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question",orphanRemoval = true)

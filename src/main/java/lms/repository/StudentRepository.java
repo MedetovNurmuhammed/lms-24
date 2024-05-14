@@ -11,16 +11,17 @@ import lms.enums.StudyFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface StudentRepository extends JpaRepository<Student,Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(i.id, c.title, i.user.fullName, '', i.user.phoneNumber, i.user.email) from Student i join i.group g join g.courses c where c.id = :courseId and i.trash is null")
     List<InstructorsOrStudentsOfCourse> StudentsByCourseId(Long courseId);
 
-    default Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(Long courseId, Pageable pageable){
+    default Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(Long courseId, Pageable pageable) {
         List<InstructorsOrStudentsOfCourse> allStudents = StudentsByCourseId(courseId);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allStudents.size());
@@ -56,4 +57,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("select s from Student s join s.group.courses c where c.id = :courseId and s.trash is null ")
     List<Student> findByCourseId(Long courseId);
 
+    @Query("select s from Student s where s.user.id =:id")
+    Student findStudentByUserId(@Param("id") Long id);
 }
