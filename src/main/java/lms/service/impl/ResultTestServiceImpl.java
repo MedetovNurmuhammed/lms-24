@@ -71,7 +71,10 @@ public class ResultTestServiceImpl implements ResultTestService {
                         } else {
                             answerOptionResponse.setYourChoice(false);
                         }
-                        answerQuestionResponse.setPoint(option.getOptionPoint());
+                        if (option.getOptionPoint() != 0){
+                            double v = option.getOptionPoint() * question.getOptions().size();
+                            answerQuestionResponse.setPoint(v);
+                        }
                         totalPoint += option.getOptionPoint();
                     }
                 }
