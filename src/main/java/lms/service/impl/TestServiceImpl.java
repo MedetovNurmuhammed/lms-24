@@ -3,15 +3,13 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.*;
 import lms.dto.response.SimpleResponse;
-import lms.entities.Lesson;
-import lms.entities.Option;
-import lms.entities.Question;
-import lms.entities.Test;
+import lms.dto.response.StudentResponse;
+import lms.dto.response.StudentTestResponse;
+import lms.dto.response.TestResponse;
+import lms.entities.*;
+import lms.enums.Type;
 import lms.exceptions.NotFoundException;
-import lms.repository.LessonRepository;
-import lms.repository.OptionRepository;
-import lms.repository.QuestionRepository;
-import lms.repository.TestRepository;
+import lms.repository.*;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +28,7 @@ public class TestServiceImpl implements TestService {
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
+    private final TrashRepository trashRepository;
 
     @Override
     @Transactional
@@ -144,6 +143,33 @@ public class TestServiceImpl implements TestService {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Готов к тесту")
+                .build();
+    }
+
+    @Override
+    public SimpleResponse delete(Long testId) {
+        Test test = testRepository.findById(testId).
+                orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        Trash trash = new Trash();
+        trash.setName(test.getTitle());
+        trash.setType(Type.TEST);
+        trash.setTest(test);
+        trashRepository.save(trash);
+        test.setTrash(trash);
+        return SimpleResponse.builder()
+                .message("dg")
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+    @Override
+    public TestResponse findById(Long testId) {
+        Test test = testRepository.findById(testId).
+                orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        List<StudentTestResponse> studentResponses = testRepository.findTestsStudents(testId);
+        return TestResponse.builder()
+                .id(test.getId())
+                .studentTestResponses(studentResponses)
                 .build();
     }
 }

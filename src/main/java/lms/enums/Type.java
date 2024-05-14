@@ -8,5 +8,6 @@ public enum Type {
     LINK,
     PRESENTATION,
     VIDEO,
+    TEST,
     TASK
 }
