@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "answer_tasks")
@@ -19,18 +22,18 @@ import java.time.LocalDate;
 public class AnswerTask{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_task_gen")
-    @SequenceGenerator(name = "answer_task_seq",sequenceName = "answer_task_seq", allocationSize = 1)
+    @SequenceGenerator(name = "answer_task_gen",sequenceName = "answer_task_seq", allocationSize = 1, initialValue = 21)
     private long id;
     private String text;
     private String image;
-    private String comment;
+    private String file;
     @Enumerated(EnumType.STRING)
     private TaskAnswerStatus taskAnswerStatus;
-    private LocalDate dateOfSend;
-    private LocalDate updatedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Trash trash;
+    private int point = 0;
+    @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+    private LocalDateTime dateOfSend;
+    private LocalDateTime updatedAt;
 
     //*************************************** Student **************************************
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
@@ -40,21 +43,13 @@ public class AnswerTask{
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Task task;
 
-    //*************************************** Link *****************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private Link link;
-
-    //*************************************** ResultTask ************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private ResultTask resultTask;
-
     @PrePersist
     protected void onCreate() {
-        dateOfSend = LocalDate.now();
+        dateOfSend = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        dateOfSend = LocalDate.now();
+        dateOfSend = LocalDateTime.now();
     }
 }
