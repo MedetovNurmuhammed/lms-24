@@ -11,6 +11,7 @@ import lms.enums.StudyFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,4 +57,12 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("select s from Student s join s.group.courses c where c.id = :courseId and s.trash is null ")
     List<Student> findByCourseId(Long courseId);
 
+    @Query("select s.id from Student s join s.group.courses c where c.id = :id and s.trash is null ")
+    List<Long> findStudentIdByCourseId(Long id);
+
+    @Query("select  s.user.fullName " +
+            "from Task t join t.lesson.course.groups g join  g.students s " +
+            "where t.id = :taskId and s.id not in (:studentIds)")
+    List<String> findUserNamesByTask(@Param("studentIds") List<Long> studentIds,
+                                     @Param("taskId") Long taskId);
 }
