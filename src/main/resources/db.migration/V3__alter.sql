@@ -1,1 +1,0 @@
-alter table testttt add column time int;
