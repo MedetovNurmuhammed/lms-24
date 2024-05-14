@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.http.annotation.Contract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class AnswerQuestionResponse {
     private Long questionId;
     private String questionTitle;
+
     private QuestionType questionType;
     private List<AnswerOptionResponse> answerOptionResponses =new ArrayList<>();
     private double point;

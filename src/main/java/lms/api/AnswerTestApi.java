@@ -17,12 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerTestApi {
     private final ResultTestService resultTestService;
     private final QuestionService questionService;
-    @Secured("STUDENT")
-    @GetMapping("/findAllQuestionByTestId/{testId}")
-    @Operation(description = "Возвращает все вопросы теста")
-    public AllQuestionResponse findAllQuestion(@PathVariable Long testId) {
-        return questionService.findAllQuestions(testId);
-    }
+
     @Secured("STUDENT")
     @PostMapping("/answerTest/{testId}")
     @Operation(description = "ответы на вопросы и ответ")

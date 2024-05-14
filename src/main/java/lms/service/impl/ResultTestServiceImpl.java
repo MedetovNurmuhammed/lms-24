@@ -39,10 +39,9 @@ public class ResultTestServiceImpl implements ResultTestService {
         ResultTest resultTest = new ResultTest();
         String emailCurrentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(emailCurrentUser).orElseThrow(() -> new NotFoundException("студент с  email " + emailCurrentUser + " не найден"));
-        Student studentByUserId = studentRepository.findStudentByUserId(user.getId());
+        Student studentByUserId = studentRepository.findStudentByUserId(user.getId()).orElseThrow(() -> new NotFoundException(""));
         resultTest.setStudent(studentByUserId);
         resultTest.setTest(test);
-        resultTestRepository.save(resultTest);
         test.getResultTests().add(resultTest);
         studentByUserId.getResultTests().add(resultTest);
         ResultTestResponse resultTestResponse = new ResultTestResponse();
@@ -60,6 +59,7 @@ public class ResultTestServiceImpl implements ResultTestService {
                 for (Long optionId : answerRequest.optionId()) {
                     optionRepository.findById(optionId).orElseThrow(() -> new NotFoundException("ответ с id: " + optionId + " не найден"));
                     if (optionId.equals(option.getId())) {
+                        resultTest.getOptions().add(option);
                         if (option.getIsTrue()) {
                             answerOptionResponse.setYourChoice(true);
                         } else{
@@ -71,6 +71,7 @@ public class ResultTestServiceImpl implements ResultTestService {
                 answerOptionResponse.setOption(option.getOption());
                 answerQuestionResponse.getAnswerOptionResponses().add(answerOptionResponse);
             }
+            resultTestRepository.save(resultTest);
             resultTestResponse.setTestId(testId);
             resultTestResponse.setTestTitle(test.getTitle());
             resultTestResponse.setTotalPoint(totalPoint);
@@ -85,7 +86,7 @@ public class ResultTestServiceImpl implements ResultTestService {
         String emailCurrentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         double totalPoint = 0;
         User user = userRepository.findByEmail(emailCurrentUser).orElseThrow(() -> new NotFoundException("студент с  email " + emailCurrentUser + " не найден"));
-        Student studentByUserId = studentRepository.findStudentByUserId(user.getId());
+        Student studentByUserId = studentRepository.findStudentByUserId(user.getId()).orElseThrow(() -> new NotFoundException(""));
         ResultTest resultTest = resultTestRepository.findByStudentId(studentByUserId.getId());
         ResultTestResponse resultTestResponse = new ResultTestResponse();
         for (Question question : resultTest.getTest().getQuestions()) {
@@ -98,17 +99,10 @@ public class ResultTestServiceImpl implements ResultTestService {
                 AnswerOptionResponse answerOptionResponse = new AnswerOptionResponse();
                 answerOptionResponse.setOptionId(option.getId());
                 answerOptionResponse.setTrue(option.getIsTrue());
-                for (Long optionId : answerRequest.optionId()) {
-                    optionRepository.findById(optionId).orElseThrow(() -> new NotFoundException("ответ с id: " + optionId + " не найден"));
-                    if (optionId.equals(option.getId())) {
-                        if (option.getIsTrue()) {
-                            answerOptionResponse.setYourChoice(true);
-                        } else{
-                            answerOptionResponse.setYourChoice(false);}
+                for (Option optionId : resultTest.getOptions()) {
                         answerQuestionResponse.setPoint(option.getOptionPoint());
-                        totalPoint += option.getOptionPoint();
+                        totalPoint += optionId.getOptionPoint();
                     }
-                }
                 answerOptionResponse.setOption(option.getOption());
                 answerQuestionResponse.getAnswerOptionResponses().add(answerOptionResponse);
             }
