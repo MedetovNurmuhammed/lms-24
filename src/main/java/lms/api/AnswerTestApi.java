@@ -22,15 +22,15 @@ public class AnswerTestApi {
 
     @Secured("STUDENT")
     @PostMapping("/answerTest/{testId}")
-    @Operation(summary = "ответы на вопросы и ответ")
+    @Operation(summary = "ответы на вопросы и ответ.(Авторизация: студент)")
     public ResultTestResponse resultTest(@PathVariable Long testId, @RequestBody AnswerTestRequest answerRequest) {
         return resultTestService.result(testId, answerRequest);
     }
     @Secured("STUDENT")
-    @GetMapping("/findResultTestOfCurrentStudent")
-    @Operation(summary = "сохраненные результаты теста")
-    public ResultTestResponse findResultOfCurrentStudent() {
-        return resultTestService.findResultOfCurrentStudent();
+    @GetMapping("/findResultTestOfCurrentStudent/{testId}")
+    @Operation(summary = "сохраненные результаты теста.(Авторизация: студент)")
+    public ResultTestResponse findResultOfCurrentStudent(@PathVariable Long testId) {
+        return resultTestService.findResultOfCurrentStudent(testId);
     }
 
     @Secured("INSTRUCTOR")

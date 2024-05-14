@@ -6,7 +6,7 @@ import lms.dto.response.ResultTestResponse;
 public interface ResultTestService {
     ResultTestResponse result(Long testId, AnswerTestRequest answerRequest);
 
-    ResultTestResponse findResultOfCurrentStudent();
+    ResultTestResponse findResultOfCurrentStudent(Long testId);
 
     ResultTestResponse findResultTestById(Long resultTestId);
 }
