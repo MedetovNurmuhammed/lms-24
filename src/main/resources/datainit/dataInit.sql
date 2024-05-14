@@ -767,87 +767,87 @@ insert into tests (id, lesson_id, is_active, creation_date, title)
 values (20, 20, 'FALSE', '2024-05-08',
         'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum');
 
-insert into questions (id, test_id, question_type, title)
-values (1, 1, 'MULTIPLE', 'Legal Assistant');
-insert into questions (id, test_id, question_type, title)
-values (2, 2, 'MULTIPLE', 'Systems Administrator IV');
-insert into questions (id, test_id, question_type, title)
-values (3, 3, 'MULTIPLE', 'Teacher');
-insert into questions (id, test_id, question_type, title)
-values (4, 4, 'MULTIPLE', 'Nurse Practicioner');
-insert into questions (id, test_id, question_type, title)
-values (5, 5, 'MULTIPLE', 'Operator');
-insert into questions (id, test_id, question_type, title)
-values (6, 6, 'MULTIPLE', 'Executive Secretary');
-insert into questions (id, test_id, question_type, title)
-values (7, 7, 'MULTIPLE', 'Media Manager II');
-insert into questions (id, test_id, question_type, title)
-values (8, 8, 'MULTIPLE', 'Technical Writer');
-insert into questions (id, test_id, question_type, title)
-values (9, 9, 'MULTIPLE', 'VP Marketing');
-insert into questions (id, test_id, question_type, title)
-values (10, 10, 'SINGLE', 'Health Coach IV');
-insert into questions (id, test_id, question_type, title)
-values (11, 11, 'SINGLE', 'Assistant Manager');
-insert into questions (id, test_id, question_type, title)
-values (12, 12, 'SINGLE', 'Marketing Assistant');
-insert into questions (id, test_id, question_type, title)
-values (13, 13, 'SINGLE', 'Account Coordinator');
-insert into questions (id, test_id, question_type, title)
-values (14, 14, 'SINGLE', 'Help Desk Operator');
-insert into questions (id, test_id, question_type, title)
-values (15, 15, 'SINGLE', 'VP Quality Control');
-insert into questions (id, test_id, question_type, title)
-values (16, 16, 'SINGLE', 'Developer III');
-insert into questions (id, test_id, question_type, title)
-values (17, 17, 'SINGLE', 'Social Worker');
-insert into questions (id, test_id, question_type, title)
-values (18, 18, 'SINGLE', 'Payment Adjustment Coordinator');
-insert into questions (id, test_id, question_type, title)
-values (19, 19, 'SINGLE', 'Account Representative IV');
-insert into questions (id, test_id, question_type, title)
-values (20, 20, 'SINGLE', 'Paralegal');
+insert into questions (id, test_id, question_type, title, point)
+values (1, 1, 'MULTIPLE', 'Legal Assistant', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (2, 2, 'MULTIPLE', 'Systems Administrator IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (3, 3, 'MULTIPLE', 'Teacher', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (4, 4, 'MULTIPLE', 'Nurse Practicioner', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (5, 5, 'MULTIPLE', 'Operator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (6, 6, 'MULTIPLE', 'Executive Secretary', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (7, 7, 'MULTIPLE', 'Media Manager II', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (8, 8, 'MULTIPLE', 'Technical Writer', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (9, 9, 'MULTIPLE', 'VP Marketing', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (10, 10, 'SINGLE', 'Health Coach IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (11, 11, 'SINGLE', 'Assistant Manager', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (12, 12, 'SINGLE', 'Marketing Assistant', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (13, 13, 'SINGLE', 'Account Coordinator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (14, 14, 'SINGLE', 'Help Desk Operator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (15, 15, 'SINGLE', 'VP Quality Control', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (16, 16, 'SINGLE', 'Developer III', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (17, 17, 'SINGLE', 'Social Worker', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (18, 18, 'SINGLE', 'Payment Adjustment Coordinator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (19, 19, 'SINGLE', 'Account Representative IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (20, 20, 'SINGLE', 'Paralegal', 10);
 
-insert into options (id, is_true, question_id, option)
-values (1, 'TRUE', 1, 'edu');
-insert into options (id, is_true, question_id, option)
-values (2, 'FALSE', 2, 'edu');
-insert into options (id, is_true, question_id, option)
-values (3, 'TRUE', 3, 'net');
-insert into options (id, is_true, question_id, option)
-values (4, 'FALSE', 4, 'edu');
-insert into options (id, is_true, question_id, option)
-values (5, 'FALSE', 5, 'gov');
-insert into options (id, is_true, question_id, option)
-values (6, 'FALSE', 6, 'name');
-insert into options (id, is_true, question_id, option)
-values (7, 'FALSE', 7, 'name');
-insert into options (id, is_true, question_id, option)
-values (8, 'TRUE', 8, 'name');
-insert into options (id, is_true, question_id, option)
-values (9, 'FALSE', 9, 'edu');
-insert into options (id, is_true, question_id, option)
-values (10, 'FALSE', 10, 'com');
-insert into options (id, is_true, question_id, option)
-values (11, 'FALSE', 11, 'org');
-insert into options (id, is_true, question_id, option)
-values (12, 'FALSE', 12, 'org');
-insert into options (id, is_true, question_id, option)
-values (13, 'TRUE', 13, 'info');
-insert into options (id, is_true, question_id, option)
-values (14, 'TRUE', 14, 'org');
-insert into options (id, is_true, question_id, option)
-values (15, 'TRUE', 15, 'biz');
-insert into options (id, is_true, question_id, option)
-values (16, 'TRUE', 16, 'biz');
-insert into options (id, is_true, question_id, option)
-values (17, 'TRUE', 17, 'biz');
-insert into options (id, is_true, question_id, option)
-values (18, 'TRUE', 18, 'mil');
-insert into options (id, is_true, question_id, option)
-values (19, 'TRUE', 19, 'name');
-insert into options (id, is_true, question_id, option)
-values (20, 'FALSE', 20, 'net');
+insert into options (id, is_true, question_id, option, option_point)
+values (1, 'TRUE', 1, 'edu', 5);
+insert into options (id, is_true, question_id, option, option_point)
+values (2, 'FALSE', 2, 'edu', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (3, 'TRUE', 3, 'net', 5);
+insert into options (id, is_true, question_id, option, option_point)
+values (4, 'FALSE', 4, 'edu', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (5, 'FALSE', 5, 'gov', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (6, 'FALSE', 6, 'name', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (7, 'FALSE', 7, 'name', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (8, 'TRUE', 8, 'name', 5);
+insert into options (id, is_true, question_id, option, option_point)
+values (9, 'FALSE', 9, 'edu', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (10, 'FALSE', 10, 'com', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (11, 'FALSE', 11, 'org', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (12, 'FALSE', 12, 'org', 0);
+insert into options (id, is_true, question_id, option, option_point)
+values (13, 'TRUE', 13, 'info', 5);
+insert into options (id, is_true, question_id, option, option_point)
+values (14, 'TRUE', 14, 'org', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (15, 'TRUE', 15, 'biz', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (16, 'TRUE', 16, 'biz', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (17, 'TRUE', 17, 'biz', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (18, 'TRUE', 18, 'mil', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (19, 'TRUE', 19, 'name', 10);
+insert into options (id, is_true, question_id, option, option_point)
+values (20, 'FALSE', 20, 'net', 0);
 
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
 values (1, 1, 'LATE', '2024-04-12', 1,

@@ -6,7 +6,12 @@ import lms.dto.request.AnswerTestRequest;
 import lms.dto.response.AnswerOptionResponse;
 import lms.dto.response.AnswerQuestionResponse;
 import lms.dto.response.ResultTestResponse;
-import lms.entities.*;
+import lms.entities.Test;
+import lms.entities.ResultTest;
+import lms.entities.User;
+import lms.entities.Student;
+import lms.entities.Question;
+import lms.entities.Option;
 import lms.exceptions.NotFoundException;
 import lms.repository.ResultTestRepository;
 import lms.repository.UserRepository;
@@ -113,7 +118,37 @@ public class ResultTestServiceImpl implements ResultTestService {
         }
         return resultTestResponse;
     }
+
+    @Override
+    public ResultTestResponse findResultTestById(Long resultTestId) {
+        double totalPoint = 0;
+        ResultTest resultTest = resultTestRepository.findById(resultTestId).orElseThrow(() -> new NotFoundException("результат с " + resultTestId + " айди не найден"));
+        ResultTestResponse resultTestResponse = new ResultTestResponse();
+        for (Question question : resultTest.getTest().getQuestions()) {
+            AnswerQuestionResponse answerQuestionResponse = new AnswerQuestionResponse();
+            answerQuestionResponse.setQuestionId(question.getId());
+            answerQuestionResponse.setQuestionTitle(question.getTitle());
+            answerQuestionResponse.setQuestionType(question.getQuestionType());
+            answerQuestionResponse.setPoint(question.getPoint());
+            for (Option option : question.getOptions()) {
+                AnswerOptionResponse answerOptionResponse = new AnswerOptionResponse();
+                answerOptionResponse.setOptionId(option.getId());
+                answerOptionResponse.setTrue(option.getIsTrue());
+                for (Option optionId : resultTest.getOptions()) {
+                    answerQuestionResponse.setPoint(option.getOptionPoint());
+                    totalPoint += optionId.getOptionPoint();
+                }
+                answerOptionResponse.setOption(option.getOption());
+                answerQuestionResponse.getAnswerOptionResponses().add(answerOptionResponse);
+            }
+            resultTestResponse.setTestId(resultTest.getTest().getId());
+            resultTestResponse.setTestTitle(resultTest.getTest().getTitle());
+            resultTestResponse.setTotalPoint(totalPoint);
+            resultTestResponse.getAnswerQuestionResponses().add(answerQuestionResponse);
         }
+        return resultTestResponse;
+    }
+}
 
 
 

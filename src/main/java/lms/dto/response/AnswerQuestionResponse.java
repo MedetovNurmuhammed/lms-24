@@ -1,13 +1,9 @@
 package lms.dto.response;
 
-import com.amazonaws.services.wellarchitected.model.QuestionType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import lms.enums.QuestionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.http.annotation.Contract;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +13,10 @@ import java.util.List;
 public class AnswerQuestionResponse {
     private Long questionId;
     private String questionTitle;
-
-    private QuestionType questionType;
+    QuestionType questionType;
     private List<AnswerOptionResponse> answerOptionResponses =new ArrayList<>();
     private double point;
-
     public void setQuestionType(lms.enums.QuestionType questionType) {
+        this.questionType = questionType;
     }
 }
