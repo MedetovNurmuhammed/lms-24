@@ -2,6 +2,7 @@ package lms.repository;
 
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.InstructorResponse;
+import lms.entities.AnswerTask;
 import lms.entities.Instructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,4 +32,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     }
 
     Optional<Instructor> findByUserId(Long id);
+
+    @Query("select i from Instructor i join i.courses c join c.lessons l join l.tasks t where t.id = :taskId")
+    List<Instructor> findByAnswerTask(Long taskId);
 }
