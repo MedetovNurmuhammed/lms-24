@@ -3,6 +3,7 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import lms.dto.request.AnswerTestRequest;
 import lms.dto.response.ResultTestResponse;
+import lms.dto.response.SimpleResponse;
 import lms.service.ResultTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -21,20 +22,20 @@ public class AnswerTestApi {
     private final ResultTestService resultTestService;
 
     @Secured("STUDENT")
-    @PostMapping("/answerTest/{testId}")
+    @PostMapping("/pastTest/{testId}")
     @Operation(summary = "ответы на вопросы и ответ.(Авторизация: студент)")
-    public ResultTestResponse resultTest(@PathVariable Long testId, @RequestBody AnswerTestRequest answerRequest) {
-        return resultTestService.result(testId, answerRequest);
+    public SimpleResponse resultTest(@PathVariable Long testId, @RequestBody AnswerTestRequest answerRequest) {
+        return resultTestService.saveResult(testId, answerRequest);
     }
     @Secured("STUDENT")
-    @GetMapping("/findResultTestOfCurrentStudent/{testId}")
+    @GetMapping("/myResultTest/{testId}")
     @Operation(summary = "сохраненные результаты теста.(Авторизация: студент)")
     public ResultTestResponse findResultOfCurrentStudent(@PathVariable Long testId) {
         return resultTestService.findResultOfCurrentStudent(testId);
     }
 
     @Secured("INSTRUCTOR")
-    @GetMapping("/findResultTestBuId/{resultTestId}")
+    @GetMapping("/resultTestOfStudent/{resultTestId}")
     @Operation(summary = "возвращает результат теста.(Авторизация: инструктор)")
     public ResultTestResponse findResultTestById(@PathVariable Long resultTestId) {
         return resultTestService.findResultTestById(resultTestId);

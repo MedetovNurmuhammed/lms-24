@@ -20,7 +20,7 @@ import java.util.List;
 public class ResultTest {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "res_test_gen")
-    @SequenceGenerator(name = "res_test_seq", sequenceName = "res_test_seq", allocationSize = 1)
+    @SequenceGenerator(name = "res_test_gen", sequenceName = "res_test_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private double point;
     private LocalDate creationDate;
