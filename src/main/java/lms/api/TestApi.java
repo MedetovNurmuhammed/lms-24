@@ -2,12 +2,12 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import lms.dto.request.QuestionRequest;
 import lms.dto.request.TestRequest;
 import lms.dto.request.UpdateTestRequest;
+import lms.dto.response.AllTestResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TestResponse;
-import lms.entities.Question;
+import lms.dto.response.TestResponseWithStudents;
 import lms.service.OptionService;
 import lms.service.QuestionService;
 import lms.service.TestService;
@@ -38,7 +38,7 @@ public class TestApi {
     @Operation(summary = "Обновить теста",
             description = "Метод для обновление теста " +
                     " Авторизация: администратор!")
-    @PatchMapping ("/save/{testId}")
+    @PatchMapping ("/update/{testId}")
     public SimpleResponse update (@PathVariable Long testId,
                                   @RequestBody UpdateTestRequest updateTestRequest){
         return testService.update(testId,updateTestRequest);
@@ -53,13 +53,31 @@ public class TestApi {
         return testService.enableToStart(testId);
     }
 
-    @Operation(summary = "Удалить теста",
-            description = "Метод для удаления теста по его идентификатору." +
-                    " Авторизация: администратор и инструктор!")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @Operation(summary = "Найти теста",
+            description = "Метод для Найти теста по его идентификатору." +
+                    " Авторизация: инструктор!")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/findById/{testId}")
-    public TestResponse findById(@PathVariable Long testId){
+    public TestResponseWithStudents findById(@PathVariable Long testId){
         return testService.findById(testId);
+    }
+
+    @Operation(summary = "Найти теста для редактирования",
+            description = "Метод для Найти теста по его идентификатору." +
+                    " Авторизация: инструктор!")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("/findByIdForEdit/{testId}")
+    public TestResponse findTestById(@PathVariable Long testId){
+        return testService.findTestById(testId);
+    }
+
+    @Operation(summary = "Найти все тесты ",
+            description = "Метод для Найти всех тестов." +
+                    " Авторизация: инструктор!")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("/findAll/{lessonId}")
+     public AllTestResponse findAll(@PathVariable Long lessonId){
+       return testService.findAll(lessonId);
     }
 
     @Operation(summary = "Удалить вопроса",

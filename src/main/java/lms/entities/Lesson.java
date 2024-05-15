@@ -55,8 +55,8 @@ public class Lesson {
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************
-    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "lesson",orphanRemoval = true)
-    private Test test ;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson",orphanRemoval = true)
+    private List<Test> tests ;
 
     //*************************************** Task *****************************************
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson",orphanRemoval = true)

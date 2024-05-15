@@ -1,10 +1,12 @@
 package lms.dto.response;
 
+import lombok.Builder;
+
+@Builder
 public record StudentTestResponse(
         Long resultTestId,
         String fullName,
-        StatusAnswerTest status,
-        double point
+        double point,
+        Boolean isPassed
 ) {
-
 }

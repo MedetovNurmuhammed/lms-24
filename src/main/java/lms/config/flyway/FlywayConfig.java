@@ -12,11 +12,11 @@
 //
 //@Configuration
 //public class FlywayConfig {
-//    @Value("${flyway.url}")
+//    @Value("${spring.datasource.url}")
 //    private String dataSourceUrl;
-//    @Value("${flyway.user}")
+//    @Value("${spring.datasource.username}")
 //    private String dataSourceUsername;
-//    @Value("${flyway.password}")
+//    @Value("${spring.datasource.password}")
 //    private String dataSourcePassword;
 //
 //    @Bean

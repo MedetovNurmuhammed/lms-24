@@ -26,6 +26,7 @@ public class ResultTest {
     private LocalDate creationDate;
     private LocalDate updateDate;
 
+
     //*************************************** Test ********************************************
     @ManyToOne(cascade = CascadeType.DETACH)
     private Test test;

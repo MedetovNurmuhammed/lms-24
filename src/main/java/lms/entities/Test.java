@@ -37,7 +37,7 @@ public class Test {
     private List<Question> questions = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Lesson lesson;
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)

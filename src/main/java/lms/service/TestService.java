@@ -2,8 +2,10 @@ package lms.service;
 
 import lms.dto.request.TestRequest;
 import lms.dto.request.UpdateTestRequest;
+import lms.dto.response.AllTestResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TestResponse;
+import lms.dto.response.TestResponseWithStudents;
 
 public interface TestService {
     SimpleResponse  saveTest(Long lessonId, TestRequest testRequest);
@@ -14,5 +16,9 @@ public interface TestService {
 
     SimpleResponse delete(Long testId);
 
-    TestResponse findById(Long testId);
+    TestResponseWithStudents findById(Long testId);
+
+    TestResponse findTestById(Long testId);
+
+    AllTestResponse findAll(Long lessonId);
 }

@@ -2,14 +2,12 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.*;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
-import lms.dto.response.StudentTestResponse;
-import lms.dto.response.TestResponse;
+import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
+import lms.repository.jdbcTemplateService.TestJDBCTemplate;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +28,8 @@ public class TestServiceImpl implements TestService {
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
     private final TrashRepository trashRepository;
+    private final StudentRepository studentRepository;
+    private final TestJDBCTemplate testJDBCTemplate;
 
     @Override
     @Transactional
@@ -123,8 +124,6 @@ public class TestServiceImpl implements TestService {
                 if (Objects.equals(option.getId(), ids)) {
                     option.setOption(updateOptionRequest.option());
                     option.setIsTrue(updateOptionRequest.isTrue());
-//                    option.setQuestion(question);
-//                    question.getOptions().add();
                 }
             }
         }
@@ -163,13 +162,52 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestResponse findById(Long testId) {
-        Test test = testRepository.findById(testId).
+    public TestResponseWithStudents findById(Long testId) {
+         testRepository.findById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
-        List<StudentTestResponse> studentResponses = testRepository.findTestsStudents(testId);
-        return TestResponse.builder()
-                .id(test.getId())
-                .studentTestResponses(studentResponses)
+        List<StudentTestResponse> responses = testJDBCTemplate.allStudentsWithResultTest(testId);
+        return TestResponseWithStudents.builder()
+                .id(testId)
+                .studentTestResponses(responses)
                 .build();
+    }
+
+    public TestResponse findTestById(Long testId) {
+        Test test = testRepository.findById(testId)
+                .orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        List<Question> questions = test.getQuestions();
+        List<QuestionResponse> questionResponses = questions.stream()
+                .map(this::mapToQuestionResponse)
+                .collect(Collectors.toList());
+
+        return TestResponse.builder()
+                .title(test.getTitle())
+                .hour(test.getHour())
+                .minute(test.getMinute())
+                .questionResponseList(questionResponses)
+                .build();
+    }
+
+    @Override
+    public AllTestResponse findAll(Long lessonId) {
+      lessonRepository.findById(lessonId).
+                orElseThrow(() -> new NotFoundException("Урок не найден!!!"));
+        List<TestResponseForGetAll> testResponseForGetAll = testRepository.findAllTestsByLessonId(lessonId);
+        return AllTestResponse.builder()
+                .testResponseForGetAll(testResponseForGetAll)
+                .build();
+    }
+
+    private QuestionResponse mapToQuestionResponse(Question question) {
+        List<OptionResponse> optionResponses = question.getOptions().stream()
+                .map(option -> new OptionResponse(option.getOption(), option.getIsTrue()))
+                .collect(Collectors.toList());
+
+        return new QuestionResponse(
+                question.getTitle(),
+                question.getPoint(),
+                question.getQuestionType(),
+                optionResponses
+        );
     }
 }
