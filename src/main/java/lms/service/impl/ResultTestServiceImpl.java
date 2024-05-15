@@ -56,6 +56,8 @@ public class ResultTestServiceImpl implements ResultTestService {
             resultTest.getOptions().add(option);
         }
         resultTestRepository.save(resultTest);
+        ResultTestResponse resultTestResponse = getResultTestResponse(resultTest);
+        resultTest.setPoint(resultTestResponse.getTotalPoint());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("вы успешно сдали тест")
