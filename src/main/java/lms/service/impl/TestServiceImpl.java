@@ -12,11 +12,8 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,14 +25,13 @@ public class TestServiceImpl implements TestService {
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
     private final TrashRepository trashRepository;
-    private final StudentRepository studentRepository;
     private final TestJDBCTemplate testJDBCTemplate;
 
     @Override
     @Transactional
     public SimpleResponse saveTest(Long lessonId, TestRequest testRequest) {
         Lesson lesson = lessonRepository.findById(lessonId).
-                orElseThrow(() -> new NotFoundException(" не найден!"));
+                orElseThrow(() -> new NotFoundException("Урок не найден!"));
         Test test = new Test();
         test.setTitle(testRequest.title());
         test.setIsActive(false);
@@ -43,7 +39,7 @@ public class TestServiceImpl implements TestService {
         test.setHour(testRequest.hour());
         test.setMinute(testRequest.minute());
         test.setLesson(lesson);
-        lesson.setTest(test);
+        lesson.getTests().add(test);
         testRepository.save(test);
         for (QuestionRequest questionRequest : testRequest.questionRequests()) {
             Question question = new Question();
@@ -64,7 +60,7 @@ public class TestServiceImpl implements TestService {
         }
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Тест успешно создан!!!")
+                .message("Тест успешно создан!")
                 .build();
     }
 
@@ -74,7 +70,7 @@ public class TestServiceImpl implements TestService {
     public SimpleResponse update(Long testId, UpdateTestRequest testRequest) {
 
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new NotFoundException("Test not found"));
+                .orElseThrow(() -> new NotFoundException("Тест не найден! "));
         test.setTitle(testRequest.title());
         test.setIsActive(false);
         test.setHour(testRequest.hour());
@@ -84,7 +80,7 @@ public class TestServiceImpl implements TestService {
 
             Question question = questionRequest.questionId() != null ?
                     questionRepository.findById(questionRequest.questionId())
-                            .orElseThrow(() -> new NotFoundException("Question not found")) :
+                            .orElseThrow(() -> new NotFoundException("Вопрос не найден! ")) :
                     new Question();
 
             question.setTitle(questionRequest.title());
@@ -95,7 +91,7 @@ public class TestServiceImpl implements TestService {
             for (UpdateOptionRequest optionRequest : questionRequest.updateOptionRequest()) {
                 Option option = optionRequest.optionId() != null ?
                         optionRepository.findById(optionRequest.optionId())
-                                .orElseThrow(() -> new NotFoundException("Option not found")) :
+                                .orElseThrow(() -> new NotFoundException("Вариант-ответ не найден! ")) :
                         new Option();
 
                 option.setOption(optionRequest.option());
@@ -107,42 +103,31 @@ public class TestServiceImpl implements TestService {
         }
         testRepository.save(test);
 
-
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Test successfully updated")
-                .build();
-    }
-
-
-    @Transactional
-    public void updateOption(Long questionId, List<Long> optionId, UpdateOptionRequest updateOptionRequest) {
-        Question question = questionRepository.findById(questionId).
-                orElseThrow(() -> new NotFoundException("Не найден!"));
-        for (Option option : question.getOptions()) {
-            for (Long ids : optionId) {
-                if (Objects.equals(option.getId(), ids)) {
-                    option.setOption(updateOptionRequest.option());
-                    option.setIsTrue(updateOptionRequest.isTrue());
-                }
-            }
-        }
-        SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Обновлен!")
+                .message("Тест успешно обновлен!")
                 .build();
     }
 
     @Override
     @Transactional
-    public SimpleResponse enableToStart(Long testId) {
+    public SimpleResponse accessToTest(Long testId) {
         Test test = testRepository.findById(testId).
                 orElseThrow(() -> new NotFoundException("Не найден!!!"));
-        test.setIsActive(true);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Готов к тесту")
-                .build();
+
+        if (test.getIsActive().equals(false)) {
+            test.setIsActive(true);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Готов к тесту.")
+                    .build();
+        } else {
+            test.setIsActive(false);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Доступ к тесту запрешен.")
+                    .build();
+        }
     }
 
     @Override
@@ -156,7 +141,7 @@ public class TestServiceImpl implements TestService {
         trashRepository.save(trash);
         test.setTrash(trash);
         return SimpleResponse.builder()
-                .message("dg")
+                .message("Успешно добавлено в корзину!")
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
@@ -172,7 +157,7 @@ public class TestServiceImpl implements TestService {
                 .build();
     }
 
-    public TestResponse findTestById(Long testId) {
+    public TestResponse findTestByIdForEdit(Long testId) {
         Test test = testRepository.findById(testId)
                 .orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
         List<Question> questions = test.getQuestions();

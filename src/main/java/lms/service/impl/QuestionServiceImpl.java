@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Option;
 import lms.entities.Question;
-import lms.entities.ResultTest;
 import lms.exceptions.NotFoundException;
 import lms.repository.OptionRepository;
 import lms.repository.QuestionRepository;
@@ -22,23 +21,19 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public SimpleResponse delete(Long questionId) {
-            Question question = questionRepository.findById(questionId).
-                    orElseThrow(() -> new NotFoundException("Вопрос не найден!!!"));
+        Question question = questionRepository.findById(questionId).
+                orElseThrow(() -> new NotFoundException("Вопрос не найден!!!"));
 
-            // Удаление связанных записей из таблицы result_tests_options
         for (Option option : question.getOptions()) {
             optionRepository.deleteOptionById(option.getId());
         }
-            // Удаление вариантов ответа
-            optionRepository.deleteAll(question.getOptions());
+        optionRepository.deleteAll(question.getOptions());
+        question.setTest(null);
+        questionRepository.delete(question);
 
-            // Удаление связи с тестом и самого вопроса
-            question.setTest(null);
-            questionRepository.delete(question);
-
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Вопрос успешно удален!!")
-                    .build();
-        }
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Вопрос успешно удален!!")
+                .build();
+    }
 }

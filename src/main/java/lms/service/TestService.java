@@ -12,13 +12,13 @@ public interface TestService {
 
     SimpleResponse update(Long testId, UpdateTestRequest updateTestRequest);
 
-    SimpleResponse enableToStart(Long testId);
+    SimpleResponse accessToTest(Long testId);
 
     SimpleResponse delete(Long testId);
 
     TestResponseWithStudents findById(Long testId);
 
-    TestResponse findTestById(Long testId);
+    TestResponse findTestByIdForEdit(Long testId);
 
     AllTestResponse findAll(Long lessonId);
 }

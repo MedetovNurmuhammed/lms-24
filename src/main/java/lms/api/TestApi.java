@@ -14,12 +14,20 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/api/test")
 @RequiredArgsConstructor
 public class TestApi {
+
     private final TestService testService;
     private final QuestionService questionService;
     private final OptionService optionService;
@@ -45,36 +53,36 @@ public class TestApi {
     }
 
     @Secured("INSTRUCTOR")
-    @Operation(summary = "Начать теста",
-            description = "Метод для начала  теста " +
+    @Operation(summary = "Доступ к тесту",
+            description = "Метод для доступ к тесту." +
                     " Авторизация: администратор!")
     @PatchMapping("/enableToStart/{testId}")
-    public SimpleResponse enableToStart(@PathVariable Long testId){
-        return testService.enableToStart(testId);
+    public SimpleResponse AccessToTest(@PathVariable Long testId){
+        return testService.accessToTest(testId);
     }
 
     @Operation(summary = "Найти теста",
-            description = "Метод для Найти теста по его идентификатору." +
+            description = "Метод для найти теста по его идентификатору." +
                     " Авторизация: инструктор!")
-//    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @GetMapping("/findById/{testId}")
     public TestResponseWithStudents findById(@PathVariable Long testId){
         return testService.findById(testId);
     }
 
     @Operation(summary = "Найти теста для редактирования",
-            description = "Метод для Найти теста по его идентификатору." +
+            description = "Метод для найти теста по его идентификатору." +
                     " Авторизация: инструктор!")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @GetMapping("/findByIdForEdit/{testId}")
-    public TestResponse findTestById(@PathVariable Long testId){
-        return testService.findTestById(testId);
+    public TestResponse findTestByIForEdit(@PathVariable Long testId){
+        return testService.findTestByIdForEdit(testId);
     }
 
     @Operation(summary = "Найти все тесты ",
-            description = "Метод для Найти всех тестов." +
+            description = "Метод для найти всех тестов." +
                     " Авторизация: инструктор!")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @GetMapping("/findAll/{lessonId}")
      public AllTestResponse findAll(@PathVariable Long lessonId){
        return testService.findAll(lessonId);
@@ -89,7 +97,7 @@ public class TestApi {
         return questionService.delete(questionId);
     }
 
-    @Operation(summary = "Удалить варианта",
+    @Operation(summary = "Удалить вариант-ответа",
             description = "Метод для удаления варианта по его идентификатору." +
                     " Авторизация: инструктор!")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
@@ -98,17 +106,12 @@ public class TestApi {
         return optionService.deleteOption(optionId);
     }
 
-    @Operation(summary = "Удалить теста",
+    @Operation(summary = "Удалить теста (добавление в корзину.)",
             description = "Метод для удаления теста по его идентификатору." +
-                    " Авторизация: администратор и инструктор!")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+                    " Авторизация: инструктор!")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @DeleteMapping("/delete/{testId}")
     public SimpleResponse delete(@PathVariable Long testId){
         return testService.delete(testId);
     }
-//    delete option
-//    delete question
-//    findTestById
-
-
 }
