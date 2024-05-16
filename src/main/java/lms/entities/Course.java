@@ -28,11 +28,6 @@ public class Course {
     private String image;
     private LocalDate dateOfStart;
     private LocalDate dateOfEnd;
-    private Type type;
-
-    public Type getType() {
-        return type = Type.COURSE;
-    }
 
     //*************************************** Instructor *************************************
     @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)

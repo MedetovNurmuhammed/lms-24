@@ -42,7 +42,6 @@ public class Instructor {
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private Type type;
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)

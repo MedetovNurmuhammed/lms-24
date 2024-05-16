@@ -29,11 +29,6 @@ public class Group {
     private LocalDate dateOfStart;
     private LocalDate dateOfEnd;
     private LocalDate removedDate;
-    private Type type;
-
-    public Type getType() {
-        return type = Type.GROUP;
-    }
 
     //*************************************** Course ******************************************
     @ManyToMany(mappedBy = "groups",cascade = CascadeType.DETACH)

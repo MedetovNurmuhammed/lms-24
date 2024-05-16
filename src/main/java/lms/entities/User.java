@@ -34,7 +34,6 @@ public class User implements UserDetails {
     private Boolean block;
     private String uuid;
     private LocalDate removedDate;
-    private Type type;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
