@@ -1,14 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,15 +25,11 @@ public class Notification {
     private LocalDate createdAt;
 
     //*************************************** Task ******************************************
-    @OneToOne(cascade = CascadeType.DETACH, optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH)
-    private ResultTask resultTask;
-
-    //*************************************** ResultTask *************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private AnswerTask answerTask;
 
     @PrePersist

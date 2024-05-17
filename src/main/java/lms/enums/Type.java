@@ -5,12 +5,10 @@ public enum Type {
     INSTRUCTOR,
     GROUP,
     COURSE,
-    VIDEO,
-    PRESENTATION,
     LINK,
+    PRESENTATION,
+    VIDEO,
     TEST,
     TASK,
     LESSON
-
-
 }

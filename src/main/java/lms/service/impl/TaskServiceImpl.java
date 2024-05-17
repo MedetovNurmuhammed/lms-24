@@ -23,7 +23,6 @@ import lms.repository.TrashRepository;
 import lms.repository.UserRepository;
 import lms.service.NotificationService;
 import lms.service.TaskService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,33 +31,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.amazonaws.services.xray.model.Http;
-import lms.dto.response.SimpleResponse;
-import lms.entities.Task;
-import lms.entities.Trash;
-import lms.enums.Type;
 import lms.exceptions.NotFoundException;
-import lms.repository.TaskRepository;
-import lms.repository.TrashRepository;
-import lms.service.TaskService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
-@Getter
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final LessonRepository lessonRepository;
@@ -200,7 +184,7 @@ public class TaskServiceImpl implements TaskService {
                 .message("Успешно добавлено в корзину")
                 .build();
     }
-    public String deleteTaskById(Long taskId){
+    public void deleteTaskById(Long taskId){
         Task task = taskRepository.findById(taskId).
                 orElseThrow(()-> new NotFoundException("Not found"));
         Notification notification = task.getNotification();
@@ -209,6 +193,5 @@ public class TaskServiceImpl implements TaskService {
         task.setNotification(null);
         taskRepository.deleteById(task.getId());
         taskRepository.deleteById(taskId);
-        return "Deleted";
     }
 }

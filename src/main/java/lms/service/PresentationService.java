@@ -5,7 +5,6 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.PresentationResponse;
-import lms.dto.response.SimpleResponse;
 
 
 public interface PresentationService {
@@ -17,5 +16,5 @@ public interface PresentationService {
 
     FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId);
 
-    SimpleResponse delete(Long presentationId);
+    SimpleResponse deletePresentationById(Long presentationId);
 }

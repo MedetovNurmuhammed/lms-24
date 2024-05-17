@@ -1,37 +1,79 @@
 spring:
-    application:
-        name: lms-b12
-    mail:
-        host: smtp.gmail.com
-        port: 587
-        username: nurkamilkamchiev@gmail.com
-        password: akst vqxz graa hzfe
-        properties:
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
-    jpa:
-        defer-datasource-initialization: true
-    sql:
-        init:
-            data-locations: classpath:datainit/dataInit.sql
-            mode: always
-    servlet:
-        multipart:
-            max-file-size: 10MB
-            max-request-size: 10MB
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+
+  #Hibernate/JPA settings.
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    open-in-view: false
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+  #EMAIL
+  application:
+    name: lms-b12
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nurkamilkamchiev@gmail.com
+    password: akst vqxz graa hzfe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  #DATA-INIT
+  sql:
+    init:
+      data-locations: classpath:datainit/dataInit.sql
+      mode: never
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  #Migration
+  flyway:
+    enabled: true
+    locations: classpath:db.migration
+    baseline-on-migrate: true
+
+flyway:
+  user: ${POSTGRES_USER}
+  password: ${POSTGRES_PASSWORD}
+  url: ${POSTGRES_DB}
+
+
+#S3 FILE
 cloud:
-    aws:
-        credentials:
-            access-key: AKIA47CR3RLOPKMXXMMT
-            secret-key: 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
-        region:
-            static: eu-north-1
-        stack:
-            auto: false
+  aws:
+    credentials:
+      access-key: AKIA47CR3RLOPKMXXMMT
+      secret-key: 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
+    region:
+      static: eu-north-1
+    stack:
+      auto: false
 
 application:
-    bucket:
-        name: lmsb12
+  bucket:
+    name: lmsb12
+
+#JWT
+app:
+  jwt:
+    secret: learning-management-system-java-12
+
+server:
+  error:
+    include-message: always

@@ -4,5 +4,5 @@ public enum TaskAnswerStatus {
     ACCEPTED,
     REJECTED,
     WAITING,
-    LATE
+    LATE,
 }
