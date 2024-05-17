@@ -65,4 +65,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             "where t.id = :taskId and s.id not in (:studentIds)")
     List<String> findUserNamesByTask(@Param("studentIds") List<Long> studentIds,
                                      @Param("taskId") Long taskId);
+
+    @Query("SELECT DISTINCT s FROM Student s JOIN s.resultTests r WHERE r.test.id = :testId")
+    List<Student> findStudentsByTestId(Long testId);
 }

@@ -1,16 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,32 +20,30 @@ import java.util.List;
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_gen")
-    @SequenceGenerator(name = "test_seq",sequenceName = "test_seq", allocationSize = 1)
+    @SequenceGenerator(name = "test_gen", sequenceName = "test_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private Boolean isActive;
     private LocalDate creationDate;
-    private LocalDate updateDate;
+    private int hour;
+    private int minute;
 
     //*************************************** ResultTest **************************************
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "test", orphanRemoval = true)
+    @OneToMany(mappedBy = "test", orphanRemoval = true)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //*************************************** Question ****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "test", orphanRemoval = true)
+    @OneToMany(mappedBy = "test",cascade = {CascadeType.PERSIST, CascadeType.MERGE},orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Lesson lesson;
 
+    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    private Trash trash;
     @PrePersist
     protected void onCreate() {
         creationDate = LocalDate.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updateDate = LocalDate.now();
     }
 }
