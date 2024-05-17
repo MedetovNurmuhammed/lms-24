@@ -16,9 +16,4 @@ public interface TestRepository extends JpaRepository<Test, Long> {
             """)
     List<TestResponseForGetAll> findAllTestsByLessonId(Long lessonId);
 
-//    List<StudentTestResponse> getStudentsWithResultTest(Long testId);
-
-//    @Query("select new lms.dto.response.StudentTestResponse(r.id,s.user.fullName,r.statusAnswerTest,r.point)" +
-//            " from Student s join ResultTest r on s.id = r.student.id join Test t where t.id = :testId")
-//    List<StudentTestResponse> findTestsStudents(Long testId);
 }
