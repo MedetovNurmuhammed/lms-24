@@ -1,13 +1,14 @@
 package lms.dto.response;
 
-import lombok.Builder;
+import lms.enums.QuestionType;
 
 import java.util.List;
 
-@Builder
 public record QuestionResponse(
-     Long id,
-     String title,
-     List<OptionResponse>optionResponses
+        Long questionId,
+        String title,
+        double point,
+        QuestionType questionType,
+        List<OptionResponse> optionResponses
 ) {
 }

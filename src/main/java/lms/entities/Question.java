@@ -19,6 +19,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
+import static jakarta.persistence.CascadeType.MERGE;
 
 @Entity
 @Table(name = "questions")
@@ -30,7 +31,7 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_gen")
-    @SequenceGenerator(name = "question_seq",sequenceName = "question_seq", allocationSize = 1)
+    @SequenceGenerator(name = "question_gen",sequenceName = "question_seq", allocationSize = 1,initialValue = 21)
     private Long id;
     private String title;
     @Enumerated(EnumType.STRING)
@@ -38,7 +39,7 @@ public class Question {
     private double point;
 
     //*************************************** Option ***************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "question",orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST,MERGE}, mappedBy = "question",orphanRemoval = true)
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Test ******************************************

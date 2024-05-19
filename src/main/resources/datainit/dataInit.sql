@@ -711,62 +711,102 @@ values (19, 19);
 insert into lessons_videos (lesson_id, videos_id)
 values (20, 20);
 
-insert into tests (id, lesson_id, is_active, creation_date, title)
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (1, 1, 'FALSE', '2024-04-26',
-        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (2, 2, 'FALSE', '2024-05-01',
-        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (3, 3, 'TRUE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (3, 3, 'TRUE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (4, 4, 'FALSE', '2024-04-15',
-        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (5, 5, 'FALSE', '2024-05-08',
-        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (8, 8, 'FALSE', '2024-04-15',
-        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (10, 10, 'TRUE', '2024-04-17',
-        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (11, 11, 'TRUE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (11, 11, 'TRUE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (12, 12, 'FALSE', '2024-04-22',
-        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (13, 13, 'FALSE', '2024-04-27',
-        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (14, 14, 'FALSE', '2024-04-24',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (15, 15, 'TRUE', '2024-04-30',
-        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (16, 16, 'TRUE', '2024-04-27',
-        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (17, 17, 'TRUE', '2024-04-27',
-        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (18, 18, 'TRUE', '2024-04-22',
-        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (19, 19, 'TRUE', '2024-04-11',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (20, 20, 'FALSE', '2024-05-08',
-        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum');
+        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',1,20);
 
+insert into questions (id, test_id, question_type, title,point)
+values (1, 1, 'MULTIPLE', 'Legal Assistant',10);
+insert into questions (id, test_id, question_type, title,point)
+values (2, 2, 'MULTIPLE', 'Systems Administrator IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (3, 3, 'MULTIPLE', 'Teacher',10);
+insert into questions (id, test_id, question_type, title,point)
+values (4, 4, 'MULTIPLE', 'Nurse Practicioner',10);
+insert into questions (id, test_id, question_type, title,point)
+values (5, 5, 'MULTIPLE', 'Operator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (6, 6, 'MULTIPLE', 'Executive Secretary',10);
+insert into questions (id, test_id, question_type, title,point)
+values (7, 7, 'MULTIPLE', 'Media Manager II',10);
+insert into questions (id, test_id, question_type, title,point)
+values (8, 8, 'MULTIPLE', 'Technical Writer',10);
+insert into questions (id, test_id, question_type, title,point)
+values (9, 9, 'MULTIPLE', 'VP Marketing',10);
+insert into questions (id, test_id, question_type, title,point)
+values (10, 10, 'SINGLE', 'Health Coach IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (11, 11, 'SINGLE', 'Assistant Manager',10);
+insert into questions (id, test_id, question_type, title,point)
+values (12, 12, 'SINGLE', 'Marketing Assistant',10);
+insert into questions (id, test_id, question_type, title,point)
+values (13, 13, 'SINGLE', 'Account Coordinator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (14, 14, 'SINGLE', 'Help Desk Operator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (15, 15, 'SINGLE', 'VP Quality Control',10);
+insert into questions (id, test_id, question_type, title,point)
+values (16, 16, 'SINGLE', 'Developer III',10);
+insert into questions (id, test_id, question_type, title,point)
+values (17, 17, 'SINGLE', 'Social Worker',10);
+insert into questions (id, test_id, question_type, title,point)
+values (18, 18, 'SINGLE', 'Payment Adjustment Coordinator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (19, 19, 'SINGLE', 'Account Representative IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (20, 20, 'SINGLE', 'Paralegal',10);
 insert into questions (id, test_id, question_type, title, point)
 values (1, 1, 'MULTIPLE', 'Legal Assistant', 10);
 insert into questions (id, test_id, question_type, title, point)
@@ -808,46 +848,46 @@ values (19, 19, 'SINGLE', 'Account Representative IV', 10);
 insert into questions (id, test_id, question_type, title, point)
 values (20, 20, 'SINGLE', 'Paralegal', 10);
 
-insert into options (id, is_true, question_id, option, option_point)
-values (1, 'TRUE', 1, 'edu', 5);
-insert into options (id, is_true, question_id, option, option_point)
-values (2, 'FALSE', 2, 'edu', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (3, 'TRUE', 3, 'net', 5);
-insert into options (id, is_true, question_id, option, option_point)
-values (4, 'FALSE', 4, 'edu', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (5, 'FALSE', 5, 'gov', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (6, 'FALSE', 6, 'name', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (7, 'FALSE', 7, 'name', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (8, 'TRUE', 8, 'name', 5);
-insert into options (id, is_true, question_id, option, option_point)
-values (9, 'FALSE', 9, 'edu', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (10, 'FALSE', 10, 'com', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (11, 'FALSE', 11, 'org', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (12, 'FALSE', 12, 'org', 0);
-insert into options (id, is_true, question_id, option, option_point)
-values (13, 'TRUE', 13, 'info', 5);
-insert into options (id, is_true, question_id, option, option_point)
-values (14, 'TRUE', 14, 'org', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (15, 'TRUE', 15, 'biz', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (16, 'TRUE', 16, 'biz', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (17, 'TRUE', 17, 'biz', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (18, 'TRUE', 18, 'mil', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (19, 'TRUE', 19, 'name', 10);
-insert into options (id, is_true, question_id, option, option_point)
-values (20, 'FALSE', 20, 'net', 0);
+insert into options (id, is_true, question_id, option)
+values (1, 'TRUE', 1, 'edu');
+insert into options (id, is_true, question_id, option)
+values (2, 'FALSE', 2, 'edu');
+insert into options (id, is_true, question_id, option)
+values (3, 'TRUE', 3, 'net');
+insert into options (id, is_true, question_id, option)
+values (4, 'FALSE', 4, 'edu');
+insert into options (id, is_true, question_id, option)
+values (5, 'FALSE', 5, 'gov');
+insert into options (id, is_true, question_id, option)
+values (6, 'FALSE', 6, 'name');
+insert into options (id, is_true, question_id, option)
+values (7, 'FALSE', 7, 'name');
+insert into options (id, is_true, question_id, option)
+values (8, 'TRUE', 8, 'name');
+insert into options (id, is_true, question_id, option)
+values (9, 'FALSE', 9, 'edu');
+insert into options (id, is_true, question_id, option)
+values (10, 'FALSE', 10, 'com');
+insert into options (id, is_true, question_id, option)
+values (11, 'FALSE', 11, 'org');
+insert into options (id, is_true, question_id, option)
+values (12, 'FALSE', 12, 'org');
+insert into options (id, is_true, question_id, option)
+values (13, 'TRUE', 13, 'info');
+insert into options (id, is_true, question_id, option)
+values (14, 'TRUE', 14, 'org');
+insert into options (id, is_true, question_id, option)
+values (15, 'TRUE', 15, 'biz');
+insert into options (id, is_true, question_id, option)
+values (16, 'TRUE', 16, 'biz');
+insert into options (id, is_true, question_id, option)
+values (17, 'TRUE', 17, 'biz');
+insert into options (id, is_true, question_id, option)
+values (18, 'TRUE', 18, 'mil');
+insert into options (id, is_true, question_id, option)
+values (19, 'TRUE', 19, 'name');
+insert into options (id, is_true, question_id, option)
+values (20, 'FALSE', 20, 'net');
 
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
 values (1, 1, 'LATE', '2024-04-12', 1,

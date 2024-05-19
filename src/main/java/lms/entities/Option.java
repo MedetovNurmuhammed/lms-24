@@ -28,7 +28,7 @@ public class Option {
     private Long id;
     private String option;
     private Boolean isTrue;
-    private double optionPoint;
+
     //*************************************** Question *************************************
     @ManyToOne(cascade = CascadeType.DETACH)
     private Question question;

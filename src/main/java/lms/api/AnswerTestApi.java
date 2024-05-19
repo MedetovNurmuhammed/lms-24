@@ -21,7 +21,7 @@ public class AnswerTestApi {
     private final ResultTestService resultTestService;
 
     @Secured("STUDENT")
-    @PostMapping("/pastTest/{testId}")
+    @PostMapping("/{testId}")
     @Operation(summary = "ответы на вопросы и ответ.(Авторизация: студент)")
     public SimpleResponse resultTest(@PathVariable Long testId, @RequestBody AnswerTestRequest answerRequest) {
         return resultTestService.saveResult(testId, answerRequest);

@@ -1,16 +1,39 @@
 package lms.service.impl;
 
+import jakarta.transaction.Transactional;
+import lms.dto.response.SimpleResponse;
+import lms.entities.Option;
+import lms.entities.Question;
+import lms.exceptions.NotFoundException;
+import lms.repository.OptionRepository;
 import lms.repository.QuestionRepository;
 import lms.service.QuestionService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
-@Validated
-@Slf4j
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
+    private final OptionRepository optionRepository;
+
+    @Override
+    @Transactional
+    public SimpleResponse delete(Long questionId) {
+        Question question = questionRepository.findById(questionId).
+                orElseThrow(() -> new NotFoundException("Вопрос не найден!!!"));
+
+        for (Option option : question.getOptions()) {
+            optionRepository.deleteOptionById(option.getId());
+        }
+        optionRepository.deleteAll(question.getOptions());
+        question.setTest(null);
+        questionRepository.delete(question);
+
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Вопрос успешно удален!!")
+                .build();
+    }
 }
