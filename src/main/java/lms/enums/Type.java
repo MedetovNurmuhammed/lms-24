@@ -1,7 +1,6 @@
 package lms.enums;
 
 public enum Type {
-    ADMIN,
     STUDENT,
     INSTRUCTOR,
     GROUP,
@@ -9,5 +8,6 @@ public enum Type {
     LINK,
     PRESENTATION,
     VIDEO,
-    TASK,
+    TEST,
+    TASK
 }

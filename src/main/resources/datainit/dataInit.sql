@@ -1,190 +1,190 @@
 
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (1, 'java1', '2024/04/03', '2025-04-09', 'Excision of Left Cephalic Vein, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (2, 'java2', '2024/04/06', '2025-04-09',
         'Drainage of Bilateral Breast with Drainage Device, Via Natural or Artificial Opening',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (3, 'java3', '2024/04/03', '2025-04-09', 'Drainage of Right Upper Femur, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (4, 'java4', '2024/04/03', '2025-04-09',
         'Bypass Left Brachial Artery to Upper Arm Vein with Autologous Venous Tissue, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (5, 'java5', '2024/04/07', '2025-04-09', 'Release Left Mastoid Sinus, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (6, 'java6', '2024/04/04', '2025-04-09', 'Replacement of Nose with Synthetic Substitute, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (7, 'java7', '2024/04/04', '2025-04-09', 'Extirpation of Matter from Right External Ear, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (8, 'java8', '2024/04/04', '2025-04-09', 'Destruction of Right Elbow Bursa and Ligament, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (9, 'java9', '2024/04/07', '2025-04-09',
         'Bypass Right Hand Vein to Upper Vein, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (10, 'java10', '2024/04/04', '2025-04-09', 'Restriction of Cecum with Extraluminal Device, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (11, 'js1', '2024/04/05', '2025-04-09',
         'Dilation of Hymen with Intraluminal Device, Via Natural or Artificial Opening Endoscopic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (12, 'js2', '2024/04/03', '2025-04-09', 'Hyperthermia of Bile Ducts',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (13, 'js3', '2024/04/03', '2025-04-09', 'Dilation of Right Foot Artery, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (14, 'js4', '2024/04/06', '2025-04-09',
         'Introduction of Other Gas into Epidural Space, Via Natural or Artificial Opening',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (15, 'js5', '2024/04/05', '2025-04-09',
         'Revision of Internal Fixation Device in Left Femoral Shaft, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (16, 'js6', '2024/04/03', '2025-04-09',
         'Introduction of Radioactive Substance into Biliary and Pancreatic Tract, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (17, 'js7', '2024/04/07', '2025-04-09', 'Beam Radiation of Mandible using Electrons',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (18, 'js8', '2024/04/04', '2025-04-09', 'Excision of Hypoglossal Nerve, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (19, 'js9', '2024/04/03', '2025-04-09', 'Drainage of Right Conjunctiva, External Approach, Diagnostic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
-insert into groups (id, title, date_of_start, date_of_end, description, image, type)
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (20, 'js10', '2024/04/08', '2025-04-09', 'Revision of Synthetic Substitute in Left Patella, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH', 'GROUP');
+        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (1, 'Aman Raimbekov', 'admin@gmail.com', '$2a$12$ETwPTjTxa5o8Rok7TSqLmeex/cRtWSfMXYtlQ1DQTChy5DkXwzgHK', 'ADMIN',
-        'FALSE', '+9965000000', 'ADMIN');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'FALSE', '+996');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (2, 'Nurkamil Kamchiev', 'nurkamilkamchiev@gmail.com',
-        '$2a$12$C7tCVrsJMMUlQZ2x3/drp.r2OdntFYaL9OJ8cK2KVde8myUAF5xlm', 'INSTRUCTOR', 'FALSE', '+996500965456', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
-values (3, 'Gulumkan Uson kyzy', 'gulumkan@gmail.com', '$2a$12$MD5QVCndF1mscnMee159Ie9tMepgxIkMi4YTKfhbQ.zdda2Y/7djy',
-        'INSTRUCTOR', 'FALSE', '+996700768594', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        '$2a$12$C7tCVrsJMMUlQZ2x3/drp.r2OdntFYaL9OJ8cK2KVde8myUAF5xlm', 'INSTRUCTOR', 'FALSE', '+996500965456');
+insert into users (id, full_name, email, password, role, block, phone_number)
+values (3, 'Gulumkan Uson kyzy', 'student@gmail.com', '$2a$12$PH8Sb7l275Af68N0d/49o.fStIU4pzuYUdOHiVkVnvzlzdxmrmOza',
+        'STUDENT', 'FALSE', '+996700768594');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (4, 'Nurmuhemmed Medetov', 'medetov@gmail.com', '$2a$12$CetPa30U0d5fHbe2xn1UGurrR1eSYKsDeudVsihhRU5inKAO6FmAG',
-        'INSTRUCTOR', 'FALSE', '+996706584876', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996706584876');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (5, 'Myrzaim Keldibekova', 'myrzaim@gmail.com', '$2a$12$c34.DpY6pluuOGddMtgqzOunBtQIGqanvTgh7p.Howc7w2ziH5hUq',
-        'INSTRUCTOR', 'FALSE', '+99650954372', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+99650954372');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (6, 'Mirlan Arstanbekov', 'mirlan@gmail.com', '$2a$12$kbWolVsK/Kp6wmcRKvdv2eH/V3kga1rA7t5IsvWsm8fVxFnOPKbiW',
-        'INSTRUCTOR', 'FALSE', '+996506981197', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996506981197');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (7, 'Aliaskar Temirbekov', 'aliaskar@gmail.com', '$2a$12$rCjGrV7L4H/dw9l2FtVfRe0jvwxYxalFIA/4m834nQZWapBcJLyKG',
-        'INSTRUCTOR', 'FALSE', '+996705110999', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996705110999');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (8, 'Karina Bokombaeva', 'karina@gmail.com', '$2a$12$ZkCFlxDpWLzzRiqiDh7DBuaeqhKEozHfqk4dMe.sGDhPGQrpk7HMK',
-        'INSTRUCTOR', 'FALSE', '+996702093354', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996702093354');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (9, 'Alisher Keneshov', 'alisher@gmail.com', '$2a$12$K2QkNSNQvf.bPaM2vu2p1.KRaINiz1ZOAU/lxK83/Ay9OJ5t/3NOK`',
-        'INSTRUCTOR', 'FALSE', '+996703091232', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996703091232');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (10, 'Erbol Jakypov', 'jakypov@gmail.com', '$2a$12$XK0/fmiXfQrt/4dCglyRPuUWR5VgAlL9E/qHHmRcyW6lnv3eJgxPy',
-        'INSTRUCTOR', 'FALSE', '+996502091108', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996502091108');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (11, 'Erbol Aidarbekov', 'erbol@gmail.com', '$2a$12$5YU8LD0PjHHWMncif6GVyu6X0yHnUTPKNI1B6RTwY79o4D0qqhBZW',
-        'INSTRUCTOR', 'FALSE', '+996505675438', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996505675438');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (12, 'Adilet Artykov', 'artykov@gmail.com', '$2a$12$hT6uCQR3kV2W4hK6yDx02O1W7NoKPCEPs1rhludCLKST/5dPb04OW',
-        'INSTRUCTOR', 'FALSE', '+996990085547', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996990085547');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (13, 'Erzhan Sagyndykov', 'erzhan@gmail.com', '$2a$12$ulZDnOyp1N2KsT1om76qkew5UNQ7YbgdRd4ddBANHOhixld1y3oyq',
-        'INSTRUCTOR', 'FALSE', '+996999652884', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996999652884');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (14, 'Daulet Alimbekov', 'daulet@gmail.com', '$2a$12$lVD2AyWgJ2Ypzgk9ljOBxezQ6zkAD3Sn56xjkyYi/I3VTuHOOjnoO',
-        'INSTRUCTOR', 'FALSE', '+996909764875', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996909764875');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (15, 'Nurbol Melisbekov', 'nurbol@gmail.com', '$2a$12$vGXxPO74z2e2rxAeM/seIuvnv9s9PADhLzdpSFZh0VZUZuElEFl2W',
-        'INSTRUCTOR', 'FALSE', '+996502098875', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996502098875');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (16, 'Alinur Taalaibekov', 'alinur@gmail.com', '$2a$12$C6QrQ16obu.2MobSNS5jWOQv5aNAPQHCzZVx8.S16NFj554qbHoUq',
-        'INSTRUCTOR', 'TRUE', '+996555986574', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996555986574');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (17, 'Almir Kambarbekov', 'almir@gmail.com', '$2a$12$SCIxOXpKeVz/ZFzSU8ZBT.Bvi1mEuEQ7r1lHYYiVd9WC7g8QvHZVK',
-        'INSTRUCTOR', 'FALSE', '+9965020912107', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+9965020912107');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (18, 'Amantur Esengulov', 'amantur@gmail.com', '$2a$12$GPY1/JLL/DOXnmRpIObbeOGcU4KgZyqvzvUEJxAho0wHOKB6d0HMq',
-        'INSTRUCTOR', 'TRUE', '+996707083307', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'FALSE', '+996707083307');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (19, 'Keldibek Sadykov', 'keldibek@gmail.com', '$2a$12$vfsQ.Fzk/SHQx9DbNgNDf.2PMO0UtctCfsgFv.viXxqSFlj.v9fx6',
-        'INSTRUCTOR', 'FALSE', '+996509867546', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996509867546');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (20, 'Adilet Aibekov', 'adilet@gmail.com', '$2a$12$l0t97cung/VftD/8piszNus5AlnFtXNENVcTd88SGuGpjiLjGgjfi',
-        'INSTRUCTOR', 'TRUE', '+996703857463', 'INSTRUCTOR');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
-values (21, 'studnent', 'student@gmail.com', '$2a$12$PH8Sb7l275Af68N0d/49o.fStIU4pzuYUdOHiVkVnvzlzdxmrmOza',
-        'STUDENT', 'TRUE', '+996709546327', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'INSTRUCTOR', 'TRUE', '+996703857463');
+insert into users (id, full_name, email, password, role, block, phone_number)
+values (21, 'Jigit Turumbekov', 'jigit@gmail.com', '$2a$12$MD5QVCndF1mscnMee159Ie9tMepgxIkMi4YTKfhbQ.zdda2Y/7djy',
+        'STUDENT', 'TRUE', '+996709546327');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (22, 'Urmat Taichikov', 'urmat@gmail.com', '$2a$12$XVySJPMFrbHLEXe6kOiB/OhDDjsd7QQTxfGfIQnLHOQ1dtyaqX.DS',
-        'STUDENT', 'FALSE', '+996705098658', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996705098658');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (23, 'Kandybek Muktarbekov', 'kandy@gmail.comu', '$2a$12$Iw69zPsNVIuOuxb9XIgTauMS1Y3QoZ3ttdenlY2vWIcdfGaXwEp8a',
-        'STUDENT', 'FALSE', '+996709665873', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+996709665873');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (24, 'Atai Turatbekov', 'atai@gmail.com', '$2a$12$zfneK6CGwBLnJ6ibhHEfq.j4xSdXMU.eDJCOG8Vy1znmjNxhryma.',
-        'STUDENT', 'FALSE', '+996502098879', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996502098879');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (25, 'Joki Kalganbekov', 'joki@gmail.com', '$2a$12$giSLU2vzLtFqbiWqOBhRW.WDBSp6Kc9qo4HsssDvTwwgp1hoxptJC',
-        'STUDENT', 'FALSE', '+996500789605', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996500789605');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (26, 'Nazima Abdyldabekova', 'nazima@gmail.com', '$2a$12$CtjwEOY62rNmg2WPUxCSeOPkkJ2dzxb2mOfSUrPA8UXnhEabVShOm',
-        'STUDENT', 'FALSE', '+996707092454', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996707092454');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (27, 'Yryskeldi Apyshov', 'yryskeldi@gmail.com', '$2a$12$bvkd1OQD3F7sfx1URl7RHuaqMj8K0zBGS9Re9Q4ZMESsdW1yQ1/42',
-        'STUDENT', 'FALSE', '+996775648334', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+996775648334');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (28, 'Adis Suiunbekov', 'adis@gmail.com', '$2a$12$caoYq90FkzjJt5NttqBnme/xg5aRHbXmSarmfKnHPFWJFjc7kXGOq',
-        'STUDENT', 'FALSE', '+996500098673', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+996500098673');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (29, 'Roi Jons', 'roi@gmail.com', '$2a$12$.MktJzvlQDOFomQc.Vm8a.VlyK0CjaUZ2jjsWL1CPGdUvxgjAiOUy', 'STUDENT',
-        'FALSE', '+996708675936', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'FALSE', '+996708675936');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (30, 'Tony Ferguson', 'ferguson@gmail.com', '$2a$12$7VyDiCwqsZBxfU2lxpYRnOqp7LvLhv336agNdSBpcF0oLcEQ1Ec.O',
-        'STUDENT', 'FALSE', '+996703746352', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996703746352');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (31, 'Khabib Nurmagamedov', 'khabib@gmail.com', '$2a$12$3gpZR.esouEUhQ3fCeBC0.LjWL2lhvszIugDFVFA86yrhFM8Zjb02',
-        'STUDENT', 'FALSE', '+99501099999', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+99501099999');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (32, 'Leonel Messi', 'messi@gmail.com', '$2a$12$AhW18waWqHGVRhRLVaNI9O/SN8i21fZUQbf10DsDl0fNi2.U5I9RO',
-        'STUDENT', 'FALSE', '+996777654321', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+996777654321');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (33, 'Cristiano Ronaldo', 'ronaldo@gmail.com', '$2a$12$gs0xbtaWQLNc7jOLHR1s5eXgrpQJFSXytfOBYsoFMxtJQswCBBP8O',
-        'STUDENT', 'FALSE', '+996503456789', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996503456789');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (34, 'Tony Cross', 'tony@gmail.com', '$2a$12$oDB8al0vBB/KTlzLXh2ErOptdDsLkme5D3vFV8cluemMatviAX3vW', 'STUDENT',
-        'FALSE', '+996701222333', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'FALSE', '+996701222333');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (35, 'Luka Modric', 'modric@gmail.com', '$2a$12$c3/EDftzHQ5Xf7KH8DPOpOmN5TxlzpzLWafPQWlQFWQnqjYNQP.e2',
-        'STUDENT', 'FALSE', '+996777888999', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996777888999');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (36, 'Kylian Mbappe', 'mbappe@gmail.com', '$2a$12$KrTcc2u.2NFkRCgcJXlUj.NK7cjRtDXk3svpDinBhs9uwi7URMYe.',
-        'STUDENT', 'FALSE', '+996555666777', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996555666777');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (37, 'Muhammad Salah', 'salah@gmail.com', '$2a$12$r8hC0MnmCBxyTsnuExm6EuJtF50/e7azn3MVg7pRhtWbdooilFYKW',
-        'STUDENT', 'FALSE', '+996503444555', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996503444555');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (38, 'Nurlan Abibillaev', 'nurlan@gmail.com', '$2a$12$WTL9Ha0wsTBd.Y6VsK7AY.L2lDPb4Z6wcmGLo3a537c1g0ofNiSw6',
-        'STUDENT', 'TRUE', '+996502333443', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'FALSE', '+996502333443');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (39, 'Nurislam Toigumbaev', 'nurislam@gmail.com', '$2a$12$CG3ByY1D6m2xsQ0MWWVUMe6OD74wO0V.YmwSH9y4CgCCR1i4QQ0C2',
-        'STUDENT', 'TRUE', '+996503094543', 'STUDENT');
-insert into users (id, full_name, email, password, role, block, phone_number, type)
+        'STUDENT', 'TRUE', '+996503094543');
+insert into users (id, full_name, email, password, role, block, phone_number)
 values (40, 'Elebesov Muktar', 'muktar@gmail.com', '$2a$12$VA5y7.IQeF9CAwKScf70AOw99K0bDnNxHaFxJw6q/OzNy/9yZkClC',
         'STUDENT', 'TRUE', '+996707174093', 'STUDENT');
 
@@ -772,61 +772,61 @@ values (19, 19);
 insert into lessons_videos (lesson_id, videos_id)
 values (6, 20);
 
-insert into tests (id, lesson_id, is_active, creation_date, title)
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (1, 1, 'FALSE', '2024-04-26',
-        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (2, 2, 'FALSE', '2024-05-01',
-        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (3, 3, 'FALSE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (3, 3, 'TRUE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (4, 4, 'FALSE', '2024-04-15',
-        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (5, 5, 'FALSE', '2024-05-08',
-        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (8, 8, 'FALSE', '2024-04-15',
-        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (10, 10, 'FALSE', '2024-04-17',
-        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (11, 11, 'FALSE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (10, 10, 'TRUE', '2024-04-17',
+        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (11, 11, 'TRUE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (12, 12, 'FALSE', '2024-04-22',
-        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (13, 13, 'FALSE', '2024-04-27',
-        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (14, 14, 'FALSE', '2024-04-24',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (15, 15, 'FALSE', '2024-04-30',
-        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (16, 16, 'FALSE', '2024-04-27',
-        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (17, 17, 'FALSE', '2024-04-27',
-        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (15, 15, 'TRUE', '2024-04-30',
+        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (16, 16, 'TRUE', '2024-04-27',
+        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (17, 17, 'TRUE', '2024-04-27',
+        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (18, 18, 'TRUE', '2024-04-22',
-        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt');
-insert into tests (id, lesson_id, is_active, creation_date, title)
+        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (19, 19, 'TRUE', '2024-04-11',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum');
-insert into tests (id, lesson_id, is_active, creation_date, title)
-values (20, 20, 'TRUE', '2024-05-08',
-        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum');
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum',1,20);
+insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+values (20, 20, 'FALSE', '2024-05-08',
+        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',1,20);
 
 insert into questions (id, test_id, question_type, title)
 values (1, 1, 'MULTIPLE', 'Legal Assistant');
@@ -868,6 +868,46 @@ insert into questions (id, test_id, question_type, title)
 values (19, 7, 'SINGLE', 'Account Representative IV');
 insert into questions (id, test_id, question_type, title)
 values (20, 7, 'SINGLE', 'Paralegal');
+insert into questions (id, test_id, question_type, title,point)
+values (1, 1, 'MULTIPLE', 'Legal Assistant',10);
+insert into questions (id, test_id, question_type, title,point)
+values (2, 2, 'MULTIPLE', 'Systems Administrator IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (3, 3, 'MULTIPLE', 'Teacher',10);
+insert into questions (id, test_id, question_type, title,point)
+values (4, 4, 'MULTIPLE', 'Nurse Practicioner',10);
+insert into questions (id, test_id, question_type, title,point)
+values (5, 5, 'MULTIPLE', 'Operator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (6, 6, 'MULTIPLE', 'Executive Secretary',10);
+insert into questions (id, test_id, question_type, title,point)
+values (7, 7, 'MULTIPLE', 'Media Manager II',10);
+insert into questions (id, test_id, question_type, title,point)
+values (8, 8, 'MULTIPLE', 'Technical Writer',10);
+insert into questions (id, test_id, question_type, title,point)
+values (9, 9, 'MULTIPLE', 'VP Marketing',10);
+insert into questions (id, test_id, question_type, title,point)
+values (10, 10, 'SINGLE', 'Health Coach IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (11, 11, 'SINGLE', 'Assistant Manager',10);
+insert into questions (id, test_id, question_type, title,point)
+values (12, 12, 'SINGLE', 'Marketing Assistant',10);
+insert into questions (id, test_id, question_type, title,point)
+values (13, 13, 'SINGLE', 'Account Coordinator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (14, 14, 'SINGLE', 'Help Desk Operator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (15, 15, 'SINGLE', 'VP Quality Control',10);
+insert into questions (id, test_id, question_type, title,point)
+values (16, 16, 'SINGLE', 'Developer III',10);
+insert into questions (id, test_id, question_type, title,point)
+values (17, 17, 'SINGLE', 'Social Worker',10);
+insert into questions (id, test_id, question_type, title,point)
+values (18, 18, 'SINGLE', 'Payment Adjustment Coordinator',10);
+insert into questions (id, test_id, question_type, title,point)
+values (19, 19, 'SINGLE', 'Account Representative IV',10);
+insert into questions (id, test_id, question_type, title,point)
+values (20, 20, 'SINGLE', 'Paralegal',10);
 
 insert into options (id, is_true, question_id, option)
 values (1, 'TRUE', 1, 'edu');
@@ -1252,30 +1292,6 @@ where id = 11;
 update links
 set lesson_id =12
 where id = 12;
-update links
-set lesson_id =123
-where id = 13;
-update links
-set lesson_id =14
-where id = 14;
-update links
-set video_id =15
-where id = 15;
-update links
-set video_id =16
-where id = 16;
-update links
-set video_id =17
-where id = 17;
-update links
-set video_id =18
-where id = 18;
-update links
-set video_id =19
-where id = 19;
-update links
-set video_id =20
-where id = 20;
 
 insert into student_notification_states (notification_states, notification_states_key, student_id)
 values ('FALSE', 1, 1);
