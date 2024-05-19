@@ -14,6 +14,7 @@ import lms.entities.Trash;
 import lms.entities.User;
 import lms.enums.Role;
 import lms.enums.StudyFormat;
+import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -145,7 +146,7 @@ public class StudentServiceImpl implements StudentService {
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
         trash.setStudent(student);
-        trash.setType(student.getType());
+        trash.setType(Type.STUDENT);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setStudent(student);
         student.setTrash(trash);

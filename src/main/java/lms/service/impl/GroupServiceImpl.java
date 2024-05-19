@@ -6,6 +6,7 @@ import lms.dto.response.AllGroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
 import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
 import lms.repository.TrashRepository;
@@ -77,7 +78,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = groupRepository.getById(groupId);
         Trash trash = new Trash();
         trash.setName(group.getTitle());
-        trash.setType(group.getType());
+        trash.setType(Type.GROUP);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setGroup(group);
         group.setTrash(trash);
