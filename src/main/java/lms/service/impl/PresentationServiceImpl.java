@@ -101,7 +101,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     @Transactional
-    public SimpleResponse delete(Long presentationId) {
+    public SimpleResponse deletePresentationById(Long presentationId) {
         Presentation presentation = presentationRepository.findById(presentationId).
                 orElseThrow(() -> new NotFoundException("презентация не найдена!"));
         Trash trash = new Trash();

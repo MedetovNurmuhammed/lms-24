@@ -56,6 +56,6 @@ public class PresentationApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/delete/{presentationId}")
     public SimpleResponse delete(@PathVariable Long presentationId) {
-        return presentationService.delete(presentationId);
+        return presentationService.deletePresentationById(presentationId);
             }
         }

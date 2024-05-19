@@ -3,6 +3,8 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.TestRequest;
+import lms.dto.request.UpdateTestRequest;
+import lms.dto.response.AllTestResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TestResponse;
 import lms.dto.response.TestResponseWithStudents;
@@ -12,7 +14,6 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +57,7 @@ public class TestApi {
             description = "Метод для доступ к тесту." +
                     " Авторизация: администратор!")
     @PatchMapping("/enableToStart/{testId}")
-    public SimpleResponse AccessToTest(@PathVariable Long testId){
+    public SimpleResponse accessToTest(@PathVariable Long testId){
         return testService.accessToTest(testId);
     }
 

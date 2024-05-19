@@ -1,5 +1,6 @@
 package lms.service.impl;
 
+import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 import lms.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
@@ -124,7 +125,7 @@ public class TrashServiceImpl implements TrashService {
         if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             if (trash.getPresentation() != null) {
                 Presentation presentation = trash.getPresentation();
-//                storageService.deleteFile(presentation
+                storageService.deleteFile(presentation.getFile());
                 presentationRepository.deleteById(presentation.getId());
             } else if (trash.getTest() != null) {
                 Test test = trash.getTest();
@@ -133,7 +134,8 @@ public class TrashServiceImpl implements TrashService {
                 Video video = trash.getVideo();
                 videoRepository.deleteById(video.getId());
             } else if (trash.getTask() != null) {
-                taskService.deleteTaskById(trash.getTask().getId());
+                Task task = trash.getTask();
+                taskService.deleteTaskById(task.getId());
             } else if (trash.getLesson() != null) {
                 Lesson lesson = trash.getLesson();
                 lessonRepository.deleteById(lesson.getId());
@@ -152,6 +154,7 @@ public class TrashServiceImpl implements TrashService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse returnFromInstructorTrashToBase(Long trashId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
@@ -181,7 +184,7 @@ public class TrashServiceImpl implements TrashService {
             trashRepository.deleteById(trashId);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message(trashId + " удален!")
+                    .message(trashId + " успешно возвращен!")
                     .build();
         }
         throw new ForbiddenException("Доступ запрещен!");
@@ -223,7 +226,7 @@ public class TrashServiceImpl implements TrashService {
     @Transactional
     @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
-        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(2);
+        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(5000);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
         for (Trash expiredTrash : expiredTrashes) {
             if (expiredTrash.getCourse() != null) {

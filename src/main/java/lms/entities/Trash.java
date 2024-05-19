@@ -65,5 +65,4 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash")
     private Test test;
-
 }

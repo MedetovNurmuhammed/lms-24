@@ -48,8 +48,8 @@ public class AnswerTask{
     private Link link;
 
     //*************************************** ResultTask ************************************
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private ResultTask resultTask;
+//    @OneToOne(cascade = CascadeType.REMOVE)
+//    private ResultTask resultTask;
 
     @PrePersist
     protected void onCreate() {

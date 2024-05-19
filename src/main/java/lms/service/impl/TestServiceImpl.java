@@ -142,6 +142,7 @@ public class TestServiceImpl implements TestService {
         Trash trash = new Trash();
         trash.setName(test.getTitle());
         trash.setType(Type.TEST);
+        trash.setDateOfDelete(ZonedDateTime.now());
         trash.setTest(test);
         trashRepository.save(trash);
         test.setTrash(trash);
