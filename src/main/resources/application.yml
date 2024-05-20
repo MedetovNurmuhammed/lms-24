@@ -1,14 +1,14 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: nurkamil192.168
-    url: jdbc:postgresql://localhost:5432/lms_nur
-    username: postgres
+    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_DB}
+    username: ${POSTGRES_USER}
 
   #Hibernate/JPA settings.
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     open-in-view: false
 
@@ -36,7 +36,7 @@ spring:
   sql:
     init:
       data-locations: classpath:datainit/dataInit.sql
-      mode: always
+      mode: never
   servlet:
     multipart:
       max-file-size: 10MB
