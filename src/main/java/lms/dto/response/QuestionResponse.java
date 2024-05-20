@@ -5,8 +5,9 @@ import lms.enums.QuestionType;
 import java.util.List;
 
 public record QuestionResponse(
+        Long questionId,
         String title,
-        int point,
+        double point,
         QuestionType questionType,
         List<OptionResponse> optionResponses
 ) {

@@ -382,10 +382,10 @@ insert into lessons (id, title, created_at, course_id)
 values (20, 'js10', '2024/04/03', 20);
 
 insert into links (id, title, url)
-values (1, 'java1', 'http://diigo.com/odio/elementum/eu.jpg?mauris=volutpat&laoreet=erat&ut=quisque&rhoncus=erat&al');
+values (1, 'java1', 'https://diigo.com/odio/elementum/eu.jpg?mauris=volutpat&laoreet=erat&ut=quisque&rhoncus=erat&al');
 insert into links (id, title, url)
 values (2, 'java2',
-        'http://goodreads.com/dis.png?dis=eleifend&parturient=quam&montes=a&nascetur=odio&ridiculus=in&mus=hac&etiam=');
+        'https://goodreads.com/dis.png?dis=eleifend&parturient=quam&montes=a&nascetur=odio&ridiculus=in&mus=hac&etiam=');
 insert into links (id, title, url)
 values (3, 'java3',
         'https://over-blog.com/ut/erat/curabitur.jsp?integer=nibh&a=in&nibh=quis&in=justo&quis=maecenas&justo=rhoncus&mae');
@@ -409,19 +409,19 @@ values (9, 'java9',
         'https://who.int/duis/bibendum/felis/sed/interdum/venenatis.html?luctus=cubilia&et=curae&ultrices=nulla&posuere=dapibus');
 insert into links (id, title, url)
 values (10, 'java10',
-        'http://auda.org.au/nonummy.html?est=habitasse&lacinia=platea&nisi=dictumst&venenatis=morbi&tristique=vestibulum');
+        'https://auda.org.au/nonummy.html?est=habitasse&lacinia=platea&nisi=dictumst&venenatis=morbi&tristique=vestibulum');
 insert into links (id, title, url)
 values (11, 'js1',
-        'http://goodreads.com/ligula/suspendisse/ornare/consequat/lectus/in.jpg?arcu=justo&sed=aliquam&augue=quis&aliquam=turpis&erat=eget&volutpat=elit&in=sodales&congue=scelerisque&etiam=mauris&justo=sit&etiam=amet&pre');
+        'https://goodreads.com/ligula/suspendisse/ornare/consequat/lectus/in.jpg?arcu=justo&sed=aliquam&augue=quis&aliquam=turpis&erat=eget&volutpat=elit&in=sodales&congue=scelerisque&etiam=mauris&justo=sit&etiam=amet&pre');
 insert into links (id, title, url)
 values (12, 'js2',
-        'http://jimdo.com/gravida/nisi/at/nibh/in.xml?ac=nisl&est=nunc&lacinia=nisl&nisi=duis&venenatis=bibendum&tristique=felis&fusce=sed&congue=interdum&diam=venenatis&id=turpis&ornare=enim&imperdiet=blandit&sapien=mi&urna=in&pretium=porttitor&nisl=pede&ut=justo');
+        'https://jimdo.com/gravida/nisi/at/nibh/in.xml?ac=nisl&est=nunc&lacinia=nisl&nisi=duis&venenatis=bibendum&tristique=felis&fusce=sed&congue=interdum&diam=');
 insert into links (id, title, url)
 values (13, 'js3',
         'https://smugmug.com/sed/vestibulum/sit/amet.html?feugiat=curae&non=donec&pretium=pharetra&quis=magna&lectus=vestibulum&suspendisse=aliqu');
 insert into links (id, title, url)
 values (14, 'js4',
-        'http://engadget.com/volutpat/eleifend/donec/ut/dolor/morbi.html?est=faucibus&phasellus=orci&sit=luctus&amet=et&erat=ultrices&nulla=pos');
+        'https://engadget.com/volutpat/eleifend/donec/ut/dolor/morbi.html?est=faucibus&phasellus=orci&sit=luctus&amet=et&erat=ultrices&nulla=pos');
 insert into links (id, title, url)
 values (15, 'js5',
         'https://amazon.de/fringilla.xml?dui=fusce&vel=congue&sem=diam&sed=id&sagittis=ornare&nam=imperdiet&congue=sapien&risus=urna&semper=pretium&porta=nisl&volutpat=');
@@ -429,7 +429,7 @@ insert into links (id, title, url)
 values (16, 'js6',
         'https://noaa.gov/nulla.html?volutpat=a&sapien=feugiat&arcu=et&sed=em&ut=erat&erat=volutpat&id=in&mauris=congue&vulputate=etiam&elementum=justo&nullam=etiam&varius=pretium');
 insert into links (id, title, url)
-values (17, 'js7', 'http://imdb.com/sed/accumsan/felis/ut/at/dolor/quis.json?mauris');
+values (17, 'js7', 'https://imdb.com/sed/accumsan/felis/ut/at/dolor/quis.json?mauris');
 insert into links (id, title, url)
 values (18, 'js8', 'https://cdc.gov/ac.html?morbi=ut&quis=massa&tortor=volutpat&id=convallis&nulla=morbi&ultrices');
 insert into links (id, title, url)
@@ -437,7 +437,7 @@ values (19, 'js9',
         'https://archive.org/nulla/tellus.png?lectus=sed&suspendisse=justo&potenti=pellentesque&in=viverra&eleifend=pm=potenti');
 insert into links (id, title, url)
 values (20, 'js10',
-        'http://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
+        'https://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
 
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (1, 1, '2024-04-09', '2024-05-09', '5051',
@@ -870,7 +870,7 @@ insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (20, 20, 'FALSE', '2024-05-08',
         'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',1,20);
 
-insert into questions (id, test_id, question_type, title,point)
+insert into questions (id, test_id, question_type, title,  point)
 values (1, 1, 'MULTIPLE', 'Legal Assistant',10);
 insert into questions (id, test_id, question_type, title,point)
 values (2, 2, 'MULTIPLE', 'Systems Administrator IV',10);
