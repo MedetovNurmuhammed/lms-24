@@ -42,4 +42,6 @@ public class FlywayConfig {
     public FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
         return new FlywayMigrationInitializer(flyway, null);
     }
+
+
 }

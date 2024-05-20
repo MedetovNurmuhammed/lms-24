@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/course")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class CourseApi {
     private final CourseService courseService;
 
