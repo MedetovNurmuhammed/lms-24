@@ -629,26 +629,27 @@ values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified sour
 insert into presentations (id, created_at, description, file, title)
 values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
 
--- update presentations set lesson_id =1 where id =1;
--- update presentations set lesson_id =2 where id =2;
--- update presentations set lesson_id =3 where id =3;
--- update presentations set lesson_id =4 where id =4;
--- update presentations set lesson_id =5 where id =5;
--- update presentations set lesson_id =6 where id =6;
--- update presentations set lesson_id =7 where id =7;
--- update presentations set lesson_id =8 where id =8;
--- update presentations set lesson_id =9 where id =9;
--- update presentations set lesson_id =10 where id =10;
--- update presentations set lesson_id =11 where id =11;
--- update presentations set lesson_id =12 where id =12;
--- update presentations set lesson_id =13 where id =13;
--- update presentations set lesson_id =14 where id =14;
--- update presentations set lesson_id =15 where id =15;
--- update presentations set lesson_id =16 where id =16;
--- update presentations set lesson_id =17 where id =17;
--- update presentations set lesson_id =18 where id =18;
--- update presentations set lesson_id =19 where id =19;
--- update presentations set lesson_id =20 where id =20;
+update lessons_presentations ls set lesson_id =1 where ls.presentations_id =1;
+update lessons_presentations ls set lesson_id =2 where ls.presentations_id =2;
+update lessons_presentations ls set lesson_id =3 where ls.presentations_id =3;
+update lessons_presentations ls set lesson_id =4 where ls.presentations_id =4;
+update lessons_presentations ls set lesson_id =5 where ls.presentations_id =5;
+update lessons_presentations ls set lesson_id =6 where ls.presentations_id =6;
+update lessons_presentations ls set lesson_id =7 where ls.presentations_id =7;
+update lessons_presentations ls set lesson_id =8 where ls.presentations_id =8;
+update lessons_presentations ls set lesson_id =9 where ls.presentations_id =9;
+update lessons_presentations ls set lesson_id =10 where ls.presentations_id =10;
+update lessons_presentations ls set lesson_id =11 where ls.presentations_id =11;
+update lessons_presentations ls set lesson_id =12 where ls.presentations_id =12;
+update lessons_presentations ls set lesson_id =13 where ls.presentations_id =13;
+update lessons_presentations ls set lesson_id =14 where ls.presentations_id =14;
+update lessons_presentations ls set lesson_id =15 where ls.presentations_id =15;
+update lessons_presentations ls set lesson_id =16 where ls.presentations_id =16;
+update lessons_presentations ls set lesson_id =17 where ls.presentations_id =17;
+update lessons_presentations ls set lesson_id =18 where ls.presentations_id =18;
+update lessons_presentations ls set lesson_id =19 where ls.presentations_id =19;
+update lessons_presentations ls set lesson_id =20 where ls.presentations_id =20;
+
 
 insert into lessons_presentations (lesson_id, presentations_id)
 values (1, 1);
