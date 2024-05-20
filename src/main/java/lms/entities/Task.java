@@ -60,8 +60,8 @@ public class Task {
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
-    @OneToOne(mappedBy = "task")
-    private Notification notification;
+    @OneToMany(mappedBy = "task")
+    private List<Notification> notification;
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Trash trash;

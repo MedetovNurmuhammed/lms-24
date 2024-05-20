@@ -187,9 +187,11 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTaskById(Long taskId){
         Task task = taskRepository.findById(taskId).
                 orElseThrow(()-> new NotFoundException("Not found"));
-        Notification notification = task.getNotification();
-        notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
-        notification.setTask(null);
+        List<Notification> notifications = task.getNotification();
+        for (Notification notification : notifications) {
+            notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+            notification.setTask(null);
+        }
         task.setNotification(null);
         taskRepository.deleteById(task.getId());
         taskRepository.deleteById(taskId);
