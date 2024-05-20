@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/presentation")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class PresentationApi {
     private final PresentationService presentationService;
 

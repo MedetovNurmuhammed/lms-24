@@ -629,6 +629,28 @@ values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified sour
 insert into presentations (id, created_at, description, file, title)
 values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
 
+update lessons_presentations ls set lesson_id =1 where ls.presentations_id =1;
+update lessons_presentations ls set lesson_id =2 where ls.presentations_id =2;
+update lessons_presentations ls set lesson_id =3 where ls.presentations_id =3;
+update lessons_presentations ls set lesson_id =4 where ls.presentations_id =4;
+update lessons_presentations ls set lesson_id =5 where ls.presentations_id =5;
+update lessons_presentations ls set lesson_id =6 where ls.presentations_id =6;
+update lessons_presentations ls set lesson_id =7 where ls.presentations_id =7;
+update lessons_presentations ls set lesson_id =8 where ls.presentations_id =8;
+update lessons_presentations ls set lesson_id =9 where ls.presentations_id =9;
+update lessons_presentations ls set lesson_id =10 where ls.presentations_id =10;
+update lessons_presentations ls set lesson_id =11 where ls.presentations_id =11;
+update lessons_presentations ls set lesson_id =12 where ls.presentations_id =12;
+update lessons_presentations ls set lesson_id =13 where ls.presentations_id =13;
+update lessons_presentations ls set lesson_id =14 where ls.presentations_id =14;
+update lessons_presentations ls set lesson_id =15 where ls.presentations_id =15;
+update lessons_presentations ls set lesson_id =16 where ls.presentations_id =16;
+update lessons_presentations ls set lesson_id =17 where ls.presentations_id =17;
+update lessons_presentations ls set lesson_id =18 where ls.presentations_id =18;
+update lessons_presentations ls set lesson_id =19 where ls.presentations_id =19;
+update lessons_presentations ls set lesson_id =20 where ls.presentations_id =20;
+
+
 insert into lessons_presentations (lesson_id, presentations_id)
 values (1, 1);
 insert into lessons_presentations (lesson_id, presentations_id)
@@ -668,6 +690,87 @@ values (18, 18);
 insert into lessons_presentations (lesson_id, presentations_id)
 values (19, 19);
 insert into lessons_presentations (lesson_id, presentations_id)
+values (20, 20);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (1, 1);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (2, 2);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (3, 3);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (4, 4);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (5, 5);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (6, 6);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (7, 7);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (8, 8);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (9, 9);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (10, 10);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (11, 11);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (12, 12);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (13, 13);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (14, 14);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (15, 15);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (16, 16);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (17, 17);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (18, 18);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (19, 19);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (20, 20);
+
+insert into lessons_videos (lesson_id, videos_id)
+values (1, 1);
+insert into lessons_videos (lesson_id, videos_id)
+values (2, 2);
+insert into lessons_videos (lesson_id, videos_id)
+values (3, 3);
+insert into lessons_videos (lesson_id, videos_id)
+values (4, 4);
+insert into lessons_videos (lesson_id, videos_id)
+values (5, 5);
+insert into lessons_videos (lesson_id, videos_id)
+values (6, 6);
+insert into lessons_videos (lesson_id, videos_id)
+values (7, 7);
+insert into lessons_videos (lesson_id, videos_id)
+values (8, 8);
+insert into lessons_videos (lesson_id, videos_id)
+values (9, 9);
+insert into lessons_videos (lesson_id, videos_id)
+values (10, 10);
+insert into lessons_videos (lesson_id, videos_id)
+values (11, 11);
+insert into lessons_videos (lesson_id, videos_id)
+values (12, 12);
+insert into lessons_videos (lesson_id, videos_id)
+values (13, 13);
+insert into lessons_videos (lesson_id, videos_id)
+values (14, 14);
+insert into lessons_videos (lesson_id, videos_id)
+values (15, 15);
+insert into lessons_videos (lesson_id, videos_id)
+values (16, 16);
+insert into lessons_videos (lesson_id, videos_id)
+values (17, 17);
+insert into lessons_videos (lesson_id, videos_id)
+values (18, 18);
+insert into lessons_videos (lesson_id, videos_id)
+values (19, 19);
+insert into lessons_videos (lesson_id, videos_id)
 values (20, 20);
 
 insert into lessons_videos (lesson_id, videos_id)

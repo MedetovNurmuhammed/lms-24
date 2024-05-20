@@ -8,7 +8,7 @@ spring:
   #Hibernate/JPA settings.
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     open-in-view: false
 
@@ -49,9 +49,9 @@ spring:
     baseline-on-migrate: true
 
 flyway:
-  user: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}
-  url: ${POSTGRES_DB}
+  user: postgres
+  password: nurkamil192.168
+  url: jdbc:postgresql://localhost:5432/lms_nur
 
 
 #S3 FILE
