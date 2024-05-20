@@ -1,4 +1,3 @@
-
 package lms.config.flyway;
 
 import org.flywaydb.core.Flyway;
