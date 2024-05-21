@@ -19,9 +19,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
-
 import static jakarta.persistence.CascadeType.MERGE;
-import static jakarta.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "questions")
@@ -38,7 +36,8 @@ public class Question {
     private String title;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
-    private int point;
+    private double point;
+
     //*************************************** Option ***************************************
     @OneToMany(cascade = {CascadeType.PERSIST,MERGE}, mappedBy = "question",orphanRemoval = true)
     private List<Option> options = new ArrayList<>();
@@ -46,4 +45,5 @@ public class Question {
     //*************************************** Test ******************************************
     @ManyToOne(cascade = CascadeType.DETACH)
     private Test test;
+
 }

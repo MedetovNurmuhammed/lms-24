@@ -305,6 +305,8 @@ insert into instructors (id,trash_id, specialization, created_at, user_id)
 values (18,3, 'javaScript', '2024/04/08', 18);
 insert into instructors (id, specialization, created_at, user_id)
 values (19, 'javaScript', '2024/04/04', 19);
+insert into instructors (id, specialization, created_at, user_id)
+values (20, 'javaScript', '2024/04/08', 20);
 
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (1, 'java1', '2024/04/08', '2025-04-09',
@@ -1248,4 +1250,6 @@ insert into instructor_notification_states (notification_states, notification_st
 values ('FALSE', 9, 3);
 insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
 values ('FALSE', 10, 4);
+
+
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 @Builder
 public record TestResponse(
+        Long testId,
         String title,
         int hour,
         int minute,

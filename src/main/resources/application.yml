@@ -43,9 +43,9 @@ spring:
       max-request-size: 10MB
   #Migration
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db.migration
-    baseline-on-migrate: true
+    baseline-on-migrate: false
 
 flyway:
   user: ${POSTGRES_USER}
