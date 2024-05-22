@@ -6,12 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record GroupRequest(
-        @NotBlank
+        @NotBlank(message = "Название не должно быть пустым")
         String title,
-        @NotBlank
+        @NotBlank(message = "Описание не должно быть пустым")
         String description,
-        @NotNull
+        @NotNull(message = "Изображение не должно быть пустым")
         String image,
-        @Future
+        @Future(message = "Дата окончания должна быть в будущем")
         LocalDate dateOfEnd) {
 }
