@@ -16,7 +16,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-
   #EMAIL
   application:
     name: lms-b12
@@ -77,3 +76,4 @@ app:
 server:
   error:
     include-message: always
+

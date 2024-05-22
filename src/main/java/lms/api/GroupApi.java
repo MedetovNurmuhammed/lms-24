@@ -2,6 +2,7 @@ package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
 import lms.dto.response.GroupResponse;
@@ -27,7 +28,7 @@ public class GroupApi {
     @Secured("ADMIN")
     @Operation(summary = "Обновить группу", description = "Обновление данных существующей группы по ID.Авторизация: Админ")
     @PatchMapping("/{groupId}")
-    public SimpleResponse update(@PathVariable Long groupId, @RequestBody @Valid GroupRequest groupRequest) {
+    public SimpleResponse update(@PathVariable Long groupId, @RequestBody  GroupRequest groupRequest) {
         return groupService.update(groupId, groupRequest);
     }
 
@@ -35,7 +36,7 @@ public class GroupApi {
     @Operation(summary = "Получить все группы", description = "Получение списка всех групп с возможностью пагинации.Авторизация: Админ")
     @GetMapping()
     public AllGroupResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                    @RequestParam(required = false, defaultValue = "6") int size) {
+                                    @RequestParam(required = false, defaultValue = "8") int size) {
         return groupService.findAllGroup(size, page);
     }
 
