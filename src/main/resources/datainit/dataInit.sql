@@ -382,10 +382,10 @@ insert into lessons (id, title, created_at, course_id)
 values (20, 'js10', '2024/04/03', 20);
 
 insert into links (id, title, url)
-values (1, 'java1', 'http://diigo.com/odio/elementum/eu.jpg?mauris=volutpat&laoreet=erat&ut=quisque&rhoncus=erat&al');
+values (1, 'java1', 'https://diigo.com/odio/elementum/eu.jpg?mauris=volutpat&laoreet=erat&ut=quisque&rhoncus=erat&al');
 insert into links (id, title, url)
 values (2, 'java2',
-        'http://goodreads.com/dis.png?dis=eleifend&parturient=quam&montes=a&nascetur=odio&ridiculus=in&mus=hac&etiam=');
+        'https://goodreads.com/dis.png?dis=eleifend&parturient=quam&montes=a&nascetur=odio&ridiculus=in&mus=hac&etiam=');
 insert into links (id, title, url)
 values (3, 'java3',
         'https://over-blog.com/ut/erat/curabitur.jsp?integer=nibh&a=in&nibh=quis&in=justo&quis=maecenas&justo=rhoncus&mae');
@@ -409,19 +409,19 @@ values (9, 'java9',
         'https://who.int/duis/bibendum/felis/sed/interdum/venenatis.html?luctus=cubilia&et=curae&ultrices=nulla&posuere=dapibus');
 insert into links (id, title, url)
 values (10, 'java10',
-        'http://auda.org.au/nonummy.html?est=habitasse&lacinia=platea&nisi=dictumst&venenatis=morbi&tristique=vestibulum');
+        'https://auda.org.au/nonummy.html?est=habitasse&lacinia=platea&nisi=dictumst&venenatis=morbi&tristique=vestibulum');
 insert into links (id, title, url)
 values (11, 'js1',
-        'http://goodreads.com/ligula/suspendisse/ornare/consequat/lectus/in.jpg?arcu=justo&sed=aliquam&augue=quis&aliquam=turpis&erat=eget&volutpat=elit&in=sodales&congue=scelerisque&etiam=mauris&justo=sit&etiam=amet&pre');
+        'https://goodreads.com/ligula/suspendisse/ornare/consequat/lectus/in.jpg?arcu=justo&sed=aliquam&augue=quis&aliquam=turpis&erat=eget&volutpat=elit&in=sodales&congue=scelerisque&etiam=mauris&justo=sit&etiam=amet&pre');
 insert into links (id, title, url)
 values (12, 'js2',
-        'http://jimdo.com/gravida/nisi/at/nibh/in.xml?ac=nisl&est=nunc&lacinia=nisl&nisi=duis&venenatis=bibendum&tristique=felis&fusce=sed&congue=interdum&diam=venenatis&id=turpis&ornare=enim&imperdiet=blandit&sapien=mi&urna=in&pretium=porttitor&nisl=pede&ut=justo');
+        'https://jimdo.com/gravida/nisi/at/nibh/in.xml?ac=nisl&est=nunc&lacinia=nisl&nisi=duis&venenatis=bibendum&tristique=felis&fusce=sed&congue=interdum&diam=');
 insert into links (id, title, url)
 values (13, 'js3',
         'https://smugmug.com/sed/vestibulum/sit/amet.html?feugiat=curae&non=donec&pretium=pharetra&quis=magna&lectus=vestibulum&suspendisse=aliqu');
 insert into links (id, title, url)
 values (14, 'js4',
-        'http://engadget.com/volutpat/eleifend/donec/ut/dolor/morbi.html?est=faucibus&phasellus=orci&sit=luctus&amet=et&erat=ultrices&nulla=pos');
+        'https://engadget.com/volutpat/eleifend/donec/ut/dolor/morbi.html?est=faucibus&phasellus=orci&sit=luctus&amet=et&erat=ultrices&nulla=pos');
 insert into links (id, title, url)
 values (15, 'js5',
         'https://amazon.de/fringilla.xml?dui=fusce&vel=congue&sem=diam&sed=id&sagittis=ornare&nam=imperdiet&congue=sapien&risus=urna&semper=pretium&porta=nisl&volutpat=');
@@ -429,7 +429,7 @@ insert into links (id, title, url)
 values (16, 'js6',
         'https://noaa.gov/nulla.html?volutpat=a&sapien=feugiat&arcu=et&sed=em&ut=erat&erat=volutpat&id=in&mauris=congue&vulputate=etiam&elementum=justo&nullam=etiam&varius=pretium');
 insert into links (id, title, url)
-values (17, 'js7', 'http://imdb.com/sed/accumsan/felis/ut/at/dolor/quis.json?mauris');
+values (17, 'js7', 'https://imdb.com/sed/accumsan/felis/ut/at/dolor/quis.json?mauris');
 insert into links (id, title, url)
 values (18, 'js8', 'https://cdc.gov/ac.html?morbi=ut&quis=massa&tortor=volutpat&id=convallis&nulla=morbi&ultrices');
 insert into links (id, title, url)
@@ -437,7 +437,7 @@ values (19, 'js9',
         'https://archive.org/nulla/tellus.png?lectus=sed&suspendisse=justo&potenti=pellentesque&in=viverra&eleifend=pm=potenti');
 insert into links (id, title, url)
 values (20, 'js10',
-        'http://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
+        'https://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
 
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (1, 1, '2024-04-09', '2024-05-09', '5051',
@@ -629,109 +629,190 @@ values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified sour
 insert into presentations (id, created_at, description, file, title)
 values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
 
-update presentations set lesson_id =1 where id =1;
-update presentations set lesson_id =2 where id =2;
-update presentations set lesson_id =3 where id =3;
-update presentations set lesson_id =4 where id =4;
-update presentations set lesson_id =5 where id =5;
-update presentations set lesson_id =6 where id =6;
-update presentations set lesson_id =7 where id =7;
-update presentations set lesson_id =8 where id =8;
-update presentations set lesson_id =9 where id =9;
-update presentations set lesson_id =10 where id =10;
-update presentations set lesson_id =11 where id =11;
-update presentations set lesson_id =12 where id =12;
-update presentations set lesson_id =13 where id =13;
-update presentations set lesson_id =14 where id =14;
-update presentations set lesson_id =15 where id =15;
-update presentations set lesson_id =16 where id =16;
-update presentations set lesson_id =17 where id =17;
-update presentations set lesson_id =18 where id =18;
-update presentations set lesson_id =19 where id =19;
-update presentations set lesson_id =20 where id =20;
+update lessons_presentations ls set lesson_id =1 where ls.presentations_id =1;
+update lessons_presentations ls set lesson_id =2 where ls.presentations_id =2;
+update lessons_presentations ls set lesson_id =3 where ls.presentations_id =3;
+update lessons_presentations ls set lesson_id =4 where ls.presentations_id =4;
+update lessons_presentations ls set lesson_id =5 where ls.presentations_id =5;
+update lessons_presentations ls set lesson_id =6 where ls.presentations_id =6;
+update lessons_presentations ls set lesson_id =7 where ls.presentations_id =7;
+update lessons_presentations ls set lesson_id =8 where ls.presentations_id =8;
+update lessons_presentations ls set lesson_id =9 where ls.presentations_id =9;
+update lessons_presentations ls set lesson_id =10 where ls.presentations_id =10;
+update lessons_presentations ls set lesson_id =11 where ls.presentations_id =11;
+update lessons_presentations ls set lesson_id =12 where ls.presentations_id =12;
+update lessons_presentations ls set lesson_id =13 where ls.presentations_id =13;
+update lessons_presentations ls set lesson_id =14 where ls.presentations_id =14;
+update lessons_presentations ls set lesson_id =15 where ls.presentations_id =15;
+update lessons_presentations ls set lesson_id =16 where ls.presentations_id =16;
+update lessons_presentations ls set lesson_id =17 where ls.presentations_id =17;
+update lessons_presentations ls set lesson_id =18 where ls.presentations_id =18;
+update lessons_presentations ls set lesson_id =19 where ls.presentations_id =19;
+update lessons_presentations ls set lesson_id =20 where ls.presentations_id =20;
 
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (1, 1);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (2, 2);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (3, 3);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (4, 4);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (5, 5);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (6, 6);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (7, 7);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (8, 8);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (9, 9);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (10, 10);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (11, 11);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (12, 12);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (13, 13);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (14, 14);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (15, 15);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (16, 16);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (17, 17);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (18, 18);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (19, 19);
--- insert into lessons_presentations (lesson_id, presentations_id)
--- values (20, 20);
---
---
--- insert into lessons_videos (lesson_id, videos_id)
--- values (1, 1);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (2, 2);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (3, 3);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (4, 4);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (5, 5);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (6, 6);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (7, 7);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (8, 8);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (9, 9);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (10, 10);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (11, 11);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (12, 12);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (13, 13);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (14, 14);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (15, 15);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (16, 16);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (17, 17);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (18, 18);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (19, 19);
--- insert into lessons_videos (lesson_id, videos_id)
--- values (20, 20);
+
+insert into lessons_presentations (lesson_id, presentations_id)
+values (1, 1);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (2, 2);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (3, 3);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (4, 4);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (5, 5);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (6, 6);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (7, 7);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (8, 8);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (9, 9);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (10, 10);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (11, 11);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (12, 12);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (13, 13);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (14, 14);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (15, 15);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (16, 16);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (17, 17);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (18, 18);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (19, 19);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (20, 20);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (1, 1);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (2, 2);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (3, 3);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (4, 4);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (5, 5);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (6, 6);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (7, 7);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (8, 8);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (9, 9);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (10, 10);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (11, 11);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (12, 12);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (13, 13);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (14, 14);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (15, 15);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (16, 16);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (17, 17);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (18, 18);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (19, 19);
+insert into lessons_presentations (lesson_id, presentations_id)
+values (20, 20);
+
+insert into lessons_videos (lesson_id, videos_id)
+values (1, 1);
+insert into lessons_videos (lesson_id, videos_id)
+values (2, 2);
+insert into lessons_videos (lesson_id, videos_id)
+values (3, 3);
+insert into lessons_videos (lesson_id, videos_id)
+values (4, 4);
+insert into lessons_videos (lesson_id, videos_id)
+values (5, 5);
+insert into lessons_videos (lesson_id, videos_id)
+values (6, 6);
+insert into lessons_videos (lesson_id, videos_id)
+values (7, 7);
+insert into lessons_videos (lesson_id, videos_id)
+values (8, 8);
+insert into lessons_videos (lesson_id, videos_id)
+values (9, 9);
+insert into lessons_videos (lesson_id, videos_id)
+values (10, 10);
+insert into lessons_videos (lesson_id, videos_id)
+values (11, 11);
+insert into lessons_videos (lesson_id, videos_id)
+values (12, 12);
+insert into lessons_videos (lesson_id, videos_id)
+values (13, 13);
+insert into lessons_videos (lesson_id, videos_id)
+values (14, 14);
+insert into lessons_videos (lesson_id, videos_id)
+values (15, 15);
+insert into lessons_videos (lesson_id, videos_id)
+values (16, 16);
+insert into lessons_videos (lesson_id, videos_id)
+values (17, 17);
+insert into lessons_videos (lesson_id, videos_id)
+values (18, 18);
+insert into lessons_videos (lesson_id, videos_id)
+values (19, 19);
+insert into lessons_videos (lesson_id, videos_id)
+values (20, 20);
+
+insert into lessons_videos (lesson_id, videos_id)
+values (1, 1);
+insert into lessons_videos (lesson_id, videos_id)
+values (2, 2);
+insert into lessons_videos (lesson_id, videos_id)
+values (3, 3);
+insert into lessons_videos (lesson_id, videos_id)
+values (4, 4);
+insert into lessons_videos (lesson_id, videos_id)
+values (5, 5);
+insert into lessons_videos (lesson_id, videos_id)
+values (6, 6);
+insert into lessons_videos (lesson_id, videos_id)
+values (7, 7);
+insert into lessons_videos (lesson_id, videos_id)
+values (8, 8);
+insert into lessons_videos (lesson_id, videos_id)
+values (9, 9);
+insert into lessons_videos (lesson_id, videos_id)
+values (10, 10);
+insert into lessons_videos (lesson_id, videos_id)
+values (11, 11);
+insert into lessons_videos (lesson_id, videos_id)
+values (12, 12);
+insert into lessons_videos (lesson_id, videos_id)
+values (13, 13);
+insert into lessons_videos (lesson_id, videos_id)
+values (14, 14);
+insert into lessons_videos (lesson_id, videos_id)
+values (15, 15);
+insert into lessons_videos (lesson_id, videos_id)
+values (16, 16);
+insert into lessons_videos (lesson_id, videos_id)
+values (17, 17);
+insert into lessons_videos (lesson_id, videos_id)
+values (18, 18);
+insert into lessons_videos (lesson_id, videos_id)
+values (19, 19);
+insert into lessons_videos (lesson_id, videos_id)
+values (20, 20);
 
 insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (1, 1, 'FALSE', '2024-04-26',
@@ -789,7 +870,7 @@ insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (20, 20, 'FALSE', '2024-05-08',
         'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',1,20);
 
-insert into questions (id, test_id, question_type, title,point)
+insert into questions (id, test_id, question_type, title,  point)
 values (1, 1, 'MULTIPLE', 'Legal Assistant',10);
 insert into questions (id, test_id, question_type, title,point)
 values (2, 2, 'MULTIPLE', 'Systems Administrator IV',10);
@@ -870,25 +951,25 @@ insert into options (id, is_true, question_id, option)
 values (19, 'TRUE', 19, 'name');
 insert into options (id, is_true, question_id, option)
 values (20, 'FALSE', 20, 'net');
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file, point) values (1, 1, 'LATE', '2024-04-12',  1, 'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus', 'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi', 'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit', 1);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (2, 2, 'REJECTED', '2024-04-15',  2, 'suspendisse ornare consequat lectus in est risus auctor sed tristique in', 'nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis', 'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum', 2);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (4, 4, 'ACCEPTED', '2024-04-11',  4, 'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec', 'sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus', 'scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', 4);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (5, 5, 'LATE', '2024-04-11',  5, 'aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque', 'non pretium quis lectus suspendisse potenti in eleifend quam a', 'velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo', 5);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (6, 6, 'REJECTED', '2024-04-13', 6, 'nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer', 'in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa', 'duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris', 6);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (7, 7, 'LATE', '2024-04-22', 7, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo', 'eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis', 'eu sapien cursus vestibulum proin eu mi nulla ac enim', 7);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (8, 8, 'REJECTED', '2024-04-19', 8, 'nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet', 'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel', 'ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor', 8);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (9, 9, 'WAITING', '2024-04-10', 9, 'tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu', 'vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam', 'ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis', 9);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (10, 10, 'ACCEPTED', '2024-04-29', 10, 'augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet', 'purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus', 'sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (11, 11, 'LATE', '2024-04-15', 11, 'in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio', 'erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (12, 12, 'WAITING', '2024-04-30', 12, 'volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in', 'justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris', 'nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum', 12);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (13, 13, 'LATE', '2024-04-17', 13, 'ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam', 'platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur', 'est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (14, 14, 'ACCEPTED', '2024-05-07', 14, 'ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien', 'etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam', 'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (15, 15, 'REJECTED', '2024-04-22', 15, 'orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis', 'velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla', 'nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (16, 16, 'REJECTED', '2024-05-07', 16, 'mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at', 'rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut', 'morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (17, 17, 'ACCEPTED', '2024-04-18', 17, 'dolor vel est donec odio justo sollicitudin ut suscipit a', 'suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas', 'a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (18, 18, 'WAITING', '2024-04-28', 18, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id', 'tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est', 'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (19, 19, 'LATE', '2024-04-30', 19, 'sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec', 'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper', 'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 10);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (20, 20, 'WAITING', '2024-04-18',  20, 'in felis donec semper sapien a libero nam dui proin leo odio porttitor', 'ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file, point) values (1, 1, 'LATE', '2024-04-12',  1, 'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus', 'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi', 'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit', 1);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (2, 2, 'REJECTED', '2024-04-15',  2, 'suspendisse ornare consequat lectus in est risus auctor sed tristique in', 'nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis', 'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum', 2);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (4, 4, 'ACCEPTED', '2024-04-11',  4, 'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec', 'sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus', 'scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', 4);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (5, 5, 'LATE', '2024-04-11',  5, 'aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque', 'non pretium quis lectus suspendisse potenti in eleifend quam a', 'velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo', 5);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (6, 6, 'REJECTED', '2024-04-13', 6, 'nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer', 'in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa', 'duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris', 6);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (7, 7, 'LATE', '2024-04-22', 7, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo', 'eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis', 'eu sapien cursus vestibulum proin eu mi nulla ac enim', 7);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (8, 8, 'REJECTED', '2024-04-19', 8, 'nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet', 'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel', 'ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor', 8);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (9, 9, 'WAITING', '2024-04-10', 9, 'tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu', 'vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam', 'ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis', 9);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (10, 10, 'ACCEPTED', '2024-04-29', 10, 'augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet', 'purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus', 'sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point ) values (11, 11, 'LATE', '2024-04-15', 11, 'in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio', 'erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (12, 12, 'WAITING', '2024-04-30', 12, 'volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in', 'justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris', 'nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum', 12);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (13, 13, 'LATE', '2024-04-17', 13, 'ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam', 'platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur', 'est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (14, 14, 'ACCEPTED', '2024-05-07', 14, 'ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien', 'etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam', 'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (15, 15, 'REJECTED', '2024-04-22', 15, 'orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis', 'velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla', 'nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (16, 16, 'REJECTED', '2024-05-07', 16, 'mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at', 'rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut', 'morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (17, 17, 'ACCEPTED', '2024-04-18', 17, 'dolor vel est donec odio justo sollicitudin ut suscipit a', 'suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas', 'a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (18, 18, 'WAITING', '2024-04-28', 18, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id', 'tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est', 'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (19, 19, 'LATE', '2024-04-30', 19, 'sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec', 'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper', 'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 10);
+-- insert into answer_tasks (id, student_id, task_answer_status, date_of_send,  task_id, text, image, file,point) values (20, 20, 'WAITING', '2024-04-18',  20, 'in felis donec semper sapien a libero nam dui proin leo odio porttitor', 'ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh', 'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante', 10);
 
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
 values (1, 1, 'LATE', '2024-04-12', 1,

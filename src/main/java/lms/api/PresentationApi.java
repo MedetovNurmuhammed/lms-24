@@ -13,12 +13,12 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/presentation")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/presentation")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class PresentationApi {
     private final PresentationService presentationService;
-
 
     @Secured("INSTRUCTOR")
     @Operation(description = "create presentation")

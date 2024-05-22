@@ -1,6 +1,5 @@
 package lms.repository;
 
-import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import lms.enums.StudyFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -65,7 +63,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             "where t.id = :taskId and s.id not in (:studentIds)")
     List<String> findUserNamesByTask(@Param("studentIds") List<Long> studentIds,
                                      @Param("taskId") Long taskId);
+    @Query("select s from Student s where s.user.id =:id")
+    Optional<Student> findStudentByUserId(@Param("id") Long id);
 
-    @Query("SELECT DISTINCT s FROM Student s JOIN s.resultTests r WHERE r.test.id = :testId")
-    List<Student> findStudentsByTestId(Long testId);
 }

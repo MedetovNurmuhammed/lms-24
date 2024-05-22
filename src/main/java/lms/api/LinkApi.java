@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/links")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class LinkApi {
 
     private final LinkService linkService;

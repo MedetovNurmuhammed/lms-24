@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/file")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class StorageController {
 
     @Autowired
@@ -26,7 +27,6 @@ public class StorageController {
         service.uploadFile(file);
         return new ResponseEntity<>("File uploaded successfully", HttpStatus.OK);
     }
-
 
         @Secured("ADMIN")
     @GetMapping("/download/{fileName}")

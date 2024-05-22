@@ -18,7 +18,7 @@ import java.nio.file.AccessDeniedException;
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @Slf4j
-
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class AuthApi {
     private final UserService userService;
 

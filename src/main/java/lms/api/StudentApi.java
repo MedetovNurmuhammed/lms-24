@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class StudentApi {
     private final StudentService studentService;
 

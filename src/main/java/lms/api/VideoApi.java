@@ -11,10 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
-@RequestMapping("/api/video")
+@RequestMapping("/api/videos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class VideoApi {
     private final VideoService videoService;
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/lessons")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class LessonApi {
     private final LessonService lessonService;
     @Secured("INSTRUCTOR")
