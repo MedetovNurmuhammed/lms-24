@@ -76,3 +76,4 @@ app:
 server:
   error:
     include-message: always
+
