@@ -3,9 +3,11 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
+import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
 import lms.entities.Trash;
+import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
 import lms.repository.TrashRepository;
@@ -16,9 +18,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -48,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public SimpleResponse update(long groupId, GroupRequest groupRequest) {
-        Group updatedGroup = groupRepository.getById(groupId);
+        Group updatedGroup = getById(groupId);
 
         if (!updatedGroup.getTitle().equals(groupRequest.title())) {
             boolean exists = groupRepository.existsByTitle(groupRequest.title());
@@ -67,17 +71,24 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Page<AllGroupResponse> findAllGroup(int size, int page) {
+    public AllGroupResponse findAllGroup(int size, int page) {
+        if (page < 1 && size < 1) throw new IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size);
-        return groupRepository.findAllGroup(pageable);
+        Page<GroupResponse> allGroup = groupRepository.findAllGroup(pageable);
+
+        return AllGroupResponse.builder()
+                .page(allGroup.getNumber() + 1)
+                .size(allGroup.getNumberOfElements())
+                .groupResponses(allGroup.getContent())
+                .build();
     }
 
     @Override
     public SimpleResponse delete(long groupId) {
-        Group group = groupRepository.getById(groupId);
+        Group group = getById(groupId);
         Trash trash = new Trash();
         trash.setName(group.getTitle());
-        trash.setType(group.getType());
+        trash.setType(Type.GROUP);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setGroup(group);
         group.setTrash(trash);
@@ -89,8 +100,20 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<String> getAllGroupName() {
-        return groupRepository.getAllGroupName();
+    public GroupResponse getGroup(Long groupId) {
+        Group group = getById(groupId);
+        return GroupResponse.builder()
+                .id(groupId)
+                .title(group.getTitle())
+                .description(group.getDescription())
+                .image(group.getImage())
+                .dateOfStart(group.getDateOfStart())
+                .dateOfEnd(group.getDateOfEnd())
+                .build();
+    }
+
+    private Group getById(long id) {
+        return groupRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Группа не найдена"));
     }
 
 }

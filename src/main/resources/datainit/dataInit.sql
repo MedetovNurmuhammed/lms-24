@@ -691,46 +691,6 @@ insert into lessons_presentations (lesson_id, presentations_id)
 values (19, 19);
 insert into lessons_presentations (lesson_id, presentations_id)
 values (20, 20);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (1, 1);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (2, 2);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (3, 3);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (4, 4);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (5, 5);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (6, 6);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (7, 7);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (8, 8);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (9, 9);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (10, 10);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (11, 11);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (12, 12);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (13, 13);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (14, 14);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (15, 15);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (16, 16);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (17, 17);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (18, 18);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (19, 19);
-insert into lessons_presentations (lesson_id, presentations_id)
-values (20, 20);
 
 insert into lessons_videos (lesson_id, videos_id)
 values (1, 1);
@@ -773,46 +733,6 @@ values (19, 19);
 insert into lessons_videos (lesson_id, videos_id)
 values (20, 20);
 
-insert into lessons_videos (lesson_id, videos_id)
-values (1, 1);
-insert into lessons_videos (lesson_id, videos_id)
-values (2, 2);
-insert into lessons_videos (lesson_id, videos_id)
-values (3, 3);
-insert into lessons_videos (lesson_id, videos_id)
-values (4, 4);
-insert into lessons_videos (lesson_id, videos_id)
-values (5, 5);
-insert into lessons_videos (lesson_id, videos_id)
-values (6, 6);
-insert into lessons_videos (lesson_id, videos_id)
-values (7, 7);
-insert into lessons_videos (lesson_id, videos_id)
-values (8, 8);
-insert into lessons_videos (lesson_id, videos_id)
-values (9, 9);
-insert into lessons_videos (lesson_id, videos_id)
-values (10, 10);
-insert into lessons_videos (lesson_id, videos_id)
-values (11, 11);
-insert into lessons_videos (lesson_id, videos_id)
-values (12, 12);
-insert into lessons_videos (lesson_id, videos_id)
-values (13, 13);
-insert into lessons_videos (lesson_id, videos_id)
-values (14, 14);
-insert into lessons_videos (lesson_id, videos_id)
-values (15, 15);
-insert into lessons_videos (lesson_id, videos_id)
-values (16, 16);
-insert into lessons_videos (lesson_id, videos_id)
-values (17, 17);
-insert into lessons_videos (lesson_id, videos_id)
-values (18, 18);
-insert into lessons_videos (lesson_id, videos_id)
-values (19, 19);
-insert into lessons_videos (lesson_id, videos_id)
-values (20, 20);
 
 insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
 values (1, 1, 'FALSE', '2024-04-26',

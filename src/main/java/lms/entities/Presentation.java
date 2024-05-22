@@ -35,7 +35,6 @@ public class Presentation {
 
 
 
-
     @PrePersist
     private void prePersist() {
         createdAt = LocalDate.now();

@@ -1,4 +1,3 @@
-//
 //package lms.config.flyway;
 //
 //import org.flywaydb.core.Flyway;
@@ -8,7 +7,6 @@
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.DependsOn;
 //import org.springframework.jdbc.datasource.DriverManagerDataSource;
-//
 //import javax.sql.DataSource;
 //
 //@Configuration
@@ -43,4 +41,6 @@
 //    public FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
 //        return new FlywayMigrationInitializer(flyway, null);
 //    }
+//
+//
 //}

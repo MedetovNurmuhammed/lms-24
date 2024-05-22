@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getByEmail(toEmail);
         user.setUuid(uuid);
         userRepository.save(user);
-        String link = "http://192.168.0.14:9090/createPassword.html?uuid=" + uuid;  // Constructing the link
+        String link = "http://10.10.10.20:8080/createPassword.html?uuid=" + uuid;  // Constructing the link
         String htmlContent = String.format("""
                 <html>
                 <body>
