@@ -1,4 +1,4 @@
-package lms.aws.config;
+package lms.config.aws.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -24,6 +24,9 @@ public class StorageConfig {
 
     @Bean
     public AmazonS3 s3Client() {
+        System.out.println(region);
+        System.out.println(accessKey);
+        System.out.println(accessSecret);
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, accessSecret);
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
