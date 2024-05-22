@@ -166,6 +166,7 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
 
         return TestResponse.builder()
+                .testId(test.getId())
                 .title(test.getTitle())
                 .hour(test.getHour())
                 .minute(test.getMinute())
@@ -185,10 +186,11 @@ public class TestServiceImpl implements TestService {
 
     private QuestionResponse mapToQuestionResponse(Question question) {
         List<OptionResponse> optionResponses = question.getOptions().stream()
-                .map(option -> new OptionResponse(option.getOption(), option.getIsTrue()))
+                .map(option -> new OptionResponse(option.getId(),option.getOption(), option.getIsTrue()))
                 .collect(Collectors.toList());
 
         return new QuestionResponse(
+                question.getId(),
                 question.getTitle(),
                 question.getPoint(),
                 question.getQuestionType(),

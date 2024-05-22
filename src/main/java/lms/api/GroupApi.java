@@ -10,11 +10,22 @@ import lms.dto.response.SimpleResponse;
 import lms.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class GroupApi {
     private final GroupService groupService;
 
@@ -53,4 +64,5 @@ public class GroupApi {
     public SimpleResponse delete(@PathVariable long groupId) {
         return groupService.delete(groupId);
     }
+
 }

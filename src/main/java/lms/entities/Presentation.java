@@ -32,6 +32,8 @@ public class Presentation {
     @OneToOne
     private Trash trash;
 
+
+
     @PrePersist
     private void prePersist() {
         createdAt = LocalDate.now();

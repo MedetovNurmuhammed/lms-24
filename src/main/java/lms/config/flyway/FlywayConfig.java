@@ -1,4 +1,3 @@
-
 package lms.config.flyway;
 
 import org.flywaydb.core.Flyway;
@@ -42,4 +41,6 @@ public class FlywayConfig {
     public FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
         return new FlywayMigrationInitializer(flyway, null);
     }
+
+
 }
