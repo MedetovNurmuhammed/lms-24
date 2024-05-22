@@ -224,9 +224,9 @@ public class TrashServiceImpl implements TrashService {
 
 
     @Transactional
-    @Scheduled(fixedDelay = 30000)
+//    @Scheduled(fixedDelay = 500000000)
     public void cleanupExpiredTrash() {
-        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(5000);
+        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500000000);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
         for (Trash expiredTrash : expiredTrashes) {
             if (expiredTrash.getCourse() != null) {

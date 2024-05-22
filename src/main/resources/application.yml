@@ -48,10 +48,10 @@ spring:
     locations: classpath:db.migration
     baseline-on-migrate: false
 
-flyway:
-  user: postgres
-  password: nurkamil192.168
-  url: jdbc:postgresql://localhost:5432/lms_nur
+#flyway:
+#  user: postgres
+#  password: nurkamil192.168
+#  url: jdbc:postgresql://localhost:5432/lms_nur
 
 
 #S3 FILE

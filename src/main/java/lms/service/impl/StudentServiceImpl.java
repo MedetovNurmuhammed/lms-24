@@ -141,14 +141,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
-        System.out.println("Test code variant");
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
-        trash.setStudent(student);
+        System.out.println("Test test ");
         trash.setName(student.getUser().getFullName());
         trash.setType(Type.STUDENT);
         trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setStudent(student);
         student.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()

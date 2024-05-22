@@ -27,8 +27,8 @@ public class Presentation {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-//    @ManyToOne(cascade = CascadeType.DETACH)
-//    private Lesson lesson;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private Lesson lesson;
 
     @OneToOne()
     private Trash trash;
