@@ -57,14 +57,15 @@ flyway:
 cloud:
   aws:
     credentials:
-      access-key: AKIA3KYNRCVIBB2TALRT
-      secret-key: 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
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_KEY_ID}
+      profile-path: ${AWS_BUCKET_URL}
     region:
-      static: eu-central-1
+      static: ${AWS_DEFAULT_REGION}
 
 application:
   bucket:
-    name: lms-b12
+    name: ${AWS_BUCKET_NAME}
 
 #JWT
 app:

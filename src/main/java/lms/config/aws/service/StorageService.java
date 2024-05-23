@@ -24,10 +24,10 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class StorageService {
-
     @Value("${application.bucket.name}")
     private String bucketName;
-
+    @Value("${cloud.aws.credentials.profile-path}")
+    private String buketUrl;
     private final AmazonS3 s3Client;
 
     public AwsResponse uploadFile(MultipartFile file) {
@@ -38,7 +38,7 @@ public class StorageService {
         fileObj.delete();
         return AwsResponse.builder()
                 .fileName(fileName)
-                .urlFile("https://lms-b12.s3.eu-central-1.amazonaws.com/" + fileName)
+                .urlFile(buketUrl + fileName)
                 .build();
     }
 
