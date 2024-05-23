@@ -71,7 +71,7 @@ public class CourseApi {
     @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
     public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
             @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "6") int size,
+            @RequestParam(required = false, defaultValue = "12") int size,
             @PathVariable Long courseId, @RequestParam Role role) {
         return courseService.findAllInstructorsOrStudentsByCourseId(page, size, courseId, role);
     }

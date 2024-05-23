@@ -191,7 +191,6 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findById(courseId).orElseThrow(
                 () -> new NotFoundException("Курс с Id:   " + courseId + "  не найдены.")
         );
-
         if (role.equals(Role.STUDENT)) {
             Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(course.getId(), pageable);
             return AllInstructorsOrStudentsOfCourse.builder()
@@ -200,19 +199,15 @@ public class CourseServiceImpl implements CourseService {
                     .getAllInstructorsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
-            Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.findAllInstructorsByCourseId(courseId, pageable);
-            if (allInstructorsByCourseId.getContent().isEmpty()) {
+            Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
                 return AllInstructorsOrStudentsOfCourse.builder()
                         .page(allInstructorsByCourseId.getNumber() + 1)
                         .size(allInstructorsByCourseId.getSize())
                         .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
                         .build();
-            }
         }
         throw new NotFoundException("Курс с Id:  " + courseId + " не найдены.");
     }
-
-
 }
 
 

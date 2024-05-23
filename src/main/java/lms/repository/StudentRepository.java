@@ -24,14 +24,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             "JOIN s.group g " +
             "JOIN g.courses c " +
             "WHERE c.id = :courseId")
-    List<InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId);
-
-    default Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(Long courseId, Pageable pageable){
-        List<InstructorsOrStudentsOfCourse> allStudents = getStudentsByCourseId(courseId);
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), allStudents.size());
-        return new PageImpl<>(allStudents.subList(start, end), pageable, allStudents.size());
-    }
+    Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
 
     @Query("""
             select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email)
