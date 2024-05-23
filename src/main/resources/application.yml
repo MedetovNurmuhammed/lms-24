@@ -58,7 +58,7 @@ cloud:
   aws:
     credentials:
       access-key: ${AWS_ACCESS_KEY_ID}
-      secret-key: ${AWS_SECRET_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
       profile-path: ${AWS_BUCKET_URL}
     region:
       static: ${AWS_DEFAULT_REGION}
