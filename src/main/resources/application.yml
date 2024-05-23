@@ -11,10 +11,10 @@ spring:
       ddl-auto: create
     show-sql: true
     open-in-view: false
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
 
   #EMAIL
   application:
@@ -36,7 +36,6 @@ spring:
     init:
       data-locations: classpath:datainit/dataInit.sql
       mode: never
-      continue-on-error: false
   servlet:
     multipart:
       max-file-size: 10MB
@@ -44,28 +43,28 @@ spring:
 
   #Migration
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db.migration
-    baseline-on-migrate: true
+    baseline-on-migrate: false
     user: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     url: ${POSTGRES_DB}
+
+
+
 
 #S3 FILE
 cloud:
   aws:
     credentials:
-      access-key: ${AWS_ACCESS_KEY_ID}
-      secret-key: ${AWS_SECRET_ACCESS_KEY}
-      profile-path: ${AWS_BUCKET_URL}
+      access-key: AKIA3KYNRCVIBB2TALRT
+      secret-key: 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
     region:
-      static: ${AWS_DEFAULT_REGION}
-    stack:
-      auto: false
+      static: eu-central-1
 
 application:
   bucket:
-    name: ${AWS_BUCKET_NAME}
+    name: lms-b12
 
 #JWT
 app:
@@ -76,4 +75,3 @@ server:
   error:
     include-message: always
 
-  port: 8080
