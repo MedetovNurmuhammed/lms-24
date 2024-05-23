@@ -19,11 +19,11 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student,Long> {
 
 
-    @Query("SELECT new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName, '', s.user.phoneNumber, s.user.email) " +
-            "FROM Student s " +
-            "JOIN s.group g " +
-            "JOIN g.courses c " +
-            "WHERE c.id = :courseId")
+    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName, '', s.user.phoneNumber, s.user.email) " +
+            "from Student s " +
+            "join s.group g " +
+            "join g.courses c " +
+            "where c.id = :courseId")
     Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
 
     @Query("""

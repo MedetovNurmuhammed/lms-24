@@ -24,14 +24,18 @@ public class CourseApi {
 
     @Secured("ADMIN")
     @PostMapping("/createCourse")
-    @Operation(description = "Создать курс")
+    @Operation(summary = "Создать курса",
+            description = "Метод для создание курса " +
+                    " Авторизация: администратор!")
     public SimpleResponse createCourse(@RequestBody @Valid CourseRequest courseRequest) {
         return courseService.createCourse(courseRequest);
     }
 
     @Secured("ADMIN")
     @PutMapping("/updateCourse/{courseId}")
-    @Operation(description = "Обновить курс")
+    @Operation(summary = "Обновить курса",
+            description = "Метод для обновление курса" +
+                    "Авторизация: администратор!")
     public SimpleResponse editCourse(@PathVariable Long courseId,
                                      @RequestBody @Valid CourseRequest courseRequest) {
         return courseService.editCourse(courseId, courseRequest);
@@ -39,14 +43,18 @@ public class CourseApi {
 
     @Secured("ADMIN")
     @DeleteMapping("/deleteCourse/{courseId}")
-    @Operation(description = "Удалить курс по id")
+    @Operation(summary = "Удалить курса по id",
+            description = "Метод для удаление курса" +
+                    "Авторизация: администратор!")
     public SimpleResponse deleteCourseById(@PathVariable Long courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @Secured("ADMIN")
     @GetMapping("/findAllCourse")
-    @Operation(description = "Возвращает все курсы")
+    @Operation(summary = "Получть все курсы",
+            description = "Метод для получение всех курсов" +
+                    "Авторизация: администратор!")
     public Page<FindAllResponseCourse> findAllCourse(@RequestParam int page,
                                                      @RequestParam int size) {
         return courseService.findAllCourse(page, size);
@@ -54,20 +62,25 @@ public class CourseApi {
 
     @Secured("ADMIN")
     @PostMapping("/assignInGroupToCourse/{groupId}/{courseId}")
-    @Operation(description = "добавить курс в группу")
+    @Operation(summary = "Назначить группу для прохождения курса",
+            description = "Метод для назначение группу для прохождения курса" +
+                    "Авторизация: администратор!")
     public SimpleResponse assignInGroupToCourse(@PathVariable Long groupId, @PathVariable Long courseId) {
         return courseService.assignInGroupToCourse(groupId, courseId);
     }
 
     @Secured("ADMIN")
     @PostMapping("/assignInInstructorToCourse/{courseId}/{instructorId}")
-    @Operation(description = "Добавить инструктора в группу")
+    @Operation(summary = "Добавить инструктора в группу",
+            description = "Метод для добавление инструктора в группу" +
+            "Авторизация: администратор!")
     public SimpleResponse assignInstructorsToCourse(@PathVariable Long courseId, @RequestParam List<Long> instructorIds) {
         return courseService.assignInstructorsToCourse(courseId, instructorIds);
     }
 
     @Secured("ADMIN")
-    @Operation(summary = "Возвращает пагинированный список всех инструкторов одного курса.(Авторизация: администратор)")
+    @Operation(summary = "Возвращает пагинированный список всех инструкторов одного курса.",
+            description = "(Авторизация: администратор)")
     @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
     public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
             @RequestParam(required = false, defaultValue = "1") int page,
