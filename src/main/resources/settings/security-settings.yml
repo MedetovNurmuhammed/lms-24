@@ -1,0 +1,4 @@
+#JWT
+app:
+  jwt:
+    secret: learning-management-system-java-12
