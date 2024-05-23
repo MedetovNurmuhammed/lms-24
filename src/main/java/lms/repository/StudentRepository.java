@@ -1,5 +1,6 @@
 package lms.repository;
 
+import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import lms.enums.StudyFormat;
+import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,11 +18,16 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
 
-    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(i.id, c.title, i.user.fullName, '', i.user.phoneNumber, i.user.email) from Student i join i.group g join g.courses c where c.id = :courseId and i.trash is null")
-    List<InstructorsOrStudentsOfCourse> StudentsByCourseId(Long courseId);
+
+    @Query("SELECT new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName, '', s.user.phoneNumber, s.user.email) " +
+            "FROM Student s " +
+            "JOIN s.group g " +
+            "JOIN g.courses c " +
+            "WHERE c.id = :courseId")
+    List<InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId);
 
     default Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(Long courseId, Pageable pageable){
-        List<InstructorsOrStudentsOfCourse> allStudents = StudentsByCourseId(courseId);
+        List<InstructorsOrStudentsOfCourse> allStudents = getStudentsByCourseId(courseId);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allStudents.size());
         return new PageImpl<>(allStudents.subList(start, end), pageable, allStudents.size());

@@ -22,6 +22,7 @@ import java.util.List;
 public class CourseApi {
     private final CourseService courseService;
 
+    @Secured("ADMIN")
     @PostMapping("/createCourse")
     @Operation(description = "Создать курс")
     public SimpleResponse createCourse(@RequestBody @Valid CourseRequest courseRequest) {
