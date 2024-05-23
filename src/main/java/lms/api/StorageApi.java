@@ -16,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/file")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
-public class StorageController {
+public class StorageApi {
 
-    private static final Logger log = LoggerFactory.getLogger(StorageController.class);
+    private static final Logger log = LoggerFactory.getLogger(StorageApi.class);
     private final StorageService service;
 
     @Secured({"ADMIN", "INSTRUCTOR", "STUDENT"})
