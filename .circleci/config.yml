@@ -22,18 +22,6 @@ jobs:
             if [[ ! $(sudo docker -v) ]]; then
                sudo snap install docker
             fi'
-  setup-aws-credentials:
-    docker:
-      - image: circleci/node:14
-    steps:
-      - run:
-          name: Configure AWS Credentials
-          command: |
-            echo $AWS_ACCESS_KEY_ID > aws-access-key-id.txt
-            echo $AWS_SECRET_ACCESS_KEY > aws-secret-access-key.txt
-            echo $AWS_DEFAULT_REGION > region.txt
-            echo $AWS_BUCKET_NAME > bucket-name.txt
-            echo $AWS_BUCKET_URL > bucket-url.txt
   build-image:
     docker:
       - image: docker:20.10.9
@@ -100,16 +88,9 @@ workflows:
             branches:
               only:
                 - main
-      - setup-aws-credentials:
-          requires:
-            - install-docker-if-not-exists
-          filters:
-            branches:
-              only:
-                - main
       - build-image:
           requires:
-            - setup-aws-credentials
+            - install-docker-if-not-exists
           filters:
             branches:
               only:

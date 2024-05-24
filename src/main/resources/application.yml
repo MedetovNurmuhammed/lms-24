@@ -1,6 +1,7 @@
 spring:
   application:
     name: lms-b12
+
   config:
     import:
         - classpath:/settings/s3-settings.yml

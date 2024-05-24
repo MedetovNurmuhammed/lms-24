@@ -24,6 +24,7 @@ import java.util.Objects;
 @Slf4j
 public class StorageService {
     private final AwsProperties.Bucket bucket;
+
     private final AmazonS3 s3Client;
 
     public StorageService(AmazonS3 s3Client,
