@@ -1,42 +1,3 @@
-
-insert into trash(date_of_delete, id, name, type)
-values ('2023-12-02', 1, 'Elebesov Muktar', 'STUDENT');
-insert into trash(date_of_delete, id, name, type)
-values ('2023-02-12', 2, 'Nurislam Toigunbaev', 'STUDENT');
-insert into trash(date_of_delete, id, name, type)
-values ('2023-12-02', 3, 'Amantur Esengulov', 'INSTRUCTOR');
-insert into trash(date_of_delete, id, name, type)
-values ('2023-12-02', 4, 'Almir Kambarbekov', 'INSTRUCTOR');
-insert into trash(date_of_delete, id, name, type)
-values ('2023-12-02', 5, 'JS9', 'COURSE');
-insert into trash(date_of_delete, id, name, type)
-values ('2023-12-02', 6, 'JS10', 'COURSE');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-02-12', 7, 'js4', 'LINK');
-insert into trash(date_of_delete, id, name, type)
-values ('2024-01-04', 8, 'js5', 'LINK');
-insert into trash(date_of_delete, id, name, type)
-values ('2024-02-14', 9, 'java7', 'GROUP');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-02-12', 10, 'java8', 'GROUP');
-insert into trash(date_of_delete, id, name, type)
-values ('2024-11-09', 11, 'java7', 'TEST');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-08-04', 12, 'java8', 'TEST');
-insert into trash(date_of_delete, id, name, type)
-values ('2024-05-07',13, 'jalbum.net', 'TASK');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-01-08', 14, 'VIRGINIA.NET', 'TASK');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-08-04', 15, 'video', 'VIDEO');
-insert into trash(date_of_delete, id, name, type)
-values ('2024-05-07',16, 'video', 'VIDEO');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-01-08', 17, 'Cylinder Jointtail Grass', 'PRESENTATION');
-insert into trash(date_of_delete, id, name, type)
-values ('2022-08-04', 18, 'Swamp Paperbank', 'PRESENTATION');
-
-
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (1, 'java1', '2024/04/03', '2025-04-09', 'Excision of Left Cephalic Vein, Open Approach',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
@@ -57,11 +18,11 @@ values (5, 'java5', '2024/04/07', '2025-04-09', 'Release Left Mastoid Sinus, Per
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (6, 'java6', '2024/04/04', '2025-04-09', 'Replacement of Nose with Synthetic Substitute, Open Approach',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
-insert into groups (id,trash_id, title, date_of_start, date_of_end, description, image)
-values (7,10, 'java7', '2024/04/04', '2025-04-09', 'Extirpation of Matter from Right External Ear, Percutaneous Approach',
+insert into groups (id, title, date_of_start, date_of_end, description, image)
+values (7, 'java7', '2024/04/04', '2025-04-09', 'Extirpation of Matter from Right External Ear, Percutaneous Approach',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
-insert into groups (id,trash_id, title, date_of_start, date_of_end, description, image)
-values (8,9, 'java8', '2024/04/04', '2025-04-09', 'Destruction of Right Elbow Bursa and Ligament, Percutaneous Approach',
+insert into groups (id, title, date_of_start, date_of_end, description, image)
+values (8, 'java8', '2024/04/04', '2025-04-09', 'Destruction of Right Elbow Bursa and Ligament, Percutaneous Approach',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (9, 'java9', '2024/04/07', '2025-04-09',
@@ -112,22 +73,28 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (2, 'Nurkamil Kamchiev', 'nurkamilkamchiev@gmail.com',
         '$2a$12$C7tCVrsJMMUlQZ2x3/drp.r2OdntFYaL9OJ8cK2KVde8myUAF5xlm', 'INSTRUCTOR', 'FALSE', '+996500965456');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (3, 'Gulumkan Uson kyzy', 'gulumkanusonkyzy@gmail.com', '$2a$12$MD5QVCndF1mscnMee159Ie9tMepgxIkMi4YTKfhbQ.zdda2Y/7djy',
+values (3, 'Gulumkan Uson kyzy', 'gulumkanusonkyzy@gmail.com',
+        '$2a$12$MD5QVCndF1mscnMee159Ie9tMepgxIkMi4YTKfhbQ.zdda2Y/7djy',
         'INSTRUCTOR', 'FALSE', '+996700768594');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (4, 'Nurmuhemmed Medetov', 'numuhammedmedetov@gmail.com', '$2a$12$RlpZBZT7728MsSIknrcKdeB6mqKTnx1mqqj4nT8D.N8pKvkssI//6',
+values (4, 'Nurmuhemmed Medetov', 'numuhammedmedetov@gmail.com',
+        '$2a$12$RlpZBZT7728MsSIknrcKdeB6mqKTnx1mqqj4nT8D.N8pKvkssI//6',
         'INSTRUCTOR', 'FALSE', '+996706584876');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (5, 'Myrzaim Keldibekova', 'myrzaimkeldibekova1@gmail.com', '$2a$12$rKIEoRrBw7kwM0k/pY21ieWZRYLj.ZFw5m0qbERx42VX8ACJ53wd2',
+values (5, 'Myrzaim Keldibekova', 'myrzaimkeldibekova1@gmail.com',
+        '$2a$12$rKIEoRrBw7kwM0k/pY21ieWZRYLj.ZFw5m0qbERx42VX8ACJ53wd2',
         'INSTRUCTOR', 'FALSE', '+99650954372');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (6, 'Mirlan Arstanbekov', 'ajybeksadykov@gmail.com', '$2a$12$Xgt6xp8zsYkscn9R/miNV.5uTCcsywSEuIUMAFwTLLun27vOs1oAO',
+values (6, 'Mirlan Arstanbekov', 'ajybeksadykov@gmail.com',
+        '$2a$12$Xgt6xp8zsYkscn9R/miNV.5uTCcsywSEuIUMAFwTLLun27vOs1oAO',
         'INSTRUCTOR', 'FALSE', '+996506981197');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (7, 'Aliaskar Temirbekov', 'janybekovich798@gmail.com', '$2a$12$rcqtlouHd0tOW/rh3s3Yh.42xwKIQB5LxI7iJ0XsJ2iGH9mOjCS6S',
+values (7, 'Aliaskar Temirbekov', 'janybekovich798@gmail.com',
+        '$2a$12$rcqtlouHd0tOW/rh3s3Yh.42xwKIQB5LxI7iJ0XsJ2iGH9mOjCS6S',
         'INSTRUCTOR', 'FALSE', '+996705110999');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (8, 'Karina Bokombaeva', 'sadykovajybek@gmail.com', '$2a$12$UJjmvKRk3sgJyqYf60ev2OiZT8sQMMXgb7gkuEC9iXGSqIoyCsN/6',
+values (8, 'Karina Bokombaeva', 'sadykovajybek@gmail.com',
+        '$2a$12$UJjmvKRk3sgJyqYf60ev2OiZT8sQMMXgb7gkuEC9iXGSqIoyCsN/6',
         'INSTRUCTOR', 'FALSE', '+996702093354');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (9, 'Alisher Keneshov', 'ajybek20@gmail.com', '$2a$12$7ipVz6B3AeceynjyEILlq.7uyrgwS7VSD8VtYJUfpo8hlOB9bXSwW',
@@ -136,10 +103,12 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (10, 'Erbol Jakypov', 'ntoygonbaev098@gmail.com', '$2a$12$hSKMT93zcjionKdGF.WnX..RQIBhlDNtHkuHACNN8faaH6c.geNbS',
         'INSTRUCTOR', 'FALSE', '+996502091108');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (11, 'Erbol Aidarbekov', 'kylychbekovsanjar270@gmail.com', '$2a$12$1Y5e2OAQeAJEPBFWlfrWn.CanIgJ3y8tEtOaY02mcefmB6H/Lmw4O',
+values (11, 'Erbol Aidarbekov', 'kylychbekovsanjar270@gmail.com',
+        '$2a$12$1Y5e2OAQeAJEPBFWlfrWn.CanIgJ3y8tEtOaY02mcefmB6H/Lmw4O',
         'INSTRUCTOR', 'FALSE', '+996505675438');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (12, 'Adilet Artykov', 'nurajymrakatova@gmail.com', '$2a$12$b2zwtNiDybwezagVKcUh1O3ycj6IwKBWTgam9d188916hhchp4FJ2',
+values (12, 'Adilet Artykov', 'nurajymrakatova@gmail.com',
+        '$2a$12$b2zwtNiDybwezagVKcUh1O3ycj6IwKBWTgam9d188916hhchp4FJ2',
         'INSTRUCTOR', 'FALSE', '+996990085547');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (13, 'Erzhan Sagyndykov', 'rakatova.n@gmail.com', '$2a$12$aWJOsg4LsVKoxIbrS1QR9.NiKEJM5MSnLn0KA4Ys/EwVxqVC1j4xK',
@@ -148,64 +117,80 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (14, 'Daulet Alimbekov', 'rakkatova05@gmail.com', '$2a$12$ytZVnRtlf0pCgYUwu0YNA.anxfVwAHH8KvLvxflXYTnLUFVPPxWU.',
         'INSTRUCTOR', 'FALSE', '+996909764875');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (15, 'Nurbol Melisbekov', 'nurlanuuluesentur@gmail.com', '$2a$12$yYMGDyuxuILH3yX8RTZrsOrIAj5iJG2pAHtvAHa./0LwqOjViV1EW',
+values (15, 'Nurbol Melisbekov', 'nurlanuuluesentur@gmail.com',
+        '$2a$12$yYMGDyuxuILH3yX8RTZrsOrIAj5iJG2pAHtvAHa./0LwqOjViV1EW',
         'INSTRUCTOR', 'FALSE', '+996502098875');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (16, 'Alinur Taalaibekov', 'temiralievnurgazy07@gmail.com', '$2a$12$3u6vDNnC13vYMCtrhKEq6e3T1oruwv6SyLDz9zmViets.ixJiHohq',
+values (16, 'Alinur Taalaibekov', 'temiralievnurgazy07@gmail.com',
+        '$2a$12$3u6vDNnC13vYMCtrhKEq6e3T1oruwv6SyLDz9zmViets.ixJiHohq',
         'INSTRUCTOR', 'FALSE', '+996555986574');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (17, 'Almir Kambarbekov', 'arslansaparbekov18@gmail.com', '$2a$12$Jf1kFLPTuBr1UnNBNVy/ceyxCJeABlFTDiNtmq4c/Yahq9KMFfPeC',
+values (17, 'Almir Kambarbekov', 'arslansaparbekov18@gmail.com',
+        '$2a$12$Jf1kFLPTuBr1UnNBNVy/ceyxCJeABlFTDiNtmq4c/Yahq9KMFfPeC',
         'INSTRUCTOR', 'FALSE', '+9965020912107');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (18, 'ibragim Mahmudov', 'ibragimmahmudov59@gmail.com', '$2a$12$xyhaIFDPI5S9htRTERRuoeKoQG4C/KTKL1PKij1PizLi4amzppLnm',
+values (18, 'ibragim Mahmudov', 'ibragimmahmudov59@gmail.com',
+        '$2a$12$xyhaIFDPI5S9htRTERRuoeKoQG4C/KTKL1PKij1PizLi4amzppLnm',
         'INSTRUCTOR', 'TRUE', '+996706870391');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (19, 'Keldibek Sadykov', 'asrlanataalaibekova.0@gmail.com@gmail.com', '$2a$12$jf/HTUVJXus9O13X6Cer8eAUAThuot8t0nweqQ4a3M35kfkgZaV36',
+values (19, 'Keldibek Sadykov', 'asrlanataalaibekova.0@gmail.com@gmail.com',
+        '$2a$12$jf/HTUVJXus9O13X6Cer8eAUAThuot8t0nweqQ4a3M35kfkgZaV36',
         'INSTRUCTOR', 'FALSE', '+996509867546');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (20, 'Adilet Aibekov', 'toktogulovanurzanat@gmail.com@gmail.com', '$2a$12$7czzoB5mJOjzo38F2mQf.etrXOwngkovaxPZip/E8XP1pxX1mZes.',
+values (20, 'Adilet Aibekov', 'toktogulovanurzanat@gmail.com@gmail.com',
+        '$2a$12$7czzoB5mJOjzo38F2mQf.etrXOwngkovaxPZip/E8XP1pxX1mZes.',
         'INSTRUCTOR', 'FALSE', '+996703857463');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (21, 'Jigit Turumbekov', 'student@gmail.com', '$2a$12$.SAqQkou.qDYE7j.R6B0P.weM5LG1Kh7eRFV2FluwmlkNBnTcKbWO',
         'STUDENT', 'FALSE', '+996709546327');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com@gmail.com', '$2a$12$bPSakcM.R4v1I9EUnivsru5U3FQd3rsunIciIquXGdDxKGt04F9iy',
+values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com@gmail.com',
+        '$2a$12$bPSakcM.R4v1I9EUnivsru5U3FQd3rsunIciIquXGdDxKGt04F9iy',
         'STUDENT', 'FALSE', '+996705098658');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (23, 'Kandybek Muktarbekov', 'kandy@gmail.comu', '$2a$12$6mWsYumjW59IxENq.aLUS.le5eZu1MX00QJZXxcRygxAFzwYqcI/2',
         'STUDENT', 'FALSE', '+996709665873');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (24, 'Atai Turatbekov', 'mamatovkadyrdin2@gmail.com@gmail.com', '$2a$12$9R/fTNQFx0TA9WWx/NNnWOt8YuJb6xlUqmM5Pbn7V5QGUufNLmaQi',
+values (24, 'Atai Turatbekov', 'mamatovkadyrdin2@gmail.com@gmail.com',
+        '$2a$12$9R/fTNQFx0TA9WWx/NNnWOt8YuJb6xlUqmM5Pbn7V5QGUufNLmaQi',
         'STUDENT', 'FALSE', '+996502098879');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (25, 'Joki Kalganbekov', 'zaripberkursanov@gmail.com', '$2a$12$lYYmyIfjZlZqzkitRUDRzOD9W66dKgTaE2fS8OgjjqFLT4XPX2iii',
+values (25, 'Joki Kalganbekov', 'zaripberkursanov@gmail.com',
+        '$2a$12$lYYmyIfjZlZqzkitRUDRzOD9W66dKgTaE2fS8OgjjqFLT4XPX2iii',
         'STUDENT', 'FALSE', '+996500789605');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (26, 'Nazima Abdyldabekova', 'erlanmamaraimov271@gmail.com', '$2a$12$pQNkd16mxImQPXKe6O7ee.Gqxk3itQaKDd10Yl/CmVpQxHIDGqA.G',
+values (26, 'Nazima Abdyldabekova', 'erlanmamaraimov271@gmail.com',
+        '$2a$12$pQNkd16mxImQPXKe6O7ee.Gqxk3itQaKDd10Yl/CmVpQxHIDGqA.G',
         'STUDENT', 'FALSE', '+996707092454');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (27, 'Yryskeldi Apyshov', 'ismailovamantur22@gmail.com', '$2a$12$Z5Em0jmo5vSRRPpR3fZ0Sukc9NlTVbMMChDEVRZgh9niY0eYN5qba',
+values (27, 'Yryskeldi Apyshov', 'ismailovamantur22@gmail.com',
+        '$2a$12$Z5Em0jmo5vSRRPpR3fZ0Sukc9NlTVbMMChDEVRZgh9niY0eYN5qba',
         'STUDENT', 'TRUE', '+996775648334');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (28, 'Adis Suiunbekov', 'ismailovamantur46@gmail.com', '$2a$12$ZbjeQuP/n2di6uFjVh4hVes/BfQ0O8f3/4yN/y820XwZou92vlvq2',
+values (28, 'Adis Suiunbekov', 'ismailovamantur46@gmail.com',
+        '$2a$12$ZbjeQuP/n2di6uFjVh4hVes/BfQ0O8f3/4yN/y820XwZou92vlvq2',
         'STUDENT', 'TRUE', '+996500098673');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (29, 'Roi Jons', 'duisheevvva@gmail.com', '$2a$12$3BdbeJxi.Syg2Yhpqymdwu50tfM8LFKeUcIL4FGYvkPt0LGht4Sv6', 'STUDENT',
+values (29, 'Roi Jons', 'duisheevvva@gmail.com', '$2a$12$3BdbeJxi.Syg2Yhpqymdwu50tfM8LFKeUcIL4FGYvkPt0LGht4Sv6',
+        'STUDENT',
         'FALSE', '+996708675936');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (30, 'Tony Ferguson', 'duisheevva@gmail.com', '$2a$12$RU6SLTuwLkWm50L01f8C7u9w.eBHNv1VkFdq3yn31V189bBcCEv/a',
         'STUDENT', 'FALSE', '+996703746352');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (31, 'Khabib Nurmagamedov', 'mamatzhanova.datka@gmail.com', '$2a$12$5a1eLBny666DX3goDpVkHO7jdUmmhHsXFyQhD/uQ4GoziA0F6nM2m',
+values (31, 'Khabib Nurmagamedov', 'mamatzhanova.datka@gmail.com',
+        '$2a$12$5a1eLBny666DX3goDpVkHO7jdUmmhHsXFyQhD/uQ4GoziA0F6nM2m',
         'STUDENT', 'TRUE', '+99501099999');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (32, 'Leonel Messi', 'datkascnu@gmail.com', '$2a$12$mfXc14QklGDIA.UpG1FA4Oh6o5xlxkjuS4Qhhet.8bQRKP6hTH10q',
         'STUDENT', 'TRUE', '+996777654321');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (33, 'Cristiano Ronaldo', 'dmamatzhanova@gmail.com', '$2a$12$s76GqjOeMQaTjLHjThj9tOBSbHsP4K5N6k0x0UQIZ2QZWz25xTSdi',
+values (33, 'Cristiano Ronaldo', 'dmamatzhanova@gmail.com',
+        '$2a$12$s76GqjOeMQaTjLHjThj9tOBSbHsP4K5N6k0x0UQIZ2QZWz25xTSdi',
         'STUDENT', 'FALSE', '+996503456789');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (34, 'Tony Cross', 'datkamamatzhanova@gmail.com', '$2a$12$4n6nwYIlgebrSe6ThF1kveriMOCk2We2rzyBIbjiMsiNM2jramCP.', 'STUDENT',
+values (34, 'Tony Cross', 'datkamamatzhanova@gmail.com', '$2a$12$4n6nwYIlgebrSe6ThF1kveriMOCk2We2rzyBIbjiMsiNM2jramCP.',
+        'STUDENT',
         'FALSE', '+996701222333');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (35, 'Luka Modric', 'tasktracker-b6@gmail.com', '$2a$12$fvN2gyvjn9HwP3rJ0xDtHexSwabG79XvvFEKlianVW9r32/pgs5Z2',
@@ -214,16 +199,20 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (36, 'Kylian Mbappe', 'avazbekovedi@gmail.com', '$2a$12$YNaX7i90NQ53PFWwNYQeU.3Q0HvqT/JupM3BM4zz1hMYlWnpSqD9C',
         'STUDENT', 'FALSE', '+996555666777');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (37, 'Muhammad Salah', 'avazbekuulueldiar5@gmail.com', '$2a$12$w.YvDtJVDSXiZUZuVBK5uulN8RY6JxDTb4Rp9XN4tvxkyOqcQvgSq',
+values (37, 'Muhammad Salah', 'avazbekuulueldiar5@gmail.com',
+        '$2a$12$w.YvDtJVDSXiZUZuVBK5uulN8RY6JxDTb4Rp9XN4tvxkyOqcQvgSq',
         'STUDENT', 'FALSE', '+996503444555');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (38, 'Nurlan Abibillaev', 'bertur112211@gmail.com', '$2a$12$e6/wFtQ6gOIoLjJijytQ.eL1.Mf/oDxuF/PO/DfQKzwbHn.Wk9M0.',
+values (38, 'Nurlan Abibillaev', 'bertur112211@gmail.com',
+        '$2a$12$e6/wFtQ6gOIoLjJijytQ.eL1.Mf/oDxuF/PO/DfQKzwbHn.Wk9M0.',
         'STUDENT', 'FALSE', '+996502333443');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (39, 'Nurislam Toigumbaev', 'nurtilekjava@gmail.com', '$2a$12$BPYHCZBl4VzSJzT2.PrQ0uOL8njaALelNJabRuVb1TKTS5lpjlDqy',
+values (39, 'Nurislam Toigumbaev', 'nurtilekjava@gmail.com',
+        '$2a$12$BPYHCZBl4VzSJzT2.PrQ0uOL8njaALelNJabRuVb1TKTS5lpjlDqy',
         'STUDENT', 'TRUE', '+996503094543');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (40, 'Elebesov Muktar', 'tolomushevadyl4@gmail.com', '$2a$12$83AaAyoXvfEuEmRzUcpVAucI.QIxyV8MaTiJWDexZODjzLu5yYIQW',
+values (40, 'Elebesov Muktar', 'tolomushevadyl4@gmail.com',
+        '$2a$12$83AaAyoXvfEuEmRzUcpVAucI.QIxyV8MaTiJWDexZODjzLu5yYIQW',
         'STUDENT', 'FALSE', '+996707174093');
 
 insert into students (id, user_id, study_format, group_id, created_at)
@@ -262,10 +251,10 @@ insert into students (id, user_id, study_format, group_id, created_at)
 values (17, 37, 'OFFLINE', 5, '2024-4-12');
 insert into students (id, user_id, study_format, group_id, created_at)
 values (18, 40, 'ONLINE', 5, '2024-4-12');
-insert into students (id,trash_id, user_id, study_format, group_id, created_at)
-values (19, 2 , 38, 'ONLINE', 5, '2024-4-12');
-insert into students (id,trash_id, user_id, study_format, group_id, created_at)
-values (20,1, 39, 'ONLINE',5, '2024-4-12');
+insert into students (id, user_id, study_format, group_id, created_at)
+values (19, 38, 'ONLINE', 5, '2024-4-12');
+insert into students (id, user_id, study_format, group_id, created_at)
+values (20, 39, 'ONLINE', 5, '2024-4-12');
 
 insert into instructors (id, specialization, created_at, user_id)
 values (1, 'java', '2024/04/07', 20);
@@ -299,10 +288,10 @@ insert into instructors (id, specialization, created_at, user_id)
 values (15, 'java', '2024/04/06', 15);
 insert into instructors (id, specialization, created_at, user_id)
 values (16, 'javaScript', '2024/04/05', 16);
-insert into instructors (id,trash_id, specialization, created_at, user_id)
-values (17,4, 'flutter', '2024/04/05', 17);
-insert into instructors (id,trash_id, specialization, created_at, user_id)
-values (18,3, 'javaScript', '2024/04/08', 18);
+insert into instructors (id, specialization, created_at, user_id)
+values (17, 'flutter', '2024/04/05', 17);
+insert into instructors (id, specialization, created_at, user_id)
+values (18, 'javaScript', '2024/04/08', 18);
 insert into instructors (id, specialization, created_at, user_id)
 values (19, 'javaScript', '2024/04/04', 19);
 
@@ -368,12 +357,12 @@ values (17, 'js7', '2024/04/05', '2025-04-09', 'Excision of Right Foot, Open App
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (18, 'js8', '2024/04/06', '2025-04-09', 'Drainage of Upper Vein, Percutaneous Approach, Diagnostic',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
-insert into courses (id,trash_id, title, date_of_start, date_of_end, description, image)
-values (19,5, 'js9', '2024/04/04', '2025-04-09',
+insert into courses (id, title, date_of_start, date_of_end, description, image)
+values (19, 'js9', '2024/04/04', '2025-04-09',
         'Bypass Coronary Artery, Four or More Arteries from Coronary Artery with Autologous Arterial Tissue, Open Approach',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
-insert into courses (id,trash_id, title, date_of_start, date_of_end, description, image)
-values (20,6, 'js10', '2024/04/06', '2025-04-09', 'Drainage of Sacrococcygeal Joint, Open Approach, Diagnostic',
+insert into courses (id, title, date_of_start, date_of_end, description, image)
+values (20, 'js10', '2024/04/06', '2025-04-09', 'Drainage of Sacrococcygeal Joint, Open Approach, Diagnostic',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
 
 insert into lessons (id, title, created_at, course_id)
@@ -455,11 +444,11 @@ values (12, 'js2',
 insert into links (id, title, url)
 values (13, 'js3',
         'https://smugmug.com/sed/vestibulum/sit/amet.html?feugiat=curae&non=donec&pretium=pharetra&quis=magna&lectus=vestibulum&suspendisse=aliqu');
-insert into links (id,trash_id,title, url)
-values (14,7, 'js4',
+insert into links (id, title, url)
+values (14, 'js4',
         'https://engadget.com/volutpat/eleifend/donec/ut/dolor/morbi.html?est=faucibus&phasellus=orci&sit=luctus&amet=et&erat=ultrices&nulla=pos');
-insert into links (id,trash_id, title, url)
-values (15,8, 'js5',
+insert into links (id, title, url)
+values (15, 'js5',
         'https://amazon.de/fringilla.xml?dui=fusce&vel=congue&sem=diam&sed=id&sagittis=ornare&nam=imperdiet&congue=sapien&risus=urna&semper=pretium&porta=nisl&volutpat=');
 insert into links (id, title, url)
 values (16, 'js6',
@@ -485,30 +474,30 @@ values (2, 1, '2024-04-09', '2024-05-09', '6142', 'Major laceration of left vert
         'InLectus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'edublogs.org');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (3, 3, '2024-04-09', '2024-05-09', '3562',
+values (3, 2, '2024-04-09', '2024-05-09', '3562',
         'Cocaine dependence with cocaine-induced psychotic disorder, unspecified', 'AccumsanTellusNisi.xls',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'joomla.org');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (4, 4, '2024-04-09', '2024-05-09', '8343',
+values (4, 3, '2024-04-09', '2024-05-09', '8343',
         'Nondisplaced Maisonneuve''s fracture of left leg, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion',
         'NullaTellus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'amazonaws.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (5, 5, '2024-04-09', '2024-05-09', '7535', 'Strain of left Achilles tendon, sequela', 'Ut.doc',
+values (5, 4, '2024-04-09', '2024-05-09', '7535', 'Strain of left Achilles tendon, sequela', 'Ut.doc',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'goo.gl');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (6, 5, '2024-04-09', '2024-05-09', '4686',
         'Partial traumatic amputation at elbow level, unspecified arm, initial encounter', 'In.xls',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'jigsy.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (7, 7, '2024-04-09', '2024-05-09', '5141', 'Other biomechanical lesions of lumbar region', 'AliquetUltrices.avi',
+values (7, 6, '2024-04-09', '2024-05-09', '5141', 'Other biomechanical lesions of lumbar region', 'AliquetUltrices.avi',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'illinois.edu');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (8, 8, '2024-04-09', '2024-05-09', '8876',
+values (8, 7, '2024-04-09', '2024-05-09', '8876',
         'Coma scale, best motor response, extension, 24 hours or more after hospital admission', 'Pretium.ppt',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'cdbaby.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (9, 9, '2024-04-09', '2024-05-09', '7739', 'Encounter for fitting and adjustment of urinary device',
+values (9, 8, '2024-04-09', '2024-05-09', '7739', 'Encounter for fitting and adjustment of urinary device',
         'Pharetra.xls', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'bing.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
@@ -517,14 +506,14 @@ values (10, 9, '2024-04-09', '2024-05-09', '7703',
         'MaurisSit.gif', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'shutterfly.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (11, 11, '2024-04-09', '2024-05-09', '3241', 'Other fracture of shaft of left ulna', 'SemFusce.avi',
+values (11, 10, '2024-04-09', '2024-05-09', '3241', 'Other fracture of shaft of left ulna', 'SemFusce.avi',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'fastcompany.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (12, 12, '2024-04-09', '2024-05-09', '674', 'Contusion of unspecified great toe with damage to nail, sequela',
+values (12, 11, '2024-04-09', '2024-05-09', '674', 'Contusion of unspecified great toe with damage to nail, sequela',
         'IntegerAliquet.doc', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'twitter.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (13, 13, '2024-04-09', '2024-05-09', '9143',
+values (13, 12, '2024-04-09', '2024-05-09', '9143',
         'Unspecified fracture of shaft of unspecified fibula, subsequent encounter for closed fracture with nonunion',
         'Arcu.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'google.co.jp');
@@ -533,11 +522,11 @@ values (14, 13, '2024-04-09', '2024-05-09', '8892', 'Displaced spiral fracture o
         'EuMi.xls', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'google.com.br');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (15, 13, '2024-04-09', '2024-05-09', '9435', 'Poisoning by heroin, undetermined, sequela',
+values (15, 14, '2024-04-09', '2024-05-09', '9435', 'Poisoning by heroin, undetermined, sequela',
         'SuspendisseOrnareConsequat.avi',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'amazon.co.uk');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (16, 16, '2024-04-09', '2024-05-09', '1162',
+values (16, 15, '2024-04-09', '2024-05-09', '1162',
         'Unspecified fracture of shaft of right fibula, subsequent encounter for open fracture type I or II with nonunion',
         'EuEstCongue.mov', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
         'fastcompany.com');
@@ -546,13 +535,13 @@ values (17, 17, '2024-04-09', '2024-05-09', '5831',
         'Poisoning by cardiac-stimulant glycosides and drugs of similar action, assault, initial encounter',
         'SuspendissePotentiIn.png',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'imageshack.us');
-insert into tasks (id,trash_id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (18,13, 17, '2024-04-09', '2024-05-09', '9461',
+insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
+values (18, 17, '2024-04-09', '2024-05-09', '9461',
         'Poisoning by unspecified antipsychotics and neuroleptics, intentional self-harm, subsequent encounter',
         'MagnaBibendumImperdiet.mp3',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'desdev.cn');
-insert into tasks (id,trash_id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (19,14, 17, '2024-04-09', '2024-05-09', '5539', 'Spastic entropion of left upper eyelid', 'LacusPurus.jpeg',
+insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
+values (19, 17, '2024-04-09', '2024-05-09', '5539', 'Spastic entropion of left upper eyelid', 'LacusPurus.jpeg',
         'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'jalbum.net');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (20, 20, '2024-04-09', '2024-05-09', '8104', 'Abrasion of right elbow, initial encounter', 'Id.jpeg',
@@ -597,11 +586,11 @@ insert into videos (id, created_at, description)
 values (17, '2024-04-09', 'Nondisplaced fracture of posterior column [ilioischial] of right acetabulum');
 insert into videos (id, created_at, description)
 values (18, '2024-04-09', 'Anterior subluxation of right ulnohumeral joint, sequela');
-insert into videos (id, trash_id,created_at, description)
-values (19,15, '2024-04-09',
+insert into videos (id, created_at, description)
+values (19, '2024-04-09',
         'Laceration of extensor muscle, fascia and tendon of right middle finger at wrist and hand level, subsequent encounter');
-insert into videos (id,trash_id, created_at, description)
-values (20,16, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee');
+insert into videos (id, created_at, description)
+values (20, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee');
 
 insert into presentations (id, created_at, description, file, title)
 values (1, '2023-10-18', 'Other contact with pig', 'AcTellus.avi', 'Interior Live Oak');
@@ -659,11 +648,11 @@ values (17, '2024-01-31',
 insert into presentations (id, created_at, description, file, title)
 values (18, '2024-01-13', 'Corrosion of first degree of right upper arm, initial encounter', 'Non.tiff',
         'Shortleaf Crabgrass');
-insert into presentations (id,trash_id, created_at, description, file, title)
-values (19,17, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', 'LobortisConvallis.mov',
+insert into presentations (id, created_at, description, file, title)
+values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', 'LobortisConvallis.mov',
         'Cylinder Jointtail Grass');
-insert into presentations (id,trash_id, created_at, description, file, title)
-values (20, 18, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
+insert into presentations (id, created_at, description, file, title)
+values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
 
 insert into lessons_presentations (lesson_id, presentations_id)
 values (1, 1);
@@ -709,7 +698,7 @@ values (12, 20);
 insert into lessons_videos (lesson_id, videos_id)
 values (1, 1);
 insert into lessons_videos (lesson_id, videos_id)
-values (2, 2);
+values (1, 2);
 insert into lessons_videos (lesson_id, videos_id)
 values (3, 3);
 insert into lessons_videos (lesson_id, videos_id)
@@ -717,19 +706,19 @@ values (3, 4);
 insert into lessons_videos (lesson_id, videos_id)
 values (4, 5);
 insert into lessons_videos (lesson_id, videos_id)
-values (5, 6);
+values (4, 6);
 insert into lessons_videos (lesson_id, videos_id)
 values (6, 7);
 insert into lessons_videos (lesson_id, videos_id)
 values (7, 8);
 insert into lessons_videos (lesson_id, videos_id)
-values (8, 9);
+values (7, 9);
 insert into lessons_videos (lesson_id, videos_id)
 values (9, 10);
 insert into lessons_videos (lesson_id, videos_id)
 values (10, 11);
 insert into lessons_videos (lesson_id, videos_id)
-values (11, 12);
+values (10, 12);
 insert into lessons_videos (lesson_id, videos_id)
 values (12, 13);
 insert into lessons_videos (lesson_id, videos_id)
@@ -739,106 +728,114 @@ values (14, 15);
 insert into lessons_videos (lesson_id, videos_id)
 values (15, 16);
 insert into lessons_videos (lesson_id, videos_id)
-values (16, 17);
+values (15, 17);
 insert into lessons_videos (lesson_id, videos_id)
-values (17, 18);
+values (16, 18);
 
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (1, 1, 'FALSE', '2024-04-26',
-        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (2, 2, 'FALSE', '2024-05-01',
-        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
-values (3, 3, 'TRUE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu',
+        1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (3, 3, 'TRUE', '2024-04-20', 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (4, 4, 'FALSE', '2024-04-15',
-        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (5, 5, 'FALSE', '2024-05-08',
-        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
-values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
-values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (6, 6, 'FALSE', '2024-04-14', 'ligula nec sem duis aliquam convallis nunc proin at turpis a pede', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (7, 7, 'FALSE', '2024-04-11', 'vulputate ut ultrices vel augue vestibulum ante ipsum primis in', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (8, 8, 'FALSE', '2024-04-15',
-        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
-values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (9, 9, 'FALSE', '2024-05-06', 'blandit lacinia erat vestibulum sed magna at nunc commodo placerat', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (10, 10, 'TRUE', '2024-04-17',
-        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
-values (11, 11, 'TRUE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc',
+        1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (11, 11, 'TRUE', '2024-04-30', 'in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at', 1,
+        20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (12, 12, 'FALSE', '2024-04-22',
-        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (13, 13, 'FALSE', '2024-04-27',
-        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum', 1,
+        20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (14, 14, 'FALSE', '2024-04-24',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor',
+        1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (15, 15, 'TRUE', '2024-04-30',
-        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (16, 16, 'TRUE', '2024-04-27',
-        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet',
+        1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (17, 17, 'TRUE', '2024-04-27',
-        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem',1,20);
-insert into tests (id, lesson_id, is_active, creation_date, title,hour,minute)
+        'nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (18, 18, 'TRUE', '2024-04-22',
-        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt',1,20);
-insert into tests (id,trash_id, lesson_id, is_active, creation_date, title,hour,minute)
-values (19,11, 18, 'TRUE', '2024-04-11',
-        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum',1,20);
-insert into tests (id,trash_id, lesson_id, is_active, creation_date, title,hour,minute)
-values (20,12, 18, 'FALSE', '2024-05-08',
-        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',1,20);
+        'in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt',
+        1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (19, 18, 'TRUE', '2024-04-11',
+        'penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum', 1, 20);
+insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
+values (20, 18, 'FALSE', '2024-05-08',
+        'in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum',
+        1, 20);
 
-insert into questions (id, test_id, question_type, title,  point)
-values (1, 1, 'MULTIPLE', 'Legal Assistant',10);
-insert into questions (id, test_id, question_type, title,point)
-values (2, 1, 'SINGLE', 'Systems Administrator IV',10);
-insert into questions (id, test_id, question_type, title,point)
-values (3, 1, 'SINGLE', 'Teacher',10);
-insert into questions (id, test_id, question_type, title,point)
-values (4, 1, 'MULTIPLE', 'Nurse Practicioner',10);
-insert into questions (id, test_id, question_type, title,point)
-values (5, 2, 'MULTIPLE', 'Operator',10);
-insert into questions (id, test_id, question_type, title,point)
-values (6, 2, 'MULTIPLE', 'Executive Secretary',10);
-insert into questions (id, test_id, question_type, title,point)
-values (7, 2, 'MULTIPLE', 'Media Manager II',10);
-insert into questions (id, test_id, question_type, title,point)
-values (8, 2, 'MULTIPLE', 'Technical Writer',10);
-insert into questions (id, test_id, question_type, title,point)
-values (9, 3, 'MULTIPLE', 'VP Marketing',10);
-insert into questions (id, test_id, question_type, title,point)
-values (10, 3, 'SINGLE', 'Health Coach IV',10);
-insert into questions (id, test_id, question_type, title,point)
-values (11, 3, 'SINGLE', 'Assistant Manager',10);
-insert into questions (id, test_id, question_type, title,point)
-values (12, 3, 'SINGLE', 'Marketing Assistant',10);
-insert into questions (id, test_id, question_type, title,point)
-values (13, 4, 'SINGLE', 'Account Coordinator',10);
-insert into questions (id, test_id, question_type, title,point)
-values (14, 4, 'SINGLE', 'Help Desk Operator',10);
-insert into questions (id, test_id, question_type, title,point)
-values (15, 4, 'SINGLE', 'VP Quality Control',10);
-insert into questions (id, test_id, question_type, title,point)
-values (16, 4, 'SINGLE', 'Developer III',10);
-insert into questions (id, test_id, question_type, title,point)
-values (17, 5, 'SINGLE', 'Social Worker',10);
-insert into questions (id, test_id, question_type, title,point)
-values (18, 5, 'SINGLE', 'Payment Adjustment Coordinator',10);
-insert into questions (id, test_id, question_type, title,point)
-values (19, 5, 'SINGLE', 'Account Representative IV',10);
-insert into questions (id, test_id, question_type, title,point)
-values (20, 5, 'SINGLE', 'Paralegal',10);
+insert into questions (id, test_id, question_type, title, point)
+values (1, 1, 'MULTIPLE', 'Legal Assistant', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (2, 1, 'SINGLE', 'Systems Administrator IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (3, 1, 'SINGLE', 'Teacher', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (4, 1, 'MULTIPLE', 'Nurse Practicioner', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (5, 2, 'MULTIPLE', 'Operator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (6, 2, 'MULTIPLE', 'Executive Secretary', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (7, 2, 'MULTIPLE', 'Media Manager II', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (8, 2, 'MULTIPLE', 'Technical Writer', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (9, 3, 'MULTIPLE', 'VP Marketing', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (10, 3, 'SINGLE', 'Health Coach IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (11, 3, 'SINGLE', 'Assistant Manager', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (12, 3, 'SINGLE', 'Marketing Assistant', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (13, 4, 'SINGLE', 'Account Coordinator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (14, 4, 'SINGLE', 'Help Desk Operator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (15, 4, 'SINGLE', 'VP Quality Control', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (16, 4, 'SINGLE', 'Developer III', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (17, 5, 'SINGLE', 'Social Worker', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (18, 5, 'SINGLE', 'Payment Adjustment Coordinator', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (19, 5, 'SINGLE', 'Account Representative IV', 10);
+insert into questions (id, test_id, question_type, title, point)
+values (20, 5, 'SINGLE', 'Paralegal', 10);
 
 insert into options (id, is_true, question_id, option)
 values (1, 'TRUE', 1, 'edu');
@@ -881,194 +878,200 @@ values (19, 'TRUE', 5, 'name');
 insert into options (id, is_true, question_id, option)
 values (20, 'FALSE', 5, 'net');
 
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (1, 1, 'LATE', '2024-04-12', 1,
         'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus',
         'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi',
-        'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit',
+        0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (2, 2, 'REJECTED', '2024-04-15', 1, 'suspendisse ornare consequat lectus in est risus auctor sed tristique in',
         'nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis',
-        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum',
+        0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (4, 4, 'ACCEPTED', '2024-04-11', 1,
         'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec',
         'sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus',
-        'scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (5, 5, 'LATE', '2024-04-11', 2,
         'aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque',
         'non pretium quis lectus suspendisse potenti in eleifend quam a',
-        'velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (6, 6, 'REJECTED', '2024-04-13', 2,
         'nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer',
         'in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa',
-        'duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris',
+        0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (7, 7, 'LATE', '2024-04-22', 2,
         'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo',
         'eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis',
-        'eu sapien cursus vestibulum proin eu mi nulla ac enim',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'eu sapien cursus vestibulum proin eu mi nulla ac enim', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (8, 8, 'REJECTED', '2024-04-19', 2,
         'nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet',
         'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel',
-        'ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor',
+        0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (9, 9, 'WAITING', '2024-04-10', 3, 'tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu',
         'vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam',
-        'ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (10, 10, 'ACCEPTED', '2024-04-29', 3,
         'augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet',
         'purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus',
-        'sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (11, 11, 'LATE', '2024-04-15', 3,
         'in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio',
         'erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse',
-        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius',0);
-insert into answer_tasks (id, "student_id", task_answer_status, date_of_send, task_id, text, file, image,point)
+        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius', 0);
+insert into answer_tasks (id, "student_id", task_answer_status, date_of_send, task_id, text, file, image, point)
 values (12, 12, 'WAITING', '2024-04-30', 3,
         'volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in',
         'justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris',
-        'nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum',
+        0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (13, 13, 'LATE', '2024-04-17', 4,
         'ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam',
         'platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur',
-        'est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (14, 14, 'ACCEPTED', '2024-05-07', 4,
         'ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien',
         'etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam',
-        'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci',9);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci', 9);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (15, 15, 'REJECTED', '2024-04-22', 4,
         'orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis',
         'velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla',
-        'nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget',7);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget', 7);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (16, 16, 'REJECTED', '2024-05-07', 4,
         'mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at',
         'rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut',
-        'morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor',9);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor', 9);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (17, 17, 'ACCEPTED', '2024-04-18', 5, 'dolor vel est donec odio justo sollicitudin ut suscipit a',
         'suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas',
-        'a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique',7);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 7);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (18, 18, 'WAITING', '2024-04-28', 5, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id',
         'tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est',
-        'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec',5);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec', 5);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (19, 19, 'LATE', '2024-04-30', 5, 'sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec',
         'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper',
-        'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit',0);
-insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image,point)
+        'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 0);
+insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (20, 20, 'WAITING', '2024-04-18', 5, 'in felis donec semper sapien a libero nam dui proin leo odio porttitor',
         'ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh',
-        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante',0);
+        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante',
+        0);
 
 insert into result_tests (id, test_id, creation_date, student_id, point)
 values (1, 1, '2024-04-16', 1, 5);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (2, 2, '2024-05-08', 2, 1);
+values (2, 1, '2024-05-08', 2, 1);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (3, 3, '2024-05-04', 3, 4);
+values (3, 2, '2024-05-04', 3, 4);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (4, 4, '2024-04-20', 4, 5);
+values (4, 2, '2024-04-20', 4, 5);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (5, 5, '2024-04-19', 5, 8);
+values (5, 3, '2024-04-19', 5, 8);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (6, 6, '2024-04-14', 6, 3);
+values (6, 3, '2024-04-14', 6, 3);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (7, 7, '2024-05-04', 7, 9);
+values (7, 4, '2024-05-04', 7, 9);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (8, 8, '2024-04-19', 8, 7);
+values (8, 4, '2024-04-19', 8, 7);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (9, 9, '2024-04-14', 9, 2);
+values (9, 5, '2024-04-14', 9, 2);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (10, 10, '2024-05-04', 10, 1);
+values (10, 5, '2024-05-04', 10, 1);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (11, 11, '2024-04-21', 11, 9);
+values (11, 6, '2024-04-21', 11, 9);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (12, 12, '2024-04-23', 12, 8);
+values (12, 6, '2024-04-23', 12, 8);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (13, 13, '2024-04-26', 13, 9);
+values (13, 7, '2024-04-26', 13, 9);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (14, 14, '2024-05-07', 14, 8);
+values (14, 7, '2024-05-07', 14, 8);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (15, 15, '2024-04-27', 15, 3);
+values (15, 8, '2024-04-27', 15, 3);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (16, 16, '2024-04-19', 16, 4);
+values (16, 8, '2024-04-19', 16, 4);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (17, 17, '2024-05-01', 17, 10);
+values (17, 9, '2024-05-01', 17, 10);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (18, 18, '2024-04-15', 18, 7);
+values (18, 9, '2024-04-15', 18, 7);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (19, 19, '2024-04-20', 19, 6);
+values (19, 10, '2024-04-20', 19, 6);
 insert into result_tests (id, test_id, creation_date, student_id, point)
-values (20, 20, '2024-04-10', 20, 10);
+values (20, 10, '2024-04-10', 20, 10);
 
-insert into notifications (id, created_at, description, title, task_id)
-values (1, '2023-08-01',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (1, 1, '2023-08-01',
         'Nondisplaced fracture of first metatarsal bone, left foot, subsequent encounter for fracture with malunion',
         'Rosary Snoutbean', 1);
-insert into notifications (id, created_at, description, title, task_id)
-values (2, '2023-12-27', 'Contact with other nonpowered hand tool, initial encounter', 'Pacific Lovegrass', 2);
-insert into notifications (id, created_at, description, title, task_id)
-values (3, '2023-12-25', 'Complete physeal arrest, right proximal tibia', 'Spiritweed', 3);
-insert into notifications (id, created_at, description, title, task_id)
-values (4, '2023-09-13', 'Cannabis dependence with psychotic disorder with hallucinations',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (2, 1, '2023-12-27', 'Contact with other nonpowered hand tool, initial encounter', 'Pacific Lovegrass', 2);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (3, 1, '2023-12-25', 'Complete physeal arrest, right proximal tibia', 'Spiritweed', 3);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (4, 1, '2023-09-13', 'Cannabis dependence with psychotic disorder with hallucinations',
         'Luquillo Mountain Babyboot Orchid', 4);
-insert into notifications (id, created_at, description, title, task_id)
-values (5, '2024-02-07', 'Other snow-ski accident', 'Spring Phacelia', 5);
-insert into notifications (id, created_at, description, title, task_id)
-values (6, '2023-08-27', 'Total perforations of tympanic membrane, bilateral', 'Heath False Brome', 6);
-insert into notifications (id, created_at, description, title, task_id)
-values (7, '2024-03-04', 'Complete lesion at C7 level of cervical spinal cord, sequela', 'Barundi Dropseed', 7);
-insert into notifications (id, created_at, description, title, task_id)
-values (8, '2023-09-28', 'Dislocation of unspecified thoracic vertebra, sequela', 'American Hazelnut', 8);
-insert into notifications (id, created_at, description, title, task_id)
-values (9, '2024-01-12',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (5, 2, '2024-02-07', 'Other snow-ski accident', 'Spring Phacelia', 5);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (6, 2, '2023-08-27', 'Total perforations of tympanic membrane, bilateral', 'Heath False Brome', 6);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (7, 2, '2024-03-04', 'Complete lesion at C7 level of cervical spinal cord, sequela', 'Barundi Dropseed', 7);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (8, 2, '2023-09-28', 'Dislocation of unspecified thoracic vertebra, sequela', 'American Hazelnut', 8);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (9, 6, '2024-01-12',
         'Other displaced fracture of base of first metacarpal bone, right hand, initial encounter for open fracture',
         'Sierra Stonecrop', 9);
-insert into notifications (id, created_at, description, title, task_id)
-values (10, '2024-02-04', 'Pneumonia due to other specified bacteria', 'Showy Alpine Ragwort', 10);
-insert into notifications (id, created_at, description, title, task_id)
-values (11, '2024-04-04', 'Exposure to high air pressure from rapid descent in water', 'Mat Prickly Phlox', 11);
-insert into notifications (id, created_at, description, title, task_id)
-values (12, '2023-10-09',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (10, 6, '2024-02-04', 'Pneumonia due to other specified bacteria', 'Showy Alpine Ragwort', 10);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (11, 6, '2024-04-04', 'Exposure to high air pressure from rapid descent in water', 'Mat Prickly Phlox', 11);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (12, 6, '2023-10-09',
         'Nondisplaced fracture of capitate [os magnum] bone, unspecified wrist, subsequent encounter for fracture with delayed healing',
         'Pacific Lecidea Lichen', 12);
-insert into notifications (id, created_at, description, title, task_id)
-values (13, '2024-02-26',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (13, 4, '2024-02-26',
         'Military operations involving other destruction of aircraft, military personnel, initial encounter',
         'Sierra Stonecrop', 13);
-insert into notifications (id, created_at, description, title, task_id)
-values (14, '2023-11-30', 'Obstructed labor due to malposition and malpresentation, unspecified',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (14, 4, '2023-11-30', 'Obstructed labor due to malposition and malpresentation, unspecified',
         'Dwarf Russian Almond', 14);
-insert into notifications (id, created_at, description, title, task_id)
-values (15, '2023-09-19', 'Neoplasm of uncertain behavior of right ureter', 'Matted Lichen', 15);
-insert into notifications (id, created_at, description, title, task_id)
-values (16, '2023-12-10', 'Poisoning by butyrophenone and thiothixene neuroleptics, intentional self-harm, sequela',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (15, 4, '2023-09-19', 'Neoplasm of uncertain behavior of right ureter', 'Matted Lichen', 15);
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (16, 4, '2023-12-10', 'Poisoning by butyrophenone and thiothixene neuroleptics, intentional self-harm, sequela',
         'Shameplant', 16);
-insert into notifications (id, created_at, description, title, task_id)
-values (17, '2023-11-04',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (17, 5, '2023-11-04',
         'Unspecified fracture of head of left femur, subsequent encounter for open fracture type I or II with malunion',
         'Flame Orchid', 17);
-insert into notifications (id, created_at, description, title, task_id)
-values (18, '2023-10-26',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (18, 5, '2023-10-26',
         'Car driver injured in collision with heavy transport vehicle or bus in nontraffic accident, sequela',
         'Patagonia Mountain Leatherpetal', 18);
-insert into notifications (id, created_at, description, title, task_id)
-values (19, '2023-09-28',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (19, 5, '2023-09-28',
         'Kidney dialysis as the cause of abnormal reaction of the patient, or of later complication, without mention of misadventure at the time of the procedure',
         'Big Chickweed', 19);
-insert into notifications (id, created_at, description, title, task_id)
-values (20, '2023-05-09', 'Other specified pregnancy related conditions, unspecified trimester', 'Melaspilea Lichen',
+insert into notifications (id, answer_task_id, created_at, description, title, task_id)
+values (20, 5, '2023-05-09', 'Other specified pregnancy related conditions, unspecified trimester', 'Melaspilea Lichen',
         20);
 
 insert into result_tests_options (result_test_id, options_id)
@@ -1106,7 +1109,7 @@ values (4, 19);
 insert into result_tests_options (result_test_id, options_id)
 values (5, 12);
 insert into result_tests_options (result_test_id, options_id)
-values (5,5);
+values (5, 5);
 insert into result_tests_options (result_test_id, options_id)
 values (5, 6);
 insert into result_tests_options (result_test_id, options_id)
@@ -1115,23 +1118,13 @@ values (5, 7);
 insert into courses_groups (courses_id, groups_id)
 values (1, 1);
 insert into courses_groups (courses_id, groups_id)
+values (1, 1);
+insert into courses_groups (courses_id, groups_id)
 values (2, 1);
 insert into courses_groups (courses_id, groups_id)
-values (3, 1);
+values (2, 4);
 insert into courses_groups (courses_id, groups_id)
-values (4, 4);
-insert into courses_groups (courses_id, groups_id)
-values (4, 5);
-insert into courses_groups (courses_id, groups_id)
-values (4, 6);
-insert into courses_groups (courses_id, groups_id)
-values (4, 7);
-insert into courses_groups (courses_id, groups_id)
-values (8, 7);
-insert into courses_groups (courses_id, groups_id)
-values (9, 7);
-insert into courses_groups (courses_id, groups_id)
-values (10, 7);
+values (3, 5);
 insert into courses_groups (courses_id, groups_id)
 values (8, 11);
 insert into courses_groups (courses_id, groups_id)
@@ -1139,11 +1132,11 @@ values (11, 12);
 insert into courses_groups (courses_id, groups_id)
 values (11, 13);
 insert into courses_groups (courses_id, groups_id)
-values (12, 14);
+values (12, 12);
 insert into courses_groups (courses_id, groups_id)
-values (13, 15);
+values (13, 12);
 insert into courses_groups (courses_id, groups_id)
-values (16, 16);
+values (16, 12);
 insert into courses_groups (courses_id, groups_id)
 values (17, 17);
 insert into courses_groups (courses_id, groups_id)
@@ -1156,19 +1149,19 @@ values (20, 20);
 insert into instructors_courses(courses_id, instructors_id)
 values (1, 1);
 insert into instructors_courses(courses_id, instructors_id)
+values (1, 2);
+insert into instructors_courses(courses_id, instructors_id)
+values (3, 2);
+insert into instructors_courses(courses_id, instructors_id)
+values (4, 2);
+insert into instructors_courses(courses_id, instructors_id)
 values (2, 2);
-insert into instructors_courses(courses_id, instructors_id)
-values (3, 3);
-insert into instructors_courses(courses_id, instructors_id)
-values (4, 4);
-insert into instructors_courses(courses_id, instructors_id)
-values (4, 3);
 insert into instructors_courses(courses_id, instructors_id)
 values (5, 1);
 insert into instructors_courses(courses_id, instructors_id)
-values (6, 6);
+values (5, 6);
 insert into instructors_courses(courses_id, instructors_id)
-values (7, 7);
+values (7, 6);
 insert into instructors_courses(courses_id, instructors_id)
 values (8, 8);
 insert into instructors_courses(courses_id, instructors_id)
@@ -1245,87 +1238,101 @@ values ('FALSE', 9, 3);
 insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
 values ('FALSE', 10, 4);
 
-insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published) values (1, 'Valentijn', 1, '5/2/2024', '4/6/2024', 'true');
-insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published) values (2, 'Wayland', 1, '6/18/2023', '8/13/2023', 'true');
-insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published) values (3, 'Laverna', 2, '5/14/2024', '8/30/2023', 'true');
-insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published) values (4, 'Shelley', 2, '8/26/2023', '6/6/2024', 'true');
-insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published) values (5, 'Belicia', 3, '8/4/2023', '11/1/2023', 'false');
+insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
+values (1, 'Valentijn', 1, '5/2/2024', '4/6/2024', 'true');
+insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
+values (2, 'Wayland', 1, '6/18/2023', '8/13/2023', 'true');
+insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
+values (3, 'Laverna', 2, '5/14/2024', '8/30/2023', 'true');
+insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
+values (4, 'Shelley', 2, '8/26/2023', '6/6/2024', 'true');
+insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
+values (5, 'Belicia', 3, '8/4/2023', '11/1/2023', 'false');
 
-insert into announcements_groups (announcement_id, groups_id) values (1, 1);
-insert into announcements_groups (announcement_id, groups_id) values (2, 1);
-insert into announcements_groups (announcement_id, groups_id) values (3, 1);
-insert into announcements_groups (announcement_id, groups_id) values (4, 3);
-insert into announcements_groups (announcement_id, groups_id) values (5, 2);
-insert into announcements_groups (announcement_id, groups_id) values (1, 3);
-insert into announcements_groups (announcement_id, groups_id) values (2, 3);
-insert into announcements_groups (announcement_id, groups_id) values (3, 4);
-insert into announcements_groups (announcement_id, groups_id) values (4, 5);
+insert into announcements_groups (announcement_id, groups_id)
+values (1, 1);
+insert into announcements_groups (announcement_id, groups_id)
+values (2, 1);
+insert into announcements_groups (announcement_id, groups_id)
+values (3, 1);
+insert into announcements_groups (announcement_id, groups_id)
+values (4, 3);
+insert into announcements_groups (announcement_id, groups_id)
+values (5, 2);
+insert into announcements_groups (announcement_id, groups_id)
+values (1, 3);
+insert into announcements_groups (announcement_id, groups_id)
+values (2, 3);
+insert into announcements_groups (announcement_id, groups_id)
+values (3, 4);
+insert into announcements_groups (announcement_id, groups_id)
+values (4, 5);
 
 insert into task_links(task_id, links)
-values (1,'https://www.youtube.com/watch?v=j2xqOFOjUf8');
+values (1, 'https://www.youtube.com/watch?v=j2xqOFOjUf8');
 insert into task_links(task_id, links)
-values (2,'https://www.youtube.com/watch?v=_z-IdC7jIRA');
+values (2, 'https://www.youtube.com/watch?v=_z-IdC7jIRA');
 insert into task_links(task_id, links)
-values (3,'https://www.youtube.com/shorts/diA6HKkqlJc');
+values (3, 'https://www.youtube.com/shorts/diA6HKkqlJc');
 insert into task_links(task_id, links)
-values (4,'https://www.youtube.com/watch?v=kVaC-JfiMYA');
+values (4, 'https://www.youtube.com/watch?v=kVaC-JfiMYA');
 insert into task_links(task_id, links)
-values (5,'https://www.youtube.com/watch?v=87IKVg_R3vg');
+values (5, 'https://www.youtube.com/watch?v=87IKVg_R3vg');
 insert into task_links(task_id, links)
-values (6,'https://www.youtube.com/watch?v=u2JeJrNmxjU');
+values (6, 'https://www.youtube.com/watch?v=u2JeJrNmxjU');
 insert into task_links(task_id, links)
-values (7,'https://www.youtube.com/watch?v=gk3h9NSw694');
+values (7, 'https://www.youtube.com/watch?v=gk3h9NSw694');
 insert into task_links(task_id, links)
-values (8,'https://www.youtube.com/watch?v=hXQxSi34GWY');
+values (8, 'https://www.youtube.com/watch?v=hXQxSi34GWY');
 insert into task_links(task_id, links)
-values (9,'https://www.youtube.com/watch?v=grlvDLzvbL4');
+values (9, 'https://www.youtube.com/watch?v=grlvDLzvbL4');
 insert into task_links(task_id, links)
-values (10,'https://www.youtube.com/watch?v=SXkC92TqxAw');
+values (10, 'https://www.youtube.com/watch?v=SXkC92TqxAw');
 
-insert into comments (answer_task_id, id, user_id, created_at, content) values (1, 1, 1, '1/28/2024', 'исправь и занаво напиши');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (2, 2, 2, '9/8/2023', 'все правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (20, 3, 3, '6/18/2023', 'перездача');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (4, 4, 4, '3/22/2024', 'отлично');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (5, 5, 5, '10/13/2023', 'молодец');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (6, 6, 6, '5/22/2023', 'не правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (7, 7, 7, '2/1/2024', 'двойка за заданте');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (8, 8, 8, '12/12/2023', 'Требуется переработка.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (9, 9, 9, '8/4/2023', 'Пожалуйста, исправьте недочеты.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (10, 10, 10, '7/1/2023', 'Необходимо улучшить качество работы.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (11, 11, 11, '12/25/2023', 'Рекомендую пересмотреть решение.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (12, 12, 12, '5/31/2023', 'Прошу внимательнее проверить ответы.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (13, 13, 13, '6/23/2023', 'Требуется дополнительное обучение для правильного выполнения задания.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (14, 14, 14, '1/5/2024', 'Нужно больше усердия и внимания к деталям.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (15, 15, 15, '1/1/2024', 'Нужно больше практики для успешного выполнения задания.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (16, 16, 16, '5/18/2023', 'Пожалуйста, исправьте ошибки.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (17, 17, 17, '3/9/2024', 'Работа выполнена не полностью, требуется доработка.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (18, 18, 18, '3/5/2024', 'Необходимо больше усилий для правильного решения задания.');
-insert into comments (answer_task_id, id, user_id, created_at, content) values (19, 19, 19, '10/17/2023', 'Попробуйте еще раз, обратите внимание на детали.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (1, 1, 1, '1/28/2024', 'исправь и занаво напиши');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (2, 2, 2, '9/8/2023', 'все правильно');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (20, 3, 3, '6/18/2023', 'перездача');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (4, 4, 4, '3/22/2024', 'отлично');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (5, 5, 5, '10/13/2023', 'молодец');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (6, 6, 6, '5/22/2023', 'не правильно');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (7, 7, 7, '2/1/2024', 'двойка за заданте');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (8, 8, 8, '12/12/2023', 'Требуется переработка.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (9, 9, 9, '8/4/2023', 'Пожалуйста, исправьте недочеты.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (10, 10, 10, '7/1/2023', 'Необходимо улучшить качество работы.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (11, 11, 11, '12/25/2023', 'Рекомендую пересмотреть решение.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (12, 12, 12, '5/31/2023', 'Прошу внимательнее проверить ответы.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (13, 13, 13, '6/23/2023', 'Требуется дополнительное обучение для правильного выполнения задания.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (14, 14, 14, '1/5/2024', 'Нужно больше усердия и внимания к деталям.');
+insert into comments (answer_task_id, id, user_id, created_at, content)
+values (15, 15, 15, '1/1/2024', 'Нужно больше практики для успешного выполнения задания.');
 
--- insert into student_announcements (announcements, announcements_key, student_id) values (1, 1);
--- insert into student_announcements (announcements, announcements_key, student_id) values (1, 1);
--- insert into student_announcements (announcements, announcements_key, student_id) values (3, 1);
--- insert into student_announcements (announcements, announcements_key, student_id) values (2, 1);
--- insert into student_announcements (announcements, announcements_key, student_id) values (5, 2);
--- insert into student_announcements (announcements, announcements_key, student_id) values (2, 2);
--- insert into student_announcements (announcements, announcements_key, student_id) values (7, 3);
--- insert into student_announcements (announcements, announcements_key, student_id) values (8, 3);
--- insert into student_announcements (announcements, announcements_key, student_id) values (8, 4);
--- insert into student_announcements (announcements, announcements_key, student_id) values (10, 5);
 insert into student_announcements(announcements, announcements_key, student_id)
-values
-(true,1,5),
-(false,1, 2),
-(true,1, 3),
-(false,1, 4),
-(true,2,5),
-(false,2, 2),
-(true,2, 3),
-(false,2, 4),
-       (true,4, 9),
-       (false,4, 10),
-       (true,4, 11),
-       (false,4, 12),
-(true,5, 9)
+values (true, 1, 5),
+       (false, 1, 2),
+       (true, 1, 3),
+       (false, 1, 4),
+       (true, 2, 5),
+       (false, 2, 2),
+       (true, 2, 3),
+       (false, 2, 4),
+       (true, 4, 9),
+       (false, 4, 10),
+       (true, 4, 11),
+       (false, 4, 12),
+       (true, 5, 9)
 
 

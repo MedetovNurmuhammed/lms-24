@@ -57,8 +57,8 @@ flyway:
 cloud:
   aws:
     credentials:
-      access-key: AKIA47CR3RLOPKMXXMMT
-      secret-key: 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
+      access-key: AKIA3KYNRCVIBB2TALRT
+      secret-key: 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
     region:
       static: eu-north-1
     stack:
@@ -66,7 +66,7 @@ cloud:
 
 application:
   bucket:
-    name: lmsb12
+    name: lms-b12
 
 #JWT
 app:
