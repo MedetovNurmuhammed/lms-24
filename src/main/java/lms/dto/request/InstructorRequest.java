@@ -1,7 +1,7 @@
 package lms.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lms.validation.email.EmailValidation;
 import lms.validation.phoneNumber.PhoneNumberValidation;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InstructorRequest {
-    @NotBlank
+    @NotBlank(message = "Имя не может быть пустым.")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "Фамилия не может быть пустой.")
     private String lastName;
     @PhoneNumberValidation
     private String phoneNumber;
-    @EmailValidation
+    @Email(message = "Некорректный адрес электронной почты.")
     private String email;
-    @NotBlank
+    @NotBlank(message = "Специализация не может быть пустой.")
     private String specialization;
 }

@@ -1,7 +1,15 @@
 package lms.entities;
 
-import jakarta.persistence.*;
-import lms.enums.Type;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +29,7 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_gen")
-    @SequenceGenerator(name = "group_gen",sequenceName = "group_seq", allocationSize = 1,initialValue = 21)
+    @SequenceGenerator(name = "group_gen", sequenceName = "group_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private String description;
@@ -30,11 +38,11 @@ public class Group {
     private LocalDate dateOfEnd;
 
     //*************************************** Course ******************************************
-    @ManyToMany(mappedBy = "groups",cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.DETACH)
     private List<Course> courses = new ArrayList<>();
 
     //*************************************** Student ******************************************
-    @OneToMany(mappedBy = "group",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Student> students = new ArrayList<>();
 
     //*************************************** Trash ********************************************

@@ -16,7 +16,6 @@ import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
-import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
 import lms.repository.GroupRepository;

@@ -7,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -42,7 +40,6 @@ public class Instructor {
     private String specialization;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private Type type;
 
     //********************************* User *************************************
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)

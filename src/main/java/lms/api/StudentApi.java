@@ -3,6 +3,7 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import lms.dto.FindAllStudentsRequestParams;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
@@ -18,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class StudentApi {
     private final StudentService studentService;
 
