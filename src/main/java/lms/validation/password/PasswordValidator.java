@@ -9,6 +9,6 @@ public class PasswordValidator implements ConstraintValidator<PasswordValidation
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         log.error("Не корректный пароль!");
-        return value.length() >= 4;
+        return value.length() >= 6;
     }
 }
