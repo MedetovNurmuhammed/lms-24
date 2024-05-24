@@ -1,70 +1,70 @@
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (1, 'java1', '2024/04/03', '2025-04-09', 'Excision of Left Cephalic Vein, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539820995_1.web');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (2, 'java2', '2024/04/06', '2025-04-09',
         'Drainage of Bilateral Breast with Drainage Device, Via Natural or Artificial Opening',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539845253_2.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (3, 'java3', '2024/04/03', '2025-04-09', 'Drainage of Right Upper Femur, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539866725_3.png');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (4, 'java4', '2024/04/03', '2025-04-09',
         'Bypass Left Brachial Artery to Upper Arm Vein with Autologous Venous Tissue, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539878985_4.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (5, 'java5', '2024/04/07', '2025-04-09', 'Release Left Mastoid Sinus, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539892179_5.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (6, 'java6', '2024/04/04', '2025-04-09', 'Replacement of Nose with Synthetic Substitute, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539905096_6.webp');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (7, 'java7', '2024/04/04', '2025-04-09', 'Extirpation of Matter from Right External Ear, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539921060_7.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (8, 'java8', '2024/04/04', '2025-04-09', 'Destruction of Right Elbow Bursa and Ligament, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539933430_12.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (9, 'java9', '2024/04/07', '2025-04-09',
         'Bypass Right Hand Vein to Upper Vein, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539947080_13.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (10, 'java10', '2024/04/04', '2025-04-09', 'Restriction of Cecum with Extraluminal Device, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716542983753_images (18).jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (11, 'js1', '2024/04/05', '2025-04-09',
         'Dilation of Hymen with Intraluminal Device, Via Natural or Artificial Opening Endoscopic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539962996_14.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (12, 'js2', '2024/04/03', '2025-04-09', 'Hyperthermia of Bile Ducts',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539978479_15.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (13, 'js3', '2024/04/03', '2025-04-09', 'Dilation of Right Foot Artery, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716543169603_16.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (14, 'js4', '2024/04/06', '2025-04-09',
         'Introduction of Other Gas into Epidural Space, Via Natural or Artificial Opening',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716539997681_16.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (15, 'js5', '2024/04/05', '2025-04-09',
         'Revision of Internal Fixation Device in Left Femoral Shaft, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540010423_17.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (16, 'js6', '2024/04/03', '2025-04-09',
         'Introduction of Radioactive Substance into Biliary and Pancreatic Tract, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540024320_18.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (17, 'js7', '2024/04/07', '2025-04-09', 'Beam Radiation of Mandible using Electrons',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540042946_19.jpeg');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (18, 'js8', '2024/04/04', '2025-04-09', 'Excision of Hypoglossal Nerve, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540058273_20.png');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (19, 'js9', '2024/04/03', '2025-04-09', 'Drainage of Right Conjunctiva, External Approach, Diagnostic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540077306_21.webp');
 insert into groups (id, title, date_of_start, date_of_end, description, image)
 values (20, 'js10', '2024/04/08', '2025-04-09', 'Revision of Synthetic Substitute in Left Patella, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540091997_22.png');
 
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (1, 'Aman Raimbekov', 'admin@gmail.com', '$2a$12$ETwPTjTxa5o8Rok7TSqLmeex/cRtWSfMXYtlQ1DQTChy5DkXwzgHK', 'ADMIN',
@@ -298,72 +298,72 @@ values (19, 'javaScript', '2024/04/04', 19);
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (1, 'java1', '2024/04/08', '2025-04-09',
         'Dilation of Innominate Artery with Two Drug-eluting Intraluminal Devices, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540091997_22.png');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (2, 'java2', '2024/04/07', '2025-04-09', 'Immobilization of Left Toe using Brace',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540135695_23.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (3, 'java3', '2024/04/04', '2025-04-09', 'Release Right Patella, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540152436_20.png');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (4, 'java4', '2024/04/06', '2025-04-09', 'Occlusion of Left Internal Mammary Artery, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540168554_19.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (5, 'java5', '2024/04/07', '2025-04-09', 'Resection of Right Ethmoid Sinus, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540180877_18.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (6, 'java6', '2024/04/07', '2025-04-09',
         'Revision of Internal Fixation Device in Lumbar Vertebral Joint, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540198007_17.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (7, 'java7', '2024/04/04', '2025-04-09', 'Fragmentation in Spinal Canal, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540212139_16.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (8, 'java8', '2024/04/05', '2025-04-09',
         'Revision of Autologous Tissue Substitute in Lower Tendon, External Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540229002_15.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (9, 'java9', '2024/04/06', '2025-04-09', 'Dilation of Left External Carotid Artery, Bifurcation, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540244213_14.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (10, 'java10', '2024/04/08', '2025-04-09',
         'Fusion of Right Acromioclavicular Joint with Synthetic Substitute, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540263326_13.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (11, 'js1', '2024/04/05', '2025-04-09', 'Repair Right Innominate Vein, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540282535_12.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (12, 'js2', '2024/04/03', '2025-04-09',
         'Bypass Ileum to Cutaneous with Synthetic Substitute, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540301828_7.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (13, 'js3', '2024/04/06', '2025-04-09',
         'Revision of Drainage Device in Tracheobronchial Tree, Percutaneous Endoscopic Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540319283_6.webp');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (14, 'js4', '2024/04/07', '2025-04-09',
         'Removal of Synthetic Substitute from Right Carpal Joint, Percutaneous Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540336486_5.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (15, 'js5', '2024/04/06', '2025-04-09', 'Supplement Vagina with Synthetic Substitute, External Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540353632_4.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (16, 'js6', '2024/04/07', '2025-04-09',
         'Bypass Coronary Artery, One Artery from Abdominal Artery with Autologous Arterial Tissue, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540368447_3.png');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (17, 'js7', '2024/04/05', '2025-04-09', 'Excision of Right Foot, Open Approach, Diagnostic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540381272_2.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (18, 'js8', '2024/04/06', '2025-04-09', 'Drainage of Upper Vein, Percutaneous Approach, Diagnostic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540415806_16.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (19, 'js9', '2024/04/04', '2025-04-09',
         'Bypass Coronary Artery, Four or More Arteries from Coronary Artery with Autologous Arterial Tissue, Open Approach',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540428527_19.jpeg');
 insert into courses (id, title, date_of_start, date_of_end, description, image)
 values (20, 'js10', '2024/04/06', '2025-04-09', 'Drainage of Sacrococcygeal Joint, Open Approach, Diagnostic',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDH');
+        '1716540447281_6.jpeg');
 
 insert into lessons (id, title, created_at, course_id)
 values (1, 'java1', '2024/04/05', 1);
@@ -467,85 +467,85 @@ values (20, 'js10',
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (1, 1, '2024-04-09', '2024-05-09', '5051',
         'Displaced transverse fracture of shaft of right fibula, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion',
-        'Rhoncus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716541824083_СПРАВОЧНИК.pdf', '1716542983753_images (18).jpeg',
         'huffingtonpost.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (2, 1, '2024-04-09', '2024-05-09', '6142', 'Major laceration of left vertebral artery, initial encounter',
-        'InLectus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716541844238_Сабак_5.pdf', '1716542957174_images (9).jpeg',
         'edublogs.org');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (3, 2, '2024-04-09', '2024-05-09', '3562',
-        'Cocaine dependence with cocaine-induced psychotic disorder, unspecified', 'AccumsanTellusNisi.xls',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'joomla.org');
+        'Cocaine dependence with cocaine-induced psychotic disorder, unspecified', '1716541870558_Сабак_4.pdf',
+        '1716542936792_images (8).jpeg', 'joomla.org');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (4, 3, '2024-04-09', '2024-05-09', '8343',
         'Nondisplaced Maisonneuve''s fracture of left leg, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with nonunion',
-        'NullaTellus.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716541894769_Сабак_3.pdf', '1716542910316_images (7).jpeg',
         'amazonaws.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (5, 4, '2024-04-09', '2024-05-09', '7535', 'Strain of left Achilles tendon, sequela', 'Ut.doc',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'goo.gl');
+values (5, 4, '2024-04-09', '2024-05-09', '7535', 'Strain of left Achilles tendon, sequela', '1716541924932_Сабак_2.pdf',
+        '1716542884522_5.jpeg', 'goo.gl');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (6, 5, '2024-04-09', '2024-05-09', '4686',
-        'Partial traumatic amputation at elbow level, unspecified arm, initial encounter', 'In.xls',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'jigsy.com');
+        'Partial traumatic amputation at elbow level, unspecified arm, initial encounter', '1716541953548_Сабак_1.pdf',
+        '1716542869648_images (19).jpeg', 'jigsy.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (7, 6, '2024-04-09', '2024-05-09', '5141', 'Other biomechanical lesions of lumbar region', 'AliquetUltrices.avi',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'illinois.edu');
+values (7, 6, '2024-04-09', '2024-05-09', '5141', 'Other biomechanical lesions of lumbar region', '1716541979448_Практическая_терапевтич_стом_2016_2.pdf',
+        '1716542849245_images (1).jpeg', 'illinois.edu');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (8, 7, '2024-04-09', '2024-05-09', '8876',
-        'Coma scale, best motor response, extension, 24 hours or more after hospital admission', 'Pretium.ppt',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'cdbaby.com');
+        'Coma scale, best motor response, extension, 24 hours or more after hospital admission', '1716542134029_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt',
+        '1716542835735_images (3).jpeg', 'cdbaby.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (9, 8, '2024-04-09', '2024-05-09', '7739', 'Encounter for fitting and adjustment of urinary device',
-        'Pharetra.xls', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542205183_Лаб.раб 2.pdf', '1716542819821_images (10).jpeg',
         'bing.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (10, 9, '2024-04-09', '2024-05-09', '7703',
         'Infection and inflammatory reaction due to internal fixation device of right femur, subsequent encounter',
-        'MaurisSit.gif', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542226774_Лаб_Настройка DNS_кырг.pdf', '1716542804159_images (11).jpeg',
         'shutterfly.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (11, 10, '2024-04-09', '2024-05-09', '3241', 'Other fracture of shaft of left ulna', 'SemFusce.avi',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'fastcompany.com');
+values (11, 10, '2024-04-09', '2024-05-09', '3241', 'Other fracture of shaft of left ulna', '1716542254183_Жыйынтык-АЗИРЕТ_БЕКБОЛОТОВ.pdf',
+        '1716542776579_images (15).jpeg', 'fastcompany.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (12, 11, '2024-04-09', '2024-05-09', '674', 'Contusion of unspecified great toe with damage to nail, sequela',
-        'IntegerAliquet.doc', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542280450_жалпы маалымат.pdf', '1716542752334_5.jpeg',
         'twitter.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (13, 12, '2024-04-09', '2024-05-09', '9143',
         'Unspecified fracture of shaft of unspecified fibula, subsequent encounter for closed fracture with nonunion',
-        'Arcu.ppt', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542305423_TMALL.pdf', '1716542735264_4.jpeg',
         'google.co.jp');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (14, 13, '2024-04-09', '2024-05-09', '8892', 'Displaced spiral fracture of shaft of unspecified femur',
-        'EuMi.xls', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542323826_-829802911.pdf', '1716542705934_7.jpeg',
         'google.com.br');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (15, 14, '2024-04-09', '2024-05-09', '9435', 'Poisoning by heroin, undetermined, sequela',
-        'SuspendisseOrnareConsequat.avi',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'amazon.co.uk');
+        '1716542358344_СПРАВОЧНИК.pdf',
+        '1716542688474_13.jpeg', 'amazon.co.uk');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (16, 15, '2024-04-09', '2024-05-09', '1162',
         'Unspecified fracture of shaft of right fibula, subsequent encounter for open fracture type I or II with nonunion',
-        'EuEstCongue.mov', 'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42',
+        '1716542378426_Сабак_4.pdf', '1716542672169_17.jpeg',
         'fastcompany.com');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (17, 17, '2024-04-09', '2024-05-09', '5831',
         'Poisoning by cardiac-stimulant glycosides and drugs of similar action, assault, initial encounter',
-        'SuspendissePotentiIn.png',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'imageshack.us');
+        '1716542395427_Лаб.раб 2.pdf',
+        '1716542651493_20.png', 'imageshack.us');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (18, 17, '2024-04-09', '2024-05-09', '9461',
         'Poisoning by unspecified antipsychotics and neuroleptics, intentional self-harm, subsequent encounter',
-        'MagnaBibendumImperdiet.mp3',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'desdev.cn');
+        '1716542416951_жалпы маалымат.pdf',
+        '1716542632159_images (19).jpeg', 'desdev.cn');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (19, 17, '2024-04-09', '2024-05-09', '5539', 'Spastic entropion of left upper eyelid', 'LacusPurus.jpeg',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'jalbum.net');
+values (19, 17, '2024-04-09', '2024-05-09', '5539', 'Spastic entropion of left upper eyelid', '1716542486583_Патологическая_анатомия_6_е_издание1.pdf',
+        '1716542612381_images (20).jpeg', 'jalbum.net');
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
-values (20, 20, '2024-04-09', '2024-05-09', '8104', 'Abrasion of right elbow, initial encounter', 'Id.jpeg',
-        'https://app.slack.com/client/T023L1WBFLH/D06LTL4STDHhttps://app.clickup.com/t/86ep2cy42', 'virginia.edu');
+values (20, 20, '2024-04-09', '2024-05-09', '8104', 'Abrasion of right elbow, initial encounter', '1716542570768_Сабак_3.pdf',
+        '1716542593395_images (1).jpe', 'virginia.edu');
 
 insert into videos (id, created_at, description)
 values (1, '2024-04-09', 'Unspecified injury of unspecified external jugular vein, initial encounter');
@@ -593,66 +593,66 @@ insert into videos (id, created_at, description)
 values (20, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee');
 
 insert into presentations (id, created_at, description, file, title)
-values (1, '2023-10-18', 'Other contact with pig', 'AcTellus.avi', 'Interior Live Oak');
+values (1, '2023-10-18', 'Other contact with pig', '1716537887591_СПРАВОЧНИК.pd', 'Interior Live Oak');
 insert into presentations (id, created_at, description, file, title)
 values (2, '2023-10-02',
         'Displaced fracture of shaft of first metacarpal bone, unspecified hand, initial encounter for open fracture',
-        'PorttitorLorem.xls', 'Ray Goldenweed');
+        '1716538061356_Сабак_1.pdf', 'Ray Goldenweed');
 insert into presentations (id, created_at, description, file, title)
 values (3, '2023-09-02', 'Toxic effect of other tobacco and nicotine, intentional self-harm, sequela',
-        'SedAccumsan.png', 'Globe Fimbry');
+        '1716538092650_Сабак_2.pdf', 'Globe Fimbry');
 insert into presentations (id, created_at, description, file, title)
-values (4, '2023-12-16', 'Other long term (current) drug therapy', 'PlaceratAnteNulla.avi', 'Texan Gumweed');
+values (4, '2023-12-16', 'Other long term (current) drug therapy', '1716538107647_Сабак_3.pdf', 'Texan Gumweed');
 insert into presentations (id, created_at, description, file, title)
-values (5, '2023-12-25', 'Toxic effect of lead and its compounds, assault', 'ScelerisqueQuam.avi',
+values (5, '2023-12-25', 'Toxic effect of lead and its compounds, assault', '1716538133117_Сабак_4.pdf',
         'White Doll''s Daisy');
 insert into presentations (id, created_at, description, file, title)
 values (6, '2024-01-14', 'Abrasion of unspecified external genital organs, male, subsequent encounter',
-        'VitaeConsectetuerEget.gif', 'Tungoil Tree');
+        '1716538160158_Сабак_5.pdf', 'Tungoil Tree');
 insert into presentations (id, created_at, description, file, title)
-values (7, '2024-01-01', 'Injury of other nerves at shoulder and upper arm level', 'SedVel.mp3',
+values (7, '2024-01-01', 'Injury of other nerves at shoulder and upper arm level', '1716538232679_Лаб.раб 2.pdf',
         'Straightbeak Buttercup');
 insert into presentations (id, created_at, description, file, title)
 values (8, '2023-09-04',
         'Strain of muscle and tendon of long extensor muscle of toe at ankle and foot level, unspecified foot',
-        'VivamusMetus.xls', 'Longpod Stitchwort');
+        '1716538289430_Жыйынтык-АЗИРЕТ_БЕКБОЛОТОВ.pdf', 'Longpod Stitchwort');
 insert into presentations (id, created_at, description, file, title)
-values (9, '2023-05-26', 'Salter-Harris Type I physeal fracture of left calcaneus', 'TellusInSagittis.mp3',
+values (9, '2023-05-26', 'Salter-Harris Type I physeal fracture of left calcaneus', '1716538312010_жалпы маалымат.pdf',
         'Bog Korthal Mistletoe');
 insert into presentations (id, created_at, description, file, title)
 values (10, '2023-06-02',
         'Unspecified fracture of left patella, subsequent encounter for open fracture type I or II with routine healing',
-        'Pharetra.gif', 'Beckwith''s Milkvetch');
+        '1716538337567_TMALL.pdf', 'Beckwith''s Milkvetch');
 insert into presentations (id, created_at, description, file, title)
 values (11, '2023-05-15', 'Rheumatoid arthritis of hand with involvement of other organs and systems',
-        'CondimentumNequeSapien.mpeg', 'Platanillo');
+        '1716538583459_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt', 'Platanillo');
 insert into presentations (id, created_at, description, file, title)
 values (12, '2023-08-10',
         'Nondisplaced fracture of medial condyle of left femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with delayed healing',
-        'NonummyMaecenas.mp3', 'Horehound');
+        '1716538612792_Практическая_терапевтич_стом_2016_2.pdf', 'Horehound');
 insert into presentations (id, created_at, description, file, title)
 values (13, '2023-09-16', 'Poisoning by sulfonamides, undetermined, subsequent encounter', 'Ut.mp3',
         'Canary Island Date Palm');
 insert into presentations (id, created_at, description, file, title)
-values (14, '2023-05-06', 'Cutaneous chromomycosis', 'TemporConvallis.ppt', 'Hairy False Goldenaster');
+values (14, '2023-05-06', 'Cutaneous chromomycosis', '1716538782523_Лаб.раб 2.pdf', 'Hairy False Goldenaster');
 insert into presentations (id, created_at, description, file, title)
-values (15, '2023-08-24', 'Calcium deposit in bursa, left wrist', 'Turpis.mp3', 'Arizona White Oak');
+values (15, '2023-08-24', 'Calcium deposit in bursa, left wrist', '1716538801962_Лаб_Настройка DNS_кырг.pdf', 'Arizona White Oak');
 insert into presentations (id, created_at, description, file, title)
 values (16, '2023-12-23',
         'Other fracture of lower end of right ulna, subsequent encounter for closed fracture with delayed healing',
-        'NuncDonec.png', 'Elegant Mariposa Lily');
+        '1716538830414_СПРАВОЧНИК.pdf', 'Elegant Mariposa Lily');
 insert into presentations (id, created_at, description, file, title)
 values (17, '2024-01-31',
         'Displaced comminuted fracture of left patella, subsequent encounter for closed fracture with routine healing',
-        'Pede.txt', 'Crabseye');
+        '1716538846391_Практическая_терапевтич_стом_2016_2.pdf', 'Crabseye');
 insert into presentations (id, created_at, description, file, title)
-values (18, '2024-01-13', 'Corrosion of first degree of right upper arm, initial encounter', 'Non.tiff',
+values (18, '2024-01-13', 'Corrosion of first degree of right upper arm, initial encounter', '1716538878939_-829802911.pdf',
         'Shortleaf Crabgrass');
 insert into presentations (id, created_at, description, file, title)
-values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', 'LobortisConvallis.mov',
+values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', '1716538910377_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt',
         'Cylinder Jointtail Grass');
 insert into presentations (id, created_at, description, file, title)
-values (20, '2024-02-03', 'Crushing injury of right thigh', 'MorbiNonQuam.xls', 'Swamp Paperbark');
+values (20, '2024-02-03', 'Crushing injury of right thigh', '1716538941703_Лаб_Настройка DNS_кырг.pdf', 'Swamp Paperbark');
 
 insert into lessons_presentations (lesson_id, presentations_id)
 values (1, 1);
@@ -881,97 +881,97 @@ values (20, 'FALSE', 5, 'net');
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (1, 1, 'LATE', '2024-04-12', 1,
         'orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus',
-        'vehicula condimentum curabitur in libero ut massa volutpat convallis morbi',
-        'justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit',
+        '1716538977180_-829802911.pdf',
+        '1716540792652_images (11).jpeg',
         0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (2, 2, 'REJECTED', '2024-04-15', 1, 'suspendisse ornare consequat lectus in est risus auctor sed tristique in',
-        'nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis',
-        'habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum',
+        '1716539004543_TMALL.pdf',
+        '1716540882646_images (1).jpeg',
         0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (4, 4, 'ACCEPTED', '2024-04-11', 1,
         'quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec',
-        'sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus',
-        'scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor', 0);
+        '1716539030922_жалпы маалымат.pdf',
+        '1716540902227_images (2).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (5, 5, 'LATE', '2024-04-11', 2,
         'aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque',
-        'non pretium quis lectus suspendisse potenti in eleifend quam a',
-        'velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo', 0);
+        '1716539054891_Жыйынтык-АЗИРЕТ_БЕКБОЛОТОВ.pdf',
+        '1716540920973_images (3).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (6, 6, 'REJECTED', '2024-04-13', 2,
         'nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer',
-        'in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa',
-        'duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris',
+        '1716539075340_Лаб_Настройка DNS_кырг.pdf',
+        '1716540945334_images (4).jpeg',
         0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (7, 7, 'LATE', '2024-04-22', 2,
         'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo',
-        'eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis',
-        'eu sapien cursus vestibulum proin eu mi nulla ac enim', 0);
+        '1716539109673_Лаб.раб 2.pdf',
+        '1716540961923_images (5).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (8, 8, 'REJECTED', '2024-04-19', 2,
         'nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet',
-        'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel',
-        'ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor',
+        '1716539131345_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt',
+        '1716541000517_images (6).jpeg',
         0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (9, 9, 'WAITING', '2024-04-10', 3, 'tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu',
-        'vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam',
-        'ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis', 0);
+        '1716539235182_Практическая_терапевтич_стом_2016_2.pdf',
+        '1716541012196_images (7).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (10, 10, 'ACCEPTED', '2024-04-29', 3,
         'augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet',
-        'purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus',
-        'sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in', 0);
+        '1716539293699_Сабак_1.pdf',
+        '1716541033173_images (8).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (11, 11, 'LATE', '2024-04-15', 3,
         'in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio',
-        'erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse',
-        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius', 0);
+        '1716539322748_Сабак_2.pdf',
+        '1716541049210_images (9).jpeg', 0);
 insert into answer_tasks (id, "student_id", task_answer_status, date_of_send, task_id, text, file, image, point)
 values (12, 12, 'WAITING', '2024-04-30', 3,
         'volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in',
-        'justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris',
-        'nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum',
+        '1716539392696_Сабак_3.pdf',
+        '1716541069149_images (10).jpeg',
         0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (13, 13, 'LATE', '2024-04-17', 4,
         'ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam',
-        'platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur',
-        'est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc', 0);
+        '1716539414302_Сабак_4.pdf',
+        '1716541085226_images (11).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (14, 14, 'ACCEPTED', '2024-05-07', 4,
         'ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien',
-        'etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam',
-        'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci', 9);
+        '1716539433650_Сабак_5.pdf',
+        '1716541099529_images (12).jpeg', 9);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (15, 15, 'REJECTED', '2024-04-22', 4,
         'orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis',
-        'velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla',
-        'nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget', 7);
+        '1716539456835_СПРАВОЧНИК.pdf',
+        '1716541119905_images (13).jpeg', 7);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (16, 16, 'REJECTED', '2024-05-07', 4,
         'mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus at',
-        'rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut',
-        'morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor', 9);
+        '1716539475250_-829802911.pdf',
+        '1716541137286_images (14).jpeg', 9);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (17, 17, 'ACCEPTED', '2024-04-18', 5, 'dolor vel est donec odio justo sollicitudin ut suscipit a',
-        'suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas',
-        'a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 7);
+        '1716539518953_жалпы маалымат.pdf',
+        '1716541163652_images (14).jpeg', 7);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (18, 18, 'WAITING', '2024-04-28', 5, 'vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id',
-        'tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est',
-        'ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec', 5);
+        '1716539560846_Лаб.раб 2.pdf',
+        '1716541182425_images (15).jpeg', 5);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (19, 19, 'LATE', '2024-04-30', 5, 'sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec',
-        'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper',
-        'at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 0);
+        '1716539592445_Лаб_Настройка DNS_кырг.pdf',
+        '1716541199158_images (17).jpeg', 0);
 insert into answer_tasks (id, student_id, task_answer_status, date_of_send, task_id, text, file, image, point)
 values (20, 20, 'WAITING', '2024-04-18', 5, 'in felis donec semper sapien a libero nam dui proin leo odio porttitor',
-        'ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh',
-        'adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante',
+        '1716539621583_TMALL.pdf',
+        '1716541218792_images (18).jpeg',
         0);
 
 insert into result_tests (id, test_id, creation_date, student_id, point)
