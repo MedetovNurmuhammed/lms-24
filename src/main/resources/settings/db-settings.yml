@@ -5,7 +5,6 @@ spring:
     url: ${POSTGRES_DB}
     username: ${POSTGRES_USER}
 
-  #Hibernate/JPA settings.
   jpa:
     hibernate:
       ddl-auto: create
