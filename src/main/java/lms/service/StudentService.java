@@ -1,7 +1,6 @@
 package lms.service;
 
 import jakarta.mail.MessagingException;
-import lms.dto.FindAllStudentsRequestParams;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
@@ -12,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface StudentService {
 
-    SimpleResponse save( StudentRequest studentRequest) throws MessagingException;
+    SimpleResponse save(StudentRequest studentRequest) throws MessagingException;
 
-    AllStudentResponse findAll(FindAllStudentsRequestParams requestParams);
+    AllStudentResponse findAll(String keyword, String studyFormat, Long groupId, int page, int size);
 
     AllStudentResponse findAllGroupStud(int page, int size, Long groupId);
 
@@ -25,8 +24,8 @@ public interface StudentService {
     StudentResponse findById(Long studId);
 
     SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file);
-     void isValidPhoneNumber(String phoneNumber);
-     void isValidEmail(String email);
 
+    void isValidPhoneNumber(String phoneNumber);
 
-    }
+    void isValidEmail(String email);
+}

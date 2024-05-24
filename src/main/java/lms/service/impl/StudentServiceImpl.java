@@ -3,7 +3,6 @@ package lms.service.impl;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
-import lms.dto.FindAllStudentsRequestParams;
 import lms.dto.request.ExcelUser;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
@@ -83,32 +82,21 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public AllStudentResponse findAll(FindAllStudentsRequestParams requestParams) {
+    public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        log.error(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
-        String search;
+        if (search.equalsIgnoreCase("ONLINE")) {
+            search = null;
+            studyFormats.add(StudyFormat.ONLINE);
+        } else if (search.equalsIgnoreCase("OFFLINE")) {
+            search = null;
+            studyFormats.add(StudyFormat.OFFLINE);
+        } else if ("".equals(studyFormat)) {
+            studyFormats.addAll(List.of(StudyFormat.values()));
+        } else studyFormats.add(StudyFormat.valueOf(studyFormat));
 
-        switch (requestParams.search()) {
-            case "ONLINE" -> {
-                search = null;
-                studyFormats.add(StudyFormat.ONLINE);
-            }
-            case "OFFLINE" -> {
-                search = null;
-                studyFormats.add(StudyFormat.OFFLINE);
-            }
-            case "" -> {
-                search = requestParams.search();
-                studyFormats.addAll(List.of(StudyFormat.values()));
-            }
-            default -> {
-                search = requestParams.search();
-                studyFormats.add(StudyFormat.valueOf(requestParams.studyFormat()));
-            }
-        }
-
-        Page<StudentResponse> allStudent = studentRepository.searchAll(
-                search, studyFormats, requestParams.groupId(), requestParams.getPageable()
-        );
+        Page<StudentResponse> allStudent = studentRepository.searchAll(search, studyFormats, groupId, pageable);
 
         return AllStudentResponse.builder()
                 .page(allStudent.getNumber() + 1)
