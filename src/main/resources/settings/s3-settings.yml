@@ -1,0 +1,8 @@
+aws.s3:
+  credentials:
+    aws-access-key_id: AKIA3KYNRCVIBB2TALRT
+    aws-access-secret-key: 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
+  bucket:
+    name: lms-b12
+    profile-path: https://lms-b12.s3.eu-central-1.amazonaws.com/
+    region: eu-central-1
