@@ -49,9 +49,6 @@ public class VideoServiceImpl implements VideoService {
         link.setVideo(video);
         link.setUrl(videoRequest.linkOfVideo());
         linkRepository.save(link);
-        if (videoRequest.createdAt().isBefore(LocalDate.now())) {
-            throw new BadRequestException("Дата создания не должна быть раньше текущей даты");
-        }
         videoRepository.save(video);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -65,7 +62,6 @@ public class VideoServiceImpl implements VideoService {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         video.setDescription(videoRequest.description());
-        video.setCreatedAt(videoRequest.createdAt());
         Link link = video.getLink();
         link.setUrl(videoRequest.linkOfVideo());
         link.setTitle(videoRequest.titleOfVideo());
@@ -95,6 +91,7 @@ public class VideoServiceImpl implements VideoService {
         Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         return VideoResponse.builder()
+                .id(video.getId())
                 .titleOfVideo(video.getLink().getTitle())
                 .linkOfVideo(video.getLink().getUrl())
                 .description(video.getDescription())

@@ -23,5 +23,5 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
         return new PageImpl<>(videos.subList(start, end), pageable, videos.size());
     }
 @Query("select s from Video s where s.id =:videoId and s.trash is null")
-    Optional<Video> findVideoById(Long videoId);
+    Optional<Video> findVideoById(@Param("videoId") Long videoId);
 }
