@@ -3,6 +3,7 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import lms.dto.FindAllStudentsRequestParams;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.AllStudentResponse;
 import lms.dto.response.SimpleResponse;
@@ -36,14 +37,8 @@ public class StudentApi {
                     " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/findAll")
-    public AllStudentResponse findAll(
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "6") int size,
-            @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "") String studyFormat,
-            @RequestParam(required = false, defaultValue = "") Long groupId
-    ) {
-        return studentService.findAll(search, studyFormat, groupId, page, size);
+    public AllStudentResponse findAll(FindAllStudentsRequestParams requestParams) {
+        return studentService.findAll(requestParams);
     }
 
     @Operation(summary = "Получить все студенты!",

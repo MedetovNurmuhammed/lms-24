@@ -1,13 +1,8 @@
-#S3 FILE
-cloud:
-  aws:
-    credentials:
-      access-key: ${AWS_ACCESS_KEY_ID}
-      secret-key: ${AWS_SECRET_ACCESS_KEY}
-      profile-path: ${AWS_BUCKET_URL}
-    region:
-      static: ${AWS_DEFAULT_REGION}
-
-application:
+aws.s3:
+  credentials:
+    aws-access-key_id: ${AWS_ACCESS_KEY_ID}
+    aws-access-secret-key: ${AWS_SECRET_ACCESS_KEY}
   bucket:
     name: ${AWS_BUCKET_NAME}
+    profile-path: ${AWS_BUCKET_URL}
+    region: ${AWS_DEFAULT_REGION}
