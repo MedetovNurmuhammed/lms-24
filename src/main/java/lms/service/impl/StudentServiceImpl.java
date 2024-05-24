@@ -14,6 +14,8 @@ import lms.entities.Trash;
 import lms.entities.User;
 import lms.enums.Role;
 import lms.enums.StudyFormat;
+import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -55,30 +58,33 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse save(StudentRequest studentRequest) throws MessagingException {
-        Group group = groupRepository.findByTitle(studentRequest.groupName());
-        if (group != null) {
-            User user = new User();
-            Student student = new Student();
-            user.setFullName(studentRequest.firstName() + " " + studentRequest.lastName());
-            user.setPhoneNumber(studentRequest.phoneNumber());
-            user.setEmail(studentRequest.email());
-            student.setStudyFormat(studentRequest.studyFormat());
-            user.setRole(Role.STUDENT);
-            user.setBlock(false);
-            group.getStudents().add(student);
-            student.setGroup(group);
-            student.setUser(user);
-            studentRepository.save(student);
-            userRepository.save(user);
-            userService.emailSender(user.getEmail());
-            log.info("Успешно " + studentRequest.email() + " сохранен!");
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Успешно сохранен!")
-                    .build();
-        }
-        log.error("Группа не найден!");
-        throw new BadRequestException("Группа: " + studentRequest.groupName() + " не найден!");
+        Group group = groupRepository.findByTitle(studentRequest.groupName()).orElseThrow(() ->
+                new NotFoundException("Группа с названием" + studentRequest.groupName() + "не найден"));
+
+        boolean exists = userRepository.existsByEmail(studentRequest.email());
+        if (exists)
+            throw new AlreadyExistsException("User with email " + studentRequest.email() + " already exists");
+
+        User user = new User();
+        Student student = new Student();
+        user.setFullName(studentRequest.firstName() + " " + studentRequest.lastName());
+        user.setPhoneNumber(studentRequest.phoneNumber());
+        user.setEmail(studentRequest.email());
+        student.setStudyFormat(studentRequest.studyFormat());
+        user.setRole(Role.STUDENT);
+        user.setBlock(false);
+        group.getStudents().add(student);
+        student.setGroup(group);
+        student.setUser(user);
+        userRepository.save(user);
+        studentRepository.save(student);
+        userService.emailSender(user.getEmail());
+        log.info("Успешно {} сохранен!", studentRequest.email());
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Успешно сохранен!")
+                .build();
+
     }
 
     @Override
@@ -124,11 +130,10 @@ public class StudentServiceImpl implements StudentService {
         student.getUser().setFullName(studentRequest.firstName() + ' ' + studentRequest.lastName());
         student.getUser().setPhoneNumber(studentRequest.phoneNumber());
         student.getUser().setEmail(studentRequest.email());
-        Group group = groupRepository.findByTitle(studentRequest.groupName());
-        if (group != null) {
-            group.getStudents().add(student);
-            student.setGroup(group);
-        } else throw new NotFoundException("Группа: " + studentRequest.groupName() + " не найден!");
+        Group group = groupRepository.findByTitle(studentRequest.groupName()).orElseThrow(() ->
+                new NotFoundException("Группа с названием" + studentRequest.groupName() + "не найден"));
+        group.getStudents().add(student);
+        student.setGroup(group);
         student.setStudyFormat(studentRequest.studyFormat());
         log.info("Успешно обновлен!");
         return SimpleResponse.builder()
@@ -145,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
         trash.setStudent(student);
-        trash.setType(student.getType());
+        trash.setType(Type.STUDENT);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setStudent(student);
         student.setTrash(trash);
