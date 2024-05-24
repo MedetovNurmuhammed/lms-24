@@ -1,13 +1,13 @@
 package lms.dto.response;
 
-import java.time.LocalDate;
+import lombok.Builder;
 
+import java.util.List;
+
+@Builder
 public record AllGroupResponse(
-        Long id,
-        String title,
-        String description,
-        String image,
-        LocalDate dateOfStart,
-        LocalDate dateOfEnd
+        int page,
+        int size,
+        List<GroupResponse> groupResponses
 ) {
 }

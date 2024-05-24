@@ -16,7 +16,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-
   #EMAIL
   application:
     name: lms-b12
@@ -43,14 +42,9 @@ spring:
       max-request-size: 10MB
   #Migration
   flyway:
-    enabled: false
+    enabled: true
     locations: classpath:db.migration
-    baseline-on-migrate: false
-
-flyway:
-  user: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}
-  url: ${POSTGRES_DB}
+    baseline-on-migrate: true
 
 
 #S3 FILE
@@ -60,9 +54,7 @@ cloud:
       access-key: AKIA3KYNRCVIBB2TALRT
       secret-key: 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
     region:
-      static: eu-north-1
-    stack:
-      auto: false
+      static: eu-central-1
 
 application:
   bucket:

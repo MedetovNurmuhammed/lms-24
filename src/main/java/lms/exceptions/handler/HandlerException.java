@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.IllegalArgumentException;
 import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @RestControllerAdvice
 @Slf4j
@@ -74,7 +75,7 @@ public class HandlerException {
         return ExceptionResponse.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .exceptionClassName(e.getClass().getSimpleName())
-                .message(e.getMessage())
+                .message(Objects.requireNonNull(e.getFieldError()).getDefaultMessage())
                 .build();
     }
     @ExceptionHandler(IllegalArgumentException.class)
