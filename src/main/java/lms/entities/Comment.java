@@ -31,6 +31,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_gen")
     @SequenceGenerator(name = "comment_gen", sequenceName = "comment_seq", allocationSize = 1, initialValue = 21)
+    private Long id;
     private String content;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

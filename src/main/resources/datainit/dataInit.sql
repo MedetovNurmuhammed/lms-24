@@ -1289,36 +1289,36 @@ values (9, 'https://www.youtube.com/watch?v=grlvDLzvbL4');
 insert into task_links(task_id, links)
 values (10, 'https://www.youtube.com/watch?v=SXkC92TqxAw');
 
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (1, 1, 1, '1/28/2024', 'исправь и занаво напиши');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (2, 2, 2, '9/8/2023', 'все правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (20, 3, 3, '6/18/2023', 'перездача');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (4, 4, 4, '3/22/2024', 'отлично');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (5, 5, 5, '10/13/2023', 'молодец');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (6, 6, 6, '5/22/2023', 'не правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (7, 7, 7, '2/1/2024', 'двойка за заданте');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (8, 8, 8, '12/12/2023', 'Требуется переработка.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (9, 9, 9, '8/4/2023', 'Пожалуйста, исправьте недочеты.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (10, 10, 10, '7/1/2023', 'Необходимо улучшить качество работы.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (11, 11, 11, '12/25/2023', 'Рекомендую пересмотреть решение.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (12, 12, 12, '5/31/2023', 'Прошу внимательнее проверить ответы.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (13, 13, 13, '6/23/2023', 'Требуется дополнительное обучение для правильного выполнения задания.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (14, 14, 14, '1/5/2024', 'Нужно больше усердия и внимания к деталям.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (15, 15, 15, '1/1/2024', 'Нужно больше практики для успешного выполнения задания.');
+insert into comments (answer_task_id, id, user_id, content)
+values (1, 1, 1, 'исправь и занаво напиши');
+insert into comments (answer_task_id, id, user_id, content)
+values (2, 2, 2, 'все правильно');
+insert into comments (answer_task_id, id, user_id, content)
+values (20, 3, 3, 'перездача');
+insert into comments (answer_task_id, id, user_id, content)
+values (4, 4, 4, 'отлично');
+insert into comments (answer_task_id, id, user_id, content)
+values (5, 5, 5, 'молодец');
+insert into comments (answer_task_id, id, user_id, content)
+values (6, 6, 6, 'не правильно');
+insert into comments (answer_task_id, id, user_id, content)
+values (7, 7, 7,  'двойка за заданте');
+insert into comments (answer_task_id, id, user_id, content)
+values (8, 8, 8,  'Требуется переработка.');
+insert into comments (answer_task_id, id, user_id, content)
+values (9, 9, 9,  'Пожалуйста, исправьте недочеты.');
+insert into comments (answer_task_id, id, user_id, content)
+values (10, 10, 10,  'Необходимо улучшить качество работы.');
+insert into comments (answer_task_id, id, user_id, content)
+values (11, 11, 11, 'Рекомендую пересмотреть решение.');
+insert into comments (answer_task_id, id, user_id, content)
+values (12, 12, 12, 'Прошу внимательнее проверить ответы.');
+insert into comments (answer_task_id, id, user_id, content)
+values (13, 13, 13,  'Требуется дополнительное обучение для правильного выполнения задания.');
+insert into comments (answer_task_id, id, user_id, content)
+values (14, 14, 14,  'Нужно больше усердия и внимания к деталям.');
+insert into comments (answer_task_id, id, user_id, content)
+values (15, 15, 15, 'Нужно больше практики для успешного выполнения задания.');
 
 insert into student_announcements(announcements, announcements_key, student_id)
 values (true, 1, 5),
@@ -1334,5 +1334,3 @@ values (true, 1, 5),
        (true, 4, 11),
        (false, 4, 12),
        (true, 5, 9)
-
-
