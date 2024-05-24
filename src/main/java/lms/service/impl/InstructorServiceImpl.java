@@ -8,10 +8,14 @@ import lms.dto.response.AllInstructorResponse;
 import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.*;
+import lms.entities.Instructor;
+import lms.entities.User;
+import lms.entities.Trash;
+import lms.entities.Course;
 import lms.enums.Role;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.InstructorRepository;
@@ -26,7 +30,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ public class InstructorServiceImpl implements InstructorService {
     public SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException {
         boolean exists = userRepository.existsByEmail(instructorRequest.getEmail());
         if (exists)
-            throw new AlreadyExistsException("User with email " + instructorRequest.getEmail() + " already exists");
+            throw new AlreadyExistsException("Пользователь с электронной почтой " + instructorRequest.getEmail() + " уже существует");
 
         Instructor instructor = new Instructor();
         User user = new User();
@@ -58,22 +61,22 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setUser(user);
 
         userRepository.save(user);
+        instructorRepository.save(instructor);
         userService.emailSender(user.getEmail());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Saved!!!")
+                .message("Инструктор успешно добавлен")
                 .build();
     }
 
-
-
     @Override
     public AllInstructorResponse findAll(int page, int size) {
+        if(page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<InstructorResponse> allInstructors = instructorRepository.findAllInstructorsss(pageable);
+        Page<InstructorResponse> allInstructors = instructorRepository.findAllInstructors(pageable);
         return AllInstructorResponse.builder()
                 .page(allInstructors.getNumber() + 1)
-                .size(allInstructors.getSize())
+                .size(allInstructors.getNumberOfElements())
                 .instructorResponses(allInstructors.getContent())
                 .build();
     }
@@ -82,11 +85,11 @@ public class InstructorServiceImpl implements InstructorService {
     @Transactional
     public SimpleResponse update(InstructorUpdateRequest instructorRequest, Long instructorId) {
         Instructor instructor = instructorRepository.findById(instructorId)
-                .orElseThrow(() -> new NotFoundException("Instructor not found!!!"));
+                .orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         User user = instructor.getUser();
         if (!user.getEmail().equals(instructorRequest.getEmail())) {
             boolean b = userRepository.existsByEmail(instructorRequest.getEmail());
-            if (b) throw new AlreadyExistsException("email already exist");
+            if (b) throw new AlreadyExistsException("Электронная почта уже существует");
         }
         String fullName = instructorRequest.getFirstName() + " " + instructorRequest.getLastName();
         user.setFullName(fullName);
@@ -97,17 +100,15 @@ public class InstructorServiceImpl implements InstructorService {
         List<Course> courses = new ArrayList<>();
         for (Long courseId : instructorRequest.getCourseIds()) {
             Course course = courseRepository.findById(courseId).orElseThrow(() ->
-                    new NotFoundException("Course  with id: " + courseId + " not found"));
-            if (!instructor.getCourses().contains(course)) {
+                    new NotFoundException("Курс с идентификатором: " + courseId + " не найден"));
                 courses.add(course);
-            }
         }
-        instructor.getCourses().addAll(courses);
+        instructor.setCourses(courses);
         userRepository.save(user);
         instructorRepository.save(instructor);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Successfully updated")
+                .message("Инструктор успешно обновлен")
                 .build();
     }
 
@@ -115,7 +116,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Transactional
     public SimpleResponse delete(Long instructorId) {
         Instructor instructor = instructorRepository.findById(instructorId)
-                .orElseThrow(() -> new NotFoundException("Instructor not found!!!"));
+                .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
         Trash trash = new Trash();
         trash.setInstructor(instructor);
         trash.setType(Type.INSTRUCTOR);
@@ -131,7 +132,8 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public FindByIdInstructorResponse findById(Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() -> new NotFoundException("instructor not found!!!"));
+        Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() ->
+                new NotFoundException("инструктор не найден!!!"));
         List<String> courseNames = new ArrayList<>();
         for (Course course : instructor.getCourses()) {
             courseNames.add(course.getTitle());
