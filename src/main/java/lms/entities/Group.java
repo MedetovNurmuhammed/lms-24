@@ -29,7 +29,7 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_gen")
-    @SequenceGenerator(name = "group_gen",sequenceName = "group_seq", allocationSize = 1,initialValue = 21)
+    @SequenceGenerator(name = "group_gen", sequenceName = "group_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private String description;
@@ -39,11 +39,11 @@ public class Group {
     private LocalDate removedDate;
 
     //*************************************** Course ******************************************
-    @ManyToMany(mappedBy = "groups",cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.DETACH)
     private List<Course> courses = new ArrayList<>();
 
     //*************************************** Student ******************************************
-    @OneToMany(mappedBy = "group",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Student> students = new ArrayList<>();
 
     //*************************************** Trash ********************************************

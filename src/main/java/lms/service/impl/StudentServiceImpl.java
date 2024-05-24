@@ -282,7 +282,7 @@ public class StudentServiceImpl implements StudentService {
         isValidPhoneNumber(student.getPhoneNumber());
     }
 
-    private String getStringValue(org.apache.poi.ss.usermodel.Cell cell) {
+    private String getStringValue(Cell cell) {
         switch (cell.getCellType()) {
             case STRING:
                 return cell.getStringCellValue();

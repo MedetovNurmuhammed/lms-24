@@ -1,71 +1,11 @@
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    password: ${POSTGRES_PASSWORD}
-    url: ${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-
-  #Hibernate/JPA settings.
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    open-in-view: false
-
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  #EMAIL
   application:
     name: lms-b12
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: nurkamilkamchiev@gmail.com
-    password: akst vqxz graa hzfe
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
 
-  #DATA-INIT
-  sql:
-    init:
-      data-locations: classpath:datainit/dataInit.sql
-      mode: never
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
-  #Migration
-  flyway:
-    enabled: true
-    locations: classpath:db.migration
-    baseline-on-migrate: true
-
-
-#S3 FILE
-cloud:
-  aws:
-    credentials:
-      access-key: AKIA3KYNRCVIBB2TALRT
-      secret-key: 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
-    region:
-      static: eu-central-1
-
-application:
-  bucket:
-    name: lms-b12
-
-#JWT
-app:
-  jwt:
-    secret: learning-management-system-java-12
-
-server:
-  error:
-    include-message: always
-
+  config:
+    import:
+        - classpath:/settings/s3-settings.yml
+        - classpath:/settings/db-settings.yml
+        - classpath:/settings/mail-settings.yml
+        - classpath:/settings/security-settings.yml
+        - classpath:/settings/server-settings.yml
