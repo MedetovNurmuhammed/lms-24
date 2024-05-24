@@ -47,7 +47,6 @@ spring:
     locations: classpath:db.migration
     baseline-on-migrate: true
 
-
 #S3 FILE
 cloud:
   aws:
