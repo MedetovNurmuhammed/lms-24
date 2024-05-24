@@ -67,7 +67,7 @@ values (20, 'js10', '2024/04/08', '2025-04-09', 'Revision of Synthetic Substitut
         '1716540091997_22.png');
 
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (1, 'Aman Raimbekov', 'admin@gmail.com', '$2a$12$ETwPTjTxa5o8Rok7TSqLmeex/cRtWSfMXYtlQ1DQTChy5DkXwzgHK', 'ADMIN',
+values (1, 'AdminLms Admin', 'peaksoftjava12@gmail.com', '$2a$12$ETwPTjTxa5o8Rok7TSqLmeex/cRtWSfMXYtlQ1DQTChy5DkXwzgHK', 'ADMIN',
         'FALSE', '+996');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (2, 'Nurkamil Kamchiev', 'nurkamilkamchiev@gmail.com',
