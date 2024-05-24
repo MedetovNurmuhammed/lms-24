@@ -141,7 +141,7 @@ values (20, 'Adilet Aibekov', 'toktogulovanurzanat@gmail.com@gmail.com',
         '$2a$12$7czzoB5mJOjzo38F2mQf.etrXOwngkovaxPZip/E8XP1pxX1mZes.',
         'INSTRUCTOR', 'FALSE', '+996703857463');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (21, 'Jigit Turumbekov', 'student@gmail.com', '$2a$12$.SAqQkou.qDYE7j.R6B0P.weM5LG1Kh7eRFV2FluwmlkNBnTcKbWO',
+values (21, 'Jigit Turumbekov', 'muhammedtoichubai@gmail.com', '$2a$12$.SAqQkou.qDYE7j.R6B0P.weM5LG1Kh7eRFV2FluwmlkNBnTcKbWO',
         'STUDENT', 'FALSE', '+996709546327');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com@gmail.com',
