@@ -1,4 +1,4 @@
-package lms.config.sequrity;
+package lms.config.security;
 
 import lms.config.jwt.JwtFilter;
 import lms.repository.UserRepository;
@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 @EnableScheduling
-public class SpringSecurity {
+public class AppSecurity {
 
     private final UserRepository userRepo;
     private final JwtFilter jwtFilter;

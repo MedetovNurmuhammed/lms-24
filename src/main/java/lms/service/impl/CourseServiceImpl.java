@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -84,7 +85,8 @@ public class CourseServiceImpl implements CourseService {
                 .build();
     }
 
-    @Override @Transactional
+    @Override
+    @Transactional
     public SimpleResponse deleteCourseById(Long courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
@@ -123,6 +125,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
@@ -182,26 +185,28 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
         Pageable pageable = PageRequest.of(page - 1, size);
+        Course course = courseRepository.findById(courseId).orElseThrow(
+                () -> new NotFoundException("Курс с Id:   " + courseId + "  не найдены.")
+        );
         if (role.equals(Role.STUDENT)) {
-            Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(courseId, pageable);
+            Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(course.getId(), pageable);
             return AllInstructorsOrStudentsOfCourse.builder()
                     .page(allStudentByCourseId.getNumber() + 1)
-                    .size(allStudentByCourseId.getSize())
+                    .size(allStudentByCourseId.getNumberOfElements())
                     .getAllInstructorsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
-            Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.findAllInstructorsByCourseId(courseId, pageable);
-            if (allInstructorsByCourseId.getContent().isEmpty()) {
+            Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
                 return AllInstructorsOrStudentsOfCourse.builder()
                         .page(allInstructorsByCourseId.getNumber() + 1)
-                        .size(allInstructorsByCourseId.getSize())
+                        .size(allInstructorsByCourseId.getNumberOfElements())
                         .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
                         .build();
-            }
         }
-        throw new NotFoundException("Course with id: "+courseId+" not found or role is null");
+        throw new NotFoundException("Курс с Id:  " + courseId + " не найдены.");
     }
 }
 

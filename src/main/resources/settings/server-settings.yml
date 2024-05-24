@@ -1,0 +1,10 @@
+server:
+  error:
+    include-message: always
+
+spring:
+  servlet:
+    multipart:
+      file-size-threshold: 22MB
+      max-file-size: 100MB
+      max-request-size: 100MB

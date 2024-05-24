@@ -2,12 +2,8 @@ package lms.entities;
 
 import jakarta.persistence.*;
 import lms.enums.TaskAnswerStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.time.LocalDate;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +15,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerTask{
+public class AnswerTask {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_task_gen")
-    @SequenceGenerator(name = "answer_task_gen",sequenceName = "answer_task_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "answer_task_gen", sequenceName = "answer_task_seq", allocationSize = 1, initialValue = 21)
     private long id;
     private String text;
     private String image;
@@ -30,7 +26,7 @@ public class AnswerTask{
     @Enumerated(EnumType.STRING)
     private TaskAnswerStatus taskAnswerStatus;
     private int point = 0;
-    @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     private LocalDateTime dateOfSend;
     private LocalDateTime updatedAt;
@@ -40,7 +36,7 @@ public class AnswerTask{
     private Student student;
 
     //*************************************** Task *****************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Task task;
 
     //*************************************** Link *****************************************

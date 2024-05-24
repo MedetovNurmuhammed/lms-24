@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.flywaydb:flyway-core'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -34,13 +35,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.3'
     implementation 'org.apache.poi:poi-ooxml:5.2.3' // Используйте актуальную версию
     implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.701'
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     implementation 'com.github.ozlerhakan:poiji:3.1.9'
-    implementation 'org.flywaydb:flyway-core'
-
-
 }
 
 tasks.named('test') {

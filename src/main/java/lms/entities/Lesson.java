@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,7 @@ import java.util.List;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_gen")
-    @SequenceGenerator(name = "lesson_gen",sequenceName = "lesson_seq", allocationSize = 1, initialValue = 21)
+    @SequenceGenerator(name = "lesson_gen", sequenceName = "lesson_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String title;
     private LocalDate createdAt;
@@ -30,24 +33,24 @@ public class Lesson {
     private Type type;
 
     //********************************* Course ********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, optional = false)
     private Course course;
 
     //*************************************** Video ***************************************
-    @OneToMany(mappedBy = "lesson",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Video> videos = new ArrayList<>();
 
     //*************************************** Presentation ********************************
-    @OneToMany(mappedBy = "lesson",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Presentation> presentations = new ArrayList<>();
 
     //*************************************** Link *****************************************
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson",fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<Test> tests ;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true)
+    private List<Test> tests;
 
     //*************************************** Task *****************************************
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson",fetch = FetchType.LAZY,orphanRemoval = true)
