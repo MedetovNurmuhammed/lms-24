@@ -24,8 +24,4 @@ public interface StudentService {
     StudentResponse findById(Long studId);
 
     SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file);
-
-    void isValidPhoneNumber(String phoneNumber);
-
-    void isValidEmail(String email);
 }

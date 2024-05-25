@@ -36,7 +36,6 @@ public class Group {
     private String image;
     private LocalDate dateOfStart;
     private LocalDate dateOfEnd;
-    private LocalDate removedDate;
 
     //*************************************** Course ******************************************
     @ManyToMany(mappedBy = "groups", cascade = CascadeType.DETACH)
