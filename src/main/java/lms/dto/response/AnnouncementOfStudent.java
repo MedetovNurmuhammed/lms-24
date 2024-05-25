@@ -6,6 +6,7 @@ import lombok.Builder;
 public record AnnouncementOfStudent(
      long announcementId,
      String content,
+     String author,
      Boolean isView
 ) {
 }
