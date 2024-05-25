@@ -36,17 +36,8 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             """)
     Page<StudentResponse> findAllBySearchTerm(String searchTerm, List<StudyFormat> studyFormats, Long groupId,Pageable pageable);
 
-    default Page<StudentResponse> searchAll(String searchTerm, List<StudyFormat> studyFormats, Long groupId, Pageable pageable) {
-        List<StudentResponse> allBySearchTerm = findAllBySearchTerm(searchTerm, studyFormats, groupId);
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), allBySearchTerm.size());
-        return new PageImpl<>(allBySearchTerm.subList(start, end), pageable, allBySearchTerm.size());
-    }
-
     @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email,s.user.block) from Student s where s.group.id = :groupId and s.trash is null")
-    List<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
-
-
+    Page<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
 
     @Query("select s from Student s where s.user.id =:id ")
     Optional<Student> findByUserId(Long id);
