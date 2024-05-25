@@ -144,7 +144,7 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (21, 'Jigit Turumbekov', 'muhammedtoichubai@gmail.com', '$2a$12$.SAqQkou.qDYE7j.R6B0P.weM5LG1Kh7eRFV2FluwmlkNBnTcKbWO',
         'STUDENT', 'FALSE', '+996709546327');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com@gmail.com',
+values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com',
         '$2a$12$bPSakcM.R4v1I9EUnivsru5U3FQd3rsunIciIquXGdDxKGt04F9iy',
         'STUDENT', 'FALSE', '+996705098658');
 insert into users (id, full_name, email, password, role, block, phone_number)
@@ -463,6 +463,16 @@ values (19, 'js9',
 insert into links (id, title, url)
 values (20, 'js10',
         'https://tamu.edu/non/lectus/aliquam/sitis=diam&nam=id&congue=ornare&risus=imperdiet&semper=sapien&porta=urna&volutpat=pretium&quam=nisl&pede=ut&lobortis=volutpat&ligula=sapien&sit=arcu&amet=sed&eleifend=augue&pede=aliquam');
+insert into links (id, title, url)
+values (21, 'spring', 'https://www.youtube.com/watch?v=OtatKwyQtxk'),
+       (22, 'oop',' https://www.youtube.com/watch?v=sTQ0AFR64pE'),
+       (23, 'mvs', 'https://www.youtube.com/watch?v=akWWLpOMzZw'),
+       (24, 'abstract', 'https://www.youtube.com/watch?v=uS9VTJax1v4'),
+       (25, 'spring security', 'https://www.youtube.com/watch?v=HavWdiDCXVY'),
+       (26, 'hibernate', 'https://www.youtube.com/watch?v=6s22UFg3Xk0'),
+       (27, 'sql', 'https://www.youtube.com/watch?v=eEqJcNhzB7Q'),
+       (28, 'jdbs', 'https://www.youtube.com/watch?v=NFrtlt-5DuE'),
+       (29, 'rest api', 'https://www.youtube.com/watch?v=8WltrXA8dsA');
 
 insert into tasks (id, lesson_id, created_at, deadline, code, description, file, image, title)
 values (1, 1, '2024-04-09', '2024-05-09', '5051',
@@ -700,37 +710,37 @@ values (1, 1);
 insert into lessons_videos (lesson_id, videos_id)
 values (1, 2);
 insert into lessons_videos (lesson_id, videos_id)
-values (3, 3);
+values (1, 3);
 insert into lessons_videos (lesson_id, videos_id)
-values (3, 4);
+values (1, 4);
 insert into lessons_videos (lesson_id, videos_id)
-values (4, 5);
+values (2, 5);
 insert into lessons_videos (lesson_id, videos_id)
-values (4, 6);
+values (2, 6);
 insert into lessons_videos (lesson_id, videos_id)
-values (6, 7);
+values (2, 7);
 insert into lessons_videos (lesson_id, videos_id)
-values (7, 8);
+values (2, 8);
 insert into lessons_videos (lesson_id, videos_id)
-values (7, 9);
+values (3, 9);
 insert into lessons_videos (lesson_id, videos_id)
-values (9, 10);
+values (3, 10);
 insert into lessons_videos (lesson_id, videos_id)
-values (10, 11);
+values (3, 11);
 insert into lessons_videos (lesson_id, videos_id)
-values (10, 12);
+values (3, 12);
 insert into lessons_videos (lesson_id, videos_id)
-values (12, 13);
+values (4, 13);
 insert into lessons_videos (lesson_id, videos_id)
-values (13, 14);
+values (4, 14);
 insert into lessons_videos (lesson_id, videos_id)
-values (14, 15);
+values (4, 15);
 insert into lessons_videos (lesson_id, videos_id)
-values (15, 16);
+values (4, 16);
 insert into lessons_videos (lesson_id, videos_id)
-values (15, 17);
+values (5, 17);
 insert into lessons_videos (lesson_id, videos_id)
-values (16, 18);
+values (5, 18);
 
 insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (1, 1, 'FALSE', '2024-04-26',
@@ -1214,8 +1224,61 @@ update links
 set video_id =11
 where id = 11;
 update links
-set lesson_id =12
+set video_id =12
 where id = 12;
+update links
+set video_id =3
+where id = 14;
+update links
+set video_id =4
+where id = 15;
+update links
+set video_id =5
+where id = 16;
+update links
+set video_id =6
+where id = 17;
+update links
+set video_id =7
+where id = 18;
+update links
+set video_id =10
+where id = 19;
+update links
+set video_id =13
+where id = 21;
+update links
+set video_id =14
+where id = 22;
+update links
+set video_id =15
+where id = 23;
+update links
+set video_id =16
+where id = 24;
+update links
+set video_id =17
+where id = 25;
+update links
+set video_id =18
+where id = 26;
+update links
+set video_id =19
+where id = 27;
+update links
+set video_id =20
+where id = 28;
+update links
+set video_id =2
+where id = 29;
+update links
+set lesson_id =4
+where id = 20;
+update links
+set lesson_id =7
+where id = 13;
+
+
 
 insert into student_notification_states (notification_states, notification_states_key, student_id)
 values ('FALSE', 1, 1);
@@ -1289,36 +1352,36 @@ values (9, 'https://www.youtube.com/watch?v=grlvDLzvbL4');
 insert into task_links(task_id, links)
 values (10, 'https://www.youtube.com/watch?v=SXkC92TqxAw');
 
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (1, 1, 1, '1/28/2024', 'исправь и занаво напиши');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (2, 2, 2, '9/8/2023', 'все правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (20, 3, 3, '6/18/2023', 'перездача');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (4, 4, 4, '3/22/2024', 'отлично');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (5, 5, 5, '10/13/2023', 'молодец');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (6, 6, 6, '5/22/2023', 'не правильно');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (7, 7, 7, '2/1/2024', 'двойка за заданте');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (8, 8, 8, '12/12/2023', 'Требуется переработка.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (9, 9, 9, '8/4/2023', 'Пожалуйста, исправьте недочеты.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (10, 10, 10, '7/1/2023', 'Необходимо улучшить качество работы.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (11, 11, 11, '12/25/2023', 'Рекомендую пересмотреть решение.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (12, 12, 12, '5/31/2023', 'Прошу внимательнее проверить ответы.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (13, 13, 13, '6/23/2023', 'Требуется дополнительное обучение для правильного выполнения задания.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (14, 14, 14, '1/5/2024', 'Нужно больше усердия и внимания к деталям.');
-insert into comments (answer_task_id, id, user_id, created_at, content)
-values (15, 15, 15, '1/1/2024', 'Нужно больше практики для успешного выполнения задания.');
+insert into comments (answer_task_id, id, user_id, content)
+values (1, 1, 1, 'исправь и занаво напиши');
+insert into comments (answer_task_id, id, user_id, content)
+values (2, 2, 2, 'все правильно');
+insert into comments (answer_task_id, id, user_id, content)
+values (20, 3, 3, 'перездача');
+insert into comments (answer_task_id, id, user_id, content)
+values (4, 4, 4, 'отлично');
+insert into comments (answer_task_id, id, user_id, content)
+values (5, 5, 5, 'молодец');
+insert into comments (answer_task_id, id, user_id, content)
+values (6, 6, 6, 'не правильно');
+insert into comments (answer_task_id, id, user_id, content)
+values (7, 7, 7,  'двойка за заданте');
+insert into comments (answer_task_id, id, user_id, content)
+values (8, 8, 8,  'Требуется переработка.');
+insert into comments (answer_task_id, id, user_id, content)
+values (9, 9, 9,  'Пожалуйста, исправьте недочеты.');
+insert into comments (answer_task_id, id, user_id, content)
+values (10, 10, 10,  'Необходимо улучшить качество работы.');
+insert into comments (answer_task_id, id, user_id, content)
+values (11, 11, 11, 'Рекомендую пересмотреть решение.');
+insert into comments (answer_task_id, id, user_id, content)
+values (12, 12, 12, 'Прошу внимательнее проверить ответы.');
+insert into comments (answer_task_id, id, user_id, content)
+values (13, 13, 13,  'Требуется дополнительное обучение для правильного выполнения задания.');
+insert into comments (answer_task_id, id, user_id, content)
+values (14, 14, 14,  'Нужно больше усердия и внимания к деталям.');
+insert into comments (answer_task_id, id, user_id, content)
+values (15, 15, 15, 'Нужно больше практики для успешного выполнения задания.');
 
 insert into student_announcements(announcements, announcements_key, student_id)
 values (true, 1, 5),
@@ -1334,5 +1397,3 @@ values (true, 1, 5),
        (true, 4, 11),
        (false, 4, 12),
        (true, 5, 9)
-
-

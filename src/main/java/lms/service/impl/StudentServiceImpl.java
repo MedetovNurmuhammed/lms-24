@@ -16,6 +16,7 @@ import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
 import lms.repository.GroupRepository;
@@ -62,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 
         boolean exists = userRepository.existsByEmail(studentRequest.email());
         if (exists)
-            throw new AlreadyExistsException("User with email " + studentRequest.email() + " already exists");
+            throw new AlreadyExistsException("Пользователь с электронной почтой " + studentRequest.email() + " уже существует");
 
         User user = new User();
         Student student = new Student();
@@ -88,8 +89,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
         Pageable pageable = PageRequest.of(page - 1, size);
-        log.error(search);
+        log.info(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
         if (search.equalsIgnoreCase("ONLINE")) {
             search = null;
@@ -101,23 +103,26 @@ public class StudentServiceImpl implements StudentService {
             studyFormats.addAll(List.of(StudyFormat.values()));
         } else studyFormats.add(StudyFormat.valueOf(studyFormat));
 
-        Page<StudentResponse> allStudent = studentRepository.searchAll(search, studyFormats, groupId, pageable);
+        Page<StudentResponse> allStudent = studentRepository.findAllBySearchTerm(search, studyFormats, groupId, pageable);
 
         return AllStudentResponse.builder()
                 .page(allStudent.getNumber() + 1)
-                .size(allStudent.getSize())
+                .size(allStudent.getNumberOfElements())
                 .students(allStudent.getContent())
                 .build();
     }
 
     @Override
     public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
+        groupRepository.findById(groupId).orElseThrow(() -> new NoSuchElementException("Группа не найден"));
+
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
+        Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
         return AllStudentResponse.builder()
-                .page(page)
-                .size(size)
-                .students(studentResponses)
+                .page(studentResponses.getNumber() + 1)
+                .size(studentResponses.getNumberOfElements())
+                .students(studentResponses.getContent())
                 .build();
     }
 
@@ -126,6 +131,12 @@ public class StudentServiceImpl implements StudentService {
     public SimpleResponse update(Long studId, StudentRequest studentRequest) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
+        User user = student.getUser();
+        if (!user.getEmail().equals(studentRequest.email())) {
+            boolean b = userRepository.existsByEmail(studentRequest.email());
+            if (b) throw new AlreadyExistsException("Электронная почта уже существует");
+        }
+
         student.getUser().setFullName(studentRequest.firstName() + ' ' + studentRequest.lastName());
         student.getUser().setPhoneNumber(studentRequest.phoneNumber());
         student.getUser().setEmail(studentRequest.email());
@@ -165,16 +176,14 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        if (student.getTrash() == null) {
-            return StudentResponse.builder()
-                    .id(student.getId())
-                    .fullName(student.getUser().getFullName())
-                    .phoneNumber(student.getUser().getPhoneNumber())
-                    .email(student.getUser().getEmail())
-                    .groupName(student.getGroup().getTitle())
-                    .studyFormat(student.getStudyFormat())
-                    .build();
-        } else throw new NotFoundException("Студент не найден!");
+        return StudentResponse.builder()
+                .id(student.getId())
+                .fullName(student.getUser().getFullName())
+                .phoneNumber(student.getUser().getPhoneNumber())
+                .email(student.getUser().getEmail())
+                .groupName(student.getGroup().getTitle())
+                .studyFormat(student.getStudyFormat())
+                .build();
     }
 
     @Override
@@ -253,7 +262,6 @@ public class StudentServiceImpl implements StudentService {
                 .build();
     }
 
-    @Override
     public void isValidPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             throw new ValidationException("Номер телефона не может быть пустым");
@@ -269,13 +277,11 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    @Override
-
     public void isValidEmail(@Email String email) {
         if (email == null || email.isEmpty()) {
             throw new ValidationException("Email не должен быть пустым!");
         }
-        if (!email.contains("@gmail.com")) {
+        if (!email.contains("@")) {
             throw new ValidationException("Некорректный адрес почты!");
         }
     }
