@@ -175,15 +175,18 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        return StudentResponse.builder()
-                .id(student.getId())
-                .fullName(student.getUser().getFullName())
-                .phoneNumber(student.getUser().getPhoneNumber())
-                .email(student.getUser().getEmail())
-                .groupName(student.getGroup().getTitle())
-                .studyFormat(student.getStudyFormat())
-                .isBlock(student.getUser().getBlock())
-                .build();
+        if (student.getTrash() == null) {
+            return StudentResponse.builder()
+                    .id(student.getId())
+                    .fullName(student.getUser().getFullName())
+                    .phoneNumber(student.getUser().getPhoneNumber())
+                    .email(student.getUser().getEmail())
+                    .groupName(student.getGroup().getTitle())
+                    .studyFormat(student.getStudyFormat())
+                    .isBlock(student.getUser().getBlock())
+                    .build();
+        } else throw new NotFoundException("Студент не найден!");
+
     }
 
     @Override

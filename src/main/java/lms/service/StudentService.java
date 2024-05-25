@@ -28,4 +28,5 @@ public interface StudentService {
     void isValidEmail(String email);
 
     StudentIsBlockResponse isBlock(Long studId);
+
 }
