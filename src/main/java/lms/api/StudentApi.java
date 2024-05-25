@@ -16,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
@@ -81,8 +83,10 @@ public class StudentApi {
             description = "Метод для удаления cтудента по его идентификатору." +
                           " Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping("/delete/{studId}")
-    public SimpleResponse delete(@PathVariable Long studId) {
+    @GetMapping("/{studId}")
+    public SimpleResponse delete(@PathVariable Long studId, Principal principal) {
+        System.err.println("principal.getName() = " + principal.getName());
+        System.err.println("\"start\" = " + "start");
         return studentService.delete(studId);
     }
 

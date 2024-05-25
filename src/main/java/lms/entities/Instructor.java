@@ -54,8 +54,8 @@ public class Instructor {
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
-    @OneToOne(fetch = FetchType.LAZY)
-    private Trash trash;
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+    private List<Trash> trashes;
 
     @PrePersist
     protected void onCreate() {

@@ -15,12 +15,12 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select distinct new lms.dto.response.InstructorsOrStudentsOfCourse" +
             "(i.id, c.title, i.user.fullName, i.specialization, i.user.phoneNumber, i.user.email) " +
             "from Instructor i join i.courses c " +
-            "where c.id = :courseId and i.trash.id is null ")
+            "where c.id = :courseId and i.trashes is empty ")
     Page <InstructorsOrStudentsOfCourse> getInstructorsByCourseId(@Param("courseId")Long courseId, Pageable pageable);
 
     @Query("select distinct new lms.dto.response.InstructorResponse" +
             "(i.id, i.user.fullName, i.specialization, i.user.phoneNumber, i.user.email) " +
-            "from Instructor i where  i.trash.id is null order by i.id asc ")
+            "from Instructor i where  i.trashes is empty order by i.id asc ")
     Page<InstructorResponse> findAllInstructors(Pageable pageable);
 
     Optional<Instructor> findByUserId(Long id);

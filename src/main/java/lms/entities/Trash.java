@@ -1,15 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lms.enums.Type;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,7 +36,8 @@ public class Trash {
     @OneToOne(mappedBy = "trash")
     private Course course;
 
-    @OneToOne(mappedBy = "trash")
+    @ManyToOne()
+    @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
     @OneToOne(mappedBy = "trash")

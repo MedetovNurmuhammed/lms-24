@@ -2,7 +2,8 @@ package lms.service.impl;
 
 import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
-import lms.aws.service.StorageService;
+//import lms.aws.service.StorageService;
+import lms.config.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
@@ -60,7 +61,9 @@ public class TrashServiceImpl implements TrashService {
             allTrashResponse.setTrashResponses(trashResponses.getContent());
             return allTrashResponse;
         }else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable);
+            System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
+            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable,currentUser.getId());
+            System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
             AllTrashResponse allTrashResponse = new AllTrashResponse();
             allTrashResponse.setPage(allInstructorTrashes.getNumber() + 1);
             allTrashResponse.setSize(allInstructorTrashes.getNumberOfElements());
@@ -207,7 +210,9 @@ public class TrashServiceImpl implements TrashService {
                 group.setTrash(null);
             } else if (trash.getInstructor() != null) {
                 Instructor instructor = trash.getInstructor();
-                instructor.setTrash(null);
+                instructor.setTrashes(null);
+
+
             } else if (trash.getStudent() != null) {
                 Student student = trash.getStudent();
                 student.setTrash(null);
