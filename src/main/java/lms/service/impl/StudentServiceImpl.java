@@ -5,9 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import lms.dto.request.ExcelUser;
 import lms.dto.request.StudentRequest;
-import lms.dto.response.AllStudentResponse;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
+import lms.dto.response.*;
 import lms.entities.Group;
 import lms.entities.Student;
 import lms.entities.Trash;
@@ -169,6 +167,7 @@ public class StudentServiceImpl implements StudentService {
                     .email(student.getUser().getEmail())
                     .groupName(student.getGroup().getTitle())
                     .studyFormat(student.getStudyFormat())
+                    .isBlock(student.getUser().getBlock())
                     .build();
         } else throw new NotFoundException("Студент не найден!");
     }
@@ -274,6 +273,31 @@ public class StudentServiceImpl implements StudentService {
         if (!email.contains("@gmail.com")) {
             throw new ValidationException("Некорректный адрес почты!");
         }
+    }
+
+    @Override
+    @Transactional
+    public StudentIsBlockResponse isBlock(Long studId) {
+        Student student = studentRepository.findById(studId).
+                orElseThrow(() -> new NotFoundException("Студент не найден!"));
+        if (student.getUser().getBlock().equals(false)) {
+            student.getUser().setBlock(true);
+            return StudentIsBlockResponse.builder()
+                    .isTrue(true)
+                    .fullName(student.getUser().getFullName())
+                    .httpStatus(HttpStatus.OK)
+                    .message("Студент блокирован!")
+                    .build();
+        } else {
+            student.getUser().setBlock(false);
+            return StudentIsBlockResponse.builder()
+                    .isTrue(false)
+                    .fullName(student.getUser().getFullName())
+                    .httpStatus(HttpStatus.OK)
+                    .message("Студент разблокирован!")
+                    .build();
+        }
+
     }
 
     private void validateStudent(ExcelUser student) {

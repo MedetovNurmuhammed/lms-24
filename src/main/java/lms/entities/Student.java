@@ -30,6 +30,7 @@ public class Student {
     private Type type;
 
 
+
     public Type getType() {
         return type = Type.STUDENT;
     }

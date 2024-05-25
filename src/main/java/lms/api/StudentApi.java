@@ -5,9 +5,7 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lms.dto.FindAllStudentsRequestParams;
 import lms.dto.request.StudentRequest;
-import lms.dto.response.AllStudentResponse;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
+import lms.dto.response.*;
 import lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -91,5 +89,14 @@ public class StudentApi {
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file) {
         return studentService.importStudentsFromExcel(groupId, file);
+    }
+
+    @Operation(summary = "Доступ к cтуденту",
+            description = "Метод для разрешение к cтуденту по его идентификатору." +
+                    " Авторизация: администратор !")
+    @Secured("ADMIN")
+    @PostMapping("/isBlock/{studId}")
+    public StudentIsBlockResponse isBlock (@PathVariable Long studId){
+      return  studentService.isBlock(studId);
     }
 }

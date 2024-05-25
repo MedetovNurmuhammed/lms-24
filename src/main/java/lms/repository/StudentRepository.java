@@ -27,7 +27,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
 
     @Query("""
-            select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email)
+            select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email,s.user.block)
                from Student s
                  where  (:groupId is null or s.group.id = :groupId)
                    and ( s.studyFormat in (:studyFormats))
@@ -43,7 +43,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
         return new PageImpl<>(allBySearchTerm.subList(start, end), pageable, allBySearchTerm.size());
     }
 
-    @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email) from Student s where s.group.id = :groupId and s.trash is null")
+    @Query("select new lms.dto.response.StudentResponse(s.id,   s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email) from Student s where s.group.id = :groupId and s.trash is null")
     List<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
 
     @Query("select s from Student s where s.user.id =:id ")

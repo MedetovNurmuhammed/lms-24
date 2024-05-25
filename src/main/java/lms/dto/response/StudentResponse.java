@@ -10,6 +10,8 @@ public record StudentResponse(
         String phoneNumber,
         String groupName,
         StudyFormat studyFormat,
-        String email
+        String email,
+        Boolean isBlock
+
 ) {
 }

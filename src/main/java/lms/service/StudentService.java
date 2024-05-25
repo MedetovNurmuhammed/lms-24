@@ -2,9 +2,7 @@ package lms.service;
 
 import jakarta.mail.MessagingException;
 import lms.dto.request.StudentRequest;
-import lms.dto.response.AllStudentResponse;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
+import lms.dto.response.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,4 +26,6 @@ public interface StudentService {
     void isValidPhoneNumber(String phoneNumber);
 
     void isValidEmail(String email);
+
+    StudentIsBlockResponse isBlock(Long studId);
 }
