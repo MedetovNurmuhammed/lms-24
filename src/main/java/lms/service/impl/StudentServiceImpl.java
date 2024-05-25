@@ -297,7 +297,7 @@ public class StudentServiceImpl implements StudentService {
         if (student.getUser().getBlock().equals(false)) {
             student.getUser().setBlock(true);
             return StudentIsBlockResponse.builder()
-                    .isTrue(true)
+                    .isBlock(true)
                     .fullName(student.getUser().getFullName())
                     .httpStatus(HttpStatus.OK)
                     .message("Студент блокирован!")
@@ -305,7 +305,7 @@ public class StudentServiceImpl implements StudentService {
         } else {
             student.getUser().setBlock(false);
             return StudentIsBlockResponse.builder()
-                    .isTrue(false)
+                    .isBlock(false)
                     .fullName(student.getUser().getFullName())
                     .httpStatus(HttpStatus.OK)
                     .message("Студент разблокирован!")
