@@ -2,10 +2,7 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
-import lms.dto.response.FindAllResponseCourse;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.AllInstructorsOrStudentsOfCourse;
-import lms.dto.response.InstructorsOrStudentsOfCourse;
+import lms.dto.response.*;
 import lms.entities.Course;
 import lms.entities.Group;
 import lms.entities.Instructor;
@@ -13,6 +10,7 @@ import lms.enums.Role;
 import lms.entities.Trash;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.IllegalArgumentException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
@@ -103,10 +101,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<FindAllResponseCourse> findAllCourse(int page, int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+    public FindAllResponseCourse findAllCourse(int page, int size) {
+        Pageable pageable = getPageable(page,size);
 
-        return courseRepository.findAllCourse(pageable);
+        Page<CourseResponse> allCourse = courseRepository.findAllCourse(pageable);
+        return FindAllResponseCourse.builder()
+                .page(allCourse.getNumber() + 1)
+                .size(allCourse.getNumberOfElements())
+                .courses(allCourse.getContent())
+                .build();
+
     }
 
     @Transactional
@@ -187,7 +191,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = getPageable(page, size);
         Course course = courseRepository.findById(courseId).orElseThrow(
                 () -> new NotFoundException("Курс с Id:   " + courseId + "  не найдены.")
         );
@@ -200,13 +204,18 @@ public class CourseServiceImpl implements CourseService {
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
             Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
-                return AllInstructorsOrStudentsOfCourse.builder()
-                        .page(allInstructorsByCourseId.getNumber() + 1)
-                        .size(allInstructorsByCourseId.getNumberOfElements())
-                        .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
-                        .build();
+            return AllInstructorsOrStudentsOfCourse.builder()
+                    .page(allInstructorsByCourseId.getNumber() + 1)
+                    .size(allInstructorsByCourseId.getNumberOfElements())
+                    .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
+                    .build();
         }
         throw new NotFoundException("Курс с Id:  " + courseId + " не найдены.");
+    }
+
+    private Pageable getPageable(int page, int size){
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
+       return PageRequest.of(page - 1, size);
     }
 }
 
