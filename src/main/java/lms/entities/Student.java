@@ -51,7 +51,7 @@ public class Student {
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.EAGER)
     private Group group;
 
     //********************************* ResultTest ****************************************

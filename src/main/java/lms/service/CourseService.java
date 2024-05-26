@@ -5,7 +5,6 @@ import lms.dto.response.AllInstructorsOrStudentsOfCourse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.enums.Role;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface CourseService {
 
     SimpleResponse deleteCourseById(Long courseId);
 
-    Page<FindAllResponseCourse> findAllCourse(int page, int size);
+    FindAllResponseCourse findAllCourse(int page, int size);
 
     SimpleResponse assignInGroupToCourse(Long groupId, Long courseId);
 

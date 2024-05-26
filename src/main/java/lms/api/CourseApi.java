@@ -55,8 +55,9 @@ public class CourseApi {
     @Operation(summary = "Получть все курсы",
             description = "Метод для получение всех курсов" +
                     "Авторизация: администратор!")
-    public Page<FindAllResponseCourse> findAllCourse(@RequestParam int page,
-                                                     @RequestParam int size) {
+    public FindAllResponseCourse findAllCourse(  @RequestParam(required = false, defaultValue = "1") int page,
+                                                 @RequestParam(required = false, defaultValue = "12") int size
+    ) {
         return courseService.findAllCourse(page, size);
     }
 
