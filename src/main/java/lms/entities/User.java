@@ -18,6 +18,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +52,6 @@ public class User implements UserDetails {
     private Boolean block;
     private String uuid;
     private LocalDate removedDate;
-    private Type type;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
