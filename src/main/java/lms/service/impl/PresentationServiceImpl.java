@@ -6,14 +6,10 @@ import lms.dto.request.PresentationRequest;
 import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
-import lms.entities.Lesson;
-import lms.entities.Presentation;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.NotFoundException;
-import lms.repository.LessonRepository;
-import lms.repository.PresentationRepository;
-import lms.repository.TrashRepository;
+import lms.repository.*;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.ZonedDateTime;
@@ -34,6 +31,8 @@ public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
     private final PresentationRepository presentationRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
@@ -102,6 +101,10 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse deletePresentationById(Long presentationId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Presentation presentation = presentationRepository.findById(presentationId).
                 orElseThrow(() -> new NotFoundException("презентация не найдена!"));
         Trash trash = new Trash();
@@ -109,6 +112,8 @@ public class PresentationServiceImpl implements PresentationService {
         trash.setType(Type.PRESENTATION);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setPresentation(presentation);
+        trash.setInstructor(instructor);
+        instructor.getTrashes().add(trash);
         presentation.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()

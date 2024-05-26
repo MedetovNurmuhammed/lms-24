@@ -5,15 +5,11 @@ import lms.dto.request.LessonRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.LessonResponse;
 import lms.dto.response.AllLessonsResponse;
-import lms.entities.Lesson;
-import lms.entities.Course;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.CourseRepository;
-import lms.repository.LessonRepository;
-import lms.repository.TrashRepository;
+import lms.repository.*;
 import lms.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -35,6 +32,8 @@ public class LessonServiceImpl implements LessonService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {
@@ -88,20 +87,25 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse delete(Long lessonId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Lesson lesson = lessonRepository.getLessonById(lessonId);
-        if (lesson != null) {
             Trash trash = new Trash();
             trash.setName(lesson.getTitle());
             trash.setType(Type.LESSON);
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setLesson(lesson);
             lesson.setTrash(trash);
+            trash.setInstructor(instructor);
+            instructor.getTrashes().add(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
                     .message("Урок успешно добавлено в корзину")
                     .build();
-        }else throw new NotFoundException("Урок не найден!!!");
+
     }
 }
 

@@ -3,13 +3,12 @@ package lms.api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.CourseRequest;
-import lms.dto.response.AllInstructorsOrStudentsOfCourse;
+import lms.dto.response.AllInstructorsAndStudentsOfCourse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.enums.Role;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +39,7 @@ public class CourseApi {
                                      @RequestBody @Valid CourseRequest courseRequest) {
         return courseService.editCourse(courseId, courseRequest);
     }
+
 
     @Secured("ADMIN")
     @DeleteMapping("/deleteCourse/{courseId}")
@@ -83,7 +83,7 @@ public class CourseApi {
     @Operation(summary = "Возвращает пагинированный список всех инструкторов одного курса.",
             description = "(Авторизация: администратор)")
     @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
-    public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
+    public AllInstructorsAndStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "12") int size,
             @PathVariable Long courseId, @RequestParam Role role) {

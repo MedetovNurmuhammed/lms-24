@@ -168,7 +168,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse delete(Long taskId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         taskRepository.findAll();
         Task task = taskRepository.findById(taskId).
                 orElseThrow(() -> new NotFoundException("Задача не найдена!"));
@@ -177,6 +182,8 @@ public class TaskServiceImpl implements TaskService {
         trash.setType(Type.TASK);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setTask(task);
+        trash.setInstructor(instructor);
+        instructor.getTrashes().add(trash);
         task.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()
@@ -187,12 +194,7 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTaskById(Long taskId){
         Task task = taskRepository.findById(taskId).
                 orElseThrow(()-> new NotFoundException("Not found"));
-        List<Notification> notifications = task.getNotification();
-        for (Notification notification : notifications) {
-            notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
-            notification.setTask(null);
-        }
-        task.setNotification(null);
+
         taskRepository.deleteById(task.getId());
         taskRepository.deleteById(taskId);
     }

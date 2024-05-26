@@ -3,21 +3,14 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.CourseRequest;
 import lms.dto.response.*;
-import lms.entities.Course;
-import lms.entities.Group;
-import lms.entities.Instructor;
+import lms.entities.*;
 import lms.enums.Role;
-import lms.entities.Trash;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.IllegalArgumentException;
 import lms.exceptions.NotFoundException;
-import lms.repository.CourseRepository;
-import lms.repository.GroupRepository;
-import lms.repository.InstructorRepository;
-import lms.repository.StudentRepository;
-import lms.repository.TrashRepository;
+import lms.repository.*;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,6 +32,8 @@ public class CourseServiceImpl implements CourseService {
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
     private final TrashRepository trashRepository;
+    private final LessonRepository lessonRepository;
+    private final LessonServiceImpl lessonService;
 
     private void checkTitle(String courseTitle) {
         boolean exists = courseRepository.existsByTitle(courseTitle);
@@ -93,6 +88,9 @@ public class CourseServiceImpl implements CourseService {
         trash.setName(course.getTitle());
         trash.setType(Type.COURSE);
         trash.setDateOfDelete(ZonedDateTime.now());
+        for (Lesson lesson : course.getLessons()) {
+            lessonService.delete(lesson.getId());
+        }
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -190,21 +188,21 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
+    public AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
         Pageable pageable = getPageable(page, size);
         Course course = courseRepository.findById(courseId).orElseThrow(
                 () -> new NotFoundException("Курс с Id:   " + courseId + "  не найдены.")
         );
         if (role.equals(Role.STUDENT)) {
             Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(course.getId(), pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allStudentByCourseId.getNumber() + 1)
                     .size(allStudentByCourseId.getNumberOfElements())
                     .getAllInstructorsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
             Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allInstructorsByCourseId.getNumber() + 1)
                     .size(allInstructorsByCourseId.getNumberOfElements())
                     .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())

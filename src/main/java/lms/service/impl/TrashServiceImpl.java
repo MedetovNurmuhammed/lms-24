@@ -1,8 +1,6 @@
 package lms.service.impl;
 
-import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
-//import lms.aws.service.StorageService;
 import lms.config.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
@@ -13,14 +11,12 @@ import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
-import lms.service.TaskService;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +41,7 @@ public class TrashServiceImpl implements TrashService {
     private final LinkRepository linkRepository;
     private final TaskServiceImpl taskService;
     private final StorageService storageService;
+    private final StudentServiceImpl studentService;
     private final NotificationRepository notificationRepository;
 
     @Override
@@ -84,18 +81,18 @@ public class TrashServiceImpl implements TrashService {
             if (trash.getCourse() != null) {
                 Course course = trash.getCourse();
                 for (Lesson lesson : course.getLessons()) {
-                    for (Task task : lesson.getTasks()) {
-                        taskService.deleteTaskById(task.getId());
-                    }
+                    lessonRepository.deleteById(lesson.getId());
                 }
                 for (Instructor instructor : course.getInstructors()) {
                     instructor.getCourses().remove(course);
-
                 }
                 course.setInstructors(null);
                 courseRepository.deleteById(course.getId());
             } else if (trash.getGroup() != null) {
                 Group group = trash.getGroup();
+                for (Student student : group.getStudents()) {
+                    studentRepository.deleteById(student.getId());
+                }
                 for (Course cours : group.getCourses()) {
                     cours.getGroups().remove(group);
                 }

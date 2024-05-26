@@ -12,6 +12,7 @@ import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,6 +32,8 @@ public class TestServiceImpl implements TestService {
     private final OptionRepository optionRepository;
     private final TrashRepository trashRepository;
     private final TestJDBCTemplate testJDBCTemplate;
+    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
@@ -136,7 +139,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    @Transactional
     public SimpleResponse delete(Long testId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Test test = testRepository.findById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
         Trash trash = new Trash();
@@ -144,8 +152,10 @@ public class TestServiceImpl implements TestService {
         trash.setType(Type.TEST);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setTest(test);
-        trashRepository.save(trash);
+        trash.setInstructor(instructor);
+        instructor.getTrashes().add(trash);
         test.setTrash(trash);
+        trashRepository.save(trash);
         return SimpleResponse.builder()
                 .message("Успешно добавлено в корзину!")
                 .httpStatus(HttpStatus.OK)

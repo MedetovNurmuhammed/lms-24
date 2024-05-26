@@ -6,12 +6,14 @@ import lms.dto.response.AllGroupResponse;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
+import lms.entities.Student;
 import lms.entities.Trash;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
 import lms.repository.TrashRepository;
 import lms.service.GroupService;
+import lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,7 @@ import java.util.NoSuchElementException;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final TrashRepository trashRepository;
+    private final StudentService studentService;
 
     @Override
     public SimpleResponse save(GroupRequest groupRequest) {
@@ -92,6 +95,10 @@ public class GroupServiceImpl implements GroupService {
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setGroup(group);
         group.setTrash(trash);
+
+        for (Student student : group.getStudents()) {
+            studentService.delete(student.getId());
+        }
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)

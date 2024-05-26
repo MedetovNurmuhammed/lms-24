@@ -5,14 +5,10 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.request.LinkRequest;
 import lms.dto.response.LinkResponse;
 import lms.dto.response.AllLinkResponse;
-import lms.entities.Lesson;
-import lms.entities.Link;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.NotFoundException;
-import lms.repository.LinkRepository;
-import lms.repository.TrashRepository;
-import lms.repository.LessonRepository;
+import lms.repository.*;
 import lms.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 
@@ -31,10 +28,16 @@ public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final TrashRepository trashRepository;
     private final LessonRepository lessonRepository;
+    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Link link = linkRepository.findById(linkId).
                 orElseThrow(() -> new NotFoundException("Cсылка не найдена!"));
         Trash trash = new Trash();
@@ -42,6 +45,8 @@ public class LinkServiceImpl implements LinkService {
         trash.setType(Type.LINK);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setLink(link);
+        trash.setInstructor(instructor);
+        instructor.getTrashes().add(trash);
         link.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse

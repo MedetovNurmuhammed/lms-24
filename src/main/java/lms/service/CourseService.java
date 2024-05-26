@@ -1,7 +1,7 @@
 package lms.service;
 
 import lms.dto.request.CourseRequest;
-import lms.dto.response.AllInstructorsOrStudentsOfCourse;
+import lms.dto.response.AllInstructorsAndStudentsOfCourse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.SimpleResponse;
 import lms.enums.Role;
@@ -22,5 +22,5 @@ public interface CourseService {
 
     SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds);
 
-    AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);
+    AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);
 }

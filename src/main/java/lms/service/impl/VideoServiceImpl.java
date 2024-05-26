@@ -5,17 +5,11 @@ import lms.dto.request.VideoRequest;
 import lms.dto.response.AllVideoResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.VideoResponse;
-import lms.entities.Lesson;
-import lms.entities.Link;
-import lms.entities.Trash;
-import lms.entities.Video;
+import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.LessonRepository;
-import lms.repository.LinkRepository;
-import lms.repository.TrashRepository;
-import lms.repository.VideoRepository;
+import lms.repository.*;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,6 +33,8 @@ public class VideoServiceImpl implements VideoService {
     private final LessonRepository lessonRepository;
     private final LinkRepository linkRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
@@ -106,6 +103,10 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Video video = videoRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Видеоурок не найден!!!"));
         Trash trash = new Trash();
@@ -113,6 +114,8 @@ public class VideoServiceImpl implements VideoService {
         trash.setType(Type.VIDEO);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setVideo(video);
+        trash.setInstructor(instructor);
+        instructor.getTrashes().add(trash);
         video.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()
