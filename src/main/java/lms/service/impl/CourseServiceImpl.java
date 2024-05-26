@@ -200,7 +200,7 @@ public class CourseServiceImpl implements CourseService {
             return AllInstructorsOrStudentsOfCourse.builder()
                     .page(allStudentByCourseId.getNumber() + 1)
                     .size(allStudentByCourseId.getNumberOfElements())
-                    .getAllInstructorsOfCourses(allStudentByCourseId.getContent())
+                    .getAllStudentsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
             Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
