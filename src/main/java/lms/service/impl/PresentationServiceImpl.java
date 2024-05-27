@@ -5,7 +5,6 @@ import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.PresentationResponse;
-import lms.dto.response.VideoResponse;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
@@ -126,16 +125,5 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     public List<PresentationResponse> findAllPresentationByLessonId(Long lessonId) {
         return  presentationRepository.findAllPresentationsByLesson(lessonId);
-
-//        @Override
-//        public AllLessonsResponse findAll(int page, int size, Long courseId) {
-//            Pageable pageable = getPageable(page, size);
-//            Page<LessonResponse> allLessons = lessonRepository.findAllLessons(courseId, pageable);
-//            return AllLessonsResponse.builder()
-//                    .page(allLessons.getNumber() + 1)
-//                    .size(allLessons.getNumberOfElements())
-//                    .lessonResponses(allLessons.getContent())
-//                    .build();
-//        }
     }
 }

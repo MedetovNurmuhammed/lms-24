@@ -46,22 +46,6 @@ public class VideoServiceImpl implements VideoService {
                 throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
             }
         }
-
-
-
-
-
-//        Lesson lesson = lessonRepository.findById(lessonId)
-//                .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
-//        for (Presentation presentation : lesson.getPresentations()) {
-//            List<String> trashPresentations = trashRepository.findPresentations();
-//            for (String trashPresentation : trashPresentations) {
-//                if (presentationRequest.getTitle().equals(presentation.getTitle()) || trashPresentation.equals(presentationRequest.getTitle())) {
-//
-//
-//                }
-//            }
-//        }
         Video video = new Video();
         Link link = new Link();
         video.setDescription(videoRequest.description());
