@@ -5,6 +5,7 @@ import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.PresentationResponse;
+import lms.dto.response.VideoResponse;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
@@ -39,12 +40,14 @@ public class PresentationServiceImpl implements PresentationService {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
         for (Presentation presentation : lesson.getPresentations()) {
-            List<String> trashPresentations = trashRepository.findPresentations();
-            for (String trashPresentation : trashPresentations) {
-                if (presentationRequest.getTitle().equals(presentation.getTitle()) || trashPresentation.equals(presentationRequest.getTitle())) {
+            if (presentation.getTitle().equals(presentationRequest.getTitle())) {
+                throw new AlreadyExistsException("Презентация с названием " + presentation.getTitle() + " уже существует!");
 
-                    throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
-                }
+            }
+        }
+        for (String presentation : trashRepository.findPresentations()) {
+            if (presentationRequest.getTitle().equals(presentation)) {
+                throw new AlreadyExistsException("Презентация с названием " + presentation + " уже есть в корзине!");
             }
         }
         Presentation presentation = new Presentation();

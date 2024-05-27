@@ -4,11 +4,9 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.VideoRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.VideoResponse;
-import lms.entities.Lesson;
-import lms.entities.Link;
-import lms.entities.Trash;
-import lms.entities.Video;
+import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.LinkRepository;
@@ -19,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -35,13 +34,41 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public SimpleResponse save(VideoRequest videoRequest, Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
+        List<VideoResponse> allVideo = videoRepository.findAllVideo(lesson.getId());
+        for (VideoResponse videoResponse : allVideo) {
+                if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
+                    throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
+
+                }
+            }
+        for (String video : trashRepository.findVideos()) {
+            if (videoRequest.titleOfVideo().equals(video)) {
+                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
+            }
+        }
+
+
+
+
+
+//        Lesson lesson = lessonRepository.findById(lessonId)
+//                .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
+//        for (Presentation presentation : lesson.getPresentations()) {
+//            List<String> trashPresentations = trashRepository.findPresentations();
+//            for (String trashPresentation : trashPresentations) {
+//                if (presentationRequest.getTitle().equals(presentation.getTitle()) || trashPresentation.equals(presentationRequest.getTitle())) {
+//
+//
+//                }
+//            }
+//        }
         Video video = new Video();
-        lesson.getVideos().add(video);
         Link link = new Link();
         video.setDescription(videoRequest.description());
         link.setTitle(videoRequest.titleOfVideo());
         link.setVideo(video);
         link.setUrl(videoRequest.linkOfVideo());
+        lesson.getVideos().add(video);
         linkRepository.save(link);
         videoRepository.save(video);
         return SimpleResponse.builder()
@@ -70,7 +97,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public List<VideoResponse> findAllVideoByLessonId(Long lessonId) {
-        return   videoRepository.findAllVideo(lessonId);
+        return videoRepository.findAllVideo(lessonId);
 
     }
 
