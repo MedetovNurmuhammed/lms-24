@@ -18,7 +18,7 @@ public class AnnouncementApi {
 
     @Secured({"ADMIN", "INSTRUCTOR"})
     @Operation(summary = "Создание объявления",description = "Создание нового объявления с указанными данными.Авторизация:админ и инструктор")
-    @PostMapping()
+    @PostMapping
     public SimpleResponse create(@RequestBody @Valid AnnouncementRequest announcementRequest) {
         return announcementService.createAnnouncement(announcementRequest);
     }
@@ -51,7 +51,7 @@ public class AnnouncementApi {
 
     @Secured("STUDENT")
     @Operation(summary = "Поиск всех объявлений для студента", description = "Получение всех объявлений, предназначенных для студента, с возможностью пагинации.Авторизация:студент")
-    @GetMapping()
+    @GetMapping
     public AllAnnouncementOfStudentResponse findAllByGroupId(
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "4") int size,
