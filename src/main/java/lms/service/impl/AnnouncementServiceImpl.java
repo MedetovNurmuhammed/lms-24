@@ -5,6 +5,7 @@ import lms.dto.request.AnnouncementRequest;
 import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Role;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.service.AnnouncementService;
@@ -14,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -45,8 +48,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcement.setUser(currentUser);
         announcementRepository.save(announcement);
 
-        List<Group> groups = groupRepository.findAllById(announcementRequest.targetGroupIds());
+        List<Group> groups = new ArrayList<>();
+        for (Long groupId : announcementRequest.targetGroupIds()) {
+
+            Group group = groupRepository.findById(groupId).orElseThrow(() ->
+                    new NotFoundException("Группа не найден!"));
+            group.getStudents().forEach(
+                    student -> student.getAnnouncements().put(announcement, false)
+            );
+
+        }
         announcement.setGroups(groups);
+
         return SimpleResponse.builder()
                 .message("Announcement created")
                 .httpStatus(HttpStatus.ACCEPTED)
@@ -75,13 +88,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AllAnnouncementResponse findAllAnnouncementByGroupId(int page, int size, Long groupId) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("publishedDate").descending());
+        Pageable pageable = getPageable(page, size);
 
         if (groupId == null) {
             return findAll(page, size);
         }
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException("Group not found"));
+                .orElseThrow(() -> new NotFoundException("Группа не найден!"));
 
         Page<Announcement> announcementPage = announcementRepository.findAllByGroupId(group.getId(), pageable);
         List<AnnouncementResponse> announcementResponses = announcementPage.getContent().stream()
@@ -148,11 +161,13 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Student student = studentRepository.getStudentByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Студент не найден"));
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
 
         List<AnnouncementOfStudent> announcementsOfStudent = student.getAnnouncements().entrySet().stream()
                 .map(entry -> AnnouncementOfStudent.builder()
                         .announcementId(entry.getKey().getId())
                         .content(entry.getKey().getAnnouncementContent())
+                        .author(entry.getKey().getUser().getFullName())
                         .isView(entry.getValue())
                         .build())
                 .filter(announcementOfStudent -> isView == null || announcementOfStudent.isView().equals(isView))
@@ -173,8 +188,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private AllAnnouncementResponse findAll(int page, int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
-
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("publishedDate").descending());
+        Pageable pageable = getPageable(page, size);
         Page<Announcement> announcementPage;
 
         if (currentUser.getRole() == Role.ADMIN) {
@@ -229,5 +243,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     public Announcement getById(long id) {
         return announcementRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Объявление с идентификатором " + id + " не найдено"));
+    }
+
+    private Pageable getPageable(int page, int size) {
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
+        return PageRequest.of(page - 1, size, Sort.by("publishedDate").descending());
     }
 }
