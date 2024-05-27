@@ -2,7 +2,6 @@ package lms.service.impl;
 
 import jakarta.transaction.Transactional;
 import lms.dto.request.VideoRequest;
-import lms.dto.response.AllVideoResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.VideoResponse;
 import lms.entities.Lesson;
@@ -17,13 +16,11 @@ import lms.repository.TrashRepository;
 import lms.repository.VideoRepository;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Service
 @Validated
@@ -72,14 +69,9 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
-    public AllVideoResponse findAllVideoByLessonId(int size, int page, Long lessonId) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<VideoResponse> allVideo = videoRepository.findAllVideo(lessonId, pageable);
-        return AllVideoResponse.builder()
-                .page(allVideo.getNumber() + 1)
-                .size(allVideo.getSize())
-                .videoResponses(allVideo.getContent())
-                .build();
+    public List<VideoResponse> findAllVideoByLessonId(Long lessonId) {
+        return   videoRepository.findAllVideo(lessonId);
+
     }
 
 

@@ -5,7 +5,6 @@ import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.PresentationResponse;
-import lms.dto.response.FindAllPresentationResponse;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
@@ -18,9 +17,6 @@ import lms.repository.TrashRepository;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -125,14 +121,9 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
-        return FindAllPresentationResponse.builder()
-                .page(allPresentation.getNumber() + 1)
-                .size(allPresentation.getSize())
-                .presentationResponseList(allPresentation.getContent())
-                .build();
+    public List<PresentationResponse> findAllPresentationByLessonId(Long lessonId) {
+        return  presentationRepository.findAllPresentationsByLesson(lessonId);
+
 //        @Override
 //        public AllLessonsResponse findAll(int page, int size, Long courseId) {
 //            Pageable pageable = getPageable(page, size);
