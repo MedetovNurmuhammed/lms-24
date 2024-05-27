@@ -126,7 +126,7 @@ public class InstructorServiceImpl implements InstructorService {
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Инструктор успешно удалено!")
+                .message("Инструктор успешно добавлен в корзину!")
                 .build();
     }
 

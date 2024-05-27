@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +45,12 @@ public class TrashServiceImpl implements TrashService {
     private final StudentServiceImpl studentService;
     private final NotificationRepository notificationRepository;
 
+    private Boolean isOwner(User currentUser, Trash trash) {
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
+                .orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
+        return trash.getInstructor().getId().equals(instructor.getId());
+    }
+
     @Override
     public AllTrashResponse findAll(int page, int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -57,9 +64,9 @@ public class TrashServiceImpl implements TrashService {
             allTrashResponse.setSize(trashResponses.getNumberOfElements());
             allTrashResponse.setTrashResponses(trashResponses.getContent());
             return allTrashResponse;
-        }else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
-            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable,currentUser.getId());
+            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable, currentUser.getId());
             System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
             AllTrashResponse allTrashResponse = new AllTrashResponse();
             allTrashResponse.setPage(allInstructorTrashes.getNumber() + 1);
@@ -122,36 +129,43 @@ public class TrashServiceImpl implements TrashService {
         User currentUser = userRepository.getByEmail(email);
         Trash trash = trashRepository.findById(trashId).
                 orElseThrow(() -> new NotFoundException(" не найден!!! "));
-        if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            if (trash.getPresentation() != null) {
-                Presentation presentation = trash.getPresentation();
-                storageService.deleteFile(presentation.getFile());
-                presentationRepository.deleteById(presentation.getId());
-            } else if (trash.getTest() != null) {
-                Test test = trash.getTest();
-                testRepository.deleteById(test.getId());
-            } else if (trash.getVideo() != null) {
-                Video video = trash.getVideo();
-                videoRepository.deleteById(video.getId());
-            } else if (trash.getTask() != null) {
-                Task task = trash.getTask();
-                taskService.deleteTaskById(task.getId());
-            } else if (trash.getLesson() != null) {
-                Lesson lesson = trash.getLesson();
-                lessonRepository.deleteById(lesson.getId());
-            } else if (trash.getLink() != null) {
-                Link link = trash.getLink();
-                linkRepository.deleteById(link.getId());
-            } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
+        if (isOwner(currentUser, trash)) {
+            if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+                if (trash.getPresentation() != null) {
+                    Presentation presentation = trash.getPresentation();
+                    storageService.deleteFile(presentation.getFile());
+                    presentationRepository.deleteById(presentation.getId());
+                } else if (trash.getTest() != null) {
+                    Test test = trash.getTest();
+                    testRepository.deleteById(test.getId());
+                } else if (trash.getVideo() != null) {
+                    Video video = trash.getVideo();
+                    videoRepository.deleteById(video.getId());
+                } else if (trash.getTask() != null) {
+                    Task task = trash.getTask();
 
-            trashRepository.deleteById(trashId);
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Удален!")
-                    .build();
-        }
-        throw new ForbiddenException("Нет доступа!!");
+                    for (AnswerTask answerTask : task.getAnswerTasks()) {
+
+                    }
+                    taskService.deleteTaskById(task.getId());
+                } else if (trash.getLesson() != null) {
+                    Lesson lesson = trash.getLesson();
+                    lessonRepository.deleteById(lesson.getId());
+                } else if (trash.getLink() != null) {
+                    Link link = trash.getLink();
+                    linkRepository.deleteById(link.getId());
+                } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
+
+                trashRepository.deleteById(trashId);
+                return SimpleResponse.builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Удален!")
+                        .build();
+            }
+            throw new ForbiddenException("Нет доступа!!");
+        }else throw new BadRequestException("Этот корзина не ваша!");
     }
+
 
     @Override
     @Transactional
@@ -161,33 +175,36 @@ public class TrashServiceImpl implements TrashService {
         List<Trash> all = trashRepository.findAll();
         Trash trash = trashRepository.findById(trashId)
                 .orElseThrow(() -> new NotFoundException(trashId + " не найден!"));
-        if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            if (trash.getVideo() != null) {
-                Video video = trash.getVideo();
-                video.setTrash(null);
-            } else if (trash.getPresentation() != null) {
-                Presentation presentation = trash.getPresentation();
-                presentation.setTrash(null);
-            } else if (trash.getLink() != null) {
-                Link link = trash.getLink();
-                link.setTrash(null);
-            } else if (trash.getTest() != null) {
-                Test test = trash.getTest();
-                test.setTrash(null);
-            } else if (trash.getTask() != null) {
-                Task task = trash.getTask();
-                task.setTrash(null);
-            } else if (trash.getLesson() != null) {
-                Lesson lesson = trash.getLesson();
-                lesson.setTrash(null);
-            } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
-            trashRepository.deleteById(trashId);
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message(trashId + " успешно возвращен!")
-                    .build();
-        }
-        throw new ForbiddenException("Доступ запрещен!");
+        if (isOwner(currentUser, trash)) {
+            if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+                if (trash.getVideo() != null) {
+                    Video video = trash.getVideo();
+                    video.setTrash(null);
+                } else if (trash.getPresentation() != null) {
+                    Presentation presentation = trash.getPresentation();
+                    presentation.setTrash(null);
+                } else if (trash.getLink() != null) {
+                    Link link = trash.getLink();
+                    link.setTrash(null);
+                } else if (trash.getTest() != null) {
+                    Test test = trash.getTest();
+                    test.setTrash(null);
+                } else if (trash.getTask() != null) {
+                    Task task = trash.getTask();
+                    task.setTrash(null);
+                } else if (trash.getLesson() != null) {
+                    Lesson lesson = trash.getLesson();
+                    lesson.setTrash(null);
+                } else throw new BadRequestException("Вы не можете удалить этого " + trashId);
+                trashRepository.deleteById(trashId);
+                return SimpleResponse.builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message(trashId + " успешно возвращен!")
+                        .build();
+            }
+            throw new ForbiddenException("Доступ запрещен!");
+
+        } else throw new BadRequestException("Этот корзина не ваша!");
     }
 
     @Override
@@ -218,7 +235,7 @@ public class TrashServiceImpl implements TrashService {
             trashRepository.deleteById(trashId);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message(trashId + " удален!")
+                    .message(trashId + " успешно возвращен!")
                     .build();
         }
         throw new ForbiddenException("Доступ запрещен!");
