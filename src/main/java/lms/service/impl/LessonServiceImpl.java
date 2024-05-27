@@ -41,31 +41,28 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = new Lesson();
         lesson.setCourse(course);
         lesson.setTitle(lessonRequest.getTitle());
-        if (lessonRequest.getCreatedAt().isBefore(LocalDate.now())) {
-            throw new BadRequestException("Дата создания не должна быть раньше текущей даты");
-        }
         lesson.setCreatedAt(lessonRequest.getCreatedAt());
         lessonRepository.save(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("урок " + lesson.getTitle() + " успешно сохранено")
+                .message("Урок " + lesson.getTitle() + " успешно сохранено")
                 .build();
     }
 
     @Override
     public AllLessonsResponse findAll(int page, int size, Long courseId) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<LessonResponse> allLessons = lessonRepository.findAllLessons(pageable, courseId);
+        Pageable pageable = getPageable(page, size);
+        Page<LessonResponse> allLessons = lessonRepository.findAllLessons(courseId, pageable);
         return AllLessonsResponse.builder()
                 .page(allLessons.getNumber() + 1)
-                .size(allLessons.getSize())
+                .size(allLessons.getNumberOfElements())
                 .lessonResponses(allLessons.getContent())
                 .build();
     }
 
     @Override
     public LessonResponse findById(Long lessonId) {
-        Lesson lesson = lessonRepository.takeById(lessonId);
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         return LessonResponse.builder()
                 .id(lesson.getId())
                 .title(lesson.getTitle())
@@ -80,7 +77,7 @@ public class LessonServiceImpl implements LessonService {
         lesson.setTitle(lessonRequest.getTitle());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("урок " + lesson.getTitle() + " успешно обнолён")
+                .message("урок " + lesson.getTitle() + " успешно обновлён")
                 .build();
     }
 
@@ -106,6 +103,11 @@ public class LessonServiceImpl implements LessonService {
                     .message("Урок успешно добавлено в корзину")
                     .build();
 
+    }
+
+    private Pageable getPageable(int page, int size) {
+        if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
+        return PageRequest.of(page - 1, size);
     }
 }
 

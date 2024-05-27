@@ -5,9 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import lms.dto.request.ExcelUser;
 import lms.dto.request.StudentRequest;
-import lms.dto.response.AllStudentResponse;
-import lms.dto.response.SimpleResponse;
-import lms.dto.response.StudentResponse;
+import lms.dto.response.*;
 import lms.entities.Group;
 import lms.entities.Student;
 import lms.entities.Trash;
@@ -17,6 +15,7 @@ import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -116,7 +115,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        groupRepository.findById(groupId).orElseThrow(() -> new NoSuchElementException("Группа не найден"));
+        groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
 
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
@@ -177,14 +176,18 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse findById(Long studId) {
         Student student = studentRepository.findById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        return StudentResponse.builder()
-                .id(student.getId())
-                .fullName(student.getUser().getFullName())
-                .phoneNumber(student.getUser().getPhoneNumber())
-                .email(student.getUser().getEmail())
-                .groupName(student.getGroup().getTitle())
-                .studyFormat(student.getStudyFormat())
-                .build();
+        if (student.getTrash() == null) {
+            return StudentResponse.builder()
+                    .id(student.getId())
+                    .fullName(student.getUser().getFullName())
+                    .phoneNumber(student.getUser().getPhoneNumber())
+                    .email(student.getUser().getEmail())
+                    .groupName(student.getGroup().getTitle())
+                    .studyFormat(student.getStudyFormat())
+                    .isBlock(student.getUser().getBlock())
+                    .build();
+        } else throw new NotFoundException("Студент не найден!");
+
     }
 
     @Override
@@ -285,6 +288,31 @@ public class StudentServiceImpl implements StudentService {
         if (!email.contains("@")) {
             throw new ValidationException("Некорректный адрес почты!");
         }
+    }
+
+    @Override
+    @Transactional
+    public StudentIsBlockResponse isBlock(Long studId) {
+        Student student = studentRepository.findById(studId).
+                orElseThrow(() -> new NotFoundException("Студент не найден!"));
+        if (student.getUser().getBlock().equals(false)) {
+            student.getUser().setBlock(true);
+            return StudentIsBlockResponse.builder()
+                    .isBlock(true)
+                    .fullName(student.getUser().getFullName())
+                    .httpStatus(HttpStatus.OK)
+                    .message("Студент блокирован!")
+                    .build();
+        } else {
+            student.getUser().setBlock(false);
+            return StudentIsBlockResponse.builder()
+                    .isBlock(false)
+                    .fullName(student.getUser().getFullName())
+                    .httpStatus(HttpStatus.OK)
+                    .message("Студент разблокирован!")
+                    .build();
+        }
+
     }
 
     private void validateStudent(ExcelUser student) {

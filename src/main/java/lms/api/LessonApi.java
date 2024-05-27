@@ -21,36 +21,36 @@ public class LessonApi {
     private final LessonService lessonService;
     @Secured("INSTRUCTOR")
     @Operation(summary = "добавляет урок.(Авторизация: инструктор)")
-    @PostMapping("/addLesson/{courseId}")
+    @PostMapping("/{courseId}")
     public SimpleResponse addLesson(@RequestBody @Valid LessonRequest lessonRequest, @PathVariable Long courseId) throws MessagingException {
         return lessonService.addLesson(lessonRequest, courseId);
     }
 
-    @Secured("INSTRUCTOR")
-    @Operation(summary = "Возвращает пагинированный список всех уроков.(Авторизация: инструктор)")
-    @GetMapping("/findAll/{courseId}")
+    @Secured({"INSTRUCTOR","STUDENT"})
+    @Operation(summary = "Возвращает пагинированный список всех уроков.(Авторизация: инструктор и студент)")
+    @GetMapping("all/{courseId}")
     public AllLessonsResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                      @RequestParam(required = false, defaultValue = "6") int size, @PathVariable Long courseId) {
+                                      @RequestParam(required = false, defaultValue = "12") int size, @PathVariable Long courseId) {
         return lessonService.findAll(page, size,courseId);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @Operation(summary = "Возвращает урок.(Авторизация: инструктор)")
-    @GetMapping("/findById/{lessonId}")
+    @Secured({"INSTRUCTOR","STUDENT"})
+    @Operation(summary = "Возвращает урок.(Авторизация: инструктор и студент)")
+    @GetMapping("/{lessonId}")
     public LessonResponse findById(@PathVariable Long lessonId) {
         return lessonService.findById(lessonId);
     }
 
     @Secured("INSTRUCTOR")
-    @PutMapping("/updateLesson/{lessonId}")
+    @PatchMapping("/{lessonId}")
     @Operation(summary = "Обновляет информацию о уроке.(Авторизация: инструктор)")
     public SimpleResponse update(
             @RequestBody @Valid LessonRequest lessonRequest, @PathVariable Long lessonId) {
         return lessonService.update(lessonRequest, lessonId);
     }
-
+    @Secured("INSTRUCTOR")
+    @DeleteMapping("/{lessonId}")
     @Operation(summary = "Удаляет текущий урок.(Авторизация: инструктор)")
-    @DeleteMapping("/delete/{lessonId}")
     public SimpleResponse delete(@PathVariable Long lessonId) {
         return lessonService.delete(lessonId);
     }
