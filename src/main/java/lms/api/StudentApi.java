@@ -92,7 +92,7 @@ public class StudentApi {
             description = "Метод для разрешение к cтуденту по его идентификатору." +
                     " Авторизация: администратор !")
     @Secured("ADMIN")
-    @PostMapping("/isBlock/{studId}")
+    @PatchMapping("/isBlock/{studId}")
     public StudentIsBlockResponse isBlock (@PathVariable Long studId){
       return  studentService.isBlock(studId);
     }

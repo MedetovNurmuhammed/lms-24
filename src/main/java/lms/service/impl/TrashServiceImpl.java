@@ -121,7 +121,7 @@ public SimpleResponse returnToBase(Long trashId) {
 }
 
 @Transactional
-@Scheduled(fixedDelay = 60000)
+//@Scheduled(fixedDelay = 60000)
 public void cleanupExpiredTrash() {
     ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500);
     List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
