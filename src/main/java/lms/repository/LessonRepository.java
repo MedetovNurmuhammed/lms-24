@@ -2,6 +2,7 @@ package lms.repository;
 
 import lms.dto.response.LessonResponse;
 import lms.entities.Lesson;
+import lms.entities.Option;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
         int end = Math.min((start + pageable.getPageSize()), lessons.size());
         return new PageImpl<>(lessons.subList(start, end), pageable, lessons.size());
     }
+
+    @Query("select s from Lesson s where s.id =:lessonId")
+    <T> ScopedValue<lms.entities.Lesson> findLesson(Long lessonId);
 }

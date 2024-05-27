@@ -1,5 +1,6 @@
 package lms.repository;
 
+import lms.entities.Presentation;
 import lms.entities.Trash;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,6 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
     @Query("select t from Trash t where t.id = ?1")
     Trash findTrashById(Long trashId);
 
-
+@Query("select p from Trash t join t.presentation p")
+    Presentation findPresentations();
 }

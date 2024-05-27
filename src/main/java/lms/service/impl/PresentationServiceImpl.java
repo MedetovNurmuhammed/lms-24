@@ -3,13 +3,12 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
-import lms.dto.response.FindAllPresentationResponse;
-import lms.dto.response.PresentationResponse;
-import lms.dto.response.SimpleResponse;
+import lms.dto.response.*;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.PresentationRepository;
@@ -20,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +37,18 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок с id:  " + lessonId + "не существует!"));
+        Lesson lesson = lessonRepository.findLesson(lessonId).orElseThrow(() -> new NotFoundException("Урок с id:  " + lessonId + "не существует!"));
+        for (Presentation presentation : lesson.getPresentations()) {
+            Presentation presentations = trashRepository.findPresentations();
+            if (presentation.getTrash().getId() != null) {
+                if ( presentation.getTitle().equals(presentationRequest.getTitle())) {
+                    throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!!!");
+                }
+            }
+            if ( presentation.getTitle().equals(presentationRequest.getTitle()) ) {
+                    throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!!!");
+            }
+            }
         Presentation presentation = new Presentation();
         presentation.setTitle(presentationRequest.getTitle());
         presentation.setDescription(presentationRequest.getDescription());
@@ -89,10 +98,10 @@ public class PresentationServiceImpl implements PresentationService {
                 .build();
     }
 
-    @Override
+    @Override @Transactional
     public SimpleResponse deletePresentationById(Long presentationId) {
         Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
-        presentationRepository.deleteById(presentationId);
+        presentationRepository.deletePresentation(presentationId);
         Trash trash = new Trash();
         trash.setName(presentation.getTitle());
         trash.setDateOfDelete(ZonedDateTime.now());
@@ -100,6 +109,7 @@ public class PresentationServiceImpl implements PresentationService {
         trash.setPresentation(presentation);
         presentation.setTrash(trash);
         trashRepository.save(trash);
+        presentationRepository.save(presentation);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Презентация успешно удален!")
@@ -108,8 +118,8 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
-        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentations(lessonId, pageable);
         return FindAllPresentationResponse.builder()
                 .page(allPresentation.getNumber() + 1)
                 .size(allPresentation.getSize())
