@@ -33,7 +33,9 @@ public class VideoApi {
 
     @Secured("INSTRUCTOR")
     @GetMapping("/findAll/{lessonId}")
-    public AllVideoResponse findAll(@RequestParam int page, @RequestParam int size, @PathVariable Long lessonId) {
+    public AllVideoResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
+                                    @RequestParam(required = false, defaultValue = "6") int size,
+                                    @PathVariable Long lessonId) {
         return videoService.findAllVideoByLessonId(size, page, lessonId);
     }
 

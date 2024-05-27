@@ -10,7 +10,6 @@ import lms.entities.Link;
 import lms.entities.Trash;
 import lms.entities.Video;
 import lms.enums.Type;
-import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.LinkRepository;
@@ -24,8 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 @Service
@@ -77,7 +74,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public AllVideoResponse findAllVideoByLessonId(int size, int page, Long lessonId) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<VideoResponse> allVideo = videoRepository.findAllVideosByLessonId(lessonId, pageable);
+        Page<VideoResponse> allVideo = videoRepository.findAllVideo(lessonId, pageable);
         return AllVideoResponse.builder()
                 .page(allVideo.getNumber() + 1)
                 .size(allVideo.getSize())
