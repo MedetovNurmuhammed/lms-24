@@ -5,15 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record AnnouncementRequest(
-        @NotBlank
+        @NotBlank(message = "Содержимое объявления не должно быть пустым")
         String announcementContent,
-        @FutureOrPresent(message = "Expiration date must be in the present or future")
+        @Future(message = "Дата истечения срока должна быть в будущем ")
         LocalDate expirationDate,
-        @NotNull(message = "Target group IDs must not be null")
-        @Size(min = 1, message = "At least one target group ID must be provided")
+        @NotNull(message = "Идентификаторы целевой группы не должны быть пустыми")
+        @Size(min = 1, message = "Необходимо указать хотя бы один идентификатор целевой группы")
         List<Long> targetGroupIds,
-        @NotNull(message = "Published date must not be null")
-        @FutureOrPresent(message = "Expiration date must be in the present or future")
+        @NotNull(message = "Дата публикации не должна быть пустой")
+        @FutureOrPresent(message = "Дата публикации должна быть в настоящем или будущем")
         LocalDate publishedDate
 ) {
 }

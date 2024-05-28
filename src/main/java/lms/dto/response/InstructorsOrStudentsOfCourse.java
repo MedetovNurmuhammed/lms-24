@@ -9,6 +9,7 @@ public record InstructorsOrStudentsOfCourse(
         String fullName,
         String specializationOrStudyFormat,
         String phoneNumber,
-        String email
+        String email,
+        Boolean isBlock
 ) {
 }
