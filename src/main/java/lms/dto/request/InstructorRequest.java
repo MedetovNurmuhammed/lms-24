@@ -2,7 +2,6 @@ package lms.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lms.validation.password.PasswordValidation;
 import lms.validation.phoneNumber.PhoneNumberValidation;
 import lombok.Getter;
 import lombok.Setter;
