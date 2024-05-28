@@ -1,33 +1,29 @@
 package lms.repository;
 
-import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import lms.enums.StudyFormat;
-import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
-
-
-    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName, '', s.user.phoneNumber, s.user.email) " +
+    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName," +
+            " '', s.user.phoneNumber, s.user.email, u.block" +
+            ") " +
             "from Student s " +
+            "join s.user u "+
             "join s.group g " +
             "join g.courses c " +
             "where c.id = :courseId")
     Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
-
     @Query("""
-            select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email)
+            select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email,s.user.block)
                from Student s
                  where  (:groupId is null or s.group.id = :groupId)
                    and ( s.studyFormat in (:studyFormats))
@@ -36,8 +32,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
             """)
     Page<StudentResponse> findAllBySearchTerm(String searchTerm, List<StudyFormat> studyFormats, Long groupId,Pageable pageable);
 
-    @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email) " +
-            "from Student s where s.group.id = :groupId and s.trash.id is null")
+    @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email,s.user.block) from Student s where s.group.id = :groupId and s.trash is null")
     Page<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
 
     @Query("select s from Student s where s.user.id =:id ")

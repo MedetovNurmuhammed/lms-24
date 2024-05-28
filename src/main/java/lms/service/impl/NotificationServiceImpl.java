@@ -14,6 +14,7 @@ import lms.repository.StudentRepository;
 import lms.repository.UserRepository;
 import lms.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
@@ -43,7 +45,7 @@ public class NotificationServiceImpl implements NotificationService {
         mimeMessageHelper.setText(message);
         mimeMessageHelper.setSubject("КУРСЫ ПРОГРАММИРОВАНИЕ PEAKSOFT!");
         javaMailSender.send(mimeMessage);
-        System.out.println("Email успешно отправлен");
+        log.info("{} успешно отправлен ", toEmail);
     }
 
     @Override

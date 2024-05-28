@@ -14,6 +14,4 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
 
     @Query("select t from Trash t where t.id = ?1")
     Trash findTrashById(Long trashId);
-
-
 }
