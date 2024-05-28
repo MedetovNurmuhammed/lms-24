@@ -1,7 +1,7 @@
 version: "3.9"
 services:
     backend:
-        image: lms
+        image: lms-ka
         container_name: lms
         restart: always
         ports:
