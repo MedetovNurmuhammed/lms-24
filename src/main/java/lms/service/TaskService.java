@@ -15,5 +15,5 @@ public interface TaskService {
 
     TaskResponse findById(Long taskId);
 
-    AllTaskResponse findAllTaskByLessonId(int page, int size,Long lessonId);
+    AllTaskResponse findAllTaskByLessonId(Long lessonId);
 }
