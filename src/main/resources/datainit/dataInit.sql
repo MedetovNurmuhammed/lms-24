@@ -557,112 +557,112 @@ insert into tasks (id, lesson_id, created_at, deadline, code, description, file,
 values (20, 20, '2024-04-09', '2024-05-09', '8104', 'Abrasion of right elbow, initial encounter', '1716542570768_Сабак_3.pdf',
         '1716542593395_images (1).jpe', 'virginia.edu');
 
-insert into videos (id, created_at, description)
-values (1, '2024-04-09', 'Unspecified injury of unspecified external jugular vein, initial encounter');
-insert into videos (id, created_at, description)
+insert into videos (id, created_at, description, lesson_id)
+values (1, '2024-04-09', 'Unspecified injury of unspecified external jugular vein, initial encounter', 1);
+insert into videos (id, created_at, description, lesson_id)
 values (2, '2024-04-09',
-        'Unspecified physeal fracture of lower end of ulna, unspecified arm, subsequent encounter for fracture with delayed healing');
-insert into videos (id, created_at, description)
-values (3, '2024-04-09', 'Family history of malignant neoplasm of urinary tract');
-insert into videos (id, created_at, description)
-values (4, '2024-04-09', 'Toxic effect of contact with other jellyfish, intentional self-harm, initial encounter');
-insert into videos (id, created_at, description)
-values (5, '2024-04-09', 'Poisoning by mixed antiepileptics, undetermined');
-insert into videos (id, created_at, description)
-values (6, '2024-04-09', 'Other specified injury of intercostal blood vessels, left side');
-insert into videos (id, created_at, description)
-values (7, '2024-04-09', 'Poisoning by smallpox vaccines, undetermined');
-insert into videos (id, created_at, description)
+        'Unspecified physeal fracture of lower end of ulna, unspecified arm, subsequent encounter for fracture with delayed healing', 1);
+insert into videos (id, created_at, description, lesson_id)
+values (3, '2024-04-09', 'Family history of malignant neoplasm of urinary tract', 1);
+insert into videos (id, created_at, description, lesson_id)
+values (4, '2024-04-09', 'Toxic effect of contact with other jellyfish, intentional self-harm, initial encounter', 1);
+insert into videos (id, created_at, description, lesson_id)
+values (5, '2024-04-09', 'Poisoning by mixed antiepileptics, undetermined', 2);
+insert into videos (id, created_at, description, lesson_id)
+values (6, '2024-04-09', 'Other specified injury of intercostal blood vessels, left side', 2);
+insert into videos (id, created_at, description, lesson_id)
+values (7, '2024-04-09', 'Poisoning by smallpox vaccines, undetermined', 2);
+insert into videos (id, created_at, description, lesson_id)
 values (8, '2024-04-09',
-        'Military operations involving unintentional restriction of air and airway, military personnel, sequela');
-insert into videos (id, created_at, description)
-values (9, '2024-04-09', 'Trigger finger, little finger');
-insert into videos (id, created_at, description)
-values (10, '2024-04-09', 'Pathological fracture in neoplastic disease, right humerus, sequela');
-insert into videos (id, created_at, description)
-values (11, '2024-04-09', 'Injury of bladder');
-insert into videos (id, created_at, description)
+        'Military operations involving unintentional restriction of air and airway, military personnel, sequela', 2);
+insert into videos (id, created_at, description, lesson_id)
+values (9, '2024-04-09', 'Trigger finger, little finger', 3);
+insert into videos (id, created_at, description, lesson_id)
+values (10, '2024-04-09', 'Pathological fracture in neoplastic disease, right humerus, sequela', 3);
+insert into videos (id, created_at, description, lesson_id)
+values (11, '2024-04-09', 'Injury of bladder', 3);
+insert into videos (id, created_at, description, lesson_id)
 values (12, '2024-04-09',
-        'Poisoning by keratolytics, keratoplastics, and other hair treatment drugs and preparations, intentional self-harm');
-insert into videos (id, created_at, description)
-values (13, '2024-04-09', 'Glaucoma with increased episcleral venous pressure, right eye');
-insert into videos (id, created_at, description)
-values (14, '2024-04-09', 'Displacement of cystostomy catheter');
-insert into videos (id, created_at, description)
-values (15, '2024-04-09', 'Fracture of alveolus of right mandible, sequela');
-insert into videos (id, created_at, description)
-values (16, '2024-04-09', 'Nondisplaced fracture of neck of unspecified radius, initial encounter for closed fracture');
-insert into videos (id, created_at, description)
-values (17, '2024-04-09', 'Nondisplaced fracture of posterior column [ilioischial] of right acetabulum');
-insert into videos (id, created_at, description)
-values (18, '2024-04-09', 'Anterior subluxation of right ulnohumeral joint, sequela');
-insert into videos (id, created_at, description)
+        'Poisoning by keratolytics, keratoplastics, and other hair treatment drugs and preparations, intentional self-harm', 3);
+insert into videos (id, created_at, description, lesson_id)
+values (13, '2024-04-09', 'Glaucoma with increased episcleral venous pressure, right eye', 4);
+insert into videos (id, created_at, description, lesson_id)
+values (14, '2024-04-09', 'Displacement of cystostomy catheter', 4);
+insert into videos (id, created_at, description, lesson_id)
+values (15, '2024-04-09', 'Fracture of alveolus of right mandible, sequela', 4);
+insert into videos (id, created_at, description, lesson_id)
+values (16, '2024-04-09', 'Nondisplaced fracture of neck of unspecified radius, initial encounter for closed fracture',4);
+insert into videos (id, created_at, description, lesson_id)
+values (17, '2024-04-09', 'Nondisplaced fracture of posterior column [ilioischial] of right acetabulum', 5);
+insert into videos (id, created_at, description, lesson_id)
+values (18, '2024-04-09', 'Anterior subluxation of right ulnohumeral joint, sequela', 5);
+insert into videos (id, created_at, description, lesson_id)
 values (19, '2024-04-09',
-        'Laceration of extensor muscle, fascia and tendon of right middle finger at wrist and hand level, subsequent encounter');
-insert into videos (id, created_at, description)
-values (20, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee');
+        'Laceration of extensor muscle, fascia and tendon of right middle finger at wrist and hand level, subsequent encounter', 5);
+insert into videos (id, created_at, description, lesson_id)
+values (20, '2024-04-09', 'Lateral subluxation of proximal end of tibia, unspecified knee', 5);
 
-insert into presentations (id, created_at, description, file, title)
-values (1, '2023-10-18', 'Other contact with pig', '1716537887591_СПРАВОЧНИК.pd', 'Interior Live Oak');
-insert into presentations (id, created_at, description, file, title)
+insert into presentations (id, created_at, description, file, title, lesson_id)
+values (1, '2023-10-18', 'Other contact with pig', '1716537887591_СПРАВОЧНИК.pd', 'Interior Live Oak', 1);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (2, '2023-10-02',
         'Displaced fracture of shaft of first metacarpal bone, unspecified hand, initial encounter for open fracture',
-        '1716538061356_Сабак_1.pdf', 'Ray Goldenweed');
-insert into presentations (id, created_at, description, file, title)
+        '1716538061356_Сабак_1.pdf', 'Ray Goldenweed', 1);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (3, '2023-09-02', 'Toxic effect of other tobacco and nicotine, intentional self-harm, sequela',
-        '1716538092650_Сабак_2.pdf', 'Globe Fimbry');
-insert into presentations (id, created_at, description, file, title)
-values (4, '2023-12-16', 'Other long term (current) drug therapy', '1716538107647_Сабак_3.pdf', 'Texan Gumweed');
-insert into presentations (id, created_at, description, file, title)
+        '1716538092650_Сабак_2.pdf', 'Globe Fimbry', 1);
+insert into presentations (id, created_at, description, file, title, lesson_id)
+values (4, '2023-12-16', 'Other long term (current) drug therapy', '1716538107647_Сабак_3.pdf', 'Texan Gumweed', 4);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (5, '2023-12-25', 'Toxic effect of lead and its compounds, assault', '1716538133117_Сабак_4.pdf',
-        'White Doll''s Daisy');
-insert into presentations (id, created_at, description, file, title)
+        'White Doll''s Daisy', 5);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (6, '2024-01-14', 'Abrasion of unspecified external genital organs, male, subsequent encounter',
-        '1716538160158_Сабак_5.pdf', 'Tungoil Tree');
-insert into presentations (id, created_at, description, file, title)
+        '1716538160158_Сабак_5.pdf', 'Tungoil Tree', 5);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (7, '2024-01-01', 'Injury of other nerves at shoulder and upper arm level', '1716538232679_Лаб.раб 2.pdf',
-        'Straightbeak Buttercup');
-insert into presentations (id, created_at, description, file, title)
+        'Straightbeak Buttercup', 5);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (8, '2023-09-04',
         'Strain of muscle and tendon of long extensor muscle of toe at ankle and foot level, unspecified foot',
-        '1716538289430_Жыйынтык-АЗИРЕТ_БЕКБОЛОТОВ.pdf', 'Longpod Stitchwort');
-insert into presentations (id, created_at, description, file, title)
+        '1716538289430_Жыйынтык-АЗИРЕТ_БЕКБОЛОТОВ.pdf', 'Longpod Stitchwort',6);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (9, '2023-05-26', 'Salter-Harris Type I physeal fracture of left calcaneus', '1716538312010_жалпы маалымат.pdf',
-        'Bog Korthal Mistletoe');
-insert into presentations (id, created_at, description, file, title)
+        'Bog Korthal Mistletoe', 6);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (10, '2023-06-02',
         'Unspecified fracture of left patella, subsequent encounter for open fracture type I or II with routine healing',
-        '1716538337567_TMALL.pdf', 'Beckwith''s Milkvetch');
-insert into presentations (id, created_at, description, file, title)
+        '1716538337567_TMALL.pdf', 'Beckwith''s Milkvetch',7);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (11, '2023-05-15', 'Rheumatoid arthritis of hand with involvement of other organs and systems',
-        '1716538583459_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt', 'Platanillo');
-insert into presentations (id, created_at, description, file, title)
+        '1716538583459_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt', 'Platanillo',7);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (12, '2023-08-10',
         'Nondisplaced fracture of medial condyle of left femur, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with delayed healing',
-        '1716538612792_Практическая_терапевтич_стом_2016_2.pdf', 'Horehound');
-insert into presentations (id, created_at, description, file, title)
+        '1716538612792_Практическая_терапевтич_стом_2016_2.pdf', 'Horehound', 8);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (13, '2023-09-16', 'Poisoning by sulfonamides, undetermined, subsequent encounter', 'Ut.mp3',
-        'Canary Island Date Palm');
-insert into presentations (id, created_at, description, file, title)
-values (14, '2023-05-06', 'Cutaneous chromomycosis', '1716538782523_Лаб.раб 2.pdf', 'Hairy False Goldenaster');
-insert into presentations (id, created_at, description, file, title)
-values (15, '2023-08-24', 'Calcium deposit in bursa, left wrist', '1716538801962_Лаб_Настройка DNS_кырг.pdf', 'Arizona White Oak');
-insert into presentations (id, created_at, description, file, title)
+        'Canary Island Date Palm', 8);
+insert into presentations (id, created_at, description, file, title, lesson_id)
+values (14, '2023-05-06', 'Cutaneous chromomycosis', '1716538782523_Лаб.раб 2.pdf', 'Hairy False Goldenaster', 8);
+insert into presentations (id, created_at, description, file, title, lesson_id)
+values (15, '2023-08-24', 'Calcium deposit in bursa, left wrist', '1716538801962_Лаб_Настройка DNS_кырг.pdf', 'Arizona White Oak', 12);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (16, '2023-12-23',
         'Other fracture of lower end of right ulna, subsequent encounter for closed fracture with delayed healing',
-        '1716538830414_СПРАВОЧНИК.pdf', 'Elegant Mariposa Lily');
-insert into presentations (id, created_at, description, file, title)
+        '1716538830414_СПРАВОЧНИК.pdf', 'Elegant Mariposa Lily', 12);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (17, '2024-01-31',
         'Displaced comminuted fracture of left patella, subsequent encounter for closed fracture with routine healing',
-        '1716538846391_Практическая_терапевтич_стом_2016_2.pdf', 'Crabseye');
-insert into presentations (id, created_at, description, file, title)
+        '1716538846391_Практическая_терапевтич_стом_2016_2.pdf', 'Crabseye', 12);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (18, '2024-01-13', 'Corrosion of first degree of right upper arm, initial encounter', '1716538878939_-829802911.pdf',
-        'Shortleaf Crabgrass');
-insert into presentations (id, created_at, description, file, title)
+        'Shortleaf Crabgrass', 12);
+insert into presentations (id, created_at, description, file, title, lesson_id)
 values (19, '2023-07-01', 'Toxic effect of carbon monoxide from unspecified source', '1716538910377_Лекция_Дифтерия,_коклюш,_туберкулез_Объед_.ppt',
-        'Cylinder Jointtail Grass');
-insert into presentations (id, created_at, description, file, title)
-values (20, '2024-02-03', 'Crushing injury of right thigh', '1716538941703_Лаб_Настройка DNS_кырг.pdf', 'Swamp Paperbark');
+        'Cylinder Jointtail Grass', 12);
+insert into presentations (id, created_at, description, file, title, lesson_id)
+values (20, '2024-02-03', 'Crushing injury of right thigh', '1716538941703_Лаб_Настройка DNS_кырг.pdf', 'Swamp Paperbark',12);
 
 insert into lessons_presentations (lesson_id, presentations_id)
 values (1, 1);
@@ -741,6 +741,10 @@ insert into lessons_videos (lesson_id, videos_id)
 values (5, 17);
 insert into lessons_videos (lesson_id, videos_id)
 values (5, 18);
+insert into lessons_videos (lesson_id, videos_id)
+values (5, 19);
+insert into lessons_videos (lesson_id, videos_id)
+values (5, 20);
 
 insert into tests (id, lesson_id, is_active, creation_date, title, hour, minute)
 values (1, 1, 'FALSE', '2024-04-26',
