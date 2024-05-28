@@ -1,13 +1,17 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: ${POSTGRES_PASSWORD}
-    url: ${POSTGRES_DB}
-    username: ${POSTGRES_USER}
+    password: yiman
+    url: jdbc:postgresql://localhost:5434/lms
+    username: postgres
+#    password: ${POSTGRES_PASSWORD}
+#    url: ${POSTGRES_DB}
+#    username: ${POSTGRES_USER}
+
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     open-in-view: false
 
