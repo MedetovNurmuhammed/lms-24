@@ -2,9 +2,10 @@ package lms.service;
 
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
-import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
+
+import java.util.List;
 
 public interface PresentationService {
     SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest);
@@ -15,5 +16,5 @@ public interface PresentationService {
 
     SimpleResponse deletePresentationById(Long presentationId);
 
-    FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId);
+    List<PresentationResponse> findAllPresentationByLessonId(Long lessonId);
 }
