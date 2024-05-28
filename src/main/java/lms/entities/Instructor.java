@@ -37,7 +37,7 @@ public class Instructor {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_gen")
     @SequenceGenerator(name = "instructor_gen", sequenceName = "instructor_seq", allocationSize = 1, initialValue = 21)
     private Long id;
-    private String specialization;
+    private String specialization ;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 

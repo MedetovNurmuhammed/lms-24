@@ -102,7 +102,7 @@ public class GroupServiceImpl implements GroupService {
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Группа успешно удалено!")
+                .message("Группа успешно добавлено в корзину!")
                 .build();
     }
 

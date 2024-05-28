@@ -165,10 +165,10 @@ public class StudentServiceImpl implements StudentService {
         trash.setStudent(student);
         student.setTrash(trash);
         trashRepository.save(trash);
-        log.info("Успешно удален!");
+        log.info("Успешно добавлено в корзину!");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно удален!")
+                .message("Успешно добавлено в корзину!")
                 .build();
     }
 

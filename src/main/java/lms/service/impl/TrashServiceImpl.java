@@ -1,5 +1,6 @@
 package lms.service.impl;
 
+import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 import lms.config.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,8 @@ public class TrashServiceImpl implements TrashService {
     private final StorageService storageService;
     private final StudentServiceImpl studentService;
     private final NotificationRepository notificationRepository;
+    private final AnswerTaskRepository answerTaskRepository;
+    private final OptionRepository optionRepository;
 
     private Boolean isOwner(User currentUser, Trash trash) {
         Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
@@ -86,28 +90,14 @@ public class TrashServiceImpl implements TrashService {
                 orElseThrow(() -> new NotFoundException(" не найден!!! "));
         if (currentUser.getRole().equals(Role.ADMIN)) {
             if (trash.getCourse() != null) {
-                Course course = trash.getCourse();
-                for (Lesson lesson : course.getLessons()) {
-                    lessonRepository.deleteById(lesson.getId());
-                }
-                for (Instructor instructor : course.getInstructors()) {
-                    instructor.getCourses().remove(course);
-                }
-                course.setInstructors(null);
-                courseRepository.deleteById(course.getId());
+                deleteCourse(trash);
             } else if (trash.getGroup() != null) {
-                Group group = trash.getGroup();
-                for (Student student : group.getStudents()) {
-                    studentRepository.deleteById(student.getId());
-                }
-                for (Course cours : group.getCourses()) {
-                    cours.getGroups().remove(group);
-                }
-                group.setCourses(null);
-                groupRepository.deleteById(group.getId());
+                deleteGroup(trash);
             } else if (trash.getInstructor() != null) {
                 Instructor instructor = trash.getInstructor();
                 trash.getInstructor().setNotificationStates(null);
+                User user = instructor.getUser();
+                userRepository.detachFromAnnouncement(user.getId());
                 instructorRepository.deleteById(instructor.getId());
             } else if (trash.getStudent() != null) {
                 Student student = trash.getStudent();
@@ -122,6 +112,36 @@ public class TrashServiceImpl implements TrashService {
         throw new ForbiddenException("Нет доступа!");
     }
 
+    @Transactional
+    public void deleteLessonById(Long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NotFoundException("Урок не найден!"));
+        for (Task task : lesson.getTasks()) {
+            Notification foundTask = notificationRepository.findByTaskId(task.getId());
+            foundTask.setTask(null);
+        }
+        lessonRepository.deleteById(lessonId);
+    }
+
+    @Transactional
+    public void deleteTest(Long testId) {
+        Test test = testRepository.findById(testId).
+                orElseThrow(() -> new NotFoundException("Тест не найден!"));
+        for (ResultTest resultTest : test.getResultTests()) {
+            for (Option option : resultTest.getOptions()) {
+                optionRepository.deleteOptionById(option.getId());
+            }
+        }
+        testRepository.deleteById(testId);
+    }
+
+    @Transactional
+    public void deleteVideoById(Long videoId) {
+        videoRepository.deleteFromAdditionalTable(videoId);
+        videoRepository.deleteById(videoId);
+    }
+
+
     @Override
     @Transactional
     public SimpleResponse deleteInstructorTrash(Long trashId) {
@@ -133,24 +153,22 @@ public class TrashServiceImpl implements TrashService {
             if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
                 if (trash.getPresentation() != null) {
                     Presentation presentation = trash.getPresentation();
+                    lessonRepository.deleteFromAdditionalTable(presentation.getId());
                     storageService.deleteFile(presentation.getFile());
                     presentationRepository.deleteById(presentation.getId());
                 } else if (trash.getTest() != null) {
                     Test test = trash.getTest();
-                    testRepository.deleteById(test.getId());
+                    deleteTest(test.getId());
+
                 } else if (trash.getVideo() != null) {
                     Video video = trash.getVideo();
-                    videoRepository.deleteById(video.getId());
+                    deleteVideoById(video.getId());
+
                 } else if (trash.getTask() != null) {
-                    Task task = trash.getTask();
-
-                    for (AnswerTask answerTask : task.getAnswerTasks()) {
-
-                    }
-                    taskService.deleteTaskById(task.getId());
+                    deleteTask(trash);
                 } else if (trash.getLesson() != null) {
                     Lesson lesson = trash.getLesson();
-                    lessonRepository.deleteById(lesson.getId());
+                    deleteLessonById(lesson.getId());
                 } else if (trash.getLink() != null) {
                     Link link = trash.getLink();
                     linkRepository.deleteById(link.getId());
@@ -163,7 +181,7 @@ public class TrashServiceImpl implements TrashService {
                         .build();
             }
             throw new ForbiddenException("Нет доступа!!");
-        }else throw new BadRequestException("Этот корзина не ваша!");
+        } else throw new BadRequestException("Этот корзина не ваша!");
     }
 
 
@@ -243,36 +261,40 @@ public class TrashServiceImpl implements TrashService {
 
 
     @Transactional
-//    @Scheduled(fixedDelay = 500000000)
+    @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
-        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500000000);
+        ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(1);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
         for (Trash expiredTrash : expiredTrashes) {
             if (expiredTrash.getCourse() != null) {
-                Course course = expiredTrash.getCourse();
-                courseRepository.deleteById(course.getId());
+                deleteCourse(expiredTrash);
             } else if (expiredTrash.getInstructor() != null) {
                 Instructor instructor = expiredTrash.getInstructor();
+                expiredTrash.getInstructor().setNotificationStates(null);
+                User user = instructor.getUser();
+                userRepository.detachFromAnnouncement(user.getId());
                 instructorRepository.deleteById(instructor.getId());
             } else if (expiredTrash.getGroup() != null) {
-                Group group = expiredTrash.getGroup();
-                groupRepository.deleteById(group.getId());
+                deleteGroup(expiredTrash);
             } else if (expiredTrash.getStudent() != null) {
                 Student student = expiredTrash.getStudent();
                 studentRepository.deleteById(student.getId());
             } else if (expiredTrash.getPresentation() != null) {
                 Presentation presentation = expiredTrash.getPresentation();
+                lessonRepository.deleteFromAdditionalTable(presentation.getId());
                 storageService.deleteFile(presentation.getFile());
                 presentationRepository.deleteById(presentation.getId());
             } else if (expiredTrash.getTest() != null) {
                 Test test = expiredTrash.getTest();
-                testRepository.deleteById(test.getId());
+                deleteTest(test.getId());
             } else if (expiredTrash.getVideo() != null) {
                 Video video = expiredTrash.getVideo();
-                videoRepository.deleteById(video.getId());
+                deleteVideoById(video.getId());
             } else if (expiredTrash.getTask() != null) {
-                Task task = expiredTrash.getTask();
-                taskRepository.deleteById(task.getId());
+                deleteTask(expiredTrash);
+
+
+
             } else if (expiredTrash.getLesson() != null) {
                 Lesson lesson = expiredTrash.getLesson();
                 lessonRepository.deleteById(lesson.getId());
@@ -285,6 +307,61 @@ public class TrashServiceImpl implements TrashService {
                 trashRepository.delete(expiredTrash);
             }
         }
+    }
+
+    private void deleteTask(Trash expiredTrash) {
+        Task task = expiredTrash.getTask();
+        Notification notification = notificationRepository.findByTaskId(task.getId());
+        if (notification != null) {
+            notification.setTask(null);
+        }
+        for (AnswerTask answerTask : task.getAnswerTasks()) {
+            List<Notification> notification1 = notificationRepository.findByAnswerTaskId(answerTask.getId());
+            for (Notification notification2 : notification1) {
+                notification2.setAnswerTask(null);
+            }
+        }
+
+        taskRepository.deleteById(task.getId());
+    }
+
+    private void deleteGroup(Trash expiredTrash) {
+        Group group = expiredTrash.getGroup();
+
+        groupRepository.deleteFromAdditionalTable(group.getId());
+        for (Student student : group.getStudents()) {
+            Trash trash1 = student.getTrash();
+            trashRepository.deleteById(trash1.getId());
+            studentRepository.deleteById(student.getId());
+        }
+
+
+        for (Course cours : group.getCourses()) {
+            cours.getGroups().remove(group);
+        }
+        group.setCourses(null);
+        for (Student student : group.getStudents()) {
+            trashRepository.deleteById(student.getTrash().getId());
+        }
+        groupRepository.deleteById(group.getId());
+    }
+
+    private void deleteCourse(Trash expiredTrash) {
+        Course course = expiredTrash.getCourse();
+        for (Lesson lesson : course.getLessons()) {
+            trashRepository.deleteById(lesson.getTrash().getId());
+        }
+        for (Lesson lesson : course.getLessons()) {
+            for (Task task : lesson.getTasks()) {
+                notificationRepository.detachTaskFromNotification(task.getId());
+            }
+            lessonRepository.deleteById(lesson.getId());
+        }
+        for (Instructor instructor : course.getInstructors()) {
+            instructor.getCourses().remove(course);
+        }
+        course.setInstructors(null);
+        courseRepository.deleteById(course.getId());
     }
 }
 

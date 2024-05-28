@@ -86,17 +86,15 @@ public class LessonServiceImpl implements LessonService {
     public SimpleResponse delete(Long lessonId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
-                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
-        Lesson lesson = lessonRepository.getLessonById(lessonId);
+        Lesson lesson = lessonRepository.findById(lessonId).
+                orElseThrow(() -> new NotFoundException("Урок не найден!"));
             Trash trash = new Trash();
             trash.setName(lesson.getTitle());
             trash.setType(Type.LESSON);
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setLesson(lesson);
             lesson.setTrash(trash);
-            trash.setInstructor(instructor);
-            instructor.getTrashes().add(trash);
+
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)

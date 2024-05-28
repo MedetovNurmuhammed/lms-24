@@ -1,10 +1,12 @@
 package lms.repository;
 
+import jakarta.transaction.Transactional;
 import lms.dto.response.TrashResponse;
 import lms.entities.Trash;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
@@ -26,4 +28,9 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
             "lms.enums.Type.TEST, lms.enums.Type.TASK, lms.enums.Type.LESSON) " +
             "AND t.instructor.id = :currentUserId")
     Page<TrashResponse> findAllInstructorTrashes(Pageable pageable, @Param("currentUserId") Long currentUserId);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Trash t where t.task.id =:taskId")
+    void deleteTrashLessons(Long taskId);
 }

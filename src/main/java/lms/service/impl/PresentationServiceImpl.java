@@ -118,7 +118,7 @@ public class PresentationServiceImpl implements PresentationService {
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Презентация успешно удален!")
+                .message("Презентация успешно добавлено в корзину!")
                 .build();
     }
 }

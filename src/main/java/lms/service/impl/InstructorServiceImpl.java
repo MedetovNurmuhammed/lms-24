@@ -57,6 +57,7 @@ public class InstructorServiceImpl implements InstructorService {
         user.setEmail(instructorRequest.getEmail());
         user.setBlock(false);
         user.setPhoneNumber(instructorRequest.getPhoneNumber());
+//        instructor.setSpecialization(instructorRequest.getSpecialization());
         instructor.setSpecialization(instructorRequest.getSpecialization());
         instructor.setUser(user);
 

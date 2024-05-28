@@ -1,8 +1,10 @@
 package lms.repository;
 
+import jakarta.transaction.Transactional;
 import lms.entities.User;
 import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +24,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("select u from User u where u.uuid =:uuid")
     Optional<User> findByUuid( String uuid);
 
+    @Modifying
+    @Query("update Announcement a set a.user.id = null where a.user.id = :userId")
+    @Transactional
+    void detachFromAnnouncement(Long userId);
 }

@@ -84,17 +84,20 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
         Trash trash = new Trash();
-        course.setTrash(trash);
+
         trash.setName(course.getTitle());
         trash.setType(Type.COURSE);
         trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setCourse(course);
+        course.setTrash(trash);
+        trashRepository.save(trash);
         for (Lesson lesson : course.getLessons()) {
             lessonService.delete(lesson.getId());
         }
-        trashRepository.save(trash);
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно удалено!")
+                .message("Успешно добавлено в корзину!")
                 .build();
     }
 
