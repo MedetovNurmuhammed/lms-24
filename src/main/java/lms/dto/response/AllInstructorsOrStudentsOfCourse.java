@@ -7,5 +7,6 @@ import java.util.List;
 public record AllInstructorsOrStudentsOfCourse(
         int page,
         int size,
-        List<InstructorsOrStudentsOfCourse> getAllInstructorsOfCourses
+        List<InstructorsOrStudentsOfCourse> getAllInstructorsOfCourses,
+        List<InstructorsOrStudentsOfCourse> getAllStudentsOfCourses
 ){}

@@ -13,9 +13,7 @@ public record VideoRequest(
         String description,
         @NotBlank
         @NotNull
-        String linkOfVideo,
-        @NotNull
-        LocalDate createdAt
+        String linkOfVideo
 
 ) {
 }
