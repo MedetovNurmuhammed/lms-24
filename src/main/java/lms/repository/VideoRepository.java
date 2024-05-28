@@ -16,6 +16,8 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
 @Query("select s from Video s where s.id =:videoId and s.trash is null")
     Optional<Video> findVideoById(@Param("videoId") Long videoId);
-@Query("select s from Video s where s.trash.id is not null")
-List<Video> findNotNullTrashVideos(Long id);
+    @Query("select count(t) > 0 from Trash t where  t.video.link.title =:title and t.video.lesson.id = :id and t.type = 'VIDEO' ")
+    boolean existsNotNullTrashVideo(@Param("id") Long id, @Param("title") String title);
+    @Query("select count(v) > 0 from Lesson s join s.videos v where v.link.title = :title and s.id = :id and v.trash.id is null")
+    boolean existsTitle(@Param("id") Long id, @Param("title") String title);
 }

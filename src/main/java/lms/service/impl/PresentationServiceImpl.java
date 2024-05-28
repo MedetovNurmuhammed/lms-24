@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -37,25 +38,20 @@ public class PresentationServiceImpl implements PresentationService {
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
-        for (Presentation presentation : lesson.getPresentations()) {
-            if (presentation.getTitle().equals(presentationRequest.getTitle())) {
-                throw new AlreadyExistsException("Презентация с названием " + presentation.getTitle() + " уже существует!");
-
-            }
+        boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+        if (exists) {
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
         }
-        List<Presentation> notNullTrashPresentation = presentationRepository.findNotNullTrashPresentations();
-        for (Presentation presentation : notNullTrashPresentation) {
-            if (presentationRequest.getTitle().equals(presentation.getTitle())) {
-                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
-            }
-        }
+        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+        if (notNullTrashPresentations)
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
         Presentation presentation = new Presentation();
         presentation.setTitle(presentationRequest.getTitle());
         presentation.setDescription(presentationRequest.getDescription());
         presentation.setFile(presentationRequest.getFile());
-
-        lesson.getPresentations().add(presentation);
+        presentation.setLesson(lesson);
         presentationRepository.save(presentation);
+        lesson.getPresentations().add(presentation);
         lessonRepository.save(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -70,19 +66,18 @@ public class PresentationServiceImpl implements PresentationService {
         Presentation presentation = presentationRepository.findById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
         Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
-        for (Presentation presentation1 : lesson.getPresentations()) {
-            if (presentation.getTitle().equals(presentationRequest.getTitle())) {
-                throw new AlreadyExistsException("Презентация с названием " + presentation1.getTitle() + " уже существует!");
+        if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
+            boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+            if (exists) {
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
             }
         }
-        List<Presentation> notNullTrashPresentation = presentationRepository.findNotNullTrashPresentations();
-        for (Presentation presentation1 : notNullTrashPresentation) {
-            if (presentationRequest.getTitle().equals(presentation1.getTitle())) {
-                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
-            }
-        }
-            presentation.setDescription(presentationRequest.getDescription());
-            presentation.setFile(presentationRequest.getFile());
+        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+        if (notNullTrashPresentations)
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
+        presentation.setTitle(presentationRequest.getTitle());
+        presentation.setDescription(presentationRequest.getDescription());
+        presentation.setFile(presentationRequest.getFile());
         presentationRepository.save(presentation);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -122,6 +117,6 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public List<PresentationResponse> findAllPresentationByLessonId(Long lessonId) {
-        return  presentationRepository.findAllPresentationsByLesson(lessonId);
+        return presentationRepository.findAllPresentationsByLesson(lessonId);
     }
 }

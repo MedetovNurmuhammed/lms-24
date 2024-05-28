@@ -36,19 +36,14 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     public SimpleResponse save(VideoRequest videoRequest, Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
-        List<VideoResponse> allVideo = videoRepository.findAllVideo(lesson.getId());
-        for (VideoResponse videoResponse : allVideo) {
-            if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
-                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
+        boolean exists = videoRepository.existsTitle(lesson.getId(), videoRequest.titleOfVideo());
+        if (exists) {
+            throw new AlreadyExistsException("видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
+        }
+        boolean notNullTrashVideos = videoRepository.existsNotNullTrashVideo(lesson.getId(), videoRequest.titleOfVideo());
+        if (notNullTrashVideos)
+            throw new AlreadyExistsException("видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
 
-            }
-        }
-        List<Video> notNullTrashVideo = videoRepository.findNotNullTrashVideos(lesson.getId());
-        for (Video video : notNullTrashVideo) {
-            if (videoRequest.titleOfVideo().equals(video.getLink().getTitle())) {
-                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
-            }
-        }
         Video video = new Video();
         Link link = new Link();
         video.setDescription(videoRequest.description());
@@ -56,6 +51,7 @@ public class VideoServiceImpl implements VideoService {
         link.setVideo(video);
         link.setUrl(videoRequest.linkOfVideo());
         lesson.getVideos().add(video);
+        video.setLesson(lesson);
         linkRepository.save(link);
         videoRepository.save(video);
         return SimpleResponse.builder()
@@ -70,18 +66,14 @@ public class VideoServiceImpl implements VideoService {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         Lesson lesson = linkRepository.findByVideoId(video.getId());
-        List<VideoResponse> allVideo = videoRepository.findAllVideo(lesson.getId());
-        for (VideoResponse videoResponse : allVideo) {
-            if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
-                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
-            }
+        boolean exists = videoRepository.existsTitle(lesson.getId(), videoRequest.titleOfVideo());
+        if (exists) {
+            throw new AlreadyExistsException("видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
         }
-        List<Video> notNullTrashVideo = videoRepository.findNotNullTrashVideos(lesson.getId());
-        for (Video video1 : notNullTrashVideo) {
-            if (videoRequest.titleOfVideo().equals(video1.getLink().getTitle())) {
-                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
-            }
-        }
+        boolean notNullTrashVideos = videoRepository.existsNotNullTrashVideo(lesson.getId(), videoRequest.titleOfVideo());
+        if (notNullTrashVideos)
+            throw new AlreadyExistsException("видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
+
         video.setDescription(videoRequest.description());
         Link link = video.getLink();
         link.setUrl(videoRequest.linkOfVideo());

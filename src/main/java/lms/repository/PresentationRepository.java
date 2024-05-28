@@ -20,6 +20,11 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     @Modifying
     @Query(value = "delete from lessons_presentations where presentations_id = :id", nativeQuery = true)
     void deletePresentation(Long id);
-@Query("select s from Presentation s where s.trash.id is not null")
-    List<Presentation> findNotNullTrashPresentations();
+    @Query("select count(t) > 0 from Trash t where  t.presentation.title =:title and t.presentation.lesson.id = :id and t.type = 'PRESENTATION' ")
+    boolean existsNotNullTrashPresentation(@Param("id") Long id, @Param("title") String title);
+
+
+    @Query("select count(p) > 0 from Lesson s join s.presentations p where p.title = :title and s.id = :id and p.trash.id is null")
+    boolean existsTitle(@Param("id") Long id, @Param("title") String title);
+
 }
