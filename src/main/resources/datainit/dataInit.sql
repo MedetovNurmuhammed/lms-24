@@ -151,7 +151,7 @@ insert into users (id, full_name, email, password, role, block, phone_number)
 values (23, 'Kandybek Muktarbekov', 'kandy@gmail.comu', '$2a$12$6mWsYumjW59IxENq.aLUS.le5eZu1MX00QJZXxcRygxAFzwYqcI/2',
         'STUDENT', 'FALSE', '+996709665873');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (24, 'Atai Turatbekov', 'mamatovkadyrdin2@gmail.com@gmail.com',
+values (24, 'Atai Turatbekov', 'mamatovkadyrdin2@gmail.com',
         '$2a$12$9R/fTNQFx0TA9WWx/NNnWOt8YuJb6xlUqmM5Pbn7V5QGUufNLmaQi',
         'STUDENT', 'FALSE', '+996502098879');
 insert into users (id, full_name, email, password, role, block, phone_number)
