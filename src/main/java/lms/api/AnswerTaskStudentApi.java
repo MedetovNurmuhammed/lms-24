@@ -29,7 +29,7 @@ public class AnswerTaskStudentApi {
     @Secured("STUDENT")
     @Operation(summary = "Обновление ответа на задание",
             description = "Обновляет существующий ответ на задание по идентификатору ответа. Авторизация: студент!")
-    @PatchMapping("/update/{answerTaskId}")
+    @PatchMapping("/{answerTaskId}")
     public SimpleResponse update(@PathVariable Long answerTaskId, @RequestBody AnswerTaskRequest answerTaskRequest) throws MessagingException {
         return answerTaskService.update(answerTaskId,answerTaskRequest);
     }
@@ -38,7 +38,7 @@ public class AnswerTaskStudentApi {
     @Operation(summary = "Поиск ответа на задание по идентификатору задания",
             description = "Возвращает ответ на задание для указанного идентификатора задания." +
             " Авторизация: студент!")
-    @GetMapping("/findAnswerByTaskId/{taskId}")
+    @GetMapping("/{taskId}")
     public AnswerTaskResponse findAnswerByTaskId(@PathVariable("taskId") Long taskId)  {
        return answerTaskService.findAnswerByTaskId(taskId);
     }

@@ -31,7 +31,7 @@ public class Comment {
     private Long id;
     private String content;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User user;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

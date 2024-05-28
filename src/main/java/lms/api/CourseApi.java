@@ -9,7 +9,6 @@ import lms.dto.response.SimpleResponse;
 import lms.enums.Role;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
