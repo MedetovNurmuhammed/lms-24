@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -44,9 +43,10 @@ public class PresentationServiceImpl implements PresentationService {
 
             }
         }
-        for (String presentation : trashRepository.findPresentations()) {
-            if (presentationRequest.getTitle().equals(presentation)) {
-                throw new AlreadyExistsException("Презентация с названием " + presentation + " уже есть в корзине!");
+        List<Presentation> notNullTrashPresentation = presentationRepository.findNotNullTrashPresentations();
+        for (Presentation presentation : notNullTrashPresentation) {
+            if (presentationRequest.getTitle().equals(presentation.getTitle())) {
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
             }
         }
         Presentation presentation = new Presentation();
@@ -69,23 +69,21 @@ public class PresentationServiceImpl implements PresentationService {
                                            EditPresentationRequest presentationRequest) {
         Presentation presentation = presentationRepository.findById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
-
-        if (presentationRequest.getTitle() != null) {
-            if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
-                presentation.setTitle(presentationRequest.getTitle());
+        Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
+        for (Presentation presentation1 : lesson.getPresentations()) {
+            if (presentation.getTitle().equals(presentationRequest.getTitle())) {
+                throw new AlreadyExistsException("Презентация с названием " + presentation1.getTitle() + " уже существует!");
             }
         }
-
-        if (presentationRequest.getDescription() != null) {
+        List<Presentation> notNullTrashPresentation = presentationRepository.findNotNullTrashPresentations();
+        for (Presentation presentation1 : notNullTrashPresentation) {
+            if (presentationRequest.getTitle().equals(presentation1.getTitle())) {
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
+            }
+        }
             presentation.setDescription(presentationRequest.getDescription());
-        }
-
-
-        if (presentationRequest.getFile() != null) {
             presentation.setFile(presentationRequest.getFile());
-        }
         presentationRepository.save(presentation);
-
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Презентация успешно обновлена!")

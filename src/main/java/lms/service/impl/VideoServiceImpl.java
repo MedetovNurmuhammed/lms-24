@@ -4,7 +4,10 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.VideoRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.VideoResponse;
-import lms.entities.*;
+import lms.entities.Lesson;
+import lms.entities.Video;
+import lms.entities.Link;
+import lms.entities.Trash;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
@@ -17,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -36,13 +38,14 @@ public class VideoServiceImpl implements VideoService {
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
         List<VideoResponse> allVideo = videoRepository.findAllVideo(lesson.getId());
         for (VideoResponse videoResponse : allVideo) {
-                if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
-                    throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
+            if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
+                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
 
-                }
             }
-        for (String video : trashRepository.findVideos()) {
-            if (videoRequest.titleOfVideo().equals(video)) {
+        }
+        List<Video> notNullTrashVideo = videoRepository.findNotNullTrashVideos(lesson.getId());
+        for (Video video : notNullTrashVideo) {
+            if (videoRequest.titleOfVideo().equals(video.getLink().getTitle())) {
                 throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
             }
         }
@@ -66,6 +69,19 @@ public class VideoServiceImpl implements VideoService {
     public SimpleResponse update(Long videoId, VideoRequest videoRequest) {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
+        Lesson lesson = linkRepository.findByVideoId(video.getId());
+        List<VideoResponse> allVideo = videoRepository.findAllVideo(lesson.getId());
+        for (VideoResponse videoResponse : allVideo) {
+            if (videoRequest.titleOfVideo().equals(videoResponse.titleOfVideo())) {
+                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
+            }
+        }
+        List<Video> notNullTrashVideo = videoRepository.findNotNullTrashVideos(lesson.getId());
+        for (Video video1 : notNullTrashVideo) {
+            if (videoRequest.titleOfVideo().equals(video1.getLink().getTitle())) {
+                throw new AlreadyExistsException("Видео с названием " + videoRequest.titleOfVideo() + " уже есть в корзине!");
+            }
+        }
         video.setDescription(videoRequest.description());
         Link link = video.getLink();
         link.setUrl(videoRequest.linkOfVideo());
@@ -78,13 +94,10 @@ public class VideoServiceImpl implements VideoService {
                 .build();
     }
 
-
     @Override
     public List<VideoResponse> findAllVideoByLessonId(Long lessonId) {
         return videoRepository.findAllVideo(lessonId);
-
     }
-
 
     @Override
     public VideoResponse findById(Long videoId) {

@@ -20,4 +20,6 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     @Modifying
     @Query(value = "delete from lessons_presentations where presentations_id = :id", nativeQuery = true)
     void deletePresentation(Long id);
+@Query("select s from Presentation s where s.trash.id is not null")
+    List<Presentation> findNotNullTrashPresentations();
 }
