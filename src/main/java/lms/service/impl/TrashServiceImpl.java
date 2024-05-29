@@ -264,52 +264,59 @@ public class TrashServiceImpl implements TrashService {
     @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
         ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(1);
-        List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
+        List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(fiveMinutesAgo);
         for (Trash expiredTrash : expiredTrashes) {
             if (expiredTrash.getCourse() != null) {
+                System.err.println("expiredTrash = " + expiredTrash);
                 deleteCourse(expiredTrash);
-            } else if (expiredTrash.getInstructor() != null) {
-                Instructor instructor = expiredTrash.getInstructor();
-                expiredTrash.getInstructor().setNotificationStates(null);
-                User user = instructor.getUser();
-                userRepository.detachFromAnnouncement(user.getId());
-                instructorRepository.deleteById(instructor.getId());
-            } else if (expiredTrash.getGroup() != null) {
-                deleteGroup(expiredTrash);
-            } else if (expiredTrash.getStudent() != null) {
-                Student student = expiredTrash.getStudent();
-                studentRepository.deleteById(student.getId());
-            } else if (expiredTrash.getPresentation() != null) {
-                Presentation presentation = expiredTrash.getPresentation();
-                lessonRepository.deleteFromAdditionalTable(presentation.getId());
-                storageService.deleteFile(presentation.getFile());
-                presentationRepository.deleteById(presentation.getId());
-            } else if (expiredTrash.getTest() != null) {
-                Test test = expiredTrash.getTest();
-                deleteTest(test.getId());
-            } else if (expiredTrash.getVideo() != null) {
-                Video video = expiredTrash.getVideo();
-                deleteVideoById(video.getId());
-            } else if (expiredTrash.getTask() != null) {
-                deleteTask(expiredTrash);
 
+                System.err.println("expiredTrash =  asdfsdfasdfas " + expiredTrash);
+//            } else if (expiredTrash.getInstructor() != null) {
+//                Instructor instructor = expiredTrash.getInstructor();
+//                expiredTrash.getInstructor().setNotificationStates(null);
+//                User user = instructor.getUser();
+//                userRepository.detachFromAnnouncement(user.getId());
+//                instructorRepository.deleteById(instructor.getId());
+//            } else if (expiredTrash.getGroup() != null) {
+//                deleteGroup(expiredTrash);
+//            } else if (expiredTrash.getStudent() != null) {
+//                Student student = expiredTrash.getStudent();
+//                studentRepository.deleteById(student.getId());
+//            } else if (expiredTrash.getPresentation() != null) {
+//                Presentation presentation = expiredTrash.getPresentation();
+//                lessonRepository.deleteFromAdditionalTable(presentation.getId());
+//                storageService.deleteFile(presentation.getFile());
+//                presentationRepository.deleteById(presentation.getId());
+//            } else if (expiredTrash.getTest() != null) {
+//                Test test = expiredTrash.getTest();
+//                deleteTest(test.getId());
+//            } else if (expiredTrash.getVideo() != null) {
+//                Video video = expiredTrash.getVideo();
+//                deleteVideoById(video.getId());
+//            } else if (expiredTrash.getTask() != null) {
+//                deleteTask(expiredTrash);
+//
+//
+//
+//            } else if (expiredTrash.getLesson() != null) {
+//                Lesson lesson = expiredTrash.getLesson();
+//                deleteLessonById(lesson.getId());
+//
+//            } else if (expiredTrash.getLink() != null) {
+//                Link link = expiredTrash.getLink();
+//                linkRepository.deleteById(link.getId());
+//
+//            }
+                if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
+                    trashRepository.delete(expiredTrash);
 
-
-            } else if (expiredTrash.getLesson() != null) {
-                Lesson lesson = expiredTrash.getLesson();
-                lessonRepository.deleteById(lesson.getId());
-            } else if (expiredTrash.getLink() != null) {
-                Link link = expiredTrash.getLink();
-                linkRepository.deleteById(link.getId());
-
-            }
-            if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
-                trashRepository.delete(expiredTrash);
+                }
             }
         }
     }
 
-    private void deleteTask(Trash expiredTrash) {
+    @Transactional
+    public void deleteTask(Trash expiredTrash) {
         Task task = expiredTrash.getTask();
         Notification notification = notificationRepository.findByTaskId(task.getId());
         if (notification != null) {
@@ -318,6 +325,7 @@ public class TrashServiceImpl implements TrashService {
         for (AnswerTask answerTask : task.getAnswerTasks()) {
             List<Notification> notification1 = notificationRepository.findByAnswerTaskId(answerTask.getId());
             for (Notification notification2 : notification1) {
+
                 notification2.setAnswerTask(null);
             }
         }
@@ -325,7 +333,8 @@ public class TrashServiceImpl implements TrashService {
         taskRepository.deleteById(task.getId());
     }
 
-    private void deleteGroup(Trash expiredTrash) {
+    @Transactional
+    public void deleteGroup(Trash expiredTrash) {
         Group group = expiredTrash.getGroup();
 
         groupRepository.deleteFromAdditionalTable(group.getId());
@@ -346,8 +355,14 @@ public class TrashServiceImpl implements TrashService {
         groupRepository.deleteById(group.getId());
     }
 
-    private void deleteCourse(Trash expiredTrash) {
+    @Transactional
+    public void deleteCourse(Trash expiredTrash) {
         Course course = expiredTrash.getCourse();
+        for (Group group : course.getGroups()) {
+            group.setCourses(null);
+        }
+        course.setGroups(null);
+
         for (Lesson lesson : course.getLessons()) {
             trashRepository.deleteById(lesson.getTrash().getId());
         }
@@ -361,6 +376,8 @@ public class TrashServiceImpl implements TrashService {
             instructor.getCourses().remove(course);
         }
         course.setInstructors(null);
+        courseRepository.detachFromExtraTable(course.getId());
+
         courseRepository.deleteById(course.getId());
     }
 }

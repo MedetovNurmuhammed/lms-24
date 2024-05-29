@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
@@ -19,5 +20,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Page<CourseResponse> findAllCourse(Pageable pageable);
 
 
+    @Query(value = "delete from courses_groups cg where cg.courses_id =:courseId",nativeQuery = true)
+    void detachFromExtraTable(@Param("courseId") Long courseId);
 }
 
