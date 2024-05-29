@@ -9,6 +9,7 @@ import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.*;
+import lms.enums.Role;
 import lms.enums.TaskAnswerStatus;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.*;
@@ -142,11 +143,14 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         return studentRepository.findUserNamesByTask(studentIds, taskId);
     }
 
+
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
     }
+
+
 
     private Comment saveComment(String comment, User author) {
         Comment newComment = new Comment();
