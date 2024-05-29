@@ -9,16 +9,25 @@ import lms.dto.response.SimpleResponse;
 import lms.enums.Role;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/course")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseApi {
     private final CourseService courseService;
 
@@ -55,8 +64,8 @@ public class CourseApi {
     @Operation(summary = "Получть все курсы",
             description = "Метод для получение всех курсов" +
                     "Авторизация: администратор!")
-    public FindAllResponseCourse findAllCourse(  @RequestParam(required = false, defaultValue = "1") int page,
-                                                 @RequestParam(required = false, defaultValue = "12") int size
+    public FindAllResponseCourse findAllCourse(@RequestParam(required = false, defaultValue = "1") int page,
+                                               @RequestParam(required = false, defaultValue = "8") int size
     ) {
         return courseService.findAllCourse(page, size);
     }
@@ -74,7 +83,7 @@ public class CourseApi {
     @PostMapping("/assignInInstructorToCourse/{courseId}/{instructorId}")
     @Operation(summary = "Добавить инструктора в группу",
             description = "Метод для добавление инструктора в группу" +
-            "Авторизация: администратор!")
+                    "Авторизация: администратор!")
     public SimpleResponse assignInstructorsToCourse(@PathVariable Long courseId, @RequestParam List<Long> instructorIds) {
         return courseService.assignInstructorsToCourse(courseId, instructorIds);
     }
@@ -85,10 +94,22 @@ public class CourseApi {
     @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
     public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
             @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "12") int size,
+            @RequestParam(required = false, defaultValue = "8") int size,
             @PathVariable Long courseId, @RequestParam Role role) {
         return courseService.findAllInstructorsOrStudentsByCourseId(page, size, courseId, role);
     }
+
+    @Secured({"INSTRUCTOR", "STUDENT"})
+    @GetMapping("/myCourse")
+    @Operation(summary = "Получить все мои курсы",
+            description = "Метод для получение моих курсов" +
+                    "Авторизация: инструктор , студент!")
+    public FindAllResponseCourse myCourses(@RequestParam(required = false, defaultValue = "1") int page,
+                                           @RequestParam(required = false, defaultValue = "8") int size
+    ) {
+        return courseService.findMyCourse(page, size);
+    }
+
 }
 
 

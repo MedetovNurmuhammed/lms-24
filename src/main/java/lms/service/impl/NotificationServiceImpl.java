@@ -3,29 +3,25 @@ package lms.service.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
-import lms.dto.response.FindNotificationTaskResponse;
-import lms.dto.response.NotificationResponse;
-import lms.dto.response.SimpleResponse;
+import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Role;
-import lms.repository.InstructorRepository;
-import lms.repository.NotificationRepository;
-import lms.repository.StudentRepository;
-import lms.repository.UserRepository;
+import lms.repository.*;
 import lms.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
@@ -43,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
         mimeMessageHelper.setText(message);
         mimeMessageHelper.setSubject("КУРСЫ ПРОГРАММИРОВАНИЕ PEAKSOFT!");
         javaMailSender.send(mimeMessage);
-        System.out.println("Email успешно отправлен");
+        log.info("{} успешно отправлен ", toEmail);
     }
 
     @Override
@@ -58,6 +54,35 @@ public class NotificationServiceImpl implements NotificationService {
                 .map(entry -> mapToNotificationResponse(entry.getKey(), entry.getValue()))
                 .filter(notificationResponse -> isView == null || notificationResponse.isView().equals(isView))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SimpleResponse findByNotificationId(Long notificationId) {
+        Notification notification = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new NoSuchElementException("Уведомление не найдено"));
+
+        User currentUser = getCurrentUser();
+        updateNotificationState(currentUser, notification);
+        return SimpleResponse.builder()
+                .message("Уведомление простмотрено")
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+    private void updateNotificationState(User currentUser, Notification notification) {
+        if (currentUser.getRole().equals(Role.STUDENT)) {
+            Student student = studentRepository.findByUserId(currentUser.getId())
+                    .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
+             notificationRepository.findNotificationInExtraTable(student.getId(),notification.getId())
+                    .orElseThrow(()->new NoSuchElementException("Уведомление не найдено"));
+            student.getNotificationStates().put(notification, true);
+        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+            Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
+                    .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
+            notificationRepository.findNotificationInstructorInExtraTable( instructor.getId() ,notification.getId())
+                    .orElseThrow(()->new NoSuchElementException("Уведомление не найдено"));
+            instructor.getNotificationStates().put(notification, true);
+        }
     }
 
     private Map<Notification, Boolean> getNotificationStates(User currentUser) {
@@ -84,45 +109,9 @@ public class NotificationServiceImpl implements NotificationService {
                 .build();
     }
 
-    @Override
-    public FindNotificationTaskResponse findById(Long notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new NoSuchElementException("Уведомление не найдено"));
-
-        User currentUser = getCurrentUser();
-        updateNotificationState(currentUser, notification);
-
-        Task task = notification.getTask();
-        return mapToFindNotificationTaskResponse(task);
-    }
-
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.getByEmail(email);
-    }
-
-    private void updateNotificationState(User currentUser, Notification notification) {
-        if (currentUser.getRole().equals(Role.STUDENT)) {
-            Student student = studentRepository.findByUserId(currentUser.getId())
-                    .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
-            student.getNotificationStates().put(notification, true);
-        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
-                    .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
-            instructor.getNotificationStates().put(notification, true);
-        }
-    }
-
-    private FindNotificationTaskResponse mapToFindNotificationTaskResponse(Task task) {
-        return FindNotificationTaskResponse.builder()
-                .id(task.getId())
-                .image(task.getImage())
-                .title(task.getTitle())
-                .code(task.getCode())
-                .file(task.getFile())
-                .deadline(task.getDeadline())
-                .links(task.getLinks())
-                .build();
     }
 
     @Override
@@ -132,13 +121,13 @@ public class NotificationServiceImpl implements NotificationService {
 
         User currentUser = getCurrentUser();
         if (currentUser.getRole().equals(Role.STUDENT)) {
-            studentRepository.findByUserId(currentUser.getId())
+            Student student = studentRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
-            notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+            notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
         } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            instructorRepository.findByUserId(currentUser.getId())
+            Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
-            notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId());
+            notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId(), instructor.getId());
         }
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)

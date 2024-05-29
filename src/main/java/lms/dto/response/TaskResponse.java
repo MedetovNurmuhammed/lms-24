@@ -3,6 +3,7 @@ package lms.dto.response;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,5 +19,5 @@ public class TaskResponse{
        private String image;
        private String code;
        private LocalDateTime deadline;
-       private List<String> links;
+       private List<String> links = new ArrayList<>();
 }
