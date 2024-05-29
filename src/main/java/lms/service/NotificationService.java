@@ -1,9 +1,11 @@
 package lms.service;
 
 import jakarta.mail.MessagingException;
+import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.FindNotificationTaskResponse;
 import lms.dto.response.NotificationResponse;
 import lms.dto.response.SimpleResponse;
+
 import java.util.List;
 
 public interface NotificationService {
@@ -12,7 +14,7 @@ public interface NotificationService {
 
     List<NotificationResponse> findAll(Boolean isView);
 
-    FindNotificationTaskResponse findById(Long notificationId);
+    SimpleResponse findByNotificationId(Long notificationId);
 
     SimpleResponse delete(Long notificationId);
 }
