@@ -31,7 +31,7 @@ public class InstructorApi {
     @Operation(summary = "Возвращает пагинированный список всех инструкторов.(Авторизация: администратор)")
     @GetMapping()
     public AllInstructorResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
-                                         @RequestParam(required = false, defaultValue = "12") int size) {
+                                         @RequestParam(required = false, defaultValue = "8") int size) {
         return instructorService.findAll(page, size);
     }
 
@@ -55,6 +55,13 @@ public class InstructorApi {
     @Operation(summary = "Удаляет текущего инструкторa.(Авторизация: администратор)")
     public SimpleResponse delete(@PathVariable Long instructorId) {
         return instructorService.delete(instructorId);
+    }
+    @Secured("ADMIN")
+    @Operation(summary = "Возвращает пагинированный список всех имёнь инструкторов.(Авторизация: администратор)")
+    @GetMapping("allInstructorsName")
+    public AllInstructorResponse allInstructorsName(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "8") int size) {
+        return instructorService.allInstructorsName(page, size);
     }
 }
 

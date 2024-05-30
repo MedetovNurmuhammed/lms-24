@@ -18,4 +18,5 @@ public interface InstructorService {
 
     FindByIdInstructorResponse findById(Long instructorId);
 
+    AllInstructorResponse allInstructorsName(int page, int size);
 }

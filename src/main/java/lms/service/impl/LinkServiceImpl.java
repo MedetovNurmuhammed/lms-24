@@ -51,6 +51,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public AllLinkResponse findAll(int page, int size, Long lessonId) {
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<LinkResponse> allLinks = linkRepository.findAllLinksByLesson(lessonId, pageable);
         return AllLinkResponse.builder()

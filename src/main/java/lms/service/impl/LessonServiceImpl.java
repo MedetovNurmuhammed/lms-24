@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -47,7 +48,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public AllLessonsResponse findAll(int page, int size, Long courseId) {
-        Pageable pageable = getPageable(page, size);
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<LessonResponse> allLessons = lessonRepository.findAllLessons(courseId, pageable);
         return AllLessonsResponse.builder()
                 .page(allLessons.getNumber() + 1)
