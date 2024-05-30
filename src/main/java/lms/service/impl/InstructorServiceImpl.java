@@ -151,7 +151,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public InstructorNamesResponse allInstructorsName() {
+    public List<InstructorNamesResponse> allInstructorsName() {
         return instructorRepository.AllInstructorName();
     }
 }

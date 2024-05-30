@@ -31,6 +31,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select i from Instructor i join i.courses c join c.lessons l join l.tasks t where t.id = :taskId")
     List<Instructor> findByAnswerTask(Long taskId);
 
-    @Query("select new lms.dto.response.InstructorNamesResponse(i.id, u.fullName) from Instructor i join i.user u ")
-    InstructorNamesResponse AllInstructorName();
+    @Query("select distinct new lms.dto.response.InstructorNamesResponse(i.id, u.fullName) from Instructor i join i.user u order by i.id")
+    List<InstructorNamesResponse> AllInstructorName();
 }

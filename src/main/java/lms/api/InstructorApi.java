@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -70,7 +72,7 @@ public class InstructorApi {
     @Secured("ADMIN")
     @Operation(summary = "Возвращает список всех имёнь инструкторов.(Авторизация: администратор)")
     @GetMapping("allInstructorsName")
-    public InstructorNamesResponse allInstructorsName() {
+    public List<InstructorNamesResponse> allInstructorsName() {
         return instructorService.allInstructorsName();
     }
 }

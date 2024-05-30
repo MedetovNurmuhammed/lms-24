@@ -8,6 +8,8 @@ import lms.dto.response.FindByIdInstructorResponse;
 import lms.dto.response.InstructorNamesResponse;
 import lms.dto.response.SimpleResponse;
 
+import java.util.List;
+
 public interface InstructorService {
     SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
 
@@ -19,5 +21,5 @@ public interface InstructorService {
 
     FindByIdInstructorResponse findById(Long instructorId);
 
-    InstructorNamesResponse allInstructorsName();
+    List<InstructorNamesResponse> allInstructorsName();
 }
