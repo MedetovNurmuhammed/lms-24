@@ -117,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
         groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
 
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
         return AllStudentResponse.builder()
                 .page(studentResponses.getNumber() + 1)

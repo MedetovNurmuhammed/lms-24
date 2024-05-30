@@ -112,7 +112,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public FindAllResponseCourse findAllCourse(int page, int size) {
-        Pageable pageable = getPageable(page,size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
 
         Page<CourseResponse> allCourse = courseRepository.findAllCourse(pageable);
         return FindAllResponseCourse.builder()
