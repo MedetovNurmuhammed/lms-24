@@ -5,6 +5,7 @@ import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
 import lms.dto.response.AllInstructorResponse;
 import lms.dto.response.FindByIdInstructorResponse;
+import lms.dto.response.InstructorNamesResponse;
 import lms.dto.response.SimpleResponse;
 
 public interface InstructorService {
@@ -18,5 +19,5 @@ public interface InstructorService {
 
     FindByIdInstructorResponse findById(Long instructorId);
 
-    AllInstructorResponse allInstructorsName(int page, int size);
+    InstructorNamesResponse allInstructorsName();
 }

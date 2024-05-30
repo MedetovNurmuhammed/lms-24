@@ -4,10 +4,11 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
-import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.FindByIdInstructorResponse;
-import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.InstructorNamesResponse;
+import lms.dto.response.AllInstructorResponse;
+import lms.dto.response.InstructorResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.entities.Instructor;
 import lms.entities.User;
 import lms.entities.Trash;
@@ -150,7 +151,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public AllInstructorResponse allInstructorsName(int page, int size) {
-        return null;
+    public InstructorNamesResponse allInstructorsName() {
+        return instructorRepository.AllInstructorName();
     }
 }
