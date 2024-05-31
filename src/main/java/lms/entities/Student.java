@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "students")
 @Getter
@@ -76,7 +78,7 @@ public class Student {
     private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = LAZY)
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
