@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   docker-container:
     type: string
-    default: "lms-ka"
+    default: "lms"
 
 jobs:
   install-docker-if-not-exists:
