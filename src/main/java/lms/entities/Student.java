@@ -30,8 +30,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static jakarta.persistence.FetchType.LAZY;
-
 @Entity
 @Table(name = "students")
 @Getter
@@ -62,7 +60,7 @@ public class Student {
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.LAZY)
     private Group group;
 
     //********************************* ResultTest ****************************************
@@ -78,7 +76,7 @@ public class Student {
     private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
-    @ElementCollection(fetch = LAZY)
+    @ElementCollection(fetch = FetchType.LAZY)
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************

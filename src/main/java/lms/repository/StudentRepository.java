@@ -54,5 +54,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
                                      @Param("taskId") Long taskId);
     @Query("select s from Student s where s.user.id =:id")
     Optional<Student> findStudentByUserId(@Param("id") Long id);
-
+    @Query("select s from Student s where s.id =:studentId")
+    Optional<Student> findStudentById(@Param("studentId")Long studentId);
 }

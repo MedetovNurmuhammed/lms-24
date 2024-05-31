@@ -36,7 +36,7 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
-        Lesson lesson = lessonRepository.findById(lessonId)
+        Lesson lesson = lessonRepository.findLessonById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
         boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
         if (exists) {
@@ -63,7 +63,7 @@ public class PresentationServiceImpl implements PresentationService {
     @Transactional
     public SimpleResponse editPresentation(Long presentationId,
                                            EditPresentationRequest presentationRequest) {
-        Presentation presentation = presentationRepository.findById(presentationId)
+        Presentation presentation = presentationRepository.findPresentationById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
         Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
         if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
@@ -87,7 +87,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse findById(Long presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
+        Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
         return PresentationResponse.builder()
                 .id(presentation.getId())
                 .title(presentation.getTitle())
@@ -99,7 +99,7 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse deletePresentationById(Long presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
+        Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
         presentationRepository.deletePresentation(presentationId);
         Trash trash = new Trash();
         trash.setName(presentation.getTitle());

@@ -28,4 +28,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Transactional
     @Query(value = "select notification_states_key from instructor_notification_states  where notification_states_key = :notificationId and instructor_id = :instructorId", nativeQuery = true)
     Optional<Long> findNotificationInstructorInExtraTable(@Param("instructorId")Long studentId, @Param("notificationId") Long notificationId);
+    @Query("select s from Notification s where s.id =:notificationId")
+    Optional<Notification> findNotificationById(Long notificationId);
 }

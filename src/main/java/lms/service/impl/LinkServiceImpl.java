@@ -36,7 +36,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public SimpleResponse addLink(LinkRequest linkRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         Link link = new Link();
         link.setTitle(linkRequest.title());
         link.setUrl(linkRequest.url());
@@ -62,7 +62,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public LinkResponse findById(Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         return LinkResponse.builder()
                 .id(link.getId())
                 .title(link.getTitle())
@@ -73,7 +73,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse update(LinkRequest linkRequest, Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         link.setTitle(linkRequest.title());
         link.setUrl(linkRequest.url());
         linkRepository.save(link);
@@ -86,7 +86,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         Trash trash = new Trash();
         trash.setName(link.getTitle());
         trash.setDateOfDelete(ZonedDateTime.now());

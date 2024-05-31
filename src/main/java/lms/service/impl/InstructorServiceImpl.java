@@ -84,7 +84,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     @Transactional
     public SimpleResponse update(InstructorUpdateRequest instructorRequest, Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId)
+        Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         User user = instructor.getUser();
         if (!user.getEmail().equals(instructorRequest.getEmail())) {
@@ -99,7 +99,7 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setSpecialization(instructorRequest.getSpecialization());
         List<Course> courses = new ArrayList<>();
         for (Long courseId : instructorRequest.getCourseIds()) {
-            Course course = courseRepository.findById(courseId).orElseThrow(() ->
+            Course course = courseRepository.findCourseById(courseId).orElseThrow(() ->
                     new NotFoundException("Курс с идентификатором: " + courseId + " не найден"));
                 courses.add(course);
         }
@@ -115,7 +115,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     @Transactional
     public SimpleResponse delete(Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId)
+        Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
         Trash trash = new Trash();
         trash.setInstructor(instructor);
@@ -132,7 +132,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public FindByIdInstructorResponse findById(Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() ->
+        Instructor instructor = instructorRepository.findInstructorById(instructorId).orElseThrow(() ->
                 new NotFoundException("инструктор не найден!!!"));
         List<String> courseNames = new ArrayList<>();
         for (Course course : instructor.getCourses()) {

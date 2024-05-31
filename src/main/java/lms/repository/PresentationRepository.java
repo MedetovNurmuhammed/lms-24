@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
     @Query("SELECT new lms.dto.response.PresentationResponse(p.id, p.title, p.description, p.file) " +
@@ -26,5 +27,6 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
 
     @Query("select count(p) > 0 from Lesson s join s.presentations p where p.title = :title and s.id = :id and p.trash.id is null")
     boolean existsTitle(@Param("id") Long id, @Param("title") String title);
-
+    @Query("select s from Presentation s where s.id =:presentationId")
+    Optional<Presentation> findPresentationById(Long presentationId);
 }

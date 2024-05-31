@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
@@ -33,5 +34,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
                 from Student s join s.group g join g.courses c  where s.id =:id and c.trash.id is null 
             """)
     Page<CourseResponse> findByStudentId(Long id, Pageable pageable);
+    @Query("select s from Course s where s.id =:courseId")
+    Optional<Course> findCourseById(Long courseId);
 }
 
