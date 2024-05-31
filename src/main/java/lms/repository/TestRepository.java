@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TestRepository extends JpaRepository<Test, Long> {
     @Query("""
@@ -15,5 +16,6 @@ public interface TestRepository extends JpaRepository<Test, Long> {
             from Test t where t.lesson.id =:lessonId 
             """)
     List<TestResponseForGetAll> findAllTestsByLessonId(Long lessonId);
-
+@Query("select s from Test s where s.id =:testId")
+    Optional<Test> findTestById(Long testId);
 }

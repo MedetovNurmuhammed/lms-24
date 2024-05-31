@@ -41,7 +41,7 @@ public class ResultTestServiceImpl implements ResultTestService {
     @Override
     @Transactional
     public SimpleResponse saveResult(Long testId, AnswerTestRequest answerRequest) {
-        Test test = testRepository.findById(testId)
+        Test test = testRepository.findTestById(testId)
                 .orElseThrow(() -> new NotFoundException("тест с id " + testId + " не найден"));
 
         Student student = getCurrentStudent();
@@ -51,7 +51,7 @@ public class ResultTestServiceImpl implements ResultTestService {
         test.getResultTests().add(resultTest);
         student.getResultTests().add(resultTest);
         for (Long optionId : answerRequest.optionId()) {
-            Option option = optionRepository.findById(optionId)
+            Option option = optionRepository.findOptionById(optionId)
                     .orElseThrow(() -> new NotFoundException("ответ с id: " + optionId + " не найден"));
             resultTest.getOptions().add(option);
         }
@@ -65,14 +65,14 @@ public class ResultTestServiceImpl implements ResultTestService {
     }
     @Override
     public ResultTestResponse findResultOfCurrentStudent(Long testId) {
-        Test test = testRepository.findById(testId).orElseThrow(() -> new NotFoundException("тест с айди: " + testId + " не найден"));
+        Test test = testRepository.findTestById(testId).orElseThrow(() -> new NotFoundException("тест с айди: " + testId + " не найден"));
         Student student = getCurrentStudent();
         ResultTest resultTest = resultTestRepository.findByStudentId(student.getId(), test.getId());
         return getResultTestResponse(resultTest);
     }
     @Override
     public ResultTestResponse findResultTestById(Long resultTestId) {
-        ResultTest resultTest = resultTestRepository.findById(resultTestId).orElseThrow(() -> new NotFoundException("результат с " + resultTestId + "не найден"));
+        ResultTest resultTest = resultTestRepository.findResultTestById(resultTestId).orElseThrow(() -> new NotFoundException("результат с " + resultTestId + "не найден"));
 
         return getResultTestResponse(resultTest);
     }

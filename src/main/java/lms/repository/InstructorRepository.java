@@ -33,4 +33,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     @Query("select distinct new lms.dto.response.InstructorNamesResponse(i.id, u.fullName) from Instructor i join i.user u order by i.id")
     List<InstructorNamesResponse> AllInstructorName();
+    @Query("select s from Instructor s where s.id =:instructorId")
+    Optional<Instructor> findInstructorById(Long instructorId);
 }

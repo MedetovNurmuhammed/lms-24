@@ -115,7 +115,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
+        groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
@@ -129,7 +129,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse update(Long studId, StudentRequest studentRequest) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         User user = student.getUser();
         if (!user.getEmail().equals(studentRequest.email())) {
@@ -155,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
@@ -174,7 +174,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse findById(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         if (student.getTrash() == null) {
             return StudentResponse.builder()
@@ -193,7 +193,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Validated
     public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
+        Group group = groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
         try {
             Workbook workbook = WorkbookFactory.create(file.getInputStream());
             Sheet sheet = workbook.getSheetAt(0);
@@ -293,7 +293,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentIsBlockResponse isBlock(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден!"));
         if (student.getUser().getBlock().equals(false)) {
             student.getUser().setBlock(true);
