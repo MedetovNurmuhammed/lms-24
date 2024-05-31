@@ -28,4 +28,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     @Query("select i from Instructor i join i.courses c join c.lessons l join l.tasks t where t.id = :taskId")
     List<Instructor> findByAnswerTask(Long taskId);
+    @Query("select s from Instructor s where s.id =:instructorId")
+    Optional<Instructor> findInstructorById(Long instructorId);
 }

@@ -79,7 +79,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public SimpleResponse editCourse(Long courseId,
                                      CourseRequest courseRequest) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id :" + courseId + " не найден!"));
+        Course course = courseRepository.findCourseById(courseId).orElseThrow(() -> new NotFoundException("Курс с id :" + courseId + " не найден!"));
         checkTitle(courseRequest.getTitle());
         course.setTitle(courseRequest.getTitle());
         course.setImage(courseRequest.getImage());
@@ -95,7 +95,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public SimpleResponse deleteCourseById(Long courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow(()
+        Course course = courseRepository.findCourseById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
         Trash trash = new Trash();
         course.setTrash(trash);
@@ -125,8 +125,8 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public SimpleResponse assignInGroupToCourse(Long groupId, Long courseId) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа с id: " + groupId + " не найден!"));
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не найден!"));
+        Group group = groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группа с id: " + groupId + " не найден!"));
+        Course course = courseRepository.findCourseById(courseId).orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не найден!"));
         group.getCourses().add(course);
         course.getGroups().add(group);
         courseRepository.save(course);
@@ -140,7 +140,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds) {
-        Course course = courseRepository.findById(courseId)
+        Course course = courseRepository.findCourseById(courseId)
                 .orElseThrow(() -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
 
         List<Instructor> foundInstructors = instructorRepository.findAllById(instructorIds);
@@ -201,7 +201,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
         Pageable pageable = getPageable(page, size);
-        Course course = courseRepository.findById(courseId).orElseThrow(
+        Course course = courseRepository.findCourseById(courseId).orElseThrow(
                 () -> new NotFoundException("Курс с Id:   " + courseId + "  не найдены.")
         );
         if (role.equals(Role.STUDENT)) {

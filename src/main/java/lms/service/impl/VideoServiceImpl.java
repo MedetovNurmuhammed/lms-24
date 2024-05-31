@@ -35,7 +35,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse save(VideoRequest videoRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
         boolean exists = videoRepository.existsTitle(lesson.getId(), videoRequest.titleOfVideo());
         if (exists) {
             throw new AlreadyExistsException("видео с названием " + videoRequest.titleOfVideo() + " уже существует!");
@@ -63,7 +63,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse update(Long videoId, VideoRequest videoRequest) {
-        Video video = videoRepository.findById(videoId)
+        Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         Lesson lesson = linkRepository.findByVideoId(video.getId());
         boolean exists = videoRepository.existsTitle(lesson.getId(), videoRequest.titleOfVideo());
@@ -107,7 +107,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse delete(Long videoId) {
-        Video video = videoRepository.findById(videoId)
+        Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         Trash trash = new Trash();
         trash.setName(video.getDescription());

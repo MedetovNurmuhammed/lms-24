@@ -20,4 +20,6 @@ public interface AnswerTaskRepository extends JpaRepository<AnswerTask, Long> {
 
     @Query("select count(a)>0 from AnswerTask a where a.task.id = :taskId and a.student.id = :studentId")
     Boolean existsByTaskId(Long taskId, Long studentId);
+    @Query("select s from AnswerTask s where s.id =:answerId")
+    Optional<AnswerTask> findAnswerTaskById(Long answerId);
 }
