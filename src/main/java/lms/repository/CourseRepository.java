@@ -33,5 +33,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
                 from Student s join s.group g join g.courses c  where s.id =:id and c.trash.id is null 
             """)
     Page<CourseResponse> findByStudentId(Long id, Pageable pageable);
+    @Query("SELECT COUNT(c) FROM Course c")
+    int getAllCourseCount();
 }
 
