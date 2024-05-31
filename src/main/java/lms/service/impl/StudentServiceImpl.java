@@ -14,7 +14,6 @@ import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
-import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -40,7 +39,6 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -77,7 +75,7 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(user);
         userRepository.save(user);
         studentRepository.save(student);
-        userService.emailSender(user.getEmail());
+        userService.emailSender(user.getEmail(), );
         log.info("Успешно {} сохранен!", studentRequest.email());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -250,7 +248,7 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-                userServiceImpl.emailSender(user.getEmail());
+                userServiceImpl.emailSender(user.getEmail(), );
             }
         } catch (IOException e) {
             e.printStackTrace();

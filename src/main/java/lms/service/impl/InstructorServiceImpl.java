@@ -62,7 +62,7 @@ public class InstructorServiceImpl implements InstructorService {
 
         userRepository.save(user);
         instructorRepository.save(instructor);
-        userService.emailSender(user.getEmail());
+        userService.emailSender(user.getEmail(), );
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Инструктор успешно добавлен")
