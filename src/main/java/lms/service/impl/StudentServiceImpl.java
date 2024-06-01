@@ -31,6 +31,7 @@ import org.apache.poi.ss.util.NumberToTextConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -89,7 +90,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         log.info(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
         if (search.equalsIgnoreCase("ONLINE")) {
@@ -116,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
         groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
 
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
         return AllStudentResponse.builder()
                 .page(studentResponses.getNumber() + 1)

@@ -4,10 +4,11 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
-import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.FindByIdInstructorResponse;
-import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.InstructorNamesResponse;
+import lms.dto.response.AllInstructorResponse;
+import lms.dto.response.InstructorResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.entities.Instructor;
 import lms.entities.User;
 import lms.entities.Trash;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -72,7 +74,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public AllInstructorResponse findAll(int page, int size) {
         if(page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<InstructorResponse> allInstructors = instructorRepository.findAllInstructors(pageable);
         return AllInstructorResponse.builder()
                 .page(allInstructors.getNumber() + 1)
@@ -146,5 +148,10 @@ public class InstructorServiceImpl implements InstructorService {
                 .email(instructor.getUser().getEmail())
                 .courseNames(courseNames)
                 .build();
+    }
+
+    @Override
+    public List<InstructorNamesResponse> allInstructorsName() {
+        return instructorRepository.AllInstructorName();
     }
 }
