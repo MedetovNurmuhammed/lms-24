@@ -75,7 +75,8 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(user);
         userRepository.save(user);
         studentRepository.save(student);
-        userService.emailSender(user.getEmail(), );
+        String link = studentRequest.linkForPassword();
+        userService.emailSender(user.getEmail(), link);
         log.info("Успешно {} сохранен!", studentRequest.email());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -248,13 +249,14 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-                userServiceImpl.emailSender(user.getEmail(), );
+//                String link = studentRequest.linkForPassword();
+//                userServiceImpl.emailSender(user.getEmail(), );
             }
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Не удалось импортировать студентов из Excel");
-        } catch (MessagingException e) {
-            throw new RuntimeException("Произошла ошибка при отправке или получении сообщения по почте: " + e.getMessage(), e);
+//        } catch (MessagingException e) {
+//            throw new RuntimeException("Произошла ошибка при отправке или получении сообщения по почте: " + e.getMessage(), e);
         }
 
         return SimpleResponse.builder()

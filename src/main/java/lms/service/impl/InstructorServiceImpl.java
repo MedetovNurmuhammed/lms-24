@@ -59,10 +59,10 @@ public class InstructorServiceImpl implements InstructorService {
         user.setPhoneNumber(instructorRequest.getPhoneNumber());
         instructor.setSpecialization(instructorRequest.getSpecialization());
         instructor.setUser(user);
-
         userRepository.save(user);
         instructorRepository.save(instructor);
-        userService.emailSender(user.getEmail(), );
+        String link = instructorRequest.getLinkForPassword() ;
+        userService.emailSender(user.getEmail(), link);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Инструктор успешно добавлен")
