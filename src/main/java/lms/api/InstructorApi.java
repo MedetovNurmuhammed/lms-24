@@ -71,7 +71,7 @@ public class InstructorApi {
     }
     @Secured("ADMIN")
     @Operation(summary = "Возвращает список всех имёнь инструкторов.(Авторизация: администратор)")
-    @GetMapping("allInstructorsName")
+    @GetMapping("/allInstructorsName")
     public List<InstructorNamesResponse> allInstructorsName() {
         return instructorService.allInstructorsName();
     }
