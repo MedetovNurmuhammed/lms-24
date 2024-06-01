@@ -76,8 +76,10 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public SimpleResponse deleteExam(Long examId) {
+        System.out.println("\"test\" = " + "test");
         Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);
+        System.out.println("\"deleted\" = " + "deleted");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удалено!")
@@ -93,10 +95,11 @@ public class ExamServiceImpl implements ExamService {
         return students.stream().map(student -> {
             List<ExamResult> examResults = examResultRepository.findExamResultsByCourseId(courseId).stream()
                     .filter(er -> er.getStudent().getId().equals(student.getId()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             List<StudentExamResponse.ExamInfo> examInfos = examResults.stream().map(examResult -> {
                 StudentExamResponse.ExamInfo examInfo = new StudentExamResponse.ExamInfo();
+                examInfo.setExamId(examResult.getId());
                 examInfo.setExamTitle(examResult.getExam().getTitle());
                 examInfo.setPoint(examResult.getPoint());
                 return examInfo;

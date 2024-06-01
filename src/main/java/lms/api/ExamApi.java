@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/exam")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ExamApi {
+
     private final ExamService examService;
     @PostMapping("/{courseId}")
     @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
@@ -33,21 +34,25 @@ public class ExamApi {
     public SimpleResponse editExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long examId) {
         return examService.editExam(examRequest, examId);
     }
+
     @Secured("INSTRUCTOR")
     @DeleteMapping("/{examId}")
     @Operation(summary = "Удалить экзамен",description = "метод для удаление  экзамена! \"+\n"+
             "\" Авторизация: Инструктор!")
     private SimpleResponse deleteExam(@PathVariable Long examId) {
+        System.out.println("\"api\" = Mukhammed " + "api");
+        System.out.println("examId = " + examId);
         return examService.deleteExam(examId);
     }
+
     @Secured({"INSTRUCTOR"})
     @GetMapping("/{courseId}")
     @Operation(summary = "Получить студенты курса с экзаменами и баллами!",description = "метод для получение студентов с баллами экзамена! \"+\n"+
             "\" Авторизация: Инструктор!")
     public ResponseEntity<List<StudentExamResponse>> getStudentsAndExamsByCourseId(@Valid @PathVariable Long courseId) {
-        List<StudentExamResponse> response = examService.getStudentsAndExamsByCourseId(courseId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(examService.getStudentsAndExamsByCourseId(courseId), HttpStatus.OK);
     }
+
     @Secured("INSTRUCTOR")
     @PatchMapping("editExamPoint/{examResultId}")
     @Operation(summary = "Редактивироват балл студента!",description = "метод для редактивирование балл экзамена! \"+\n"+

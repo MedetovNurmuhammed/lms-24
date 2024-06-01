@@ -11,6 +11,7 @@ public class StudentExamResponse {
 
     @Data
     public static class ExamInfo {
+        private Long examId;
         private String examTitle;
         private int point;
     }
