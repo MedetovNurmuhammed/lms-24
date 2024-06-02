@@ -249,14 +249,14 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-//                String link = studentRequest.linkForPassword();
+//                String link = studentRequ est.linkForPassword();
 //                userServiceImpl.emailSender(user.getEmail(), );
             }
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Не удалось импортировать студентов из Excel");
-//        } catch (MessagingException e) {
-//            throw new RuntimeException("Произошла ошибка при отправке или получении сообщения по почте: " + e.getMessage(), e);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Произошла ошибка при отправке или получении сообщения по почте: " + e.getMessage(), e);
         }
 
         return SimpleResponse.builder()
