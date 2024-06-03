@@ -117,7 +117,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
                 new NoSuchElementException("Инструктор не найден"));
         String message = instructor.getUser().getFullName() + " оценил(a) вашу работу по " + answer.getTask().getTitle();
         Notification notification = createNotification(answer, message);
-        student.getNotificationStates().put(notification, false);
+        student.getNotificationStates().put(notification.getId(), false);
         notificationService.emailMessage(message, student.getUser().getEmail());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -233,7 +233,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         notificationRepository.save(notification);
 
 
-        instructor.getNotificationStates().put(notification, false);
+        instructor.getNotificationStates().put(notification.getId(), false);
         notificationService.emailMessage(message, instructor.getUser().getEmail());
     }
 

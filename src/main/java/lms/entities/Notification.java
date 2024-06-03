@@ -1,6 +1,5 @@
 package lms.entities;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -38,7 +37,7 @@ public class Notification {
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REMOVE})
     private AnswerTask answerTask;
 
     @PrePersist

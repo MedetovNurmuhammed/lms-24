@@ -67,7 +67,7 @@ public class Task {
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Lesson ****************************************

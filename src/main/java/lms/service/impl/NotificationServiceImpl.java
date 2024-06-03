@@ -52,7 +52,7 @@ public class NotificationServiceImpl implements NotificationService {
         User currentUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
 
-        Map<Notification, Boolean> notificationStates = getNotificationStates(currentUser);
+        Map<Long, Boolean> notificationStates = getNotificationStates(currentUser);
 
         return notificationStates.entrySet().stream()
                 .map(entry -> mapToNotificationResponse(entry.getKey(), entry.getValue()))
@@ -60,7 +60,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .collect(Collectors.toList());
     }
 
-    private Map<Notification, Boolean> getNotificationStates(User currentUser) {
+    private Map<Long, Boolean> getNotificationStates(User currentUser) {
         if (currentUser.getRole().equals(Role.STUDENT)) {
             Student student = studentRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
@@ -73,7 +73,8 @@ public class NotificationServiceImpl implements NotificationService {
         return Collections.emptyMap();
     }
 
-    private NotificationResponse mapToNotificationResponse(Notification notification, Boolean isView) {
+    private NotificationResponse mapToNotificationResponse(Long id, Boolean isView) {
+        Notification notification = notificationRepository.getReferenceById(id);
         return NotificationResponse.builder()
                 .notificationId(notification.getId())
                 .notificationTitle(notification.getTitle())
@@ -105,11 +106,11 @@ public class NotificationServiceImpl implements NotificationService {
         if (currentUser.getRole().equals(Role.STUDENT)) {
             Student student = studentRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
-            student.getNotificationStates().put(notification, true);
+            student.getNotificationStates().put(notification.getId(), true);
         } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
             Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
                     .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
-            instructor.getNotificationStates().put(notification, true);
+            instructor.getNotificationStates().put(notification.getId(), true);
         }
     }
 

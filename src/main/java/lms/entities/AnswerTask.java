@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerTask {
+public class  AnswerTask {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_task_gen")
     @SequenceGenerator(name = "answer_task_gen", sequenceName = "answer_task_seq", allocationSize = 1, initialValue = 21)
@@ -34,7 +34,11 @@ public class AnswerTask {
     private LocalDateTime dateOfSend;
     private LocalDateTime updatedAt;
 
-    //*************************************** Student **************************************
+    // added notification list
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE}, mappedBy = "answerTask")
+    private List<Notification> notifications;
+
+    //*************************************** Student ************************************** remove
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Student student;
 
@@ -45,10 +49,6 @@ public class AnswerTask {
     //*************************************** Link *****************************************
     @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Link link;
-
-    //*************************************** ResultTask ************************************
-//    @OneToOne(cascade = CascadeType.REMOVE)
-//    private ResultTask resultTask;
 
     @PrePersist
     protected void onCreate() {

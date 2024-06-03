@@ -59,4 +59,13 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Query("select s from Student s where s.user.id =:id")
     Optional<Student> findStudentByUserId(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "delete from students where id = :id", nativeQuery = true)
+    void deleteStudentById(Long id);
+
+//    @Modifying
+//    @Transactional
+//    @Query(value = "delete from students where trash_id = :id", nativeQuery = true)
+//    void deleteStudentByTrashId(Long id);
 }

@@ -28,4 +28,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("update Announcement a set a.user.id = null where a.user.id = :userId")
     @Transactional
     void detachFromAnnouncement(Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from users where id = :id", nativeQuery = true)
+    void deleteStudentById(Long id);
 }

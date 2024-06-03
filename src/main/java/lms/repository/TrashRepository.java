@@ -33,4 +33,9 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
     @Transactional
     @Query("delete from Trash t where t.task.id =:taskId")
     void deleteTrashLessons(Long taskId);
+
+    @Modifying
+    @Transactional
+    @Query("update Trash t set t.student.id = null where t.student.id = :studentId")
+    void deleteTrashById(Long studentId);
 }

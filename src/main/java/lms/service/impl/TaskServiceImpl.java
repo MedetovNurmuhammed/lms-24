@@ -88,7 +88,7 @@ public class TaskServiceImpl implements TaskService {
             notification.setTitle("Новое домашнее задание");
 
             notificationRepository.save(notification);
-            student.getNotificationStates().put(notification, false);
+            student.getNotificationStates().put(notification.getId(), false);
             notificationService.emailMessage(message, student.getUser().getEmail());
         }
     }

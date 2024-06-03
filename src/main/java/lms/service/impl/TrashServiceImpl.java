@@ -1,12 +1,13 @@
 package lms.service.impl;
 
-import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 import lms.config.aws.service.StorageService;
 import lms.dto.response.AllTrashResponse;
+import lms.dto.response.NotificationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
 import lms.entities.*;
+import lms.repository.TrashRepository;
 import lms.enums.Role;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.ForbiddenException;
@@ -23,8 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +48,8 @@ public class TrashServiceImpl implements TrashService {
     private final NotificationRepository notificationRepository;
     private final AnswerTaskRepository answerTaskRepository;
     private final OptionRepository optionRepository;
+    private final CommentRepository commentRepository;
+    private final AnnouncementRepository announcementRepository;
 
     private Boolean isOwner(User currentUser, Trash trash) {
         Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
@@ -263,22 +265,24 @@ public class TrashServiceImpl implements TrashService {
     @Transactional
     @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
+        System.err.println("WORKING...");
         ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(1);
         List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(fiveMinutesAgo);
         for (Trash expiredTrash : expiredTrashes) {
-            if (expiredTrash.getCourse() != null) {
-                System.err.println("expiredTrash = " + expiredTrash);
-                deleteCourse(expiredTrash);
+//            if (expiredTrash.getInstructor() != null) {
+//                System.err.println("WORKING1...");
+//                deleteInstructor(expiredTrash.getInstructor());
+////                Instructor instructor = expiredTrash.getInstructor();
+////                expiredTrash.getInstructor().setNotificationStates(null);
+////                User user = instructor.getUser();
+////                userRepository.detachFromAnnouncement(user.getId());
+////                instructorRepository.deleteById(instructor.getId());
 
-                System.err.println("expiredTrash =  asdfsdfasdfas " + expiredTrash);
-//            } else if (expiredTrash.getInstructor() != null) {
-//                Instructor instructor = expiredTrash.getInstructor();
-//                expiredTrash.getInstructor().setNotificationStates(null);
-//                User user = instructor.getUser();
-//                userRepository.detachFromAnnouncement(user.getId());
-//                instructorRepository.deleteById(instructor.getId());
-//            } else if (expiredTrash.getGroup() != null) {
-//                deleteGroup(expiredTrash);
+//            } else
+                if (expiredTrash.getGroup() != null) {
+                System.err.println("WORKING2...");
+                deleteGroup(expiredTrash);
+            }
 //            } else if (expiredTrash.getStudent() != null) {
 //                Student student = expiredTrash.getStudent();
 //                studentRepository.deleteById(student.getId());
@@ -297,7 +301,6 @@ public class TrashServiceImpl implements TrashService {
 //                deleteTask(expiredTrash);
 //
 //
-//
 //            } else if (expiredTrash.getLesson() != null) {
 //                Lesson lesson = expiredTrash.getLesson();
 //                deleteLessonById(lesson.getId());
@@ -305,13 +308,17 @@ public class TrashServiceImpl implements TrashService {
 //            } else if (expiredTrash.getLink() != null) {
 //                Link link = expiredTrash.getLink();
 //                linkRepository.deleteById(link.getId());
+//            }
+//            } else if (expiredTrash.getCourse() != null) {
+//                System.err.println("expiredTrash = " + expiredTrash);
+//                deleteCourse(expiredTrash);
+//            }
+            System.err.println("expiredTrash =  asdfsdfasdfas " + expiredTrash);
+//            if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
+//                System.err.println("WORKING3...");
+//                trashRepository.delete(expiredTrash);
 //
 //            }
-                if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
-                    trashRepository.delete(expiredTrash);
-
-                }
-            }
         }
     }
 
@@ -329,56 +336,350 @@ public class TrashServiceImpl implements TrashService {
                 notification2.setAnswerTask(null);
             }
         }
-
         taskRepository.deleteById(task.getId());
     }
 
     @Transactional
     public void deleteGroup(Trash expiredTrash) {
         Group group = expiredTrash.getGroup();
+//        group.setCourses(null);
+        for (Course course : group.getCourses()) {
+            System.err.println("for course delete1");
+            courseRepository.deleteById(course.getId());
+            System.err.println("for course delete1");
+            for (Instructor instructor : course.getInstructors()) {
+                System.err.println("for instructor delete1");
+                instructorRepository.deleteById(instructor.getId());
+                System.err.println("for instructor delete2");
+            }
+        }
 
-        groupRepository.deleteFromAdditionalTable(group.getId());
+//        groupRepository.deleteFromAdditionalTable(group.getId());
+        System.err.println("delete group announcement");
         for (Student student : group.getStudents()) {
-            Trash trash1 = student.getTrash();
-            trashRepository.deleteById(trash1.getId());
-            studentRepository.deleteById(student.getId());
+            //-----------------------
+            List<Announcement> announcements = student.getUser().getAnnouncements();
+            for (Announcement announcement : announcements) {
+                announcementRepository.deleteById(announcement.getId());
+            }
+            System.err.println("user id ");
+//            List<Announcement> userAnnouncements = announcementRepository.deleteByUserId(student.getUser().getId());
+            student.getUser().setAnnouncements(null);
+//            userRepository.detachFromAnnouncement(student.getUser().getId());
+            System.err.println("after delete user announcements " + student.getId());
+//            for (Announcement announcement : userAnnouncements) {
+//                System.err.println("before delete1 stud");
+//                announcementRepository.deleteById(announcement.getId());
+//                System.err.println("before delete2 stud");
+//            }
+            //---------------
+            System.err.println("in for notification states");
+            for (AnswerTask answerTask : student.getAnswerTasks()) {
+                System.err.println("in for answer task");
+//                student.setNotificationStates(null);
+                System.err.println("after set null notification states");
+                answerTask.setStudent(null);
+                System.err.println("after set null answer task states");
+//                for (NotificationResponse notification1: notificationRepository.findAllNotificationResponseByAnswerTaskId(answerTask.getId())) {
+                for (Notification notification : answerTask.getNotifications()) {
+                    System.err.println("in for notification");
+//                    student.getNotificationStates().put(null, null);//todo
+                    System.err.println("null null");
+//                    notificationRepository.detachNotificationFromStudents(notification.getId());//todo
+                    System.err.println("after set null for notification key");
+                    student.setNotificationStates(null);  //todo
+                    System.err.println("after notification");
+//                    notificationRepository.deleteByAnswerTaskIdAndExtraTable(student.getId());
+//                    System.err.println("check " + student.getNotificationStates().keySet());
+//                    notificationRepository.deleteNotificationFromExtraTableStudent(student.getId());
+                    System.err.println("after delete ");
+
+//                    notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
+//                    Notification notification = notificationRepository.getReferenceById(notification1.notificationId());
+                    notification.setAnswerTask(null);
+                    System.err.println("in for after task");
+//                    removeAnswerTaskByNotification(notification.getAnswerTask());
+                }
+            }
+
+            System.err.println("after deLETE STUDENT TRASH ID");
+//            student.setTrash(null);
+            System.err.println("TRASH ID IS " + student.getTrash().getId());
+            Long trashId = student.getTrash().getId();
+            Trash trash = student.getTrash();
+            trash.setStudent(null);
+            student.setTrash(null);
+            System.err.println("l;akseflknawl;fna;eofjasljflasknflan;falkjhgfd';lkjhgfdsalkjhgfdsa");
+//            trashRepository.deleteTrashById(trashId);
+//            studentRepository.deleteStudentById(student.getId());
+            System.err.println("ggggggggggggggghjkl");
+//            trashRepository.deleteTrashById(student.getTrash().getId());
+
+            System.err.println("student id " + student.getId() + " ann.size " + student.getAnnouncements().size());
+            student.setAnnouncements(null);
+//            for (Announcement announcement : student.getAnnouncements().keySet()) {
+//                Student student1 = studentRepository.findByUserId(announcement.getUser().getId()).get();
+//            }
+//            announcementRepository.deleteByAnnouncementIdNative(student.getId());
+//            student.getAnnouncements().put(null, null);
+
+            System.err.println("DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEE ");
+//            userRepository.deleteStudentById(student.getUser().getId());
+//            trashRepository.deleteById(student.getTrash().getId());
         }
 
+//        for (Announcement announcement : announcementRepository.findAllByGroupId(group.getId())) {
+//            System.err.println("for delete1");
+//            announcementRepository.deleteById(announcement.getId());
+//            System.err.println("for delete2");
+//        }
 
-        for (Course cours : group.getCourses()) {
-            cours.getGroups().remove(group);
-        }
-        group.setCourses(null);
-        for (Student student : group.getStudents()) {
-            trashRepository.deleteById(student.getTrash().getId());
-        }
+        System.err.println("Before delete group");
         groupRepository.deleteById(group.getId());
+        System.err.println("After delete group");
+
+
+//        for (Student student : group.getStudents()) {
+//            System.err.println("In for1");
+//
+//            // Удаляем уведомления, связанные с AnswerTask
+//            for (AnswerTask answerTask : student.getAnswerTasks()) {
+//                System.err.println("in for2");
+//
+//                // Удаляем уведомления, связанные с AnswerTask
+//                List<Notification> notifications = notificationRepository.findByAnswerTaskId(answerTask.getId());
+//                for (Notification notification : notifications) {
+//                    System.err.println("notification id " + notification.getId());
+//                    studentRepository.deleteStudentById(student.getId());
+//                    System.err.println("answer task id " + answerTask.getId());
+//
+//                    notificationRepository.deleteByAnswerTaskId(answerTask.getId());
+//                    answerTaskRepository.deleteByIdStudent(notification.getId(), student.getId());
+//                }
+//                System.err.println("Deleted notifications by AnswerTaskId");
+//
+//                // Удаляем уведомления, связанные со студентом
+//                for (Notification notification : student.getNotificationStates().keySet()) {
+//                    notificationRepository.deleteNotificationFromStudent(notification.getId(), student.getId());
+//                    System.err.println("Deleted notification from student");
+//                }
+//
+//                // Удаляем сам AnswerTask
+//                answerTaskRepository.deleteById(answerTask.getId());
+//                System.err.println("Deleted AnswerTask");
+//            }
+//
+//            // Удаляем студента
+//            studentRepository.deleteById(student.getId());
+//            System.err.println("Deleted student");
+//        }
     }
+
+    private void removeAnswerTaskByNotification(AnswerTask answerTask) {
+        answerTaskRepository.deleteById(answerTask.getId());
+        System.err.println("deleted answer task");
+    }
+
+
+    //----------------------------------
+//    @Transactional
+//    public void deleteGroup(Trash expiredTrash) {
+//        Group group = expiredTrash.getGroup();
+//        group.setCourses(null);
+//        System.err.println("Before delete group");
+//        groupRepository.deleteById(group.getId());
+//        System.err.println("After delete group");
+//        for (Student student : group.getStudents()) {
+//            System.err.println("In for1");
+//            for (AnswerTask answerTask : student.getAnswerTasks()) {
+//                System.err.println("in for2");
+//                System.err.println("size " + student.getNotificationStates().keySet().size());
+//
+//                for (Notification notification : student.getNotificationStates().keySet()) {
+//                    System.err.println("notification");
+//
+//                    studentRepository.deleteStudentById(student.getId());
+//                    System.err.println("after delete notification");
+//
+//                    notificationRepository.deleteNotificationFromStudent(notification.getId(),student.getId());
+//                    System.err.println("after delete student notification");
+//                    answerTaskRepository.deleteByIdStudent(answerTask.getId(),student.getId());
+//                    notificationRepository.delete(notification);
+//                    System.err.println("TEST 1");
+//
+//                    notificationRepository.deleteByAnswerTaskId(answerTask.getId());
+//
+//
+//                    System.err.println("Test 2");
+//
+//                }
+//
+//                // Удаляем уведомления, связанные с AnswerTask
+//                notificationRepository.deleteNotificationsByAnswerTaskId(answerTask.getId());
+//
+//                System.err.println("in for2 after");
+//            }
+//        }
+//    }
+
+    //-------------------------------
+
+//    public void deleteGroup(Trash expiredTrash) {
+//        Group group = expiredTrash.getGroup();
+//        group.setCourses(null);
+////        System.out.println("get courses " + group.getCourses().size());
+//        System.err.println("Before delete group");
+//        groupRepository.deleteById(group.getId());
+//        System.err.println("After delete group");
+//        for (Student student : group.getStudents()) {
+//            System.err.println("In for1");
+//            for (AnswerTask answerTask : student.getAnswerTasks()) {
+//                System.err.println("in for2");
+//                System.err.println("size " + student.getNotificationStates().keySet().size());
+//
+////                notificationRepository.deleteByAnswerTaskId(answerTask.getId());
+//                for (Notification notification : student.getNotificationStates().keySet()) {
+//                    notification.setAnswerTask(null);
+//                    System.err.println("notification");
+//
+////                    notificationRepository.save(notification);
+////                    notificationRepository.detachNotificationFromStudents(notification.getId());
+//                    student.setNotificationStates(null);
+//                    notificationRepository.deleteNotificationFromStudent(notification.getId());
+////                    notificationRepository.detachNotificationFromStudents(notification.getId());
+////                    System.err.println("answer task size " + notification.getAnswerTask().getId());
+////                    System.err.println("student notification state size " + student.getNotificationStates().keySet().size());
+//                }
+////                notificationRepository.deleteByAnswerTaskId(answerTask.getId());
+////                notificationRepository.deleteNotificationFromExtraTableStudentMethod(answerTask.getId());
+//                System.err.println("in for2 after");
+//            }
+//        }
+//    }
+
+
+//        System.err.println("before delete group");
+////        groupRepository.deleteFromAdditionalTable(group.getId());
+//        System.err.println("after delete group");
+//        for (Student student : group.getStudents()) {
+//            System.err.println("in student1 for");
+//            Trash trash1 = student.getTrash();
+//            System.err.println("Before delete trashStud");
+//            trashRepository.deleteById(trash1.getId());
+//            System.err.println("After delete trashStud");
+//
+//            for (AnswerTask answerTask : student.getAnswerTasks()) {
+//                List<Notification> notifications = notificationRepository.findByAnswerTaskId(answerTask.getId());
+//                for (Notification notification : notifications) {
+//                    notificationRepository.detachNotificationFromStudents(notification.getId());
+//                }
+//
+//                notificationRepository.deleteNotificationsByAnswerTaskId(answerTask.getId());
+//                commentRepository.deleteByAnswerTaskId(answerTask.getId());
+//            }
+//            answerTaskRepository.deleteAnswerTaskByStudId(student.getId());
+//            studentRepository.deleteById(student.getId());
+//            System.err.println("After delete stud");
+//        }
+//        for (Course cours : group.getCourses()) {
+//            System.err.println("in remove group for");
+//            cours.getGroups().remove(group);
+//        }
+//        group.setCourses(null);
+//
+//        groupRepository.deleteById(group.getId());
+
 
     @Transactional
     public void deleteCourse(Trash expiredTrash) {
         Course course = expiredTrash.getCourse();
         for (Group group : course.getGroups()) {
-            group.setCourses(null);
-        }
-        course.setGroups(null);
-
-        for (Lesson lesson : course.getLessons()) {
-            trashRepository.deleteById(lesson.getTrash().getId());
-        }
-        for (Lesson lesson : course.getLessons()) {
-            for (Task task : lesson.getTasks()) {
-                notificationRepository.detachTaskFromNotification(task.getId());
+            for (Student student : group.getStudents()) {
+                for (Long notificationId : student.getNotificationStates().keySet()) {
+                    Notification notification = notificationRepository.getReferenceById(notificationId);
+                    notification.setAnswerTask(null);
+                    courseRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
+                }
             }
-            lessonRepository.deleteById(lesson.getId());
         }
-        for (Instructor instructor : course.getInstructors()) {
-            instructor.getCourses().remove(course);
-        }
-        course.setInstructors(null);
-        courseRepository.detachFromExtraTable(course.getId());
-
-        courseRepository.deleteById(course.getId());
+        courseRepository.delete(course);
     }
+
+    @Transactional
+    public void deleteInstructor(Instructor instructor) {
+        for (Trash trash : instructor.getTrashes()) {
+            trash.setCourse(null);
+        }
+        instructorRepository.deleteById(instructor.getId());
+    }
+
+
+//    @Transactional
+//    public void deleteCourse(Trash expiredTrash) {
+//        Course course = expiredTrash.getCourse();
+//
+//        // Сначала отвязываем курс от связанных таблиц
+//        courseRepository.detachFromExtraTable(course.getId());
+//        courseRepository.detachFromCoursesInstructors(course.getId());
+//
+//        for (Lesson lesson : course.getLessons()) {
+
+//            for (Task task : lesson.getTasks()) {
+//
+//                Notification notification = notificationRepository.findByTaskId(task.getId());
+//                notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+//                for (AnswerTask answerTask : task.getAnswerTasks()) {
+//                    notificationRepository.detachTaskFromNotification(task.getId());
+//                    notificationRepository.detachAnswerTaskFromNotification(answerTask.getId());
+//
+////                    notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+//                    answerTaskRepository.deleteById(answerTask.getId());
+//                }
+////
+//////                    task.getAnswerTasks().remove(answerTask);
+//////                    List<Notification> notifications = notificationRepository.findByAnswerTaskId(answerTask.getId());
+//////                    for (Notification notification : notifications) {
+//////                        notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+//////                        notificationRepository.detachAnswerTaskFromNotification(answerTask.getId());
+//////                        notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId());
+//////
+//////                    }
+////                }
+//                trashRepository.deleteById(lesson.getTrash().getId());
+//                lessonRepository.deleteById(lesson.getId());
+//            }
 }
+
+// Удаление связей курса из дополнительных таблиц
+//        courseRepository.deleteCourseGroups(course.getId());
+//        courseRepository.deleteInstructorNotificationStates(course.getId());
+//        courseRepository.deleteInstructorCourses(course.getId());
+//
+//        // Наконец, удаляем курс
+//        courseRepository.delete(course);
+//
+
+
+//        Course course = expiredTrash.getCourse();
+//        courseRepository.detachFromExtraTable(course.getId());
+//        courseRepository.detachFromCoursesInstructors(course.getId());
+//        for (Lesson lesson : course.getLessons()) {
+//            for (Task task : lesson.getTasks()) {
+//                for (AnswerTask answerTask : task.getAnswerTasks()) {
+//                    List<Notification> notifications = notificationRepository.findByAnswerTaskId(answerTask.getId());
+//                    for (Notification notification : notifications) {
+////                        notification.setAnswerTask(null);
+//                        notificationRepository.detachAnswerTaskFromNotification(answerTask.getId());
+//                        notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId());
+//                        notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId());
+//                    }
+//                }
+//                trashRepository.deleteById(lesson.getTrash().getId());
+//                lessonRepository.deleteById(lesson.getId());
+//
+//            }
+//        }
+//        courseRepository.delete(course);
+//    }
+
 

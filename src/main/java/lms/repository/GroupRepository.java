@@ -32,6 +32,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "delete from announcements_groups ag where ag.groups_id =:groupId",nativeQuery = true)
+    @Query(value = "delete from announcements_groups where groups_id =:groupId",nativeQuery = true)
     void deleteFromAdditionalTable(@Param("groupId") Long groupId);
 }

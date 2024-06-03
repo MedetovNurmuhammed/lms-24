@@ -8,6 +8,7 @@ public class LmsB12Application {
 
     public static void main(String[] args) {
         SpringApplication.run(LmsB12Application.class, args);
+        System.out.println("Project running....");
     }
 
 
