@@ -264,7 +264,7 @@ public class TrashServiceImpl implements TrashService {
 
 }
     @Transactional
-    @Scheduled(fixedDelay = 30000)
+//    @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {
         System.err.println("WORKING...");
         ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(1);
