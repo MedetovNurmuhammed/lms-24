@@ -259,9 +259,10 @@ public class TrashServiceImpl implements TrashService {
                     .build();
         }
         throw new ForbiddenException("Доступ запрещен!");
-    }
 
 
+
+}
     @Transactional
     @Scheduled(fixedDelay = 30000)
     public void cleanupExpiredTrash() {

@@ -299,7 +299,6 @@ public class StudentServiceImpl implements StudentService {
             student.getUser().setBlock(true);
             return StudentIsBlockResponse.builder()
                     .isBlock(true)
-                    .fullName(student.getUser().getFullName())
                     .httpStatus(HttpStatus.OK)
                     .message("Студент блокирован!")
                     .build();
@@ -307,12 +306,10 @@ public class StudentServiceImpl implements StudentService {
             student.getUser().setBlock(false);
             return StudentIsBlockResponse.builder()
                     .isBlock(false)
-                    .fullName(student.getUser().getFullName())
                     .httpStatus(HttpStatus.OK)
                     .message("Студент разблокирован!")
                     .build();
         }
-
     }
 
     private void validateStudent(ExcelUser student) {

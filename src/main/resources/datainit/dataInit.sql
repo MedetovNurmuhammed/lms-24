@@ -141,7 +141,7 @@ values (20, 'Adilet Aibekov', 'toktogulovanurzanat@gmail.com@gmail.com',
         '$2a$12$7czzoB5mJOjzo38F2mQf.etrXOwngkovaxPZip/E8XP1pxX1mZes.',
         'INSTRUCTOR', 'FALSE', '+996703857463');
 insert into users (id, full_name, email, password, role, block, phone_number)
-values (21, 'Jigit Turumbekov', 'muhammedtoichubai@gmail.com', '$2a$12$.SAqQkou.qDYE7j.R6B0P.weM5LG1Kh7eRFV2FluwmlkNBnTcKbWO',
+values (21, 'Jigit Turumbekov', 'muhammedtoichubai@gmail.com', '$2a$12$8CZ6jx/QKEOYqt0EJYQIEuFhKB4o9CF1ADst0VHiMUkG5cyhGSpLC',
         'STUDENT', 'FALSE', '+996709546327');
 insert into users (id, full_name, email, password, role, block, phone_number)
 values (22, 'Urmat Taichikov', 'kydyrmysovnursultan@gmail.com',
@@ -1384,14 +1384,18 @@ insert into comments (answer_task_id, id, user_id, content)
 values (15, 15, 15, 'Нужно больше практики для успешного выполнения задания.');
 
 insert into student_announcements(announcements, announcements_key, student_id)
-values (true, 1, 5),
+values (true, 1, 1),
        (false, 1, 2),
        (true, 1, 3),
        (false, 1, 4),
-       (true, 2, 5),
+       (true, 2, 1),
        (false, 2, 2),
        (true, 2, 3),
        (false, 2, 4),
+       (true, 3, 1),
+       (false, 3, 2),
+       (true, 3, 3),
+       (false, 3, 4),
        (true, 4, 9),
        (false, 4, 10),
        (true, 4, 11),
