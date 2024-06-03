@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public AllGroupResponse findAllGroup(int size, int page) {
         if (page < 1 && size < 1) throw new IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<GroupResponse> allGroup = groupRepository.findAllGroup(pageable);
 
         return AllGroupResponse.builder()

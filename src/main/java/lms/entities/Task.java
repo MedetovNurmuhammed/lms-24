@@ -41,7 +41,7 @@ public class Task {
     private String file;
     private String image;
     private String code;
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<String> links = new ArrayList<>();
     private LocalDateTime deadline;
     private LocalDate createdAt;

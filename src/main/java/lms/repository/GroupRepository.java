@@ -25,6 +25,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select g.id from Group g join g.courses c join c.instructors i where i.id = :id")
     List<Long> findAllByInstructorId(Long id);
+    @Query("select s from Group s where s.id =:groupId")
+    Optional<Group> findGroupById(Long groupId);
 @Query("select count (c) from Course  c")
     int getAllGroupsCount();
 }

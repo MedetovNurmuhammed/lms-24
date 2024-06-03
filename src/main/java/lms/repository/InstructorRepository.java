@@ -1,5 +1,6 @@
 package lms.repository;
 
+import lms.dto.response.InstructorNamesResponse;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.InstructorResponse;
 import lms.entities.Instructor;
@@ -30,4 +31,9 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     List<Instructor> findByAnswerTask(Long taskId);
 @Query("select count (i) from Instructor  i")
     int getAllInstructorsCount();
+
+    @Query("select distinct new lms.dto.response.InstructorNamesResponse(i.id, u.fullName) from Instructor i join i.user u order by i.id")
+    List<InstructorNamesResponse> AllInstructorName();
+    @Query("select s from Instructor s where s.id =:instructorId")
+    Optional<Instructor> findInstructorById(Long instructorId);
 }

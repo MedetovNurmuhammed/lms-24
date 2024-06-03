@@ -36,7 +36,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public SimpleResponse addLink(LinkRequest linkRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         Link link = new Link();
         link.setTitle(linkRequest.title());
         link.setUrl(linkRequest.url());
@@ -51,6 +51,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public AllLinkResponse findAll(int page, int size, Long lessonId) {
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<LinkResponse> allLinks = linkRepository.findAllLinksByLesson(lessonId, pageable);
         return AllLinkResponse.builder()
@@ -62,7 +63,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public LinkResponse findById(Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         return LinkResponse.builder()
                 .id(link.getId())
                 .title(link.getTitle())
@@ -73,7 +74,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse update(LinkRequest linkRequest, Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         link.setTitle(linkRequest.title());
         link.setUrl(linkRequest.url());
         linkRepository.save(link);
@@ -86,7 +87,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
-        Link link = linkRepository.findById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         Trash trash = new Trash();
         trash.setName(link.getTitle());
         trash.setDateOfDelete(ZonedDateTime.now());

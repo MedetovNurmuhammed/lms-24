@@ -30,21 +30,21 @@ public class VideoApi {
     private final VideoService videoService;
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "создать видео")
+    @Operation(summary = "создать видео")
     @PostMapping("/{lessonId}")
     public SimpleResponse save(@RequestBody @Valid VideoRequest videoRequest, @PathVariable Long lessonId) {
         return videoService.save(videoRequest, lessonId);
     }
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "Обновленить видео")
+    @Operation(summary = "Обновленить видео")
     @PutMapping("/{videoId}")
     public SimpleResponse update(@PathVariable Long videoId, @RequestBody @Valid VideoRequest videoRequest) {
         return videoService.update(videoId, videoRequest);
     }
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "найти все видео урока")
+    @Operation(summary = "найти все видео урока")
     @GetMapping("/All/{lessonId}")
     public List<VideoResponse> findAll(
                                     @PathVariable Long lessonId) {
@@ -52,7 +52,7 @@ public class VideoApi {
     }
 
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR', 'STUDENT')")
-    @Operation(description = "найти видео по id")
+    @Operation(summary = "найти видео по id")
     @GetMapping("/ById/{videoId}")
     public VideoResponse findById(@PathVariable Long videoId) {
         return videoService.findById(videoId);
@@ -60,7 +60,7 @@ public class VideoApi {
 
 
     @Secured("INSTRUCTOR")
-    @Operation(description = "удалить видео по id")
+    @Operation(summary = "удалить видео по id")
     @DeleteMapping("/{videoId}")
     public SimpleResponse delete(@PathVariable Long videoId) {
         return videoService.delete(videoId);

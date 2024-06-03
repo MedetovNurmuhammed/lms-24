@@ -25,7 +25,7 @@ public class Video {
     private LocalDate updatedAt;
 
     //*************************************** Link ***************************************
-    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY )
     private Link link;
     //********************************* Trash ***************************************
     @OneToOne

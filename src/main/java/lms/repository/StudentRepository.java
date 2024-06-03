@@ -4,6 +4,7 @@ import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
 import lms.enums.StudyFormat;
+import lms.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,9 +56,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "where t.id = :taskId and s.id not in (:studentIds)")
     List<String> findUserNamesByTask(@Param("studentIds") List<Long> studentIds,
                                      @Param("taskId") Long taskId);
-
     @Query("select s from Student s where s.user.id =:id")
     Optional<Student> findStudentByUserId(@Param("id") Long id);
+    @Query("select s from Student s where s.id =:studentId")
+    Optional<Student> findStudentById(@Param("studentId")Long studentId);
+    @Query("SELECT s FROM Student s WHERE s.user = :user")
+    Optional<Student> findByUser(@Param("user") User user);
 
     @Query("select count (s) from Student  s")
     int totalStudents();

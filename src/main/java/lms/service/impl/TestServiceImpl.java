@@ -30,7 +30,7 @@ public class TestServiceImpl implements TestService {
     @Override
     @Transactional
     public SimpleResponse saveTest(Long lessonId, TestRequest testRequest) {
-        Lesson lesson = lessonRepository.findById(lessonId).
+        Lesson lesson = lessonRepository.findLessonById(lessonId).
                 orElseThrow(() -> new NotFoundException("Урок не найден!"));
         Test test = new Test();
         test.setTitle(testRequest.title());
@@ -69,7 +69,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     public SimpleResponse update(Long testId, UpdateTestRequest testRequest) {
 
-        Test test = testRepository.findById(testId)
+        Test test = testRepository.findTestById(testId)
                 .orElseThrow(() -> new NotFoundException("Тест не найден! "));
         test.setTitle(testRequest.title());
         test.setIsActive(false);
@@ -79,7 +79,7 @@ public class TestServiceImpl implements TestService {
         for (UpdateQuestionRequest questionRequest : testRequest.updateQuestionRequests()) {
 
             Question question = questionRequest.questionId() != null ?
-                    questionRepository.findById(questionRequest.questionId())
+                    questionRepository.findQuestionById(questionRequest.questionId())
                             .orElseThrow(() -> new NotFoundException("Вопрос не найден! ")) :
                     new Question();
 
@@ -90,7 +90,7 @@ public class TestServiceImpl implements TestService {
 
             for (UpdateOptionRequest optionRequest : questionRequest.updateOptionRequest()) {
                 Option option = optionRequest.optionId() != null ?
-                        optionRepository.findById(optionRequest.optionId())
+                        optionRepository.findOptionById(optionRequest.optionId())
                                 .orElseThrow(() -> new NotFoundException("Вариант-ответ не найден! ")) :
                         new Option();
 
@@ -112,7 +112,7 @@ public class TestServiceImpl implements TestService {
     @Override
     @Transactional
     public SimpleResponse accessToTest(Long testId) {
-        Test test = testRepository.findById(testId).
+        Test test = testRepository.findTestById(testId).
                 orElseThrow(() -> new NotFoundException("Не найден!!!"));
 
         if (test.getIsActive().equals(false)) {
@@ -132,7 +132,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public SimpleResponse delete(Long testId) {
-        Test test = testRepository.findById(testId).
+        Test test = testRepository.findTestById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
         Trash trash = new Trash();
         trash.setName(test.getTitle());
@@ -148,7 +148,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestResponseWithStudents findById(Long testId) {
-         testRepository.findById(testId).
+         testRepository.findTestById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
         List<StudentTestResponse> responses = testJDBCTemplate.allStudentsWithResultTest(testId);
         return TestResponseWithStudents.builder()
@@ -165,8 +165,7 @@ public class TestServiceImpl implements TestService {
                 .map(this::mapToQuestionResponse)
                 .collect(Collectors.toList());
 
-        return TestResponse.builder()
-                .testId(test.getId())
+        return TestResponse.builder().testId(test.getId())
                 .title(test.getTitle())
                 .hour(test.getHour())
                 .minute(test.getMinute())
@@ -176,7 +175,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public AllTestResponse findAll(Long lessonId) {
-      lessonRepository.findById(lessonId).
+      lessonRepository.findLessonById(lessonId).
                 orElseThrow(() -> new NotFoundException("Урок не найден!!!"));
         List<TestResponseForGetAll> testResponseForGetAll = testRepository.findAllTestsByLessonId(lessonId);
         return AllTestResponse.builder()

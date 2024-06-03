@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
     public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException {
         Instructor instructor = getCurrentInstructor();
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
         Task task = new Task();
         task.setLesson(lesson);
         task.setTitle(taskRequest.title());
@@ -136,7 +136,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public AllTaskResponse findAllTaskByLessonId( Long lessonId) {
-        lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
+        lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
         List<Task> responsePage = taskRepository.findAll(lessonId);
         List<TaskResponse> taskResponses = new ArrayList<>();
         responsePage.forEach(task -> {
@@ -150,7 +150,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     Task getById(Long taskId) {
-        return taskRepository.findById(taskId).orElseThrow(() -> new IllegalArgumentException("Задание не существует"));
+        return taskRepository.findTaskById(taskId).orElseThrow(() -> new IllegalArgumentException("Задание не существует"));
     }
 
     Instructor getCurrentInstructor() {

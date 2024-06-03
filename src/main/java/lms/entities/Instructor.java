@@ -46,7 +46,7 @@ public class Instructor {
     private User user;
 
     //********************************* Course *************************************
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
