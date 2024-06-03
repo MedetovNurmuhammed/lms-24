@@ -4,10 +4,11 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.request.InstructorRequest;
 import lms.dto.request.InstructorUpdateRequest;
-import lms.dto.response.AllInstructorResponse;
-import lms.dto.response.FindByIdInstructorResponse;
-import lms.dto.response.InstructorResponse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.InstructorNamesResponse;
+import lms.dto.response.AllInstructorResponse;
+import lms.dto.response.InstructorResponse;
+import lms.dto.response.FindByIdInstructorResponse;
 import lms.entities.Instructor;
 import lms.entities.User;
 import lms.entities.Trash;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -72,7 +74,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public AllInstructorResponse findAll(int page, int size) {
         if(page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<InstructorResponse> allInstructors = instructorRepository.findAllInstructors(pageable);
         return AllInstructorResponse.builder()
                 .page(allInstructors.getNumber() + 1)
@@ -84,7 +86,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     @Transactional
     public SimpleResponse update(InstructorUpdateRequest instructorRequest, Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId)
+        Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         User user = instructor.getUser();
         if (!user.getEmail().equals(instructorRequest.getEmail())) {
@@ -99,7 +101,7 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setSpecialization(instructorRequest.getSpecialization());
         List<Course> courses = new ArrayList<>();
         for (Long courseId : instructorRequest.getCourseIds()) {
-            Course course = courseRepository.findById(courseId).orElseThrow(() ->
+            Course course = courseRepository.findCourseById(courseId).orElseThrow(() ->
                     new NotFoundException("Курс с идентификатором: " + courseId + " не найден"));
                 courses.add(course);
         }
@@ -115,7 +117,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     @Transactional
     public SimpleResponse delete(Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId)
+        Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
         Trash trash = new Trash();
         trash.setInstructor(instructor);
@@ -132,7 +134,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public FindByIdInstructorResponse findById(Long instructorId) {
-        Instructor instructor = instructorRepository.findById(instructorId).orElseThrow(() ->
+        Instructor instructor = instructorRepository.findInstructorById(instructorId).orElseThrow(() ->
                 new NotFoundException("инструктор не найден!!!"));
         List<String> courseNames = new ArrayList<>();
         for (Course course : instructor.getCourses()) {
@@ -146,5 +148,10 @@ public class InstructorServiceImpl implements InstructorService {
                 .email(instructor.getUser().getEmail())
                 .courseNames(courseNames)
                 .build();
+    }
+
+    @Override
+    public List<InstructorNamesResponse> allInstructorsName() {
+        return instructorRepository.AllInstructorName();
     }
 }

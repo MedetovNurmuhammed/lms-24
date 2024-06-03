@@ -29,7 +29,7 @@ public class GroupApi {
 
     @Secured("ADMIN")
     @Operation(summary = "Сохранить группу", description = "Создание новой группы с предоставленными данными.Авторизация: Админ")
-    @PostMapping()
+    @PostMapping
     public SimpleResponse save(@RequestBody @Valid GroupRequest groupRequest) {
         return groupService.save(groupRequest);
     }

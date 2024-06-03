@@ -58,7 +58,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public SimpleResponse findByNotificationId(Long notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
+        Notification notification = notificationRepository.findNotificationById(notificationId)
                 .orElseThrow(() -> new NoSuchElementException("Уведомление не найдено"));
 
         User currentUser = getCurrentUser();
@@ -116,7 +116,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public SimpleResponse delete(Long notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
+        Notification notification = notificationRepository.findNotificationById(notificationId)
                 .orElseThrow(() -> new NoSuchElementException("Уведомление не найдено"));
 
         User currentUser = getCurrentUser();

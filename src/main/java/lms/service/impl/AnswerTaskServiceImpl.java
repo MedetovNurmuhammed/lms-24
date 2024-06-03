@@ -41,7 +41,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
     @Override
     public SimpleResponse save(Long taskId, AnswerTaskRequest answerTaskRequest) throws MessagingException {
         User currentUser = getCurrentUser();
-        Task task = taskRepository.findById(taskId)
+        Task task = taskRepository.findTaskById(taskId)
                 .orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
         Student student = studentRepository.findByUserId(currentUser.getId())
                 .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
@@ -71,7 +71,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
 
     @Override
     public AnswerTaskResponse findAnswerByTaskId(Long taskId) {
-        taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
+        taskRepository.findTaskById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         AnswerTask answerTask = answerTaskRepository.findByTaskId(taskId, email).orElseThrow(() -> new NoSuchElementException("Ответ на задание не найден для данного пользователя"));
         return getAnswerTaskResponse(answerTask);
@@ -79,14 +79,14 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
 
     @Override
     public AnswerTaskResponse getAnswerById(Long answerId) {
-        AnswerTask answer = answerTaskRepository.findById(answerId).orElseThrow(() ->
+        AnswerTask answer = answerTaskRepository.findAnswerTaskById(answerId).orElseThrow(() ->
                 new NoSuchElementException("Ответ не найден"));
         return getAnswerTaskResponse(answer);
     }
 
     @Override
     public List<FilterAnswerOfTaskResponse> filterAnswerTask(Long taskId, TaskAnswerStatus answerStatus) {
-        taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
+        taskRepository.findTaskById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
         return answerTaskRepository.filterAnswerTask(taskId, answerStatus);
     }
 

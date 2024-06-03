@@ -21,7 +21,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public SimpleResponse delete(Long questionId) {
-        Question question = questionRepository.findById(questionId).
+        Question question = questionRepository.findQuestionById(questionId).
                 orElseThrow(() -> new NotFoundException("Вопрос не найден!!!"));
 
         for (Option option : question.getOptions()) {

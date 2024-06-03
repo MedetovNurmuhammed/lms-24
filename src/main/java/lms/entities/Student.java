@@ -60,7 +60,7 @@ public class Student {
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.LAZY)
     private Group group;
 
     //********************************* ResultTest ****************************************
@@ -76,7 +76,7 @@ public class Student {
     private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
