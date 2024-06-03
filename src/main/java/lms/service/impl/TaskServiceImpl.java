@@ -6,14 +6,9 @@ import lms.dto.response.AllTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.request.TaskRequest;
 import lms.dto.response.TaskResponse;
-import lms.entities.Instructor;
-import lms.entities.Lesson;
-import lms.entities.Task;
-import lms.entities.User;
-import lms.entities.Student;
-import lms.entities.Notification;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.BadRequestException;
 import lms.repository.InstructorRepository;
 import lms.repository.LessonRepository;
 import lms.repository.TaskRepository;
@@ -125,7 +120,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public AllTaskResponse findAllTaskByLessonId( Long lessonId) {
+    public AllTaskResponse findAllTaskByLessonId(Long lessonId) {
         lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
         List<Task> responsePage = taskRepository.findAll(lessonId);
         List<TaskResponse> taskResponses = new ArrayList<>();
@@ -136,6 +131,31 @@ public class TaskServiceImpl implements TaskService {
         return AllTaskResponse.builder()
                 .taskResponse(taskResponses)
                 .build();
+    }
+
+    @Override
+    public SimpleResponse deleteTask(Long taskId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
+                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
+
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Задача не найдена!"));
+        if (task.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(task.getTitle());
+            trash.setType(Type.TEST);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setTask(task);
+            trash.setInstructor(instructor);
+            instructor.getTrashes().add(trash);
+            task.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Задача успешно добавлено в корзину!")
+                    .build();
+        }else throw new BadRequestException("Задача может быть в корзине!");
     }
 
 
@@ -149,6 +169,7 @@ public class TaskServiceImpl implements TaskService {
         return instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
                 new NoSuchElementException("Инструктор с id:" + currentUser.getId() + " не найден"));
     }
+
     private TaskResponse convertToTaskResponse(Task task) {
         return TaskResponse.builder()
                 .id(task.getId())
@@ -186,9 +207,10 @@ public class TaskServiceImpl implements TaskService {
                 .message("Успешно добавлено в корзину")
                 .build();
     }
-    public void deleteTaskById(Long taskId){
+
+    public void deleteTaskById(Long taskId) {
         Task task = taskRepository.findById(taskId).
-                orElseThrow(()-> new NotFoundException("Not found"));
+                orElseThrow(() -> new NotFoundException("Not found"));
 
         taskRepository.deleteById(task.getId());
         taskRepository.deleteById(taskId);

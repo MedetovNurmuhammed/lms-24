@@ -51,7 +51,7 @@ public class Instructor {
 
     //********************************* Notification *******************************
     @ElementCollection
-    private Map<Long, Boolean> notificationStates = new HashMap<>();
+    private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
     @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)

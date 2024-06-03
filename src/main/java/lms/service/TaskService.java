@@ -16,4 +16,6 @@ public interface TaskService {
     TaskResponse findById(Long taskId);
 
     AllTaskResponse findAllTaskByLessonId(Long lessonId);
+
+    SimpleResponse deleteTask(Long taskId);
 }

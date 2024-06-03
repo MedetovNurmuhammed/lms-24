@@ -11,6 +11,7 @@ import lms.entities.Trash;
 import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.service.VideoService;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -109,6 +111,7 @@ public class VideoServiceImpl implements VideoService {
                 .createdAt(video.getCreatedAt())
                 .build();
     }
+
     @Override
     @Transactional
     public SimpleResponse delete(Long videoId) {
@@ -116,20 +119,22 @@ public class VideoServiceImpl implements VideoService {
         User currentUser = userRepository.getByEmail(email);
         Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
                 orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
-        Video video = videoRepository.findById(studId).
+        Video video = videoRepository.findById(videoId).
                 orElseThrow(() -> new NotFoundException("Видеоурок не найден!!!"));
-        Trash trash = new Trash();
-        trash.setName(video.getDescription());
-        trash.setType(Type.VIDEO);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setVideo(video);
-        trash.setInstructor(instructor);
-        instructor.getTrashes().add(trash);
-        video.setTrash(trash);
-        trashRepository.save(trash);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Видео с названием " + video.getLink().getTitle() + " успешно добавлено в карзину")
-                .build();
+        if (video.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(video.getDescription());
+            trash.setType(Type.VIDEO);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setVideo(video);
+            trash.setInstructor(instructor);
+            instructor.getTrashes().add(trash);
+            video.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Видео с названием " + video.getLink().getTitle() + " успешно добавлено в карзину")
+                    .build();
+        }else throw new BadRequestException("Видео может быть в корзину!");
     }
 }

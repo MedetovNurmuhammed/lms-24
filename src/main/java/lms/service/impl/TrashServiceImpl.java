@@ -597,11 +597,11 @@ public class TrashServiceImpl implements TrashService {
         Course course = expiredTrash.getCourse();
         for (Group group : course.getGroups()) {
             for (Student student : group.getStudents()) {
-                for (Long notificationId : student.getNotificationStates().keySet()) {
-                    Notification notification = notificationRepository.getReferenceById(notificationId);
-                    notification.setAnswerTask(null);
-                    courseRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
-                }
+//                for (Long notificationId : student.getNotificationStates().keySet()) {
+//                    Notification notification = notificationRepository.getReferenceById(notificationId);
+//                    notification.setAnswerTask(null);
+//                    courseRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
+//                }
             }
         }
         courseRepository.delete(course);

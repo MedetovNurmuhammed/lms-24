@@ -206,7 +206,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
+    public AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
         if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Course course = courseRepository.findById(courseId).orElseThrow(
@@ -214,14 +214,14 @@ public class CourseServiceImpl implements CourseService {
         );
         if (role.equals(Role.STUDENT)) {
             Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(course.getId(), pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allStudentByCourseId.getNumber() + 1)
                     .size(allStudentByCourseId.getNumberOfElements())
                     .getAllStudentsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
             Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allInstructorsByCourseId.getNumber() + 1)
                     .size(allInstructorsByCourseId.getNumberOfElements())
                     .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())
