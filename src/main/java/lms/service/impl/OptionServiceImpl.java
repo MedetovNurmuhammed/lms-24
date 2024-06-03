@@ -18,7 +18,7 @@ public class OptionServiceImpl implements OptionService {
     @Override
     @Transactional
     public SimpleResponse deleteOption(Long optionId) {
-        Option option = optionRepository.findById(optionId).
+        Option option = optionRepository.findOptionById(optionId).
                 orElseThrow(() -> new NotFoundException("Вариант-ответ  не найден!  "));
         option.setQuestion(null);
         optionRepository.deleteOptionById(optionId);

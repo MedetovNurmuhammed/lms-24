@@ -52,7 +52,7 @@ public class Lesson {
     private Course course;
 
     //*************************************** Video ***************************************
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Video> videos = new ArrayList<>();
 
     //*************************************** Presentation ********************************

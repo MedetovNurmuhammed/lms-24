@@ -4,10 +4,14 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
 import lms.dto.response.FindAllPresentationResponse;
-import lms.dto.response.PresentationResponse;
 import lms.dto.response.SimpleResponse;
+import lms.dto.response.PresentationResponse;
+import lms.entities.Lesson;
+import lms.entities.Presentation;
+import lms.entities.Trash;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.service.PresentationService;
@@ -15,13 +19,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.awt.print.Pageable;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,39 +43,49 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок с id:  " + lessonId + "не существует!"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId)
+                .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
+        boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+        if (exists) {
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
+        }
+        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+        if (notNullTrashPresentations)
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
         Presentation presentation = new Presentation();
         presentation.setTitle(presentationRequest.getTitle());
         presentation.setDescription(presentationRequest.getDescription());
         presentation.setFile(presentationRequest.getFile());
-        lesson.getPresentations().add(presentation);
+        presentation.setLesson(lesson);
         presentationRepository.save(presentation);
+        lesson.getPresentations().add(presentation);
         lessonRepository.save(lesson);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно загружено!")
                 .build();
     }
+
     @Override
     @Transactional
     public SimpleResponse editPresentation(Long presentationId,
                                            EditPresentationRequest presentationRequest) {
-        Presentation presentation = presentationRepository.findById(presentationId)
+        Presentation presentation = presentationRepository.findPresentationById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
-
-        if (presentationRequest.getTitle() != null) {
-            presentation.setTitle(presentationRequest.getTitle());
+        Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
+        if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
+            boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+            if (exists) {
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
+            }
         }
-        if (presentationRequest.getDescription() != null) {
-            presentation.setDescription(presentationRequest.getDescription());
-        }
-
-
-        if (presentationRequest.getFile() != null) {
-            presentation.setFile(presentationRequest.getFile());
-        }
+        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+        if (notNullTrashPresentations)
+            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
+        presentation.setTitle(presentationRequest.getTitle());
+        presentation.setDescription(presentationRequest.getDescription());
+        presentation.setFile(presentationRequest.getFile());
         presentationRepository.save(presentation);
-
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Презентация успешно обновлена!")
@@ -78,7 +94,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse findById(Long presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
+        Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
         return PresentationResponse.builder()
                 .id(presentation.getId())
                 .title(presentation.getTitle())
@@ -87,16 +103,17 @@ public class PresentationServiceImpl implements PresentationService {
                 .build();
     }
 
-    @Override
-    public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
-        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
-        return FindAllPresentationResponse.builder()
-                .page(allPresentation.getNumber() + 1)
-                .size(allPresentation.getSize())
-                .presentationResponseList(allPresentation.getContent())
-                .build();
-    }
+//    @Override
+//    @Transactional
+//    public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
+//        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
+//        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
+//        return FindAllPresentationResponse.builder()
+//                .page(allPresentation.getNumber() + 1)
+//                .size(allPresentation.getSize())
+//                .presentationResponseList(allPresentation.getContent())
+//                .build();
+//    }
 
     @Override
     @Transactional
@@ -118,7 +135,12 @@ public class PresentationServiceImpl implements PresentationService {
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Презентация успешно добавлено в корзину!")
+                .message("Презентация успешно удален!")
                 .build();
+    }
+
+    @Override
+    public List<PresentationResponse> findAllPresentationByLessonId(Long lessonId) {
+        return presentationRepository.findAllPresentationsByLesson(lessonId);
     }
 }

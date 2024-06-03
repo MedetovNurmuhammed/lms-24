@@ -43,7 +43,7 @@ public class ResultTest {
     private Test test;
 
     //*************************************** Options ******************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Student ******************************************

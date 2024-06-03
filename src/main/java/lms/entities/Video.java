@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lms.enums.Type;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,18 +38,17 @@ public class Video {
     private String description;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    @Enumerated(EnumType.STRING)
-    private Type type;
 
     //*************************************** Link ***************************************
-    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE,orphanRemoval = true)
-    private Link link ;
-    //*************************************** Lesson ***************************************
-    @ManyToOne( cascade = CascadeType.DETACH)
-    private Lesson lesson ;
+    @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY )
+    private Link link;
 
+    //********************************* Trash ***************************************
     @OneToOne(fetch = FetchType.LAZY)
     private Trash trash;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private Lesson lesson;
 
     @PrePersist
     protected void onCreate() {

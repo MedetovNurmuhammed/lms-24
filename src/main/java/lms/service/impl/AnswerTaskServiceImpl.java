@@ -9,7 +9,9 @@ import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.*;
+import lms.enums.Role;
 import lms.enums.TaskAnswerStatus;
+import lms.exceptions.AlreadyExistsException;
 import lms.repository.*;
 import lms.service.AnswerTaskService;
 import lms.service.NotificationService;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +41,13 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
     @Override
     public SimpleResponse save(Long taskId, AnswerTaskRequest answerTaskRequest) throws MessagingException {
         User currentUser = getCurrentUser();
-        Task task = findTaskById(taskId);
-        Student student = findStudentByUser(currentUser);
+        Task task = taskRepository.findTaskById(taskId)
+                .orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
+        Student student = studentRepository.findByUserId(currentUser.getId())
+                .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
+
+        Boolean b = answerTaskRepository.existsByTaskId(taskId, student.getId());
+        if (b) throw new AlreadyExistsException("Ваш ответ уже существует");
 
         Comment comment = new Comment();
         if (answerTaskRequest.comment() != null) {
@@ -52,6 +60,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
 
         answerTaskRepository.save(answerTask);
 
+
         notifyInstructors(task, answerTask, student);
 
         return SimpleResponse.builder()
@@ -62,7 +71,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
 
     @Override
     public AnswerTaskResponse findAnswerByTaskId(Long taskId) {
-        taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
+        taskRepository.findTaskById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         AnswerTask answerTask = answerTaskRepository.findByTaskId(taskId, email).orElseThrow(() -> new NoSuchElementException("Ответ на задание не найден для данного пользователя"));
         return getAnswerTaskResponse(answerTask);
@@ -70,20 +79,22 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
 
     @Override
     public AnswerTaskResponse getAnswerById(Long answerId) {
-        AnswerTask answer = answerTaskRepository.findById(answerId).orElseThrow(() ->
+        AnswerTask answer = answerTaskRepository.findAnswerTaskById(answerId).orElseThrow(() ->
                 new NoSuchElementException("Ответ не найден"));
         return getAnswerTaskResponse(answer);
     }
 
     @Override
     public List<FilterAnswerOfTaskResponse> filterAnswerTask(Long taskId, TaskAnswerStatus answerStatus) {
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
+        taskRepository.findTaskById(taskId).orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
         return answerTaskRepository.filterAnswerTask(taskId, answerStatus);
     }
 
     @Override
     public SimpleResponse update(Long answerTaskId, AnswerTaskRequest answerTaskRequest) throws MessagingException {
         AnswerTask answer = findAnswerTaskById(answerTaskId);
+        if (answer.getTaskAnswerStatus().equals(TaskAnswerStatus.ACCEPTED))
+            throw new AlreadyExistsException("Ваш ответ на задание уже проверено");
         Task task = answer.getTask();
 
         updateAnswerTask(answer, answerTaskRequest, task);
@@ -117,7 +128,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
                 new NoSuchElementException("Инструктор не найден"));
         String message = instructor.getUser().getFullName() + " оценил(a) вашу работу по " + answer.getTask().getTitle();
         Notification notification = createNotification(answer, message);
-        student.getNotificationStates().put(notification.getId(), false);
+//        student.getNotificationStates().put(notification, false);
         notificationService.emailMessage(message, student.getUser().getEmail());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -132,21 +143,14 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         return studentRepository.findUserNamesByTask(studentIds, taskId);
     }
 
+
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
     }
 
-    private Task findTaskById(Long taskId) {
-        return taskRepository.findById(taskId)
-                .orElseThrow(() -> new NoSuchElementException("Задание не найдено"));
-    }
 
-    private Student findStudentByUser(User user) {
-        return studentRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
-    }
 
     private Comment saveComment(String comment, User author) {
         Comment newComment = new Comment();
@@ -161,11 +165,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         answerTask.setImage(answerTaskRequest.image());
         answerTask.setFile(answerTaskRequest.file());
         answerTask.setText(answerTaskRequest.text());
-        if (task.getDeadline().isAfter(LocalDateTime.now())) {
-            answerTask.setTaskAnswerStatus(TaskAnswerStatus.WAITING);
-        } else if (task.getDeadline().isBefore(LocalDateTime.now())) {
-            answerTask.setTaskAnswerStatus(TaskAnswerStatus.LATE);
-        }
+        setTaskAnswerStatus(answerTask,task);
         if (comment != null) {
             answerTask.getComments().add(comment);
             comment.setAnswerTask(answerTask);
@@ -180,9 +180,9 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         }
     }
 
-    private void notifyInstructors(Task task, AnswerTask answerTask, Student student) throws MessagingException {
+    private void notifyInstructors(Task task, AnswerTask answer, Student student) throws MessagingException {
         String message = student.getUser().getFullName() + " отправил(a) домашнее задание по " + task.getTitle();
-        getInstructorsByCourse(task, answerTask, message);
+        notifyInstructors(task, answer,message);
     }
 
     private AnswerTask findAnswerTaskById(Long answerTaskId) {
@@ -195,7 +195,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         answer.setFile(answerTaskRequest.file());
         updateComments(answer, answerTaskRequest);
         answer.setText(answerTaskRequest.text());
-        updateTaskAnswerStatus(answer, task);
+        setTaskAnswerStatus(answer, task);
     }
 
     private void updateComments(AnswerTask answer, AnswerTaskRequest answerTaskRequest) {
@@ -206,34 +206,23 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         });
     }
 
-    private void updateTaskAnswerStatus(AnswerTask answer, Task task) {
-        if (task.getDeadline().isAfter(LocalDateTime.now())) {
-            answer.setTaskAnswerStatus(TaskAnswerStatus.WAITING);
-        } else if (task.getDeadline().isBefore(LocalDateTime.now())) {
-            answer.setTaskAnswerStatus(TaskAnswerStatus.LATE);
-        }
-    }
-
     private String generateUpdateMessage(AnswerTask answer) {
         Student student = answer.getStudent();
         Task task = answer.getTask();
         return student.getUser().getFullName() + " изменил(a) домашнее задание по " + task.getTitle();
     }
 
-    private void notifyInstructors(Task task, AnswerTask answer, String message) throws MessagingException {
-        getInstructorsByCourse(task, answer, message);
+
+    private void notifyInstructors(Task task, AnswerTask answerTask, String message) throws MessagingException {
+        List<Instructor> instructors = instructorRepository.findByAnswerTask(task.getId());
+        Notification notification = createNotification(answerTask, message);
+        for (Instructor instructor : instructors) {
+            sendNotification(notification, instructor, message);
+        }
     }
 
-    private void sendNotification(AnswerTask answer, Instructor instructor, String message) throws MessagingException {
-        Notification notification = new Notification();
-        notification.setAnswerTask(answer);
-        notification.setDescription(message);
-        notification.setTitle("Ответ на домашнее задание");
-
-        notificationRepository.save(notification);
-
-
-        instructor.getNotificationStates().put(notification.getId(), false);
+    private void sendNotification(Notification notification, Instructor instructor, String message) throws MessagingException {
+//        instructor.getNotificationStates().put(notification, false);
         notificationService.emailMessage(message, instructor.getUser().getEmail());
     }
 
@@ -241,20 +230,10 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         Notification notification = new Notification();
         notification.setAnswerTask(answerTask);
         notification.setDescription(message);
-        notification.setTitle(answerTask.getTask().getTitle());
-
+        notification.setTitle("Ответ на домашнее задание");
         return notificationRepository.save(notification);
 
     }
-
-    private void getInstructorsByCourse(Task task, AnswerTask answerTask, String message) throws MessagingException {
-        List<Instructor> instructors = instructorRepository.findByAnswerTask(task.getId());
-
-        for (Instructor instructor : instructors) {
-            sendNotification(answerTask, instructor, message);
-        }
-    }
-
     private AnswerTaskResponse getAnswerTaskResponse(AnswerTask answerTask) {
         List<CommentResponse> commentResponses = new ArrayList<>();
         answerTask.getComments().forEach(comment -> {

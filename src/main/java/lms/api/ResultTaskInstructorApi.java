@@ -25,7 +25,7 @@ public class ResultTaskInstructorApi {
     @Operation(summary = "Получение ответа на задание по идентификатору ответа",
             description = "Возвращает ответ на задание для указанного идентификатора ответа." +
                     " Авторизация: инструктор!")
-    @GetMapping("/getAnswerById/{answerId}")
+    @GetMapping("/{answerId}")
     public AnswerTaskResponse getAnswerById(@PathVariable("answerId") Long answerId)  {
         return answerTaskService.getAnswerById(answerId);
     }
@@ -33,7 +33,7 @@ public class ResultTaskInstructorApi {
     @Secured("INSTRUCTOR")
     @Operation(summary = "Поиск всех ответов на задание", description = "Возвращает список ответов на задание," +
             " отфильтрованных по идентификатору задания и статусу ответа. Авторизация: инструктор!")
-    @GetMapping("/findAll/{taskId}")
+    @GetMapping("/all/{taskId}")
     public List<FilterAnswerOfTaskResponse> findAll(@PathVariable("taskId") Long taskId,
                                                     @RequestParam (defaultValue = "WAITING" )TaskAnswerStatus answerStatus){
         return answerTaskService.filterAnswerTask(taskId,answerStatus);
@@ -50,7 +50,7 @@ public class ResultTaskInstructorApi {
     @Secured("INSTRUCTOR")
     @Operation(summary = "Проверить ответ студента",
             description = "Проверяет и оценивает ответ, предоставленный студентом на задание. Авторизация: инструктор!")
-    @PatchMapping("/checkAnswer/{answerId}")
+    @PatchMapping("/{answerId}")
     public SimpleResponse checkAnswer(@PathVariable Long answerId, @RequestBody CheckAnswerRequest checkAnswerRequest) throws MessagingException {
         return answerTaskService.checkAnswer(answerId,checkAnswerRequest);
     }

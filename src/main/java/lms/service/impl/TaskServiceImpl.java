@@ -24,6 +24,8 @@ import lms.repository.UserRepository;
 import lms.service.NotificationService;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,7 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final LessonRepository lessonRepository;
@@ -58,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
     public SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException {
         Instructor instructor = getCurrentInstructor();
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
         Task task = new Task();
         task.setLesson(lesson);
         task.setTitle(taskRequest.title());
@@ -88,7 +91,7 @@ public class TaskServiceImpl implements TaskService {
             notification.setTitle("Новое домашнее задание");
 
             notificationRepository.save(notification);
-            student.getNotificationStates().put(notification.getId(), false);
+            student.getNotificationStates().put(notification, false);
             notificationService.emailMessage(message, student.getUser().getEmail());
         }
     }
@@ -117,6 +120,36 @@ public class TaskServiceImpl implements TaskService {
 
     public TaskResponse findById(Long taskId) {
         Task task = getById(taskId);
+        log.error(String.valueOf(task.getLinks()));
+        return convertToTaskResponse(task);
+    }
+
+    @Override
+    public AllTaskResponse findAllTaskByLessonId( Long lessonId) {
+        lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
+        List<Task> responsePage = taskRepository.findAll(lessonId);
+        List<TaskResponse> taskResponses = new ArrayList<>();
+        responsePage.forEach(task -> {
+            TaskResponse taskResponse = convertToTaskResponse(task);
+            taskResponses.add(taskResponse);
+        });
+        return AllTaskResponse.builder()
+                .taskResponse(taskResponses)
+                .build();
+    }
+
+
+    Task getById(Long taskId) {
+        return taskRepository.findTaskById(taskId).orElseThrow(() -> new IllegalArgumentException("Задание не существует"));
+    }
+
+    Instructor getCurrentInstructor() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.getByEmail(email);
+        return instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
+                new NoSuchElementException("Инструктор с id:" + currentUser.getId() + " не найден"));
+    }
+    private TaskResponse convertToTaskResponse(Task task) {
         return TaskResponse.builder()
                 .id(task.getId())
                 .title(task.getTitle())
@@ -127,44 +160,6 @@ public class TaskServiceImpl implements TaskService {
                 .image(task.getImage())
                 .file(task.getFile())
                 .build();
-    }
-
-    @Override
-    public AllTaskResponse findAllTaskByLessonId(int page, int size, Long lessonId) {
-        lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("createdAt"));
-        Page<Task> responsePage = taskRepository.findAll(lessonId, pageable);
-        List<TaskResponse> taskResponses = new ArrayList<>();
-        responsePage.forEach(task -> {
-            TaskResponse taskResponse = TaskResponse.builder()
-                    .id(task.getId())
-                    .title(task.getTitle())
-                    .code(task.getCode())
-                    .description(task.getDescription())
-                    .deadline(task.getDeadline())
-                    .links(task.getLinks())
-                    .image(task.getImage())
-                    .file(task.getFile())
-                    .build();
-            taskResponses.add(taskResponse);
-        });
-        return AllTaskResponse.builder()
-                .page(responsePage.getNumber() + 1)
-                .size(responsePage.getNumberOfElements())
-                .taskResponse(taskResponses)
-                .build();
-    }
-
-
-    Task getById(Long taskId) {
-        return taskRepository.findById(taskId).orElseThrow(() -> new IllegalArgumentException("Задание не существует"));
-    }
-
-    Instructor getCurrentInstructor() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        return instructorRepository.findByUserId(currentUser.getId()).orElseThrow(() ->
-                new NoSuchElementException("Инструктор с id:" + currentUser.getId() + " не найден"));
     }
 
     @Override

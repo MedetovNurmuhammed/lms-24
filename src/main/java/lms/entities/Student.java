@@ -60,7 +60,7 @@ public class Student {
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.LAZY)
     private Group group;
 
     //********************************* ResultTest ****************************************
@@ -72,12 +72,12 @@ public class Student {
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @ElementCollection  //todo changed notification to long
-    private Map<Long, Boolean> notificationStates = new HashMap<>();
+    @ElementCollection
+    private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Map<Announcement, Boolean> announcements = new LinkedHashMap<>();
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH})

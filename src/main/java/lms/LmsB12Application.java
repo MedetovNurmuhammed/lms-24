@@ -10,6 +10,4 @@ public class LmsB12Application {
         SpringApplication.run(LmsB12Application.class, args);
         System.out.println("Project running....");
     }
-
-
 }

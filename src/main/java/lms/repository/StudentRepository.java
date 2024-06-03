@@ -4,28 +4,27 @@ import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
+import lms.entities.User;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import lms.enums.StudyFormat;
-import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
-
-
-    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName, '', s.user.phoneNumber, s.user.email) " +
+    @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName," +
+            " '', s.user.phoneNumber, s.user.email, u.block" +
+            ") " +
             "from Student s " +
+            "join s.user u "+
             "join s.group g " +
             "join g.courses c " +
             "where c.id = :courseId")
     Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
-
     @Query("""
             select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email,s.user.block)
                from Student s
@@ -58,14 +57,14 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
                                      @Param("taskId") Long taskId);
     @Query("select s from Student s where s.user.id =:id")
     Optional<Student> findStudentByUserId(@Param("id") Long id);
+    @Query("select s from Student s where s.id =:studentId")
+    Optional<Student> findStudentById(@Param("studentId")Long studentId);
+    @Query("SELECT s FROM Student s WHERE s.user = :user")
+    Optional<Student> findByUser(@Param("user") User user);
 
     @Modifying
     @Transactional
     @Query(value = "delete from students where id = :id", nativeQuery = true)
     void deleteStudentById(Long id);
 
-//    @Modifying
-//    @Transactional
-//    @Query(value = "delete from students where trash_id = :id", nativeQuery = true)
-//    void deleteStudentByTrashId(Long id);
 }

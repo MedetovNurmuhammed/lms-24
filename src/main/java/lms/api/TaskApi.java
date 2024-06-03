@@ -23,7 +23,7 @@ public class TaskApi {
 
     @Secured("INSTRUCTOR")
     @Operation(summary = "Создание задания для урока", description = "Создает новое задание для указанного урока.")
-    @PostMapping(value = "/create/{lessonId}")
+    @PostMapping("/{lessonId}")
     public SimpleResponse createTask(@PathVariable("lessonId") Long lessonId,
                                      @RequestBody @Valid TaskRequest taskRequest) throws MessagingException {
         return taskService.createTask(lessonId, taskRequest);
@@ -31,36 +31,31 @@ public class TaskApi {
 
     @Secured({"INSTRUCTOR", "STUDENT"})
     @Operation(summary = "Поиск задания по идентификатору", description = "Находит задание по указанному идентификатору.")
-    @GetMapping("/findById/{taskId}")
+    @GetMapping("/{taskId}")
     public TaskResponse findById(@PathVariable("taskId") Long taskId) {
         return taskService.findById(taskId);
     }
 
     @Secured("INSTRUCTOR")
     @Operation(summary = "Обновление задания по идентификатору", description = "Обновляет существующее задание по указанному идентификатору.")
-    @PatchMapping("/update/{taskId}")
+    @PatchMapping("/{taskId}")
     public SimpleResponse update(@PathVariable Long taskId, @RequestBody  @Valid TaskRequest taskRequest) throws MessagingException {
         return taskService.updateTask(taskId, taskRequest);
     }
 
-    @Operation(summary = "Удалить задачку",
-            description = "Метод для удаления задачку по его идентификатору." +
-                    " Авторизация: администратор и инструктор!")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping("/delete/{taskId}")
-    public SimpleResponse delete(@PathVariable Long taskId){
-        return taskService.delete(taskId);
+    @Secured("INSTRUCTOR")
+    @Operation(summary = "Удаление задания", description = "Удаляет задание по указанному идентификатору.")
+    @DeleteMapping("/{taskId}")
+    public SimpleResponse delete(@PathVariable("taskId") Long taskId) {
+        return taskService.deleteTask(taskId);
     }
-
 
     @Secured({"INSTRUCTOR","STUDENT"})
     @Operation(summary = "Поиск заданий по идентификатору урока", description = "Находит все задания для указанного урока.")
-    @GetMapping("/findTaskByLessonId/{lessonId}")
-    public AllTaskResponse findTaskByLessonId(@PathVariable("lessonId") Long lessonId,
-                                              @RequestParam(required = false,defaultValue = "1") int page,@RequestParam(required = false,defaultValue = "6") int size ) {
-        return taskService.findAllTaskByLessonId(page,size,lessonId);
+    @GetMapping("/taskOfLesson/{lessonId}")
+    public AllTaskResponse findTaskByLessonId(@PathVariable("lessonId") Long lessonId) {
+        return taskService.findAllTaskByLessonId(lessonId);
     }
-
 }
 
 

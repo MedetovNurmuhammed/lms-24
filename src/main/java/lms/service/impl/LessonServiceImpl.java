@@ -16,13 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new NotFoundException("Курс c " + courseId + " не найден"));
+        Course course = courseRepository.findCourseById(courseId).orElseThrow(() -> new NotFoundException("Курс c " + courseId + " не найден"));
         Lesson lesson = new Lesson();
         lesson.setCourse(course);
         lesson.setTitle(lessonRequest.getTitle());
@@ -51,7 +52,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public AllLessonsResponse findAll(int page, int size, Long courseId) {
-        Pageable pageable = getPageable(page, size);
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<LessonResponse> allLessons = lessonRepository.findAllLessons(courseId, pageable);
         return AllLessonsResponse.builder()
                 .page(allLessons.getNumber() + 1)
@@ -62,7 +64,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponse findById(Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         return LessonResponse.builder()
                 .id(lesson.getId())
                 .title(lesson.getTitle())
@@ -73,7 +75,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse update(LessonRequest lessonRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
+        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         lesson.setTitle(lessonRequest.getTitle());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)

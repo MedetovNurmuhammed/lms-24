@@ -2,9 +2,9 @@ package lms.service;
 
 import jakarta.validation.Valid;
 import lms.dto.request.VideoRequest;
-import lms.dto.response.AllVideoResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.VideoResponse;
+import java.util.List;
 
 public interface VideoService {
     SimpleResponse delete(Long studId);
@@ -13,7 +13,7 @@ public interface VideoService {
 
     SimpleResponse update(Long videoId, VideoRequest videoRequest);
 
-    AllVideoResponse findAllVideoByLessonId(int size, int page, Long lessonId);
+    List<VideoResponse> findAllVideoByLessonId(Long lessonId);
 
     VideoResponse findById(Long videoId);
 
