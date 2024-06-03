@@ -13,21 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/analytics")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AnalyticsApi {
     private final AnalyticsService analyticsService;
+
     @GetMapping("getAllStudentsCount")
-    @Operation(summary = "Получить все данные о студентах",description = "Количество обучающиеся,окончавшие" +
+    @Operation(summary = "Получить все данные о студентах", description = "Количество обучающиеся,окончавшие" +
             " и всего! Авторизация: Админ!")
 
 
-    public StudentsAnalyticsResponse getAllStudentsCount(){
+    public StudentsAnalyticsResponse getAllStudentsCount() {
         return analyticsService.getAllStudentsCount();
     }
+
     @GetMapping("getAllCoursesCount")
-    @Operation(summary = "Получить данные курса",description = "Получить количество курса,инструктора и группы!" +
+    @Operation(summary = "Получить данные курса", description = "Получить количество курса,инструктора и группы!" +
             "Авторизация:  Админ!")
-    public CourseAnalyticsResponse getAllCoursesCount(){
+    public CourseAnalyticsResponse getAllCoursesCount() {
         return analyticsService.getAllCoursesCount();
     }
 }
