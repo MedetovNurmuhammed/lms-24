@@ -78,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
                     .httpStatus(HttpStatus.OK)
                     .message("Успешно создана")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!")
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     private void getStudentsByCourse(Lesson lesson, Task savedTask, String message) throws MessagingException {

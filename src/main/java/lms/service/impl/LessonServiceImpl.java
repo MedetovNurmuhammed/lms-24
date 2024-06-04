@@ -50,7 +50,7 @@ public class LessonServiceImpl implements LessonService {
                     .httpStatus(HttpStatus.OK)
                     .message("Урок " + lesson.getTitle() + " успешно сохранено")
                     .build();
-        } else throw new BadRequestException("Курс может быть в корзине!")
+        } else throw new BadRequestException("Курс может быть в корзине!");
     }
 
     @Override

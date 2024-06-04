@@ -35,36 +35,38 @@ public class TestServiceImpl implements TestService {
     public SimpleResponse saveTest(Long lessonId, TestRequest testRequest) {
         Lesson lesson = lessonRepository.findLessonById(lessonId).
                 orElseThrow(() -> new NotFoundException("Урок не найден!"));
-        Test test = new Test();
-        test.setTitle(testRequest.title());
-        test.setIsActive(false);
-        test.setCreationDate(LocalDate.now());
-        test.setHour(testRequest.hour());
-        test.setMinute(testRequest.minute());
-        test.setLesson(lesson);
-        lesson.getTests().add(test);
-        testRepository.save(test);
-        for (QuestionRequest questionRequest : testRequest.questionRequests()) {
-            Question question = new Question();
-            question.setTitle(questionRequest.title());
-            question.setQuestionType(questionRequest.questionType());
-            question.setPoint(questionRequest.point());
-            question.setTest(test);
-            test.getQuestions().add(question);
-            questionRepository.save(question);
-            for (OptionRequest optionRequest : questionRequest.optionRequests()) {
-                Option option = new Option();
-                option.setOption(optionRequest.option());
-                option.setIsTrue(optionRequest.isTrue());
-                option.setQuestion(question);
-                question.getOptions().add(option);
-                optionRepository.save(option);
+        if (lesson.getTrash() == null) {
+            Test test = new Test();
+            test.setTitle(testRequest.title());
+            test.setIsActive(false);
+            test.setCreationDate(LocalDate.now());
+            test.setHour(testRequest.hour());
+            test.setMinute(testRequest.minute());
+            test.setLesson(lesson);
+            lesson.getTests().add(test);
+            testRepository.save(test);
+            for (QuestionRequest questionRequest : testRequest.questionRequests()) {
+                Question question = new Question();
+                question.setTitle(questionRequest.title());
+                question.setQuestionType(questionRequest.questionType());
+                question.setPoint(questionRequest.point());
+                question.setTest(test);
+                test.getQuestions().add(question);
+                questionRepository.save(question);
+                for (OptionRequest optionRequest : questionRequest.optionRequests()) {
+                    Option option = new Option();
+                    option.setOption(optionRequest.option());
+                    option.setIsTrue(optionRequest.isTrue());
+                    option.setQuestion(question);
+                    question.getOptions().add(option);
+                    optionRepository.save(option);
+                }
             }
-        }
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Тест успешно создан!")
-                .build();
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Тест успешно создан!")
+                    .build();
+        }else throw new BadRequestException("Урок может быть в корзину!");
     }
 
 
@@ -111,7 +113,7 @@ public class TestServiceImpl implements TestService {
                     .httpStatus(HttpStatus.OK)
                     .message("Тест успешно обновлен!")
                     .build();
-        }else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
