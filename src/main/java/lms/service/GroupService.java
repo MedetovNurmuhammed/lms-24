@@ -2,6 +2,7 @@ package lms.service;
 
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
+import lms.dto.response.GroupWithoutPagination;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 
@@ -18,4 +19,6 @@ public interface GroupService {
     SimpleResponse delete(long groupId);
 
     GroupResponse getGroup(Long groupId);
+
+    List<GroupWithoutPagination> getAll();
 }
