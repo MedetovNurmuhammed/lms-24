@@ -3,6 +3,7 @@ package lms.repository;
 import jakarta.transaction.Transactional;
 import lms.dto.response.TrashResponse;
 import lms.entities.Trash;
+import lms.exceptions.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -52,4 +53,9 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
             where t.instructor.id = :id
             """ )
     Page<TrashResponse> findAllTrashByInstructorId(Long id, Pageable pageRequest);
+
+    default Trash findByIdOrThrow(Long id){
+        return findById(id)
+                .orElseThrow(() -> new NotFoundException("Trash with id %d not found".formatted(id)));
+    }
 }

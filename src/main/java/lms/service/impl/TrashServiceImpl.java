@@ -81,7 +81,7 @@ public class TrashServiceImpl implements TrashService {
 
     @Override
     @Transactional
-    public SimpleResponse delete(Long trashId) {
+    public SimpleResponse deleted(Long trashId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
         Trash trash = trashRepository.findById(trashId).
@@ -182,6 +182,36 @@ public class TrashServiceImpl implements TrashService {
         } else throw new BadRequestException("Этот корзина не ваша!");
     }
 
+    @Override
+    public SimpleResponse restoreData(Long trashId) {
+        Trash trash = trashRepository.findByIdOrThrow(trashId);
+        return null;
+    }
+
+    @Override
+    public SimpleResponse delete(Long trashID) {
+        Trash trash = trashRepository.findByIdOrThrow(trashID);
+        System.err.println("trash.getType() = " + trash.getType());
+        deleteTrash(trash);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Trash with id: %d deleted".formatted(trash.getId()))
+                .build();
+    }
+
+    private void deleteTrash(Trash trash) {
+        switch (trash.getType()){
+            case COURSE -> {
+                courseRepository.delete(trash.getCourse());
+                trashRepository.delete(trash);
+            }
+            case STUDENT -> {
+                System.err.println("trash.getId() = " + trash.getId());
+                studentRepository.delete(trash.getStudent());
+                 trashRepository.delete(trash);
+            }
+        }
+    }
 
     @Override
     @Transactional

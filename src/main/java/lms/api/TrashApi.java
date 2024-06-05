@@ -37,6 +37,13 @@ public class TrashApi {
         return trashService.delete(trashId);
     }
 
+    @Operation(summary = "Удалить из корзины инструктора.")
+    @DeleteMapping("/hi/{trashID}")
+    public SimpleResponse deleteTrash(@PathVariable Long trashID){
+        System.err.println("HI i'm trash");
+        return trashService.delete(trashID);
+    }
+
     @Operation(summary = "Удалить из корзины инструктора.",
             description = "Метод для получение удаление из корзины инструктора!" +
                     " Авторизация:  инструктор!")
@@ -63,4 +70,13 @@ public class TrashApi {
     public SimpleResponse returnFromInstructorTrashToBase(@PathVariable Long trashId) {
         return trashService.returnFromInstructorTrashToBase(trashId);
     }
+
+    @Operation(summary = "Возвращать из корзины.", description = "Авторизация: администратор и инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @DeleteMapping("/return/{trashID}")
+    public SimpleResponse restoreData(@PathVariable Long trashID) {
+        return trashService.restoreData(trashID);
+    }
+
+
 }
