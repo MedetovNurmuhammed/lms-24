@@ -6,23 +6,15 @@ import jakarta.validation.constraints.Email;
 import lms.dto.request.ExcelUser;
 import lms.dto.request.StudentRequest;
 import lms.dto.response.*;
-import lms.entities.Group;
-import lms.entities.Student;
-import lms.entities.Trash;
-import lms.entities.User;
+import lms.entities.*;
 import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
-import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
-import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
-import lms.repository.GroupRepository;
-import lms.repository.StudentRepository;
-import lms.repository.TrashRepository;
-import lms.repository.UserRepository;
+import lms.repository.*;
 import lms.service.StudentService;
 import lms.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,13 +35,13 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 
 public class StudentServiceImpl implements StudentService {
+    private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
@@ -156,7 +149,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
-
+        Instructor authInstructor =
+                instructorRepository.getInstructorByUserID(userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
@@ -165,6 +159,7 @@ public class StudentServiceImpl implements StudentService {
         trash.setType(Type.STUDENT);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setStudent(student);
+        trash.setInstructor(authInstructor);
         student.setTrash(trash);
         trashRepository.save(trash);
         log.info("Успешно добавлено в корзину!");

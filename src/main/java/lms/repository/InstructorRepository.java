@@ -39,4 +39,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     List<InstructorNamesResponse> AllInstructorName();
     @Query("select s from Instructor s where s.id =:instructorId")
     Optional<Instructor> findInstructorById(Long instructorId);
+
+    @Query("select i from Instructor i where i.user.id = :id")
+    Instructor getInstructorByUserID(Long id);
 }

@@ -1,6 +1,7 @@
 package lms.repository;
 
 import jakarta.transaction.Transactional;
+import lms.entities.Instructor;
 import lms.entities.User;
 import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
