@@ -190,7 +190,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Validated
-    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, List<String> link) {
+    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, String link) {
         Group group = groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
         try {
             Workbook workbook = WorkbookFactory.create(file.getInputStream());
@@ -249,11 +249,7 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-                String link2 = null;
-                for (String link1 : link) {
-                    link2 = link1;
-                }
-                userServiceImpl.emailSender(user.getEmail(), link2);
+                userServiceImpl.emailSender(user.getEmail(), link);
             }
         } catch (IOException e) {
             e.printStackTrace();

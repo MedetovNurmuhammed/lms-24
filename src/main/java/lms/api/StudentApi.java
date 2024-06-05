@@ -87,8 +87,8 @@ public class StudentApi {
     @Operation(description = "Импортировать студентов в группу")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file,  @RequestParam List<String> links) {
-        return studentService.importStudentsFromExcel(groupId, file, links);
+    public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file,  @RequestParam String link) {
+        return studentService.importStudentsFromExcel(groupId, file, link);
     }
 
     @Operation(summary = "Доступ к cтуденту",

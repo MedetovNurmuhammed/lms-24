@@ -6,8 +6,6 @@ import lms.dto.response.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Service
 public interface StudentService {
 
@@ -23,7 +21,7 @@ public interface StudentService {
 
     StudentResponse findById(Long studId);
 
-    SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, List<String> link);
+    SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, String link);
 
     void isValidPhoneNumber(String phoneNumber);
 
