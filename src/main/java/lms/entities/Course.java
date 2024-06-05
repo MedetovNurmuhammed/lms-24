@@ -54,6 +54,8 @@ public class Course {
     //*************************************** Trash *******************************************
     @OneToOne()
     private Trash trash;
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Exam>exams = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

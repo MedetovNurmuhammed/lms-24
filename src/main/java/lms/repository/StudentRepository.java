@@ -3,6 +3,7 @@ package lms.repository;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
+import lms.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import lms.enums.StudyFormat;
@@ -56,4 +57,6 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Optional<Student> findStudentByUserId(@Param("id") Long id);
     @Query("select s from Student s where s.id =:studentId")
     Optional<Student> findStudentById(@Param("studentId")Long studentId);
+    @Query("SELECT s FROM Student s WHERE s.user = :user")
+    Optional<Student> findByUser(@Param("user") User user);
 }

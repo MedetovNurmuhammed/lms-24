@@ -88,8 +88,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AllAnnouncementResponse findAllAnnouncementByGroupId(int page, int size, Long groupId) {
-        Pageable pageable = getPageable(page, size);
-
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         if (groupId == null) {
             return findAll(page, size);
         }

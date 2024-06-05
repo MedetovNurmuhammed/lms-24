@@ -9,6 +9,7 @@ import lms.entities.Lesson;
 import lms.entities.Link;
 import lms.entities.Trash;
 import lms.enums.Type;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.LessonRepository;
 import lms.repository.LinkRepository;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
 import java.time.ZonedDateTime;
 
 @Service
@@ -36,21 +38,26 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public SimpleResponse addLink(LinkRequest linkRequest, Long lessonId) {
-        Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
-        Link link = new Link();
-        link.setTitle(linkRequest.title());
-        link.setUrl(linkRequest.url());
-        link.setLesson(lesson);
-        lesson.getLinks().add(link);
-        linkRepository.save(link);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Ccылка с названием " + link.getTitle() + " успешно сохранен!")
-                .build();
+        Lesson lesson = lessonRepository.findLessonById(lessonId).
+                orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
+        if (lesson.getTrash() == null) {
+            Link link = new Link();
+            link.setTitle(linkRequest.title());
+            link.setUrl(linkRequest.url());
+            link.setLesson(lesson);
+            lesson.getLinks().add(link);
+            linkRepository.save(link);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Ccылка с названием " + link.getTitle() + " успешно сохранен!")
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
     public AllLinkResponse findAll(int page, int size, Long lessonId) {
+        if (page < 1 && size < 1)
+            throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<LinkResponse> allLinks = linkRepository.findAllLinksByLesson(lessonId, pageable);
         return AllLinkResponse.builder()
@@ -63,40 +70,47 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public LinkResponse findById(Long linkId) {
         Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
-        return LinkResponse.builder()
-                .id(link.getId())
-                .title(link.getTitle())
-                .url(link.getUrl())
-                .build();
+        if (link.getTrash() == null) {
+            return LinkResponse.builder()
+                    .id(link.getId())
+                    .title(link.getTitle())
+                    .url(link.getUrl())
+                    .build();
+        } else throw new BadRequestException("Ссылка может быть в корзине!");
     }
 
     @Override
     @Transactional
     public SimpleResponse update(LinkRequest linkRequest, Long linkId) {
         Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
-        link.setTitle(linkRequest.title());
-        link.setUrl(linkRequest.url());
-        linkRepository.save(link);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Сcылка с названием " + link.getTitle() + " успешно обновлён!")
-                .build();
+        if (link.getTrash() == null) {
+            link.setTitle(linkRequest.title());
+            link.setUrl(linkRequest.url());
+            linkRepository.save(link);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Сcылка с названием " + link.getTitle() + " успешно обновлён!")
+                    .build();
+        } else throw new BadRequestException("Ссылка может быть в корзине!");
     }
 
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
-        Link link = linkRepository.findLinkById(linkId).orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
-        Trash trash = new Trash();
-        trash.setName(link.getTitle());
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setType(Type.LINK);
-        trash.setLink(link);
-        link.setTrash(trash);
-        trashRepository.save(trash);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Ссылка с названием " + link.getTitle() + " успешно добавлено в карзину")
-                .build();
+        Link link = linkRepository.findLinkById(linkId).
+                orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
+        if (link.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(link.getTitle());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setType(Type.LINK);
+            trash.setLink(link);
+            link.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Ссылка с названием " + link.getTitle() + " успешно добавлено в карзину")
+                    .build();
+        }else throw new BadRequestException("Ссылка может быть в корзине!");
     }
 }
