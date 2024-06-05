@@ -9,5 +9,6 @@ public enum Type {
     PRESENTATION,
     VIDEO,
     TEST,
-    TASK
+    TASK,
+    LESSON
 }
