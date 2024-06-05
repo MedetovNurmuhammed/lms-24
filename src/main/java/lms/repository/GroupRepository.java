@@ -1,5 +1,6 @@
 package lms.repository;
 
+import lms.dto.response.GroupWithoutPagination;
 import jakarta.transaction.Transactional;
 import lms.dto.response.GroupResponse;
 import lms.entities.Group;
@@ -31,6 +32,9 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Long> findAllByInstructorId(Long id);
     @Query("select s from Group s where s.id =:groupId")
     Optional<Group> findGroupById(Long groupId);
+
+    @Query("select new lms.dto.response.GroupWithoutPagination(g.id, g.title) from Group g where g.trash is null")
+    List<GroupWithoutPagination> findAllGroupsWithoutTrash();
 
     @Modifying
     @Transactional

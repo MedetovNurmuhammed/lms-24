@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface LinkRepository extends JpaRepository<Link, Long> {
+    @Query("select new lms.dto.response.LinkResponse(l.id, l.title, l.url) from Link l where l.lesson.id = :lessonId and l.trash is null ")
 
     default Link findd(Long linkId) {
         Link link = findById(linkId).orElseThrow(() ->

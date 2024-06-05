@@ -5,6 +5,7 @@ import lms.dto.request.*;
 import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.repository.jdbcTemplateService.TestJDBCTemplate;
@@ -40,36 +41,38 @@ public class TestServiceImpl implements TestService {
     public SimpleResponse saveTest(Long lessonId, TestRequest testRequest) {
         Lesson lesson = lessonRepository.findLessonById(lessonId).
                 orElseThrow(() -> new NotFoundException("Урок не найден!"));
-        Test test = new Test();
-        test.setTitle(testRequest.title());
-        test.setIsActive(false);
-        test.setCreationDate(LocalDate.now());
-        test.setHour(testRequest.hour());
-        test.setMinute(testRequest.minute());
-        test.setLesson(lesson);
-        lesson.getTests().add(test);
-        testRepository.save(test);
-        for (QuestionRequest questionRequest : testRequest.questionRequests()) {
-            Question question = new Question();
-            question.setTitle(questionRequest.title());
-            question.setQuestionType(questionRequest.questionType());
-            question.setPoint(questionRequest.point());
-            question.setTest(test);
-            test.getQuestions().add(question);
-            questionRepository.save(question);
-            for (OptionRequest optionRequest : questionRequest.optionRequests()) {
-                Option option = new Option();
-                option.setOption(optionRequest.option());
-                option.setIsTrue(optionRequest.isTrue());
-                option.setQuestion(question);
-                question.getOptions().add(option);
-                optionRepository.save(option);
+        if (lesson.getTrash() == null) {
+            Test test = new Test();
+            test.setTitle(testRequest.title());
+            test.setIsActive(false);
+            test.setCreationDate(LocalDate.now());
+            test.setHour(testRequest.hour());
+            test.setMinute(testRequest.minute());
+            test.setLesson(lesson);
+            lesson.getTests().add(test);
+            testRepository.save(test);
+            for (QuestionRequest questionRequest : testRequest.questionRequests()) {
+                Question question = new Question();
+                question.setTitle(questionRequest.title());
+                question.setQuestionType(questionRequest.questionType());
+                question.setPoint(questionRequest.point());
+                question.setTest(test);
+                test.getQuestions().add(question);
+                questionRepository.save(question);
+                for (OptionRequest optionRequest : questionRequest.optionRequests()) {
+                    Option option = new Option();
+                    option.setOption(optionRequest.option());
+                    option.setIsTrue(optionRequest.isTrue());
+                    option.setQuestion(question);
+                    question.getOptions().add(option);
+                    optionRepository.save(option);
+                }
             }
-        }
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Тест успешно создан!")
-                .build();
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Тест успешно создан!")
+                    .build();
+        }else throw new BadRequestException("Урок может быть в корзину!");
     }
 
 
@@ -79,42 +82,44 @@ public class TestServiceImpl implements TestService {
 
         Test test = testRepository.findTestById(testId)
                 .orElseThrow(() -> new NotFoundException("Тест не найден! "));
-        test.setTitle(testRequest.title());
-        test.setIsActive(false);
-        test.setHour(testRequest.hour());
-        test.setMinute(testRequest.minute());
+        if (test.getTrash() == null) {
+            test.setTitle(testRequest.title());
+            test.setIsActive(false);
+            test.setHour(testRequest.hour());
+            test.setMinute(testRequest.minute());
 
-        for (UpdateQuestionRequest questionRequest : testRequest.updateQuestionRequests()) {
+            for (UpdateQuestionRequest questionRequest : testRequest.updateQuestionRequests()) {
 
-            Question question = questionRequest.questionId() != null ?
-                    questionRepository.findQuestionById(questionRequest.questionId())
-                            .orElseThrow(() -> new NotFoundException("Вопрос не найден! ")) :
-                    new Question();
+                Question question = questionRequest.questionId() != null ?
+                        questionRepository.findQuestionById(questionRequest.questionId())
+                                .orElseThrow(() -> new NotFoundException("Вопрос не найден! ")) :
+                        new Question();
 
-            question.setTitle(questionRequest.title());
-            question.setQuestionType(questionRequest.questionType());
-            question.setPoint(questionRequest.point());
-            question.setTest(test);
+                question.setTitle(questionRequest.title());
+                question.setQuestionType(questionRequest.questionType());
+                question.setPoint(questionRequest.point());
+                question.setTest(test);
 
-            for (UpdateOptionRequest optionRequest : questionRequest.updateOptionRequest()) {
-                Option option = optionRequest.optionId() != null ?
-                        optionRepository.findOptionById(optionRequest.optionId())
-                                .orElseThrow(() -> new NotFoundException("Вариант-ответ не найден! ")) :
-                        new Option();
+                for (UpdateOptionRequest optionRequest : questionRequest.updateOptionRequest()) {
+                    Option option = optionRequest.optionId() != null ?
+                            optionRepository.findOptionById(optionRequest.optionId())
+                                    .orElseThrow(() -> new NotFoundException("Вариант-ответ не найден! ")) :
+                            new Option();
 
-                option.setOption(optionRequest.option());
-                option.setIsTrue(optionRequest.isTrue());
-                option.setQuestion(question);
-                optionRepository.save(option);
+                    option.setOption(optionRequest.option());
+                    option.setIsTrue(optionRequest.isTrue());
+                    option.setQuestion(question);
+                    optionRepository.save(option);
+                }
+                questionRepository.save(question);
             }
-            questionRepository.save(question);
-        }
-        testRepository.save(test);
+            testRepository.save(test);
 
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Тест успешно обновлен!")
-                .build();
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Тест успешно обновлен!")
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
@@ -122,24 +127,24 @@ public class TestServiceImpl implements TestService {
     public SimpleResponse accessToTest(Long testId) {
         Test test = testRepository.findTestById(testId).
                 orElseThrow(() -> new NotFoundException("Не найден!!!"));
-
-        if (test.getIsActive().equals(false)) {
-            test.setIsActive(true);
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Готов к тесту.")
-                    .build();
-        } else {
-            test.setIsActive(false);
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Доступ к тесту запрешен.")
-                    .build();
-        }
+        if (test.getTrash() == null) {
+            if (test.getIsActive().equals(false)) {
+                test.setIsActive(true);
+                return SimpleResponse.builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Готов к тесту.")
+                        .build();
+            } else {
+                test.setIsActive(false);
+                return SimpleResponse.builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("Доступ к тесту запрешен.")
+                        .build();
+            }
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
-    @Transactional
     public SimpleResponse delete(Long testId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepository.getByEmail(email);
@@ -147,61 +152,67 @@ public class TestServiceImpl implements TestService {
                 orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
         Test test = testRepository.findById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
-        Trash trash = new Trash();
-        trash.setName(test.getTitle());
-        trash.setType(Type.TEST);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setTest(test);
-        trash.setInstructor(instructor);
-        instructor.getTrashes().add(trash);
-        test.setTrash(trash);
-        trashRepository.save(trash);
-        return SimpleResponse.builder()
-                .message("Успешно добавлено в корзину!")
-                .httpStatus(HttpStatus.OK)
-                .build();
+        if (test.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(test.getTitle());
+            trash.setType(Type.TEST);
+            trash.setTest(test);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            test.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .message("Успешно добавлено в корзину!")
+                    .httpStatus(HttpStatus.OK)
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
     public TestResponseWithStudents findById(Long testId) {
-         testRepository.findTestById(testId).
+        Test test = testRepository.findTestById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
-        List<StudentTestResponse> responses = testJDBCTemplate.allStudentsWithResultTest(testId);
-        return TestResponseWithStudents.builder()
-                .id(testId)
-                .studentTestResponses(responses)
-                .build();
+        if (test.getTrash() == null) {
+            List<StudentTestResponse> responses = testJDBCTemplate.allStudentsWithResultTest(testId);
+            return TestResponseWithStudents.builder()
+                    .id(testId)
+                    .studentTestResponses(responses)
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     public TestResponse findTestByIdForEdit(Long testId) {
         Test test = testRepository.findById(testId)
                 .orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
-        List<Question> questions = test.getQuestions();
-        List<QuestionResponse> questionResponses = questions.stream()
-                .map(this::mapToQuestionResponse)
-                .collect(Collectors.toList());
+        if (test.getTrash() == null) {
+            List<Question> questions = test.getQuestions();
+            List<QuestionResponse> questionResponses = questions.stream()
+                    .map(this::mapToQuestionResponse)
+                    .collect(Collectors.toList());
 
-        return TestResponse.builder().testId(test.getId())
-                .title(test.getTitle())
-                .hour(test.getHour())
-                .minute(test.getMinute())
-                .questionResponseList(questionResponses)
-                .build();
+            return TestResponse.builder().testId(test.getId())
+                    .title(test.getTitle())
+                    .hour(test.getHour())
+                    .minute(test.getMinute())
+                    .questionResponseList(questionResponses)
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
     public AllTestResponse findAll(Long lessonId) {
-      lessonRepository.findLessonById(lessonId).
+        Lesson lesson = lessonRepository.findLessonById(lessonId).
                 orElseThrow(() -> new NotFoundException("Урок не найден!!!"));
-        List<TestResponseForGetAll> testResponseForGetAll = testRepository.findAllTestsByLessonId(lessonId);
-        return AllTestResponse.builder()
-                .testResponseForGetAll(testResponseForGetAll)
-                .build();
+        if (lesson.getTrash() == null) {
+            List<TestResponseForGetAll> testResponseForGetAll = testRepository.findAllTestsByLessonId(lessonId);
+            return AllTestResponse.builder()
+                    .testResponseForGetAll(testResponseForGetAll)
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     private QuestionResponse mapToQuestionResponse(Question question) {
         List<OptionResponse> optionResponses = question.getOptions().stream()
-                .map(option -> new OptionResponse(option.getId(),option.getOption(), option.getIsTrue()))
+                .map(option -> new OptionResponse(option.getId(), option.getOption(), option.getIsTrue()))
                 .collect(Collectors.toList());
 
         return new QuestionResponse(

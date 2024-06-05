@@ -3,6 +3,7 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
+import lms.dto.response.GroupWithoutPagination;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
@@ -118,6 +119,11 @@ public class GroupServiceImpl implements GroupService {
                 .dateOfStart(group.getDateOfStart())
                 .dateOfEnd(group.getDateOfEnd())
                 .build();
+    }
+
+    @Override
+    public List<GroupWithoutPagination> getAll() {
+        return groupRepository.findAllGroupsWithoutTrash();
     }
 
     private Group getById(long id) {

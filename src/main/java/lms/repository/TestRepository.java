@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface TestRepository extends JpaRepository<Test, Long> {
     @Query("""
             select new lms.dto.response.TestResponseForGetAll(t.id,t.title,t.hour,t.minute) 
-            from Test t where t.lesson.id =:lessonId 
+            from Test t where t.lesson.id =:lessonId and t.trash is null 
             """)
     List<TestResponseForGetAll> findAllTestsByLessonId(Long lessonId);
 @Query("select s from Test s where s.id =:testId")

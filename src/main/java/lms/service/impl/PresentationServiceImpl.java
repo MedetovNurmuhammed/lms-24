@@ -3,29 +3,22 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.EditPresentationRequest;
 import lms.dto.request.PresentationRequest;
-import lms.dto.response.FindAllPresentationResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.PresentationResponse;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
-import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.awt.print.Pageable;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -37,33 +30,33 @@ public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
     private final PresentationRepository presentationRepository;
     private final TrashRepository trashRepository;
-    private final UserRepository userRepository;
-    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
     public SimpleResponse createPresentation(Long lessonId, PresentationRequest presentationRequest) {
         Lesson lesson = lessonRepository.findLessonById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок с id: " + lessonId + " не существует!"));
-        boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
-        if (exists) {
-            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
-        }
-        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
-        if (notNullTrashPresentations)
-            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
-        Presentation presentation = new Presentation();
-        presentation.setTitle(presentationRequest.getTitle());
-        presentation.setDescription(presentationRequest.getDescription());
-        presentation.setFile(presentationRequest.getFile());
-        presentation.setLesson(lesson);
-        presentationRepository.save(presentation);
-        lesson.getPresentations().add(presentation);
-        lessonRepository.save(lesson);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Успешно загружено!")
-                .build();
+        if (lesson.getTrash() == null) {
+            boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+            if (exists) {
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
+            }
+            boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+            if (notNullTrashPresentations)
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
+            Presentation presentation = new Presentation();
+            presentation.setTitle(presentationRequest.getTitle());
+            presentation.setDescription(presentationRequest.getDescription());
+            presentation.setFile(presentationRequest.getFile());
+            presentation.setLesson(lesson);
+            presentationRepository.save(presentation);
+            lesson.getPresentations().add(presentation);
+            lessonRepository.save(lesson);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Успешно загружено!")
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     @Override
@@ -72,71 +65,60 @@ public class PresentationServiceImpl implements PresentationService {
                                            EditPresentationRequest presentationRequest) {
         Presentation presentation = presentationRepository.findPresentationById(presentationId)
                 .orElseThrow(() -> new NotFoundException("Презентация с id:  " + presentationId + " не существует!"));
-        Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
-        if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
-            boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
-            if (exists) {
-                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
+        if (presentation.getTrash() == null) {
+            Lesson lesson = lessonRepository.findLessonByPresentationId(presentation.getId());
+            if (!presentation.getTitle().equals(presentationRequest.getTitle())) {
+                boolean exists = presentationRepository.existsTitle(lesson.getId(), presentationRequest.getTitle());
+                if (exists) {
+                    throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже существует!");
+                }
             }
-        }
-        boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
-        if (notNullTrashPresentations)
-            throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
-        presentation.setTitle(presentationRequest.getTitle());
-        presentation.setDescription(presentationRequest.getDescription());
-        presentation.setFile(presentationRequest.getFile());
-        presentationRepository.save(presentation);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Презентация успешно обновлена!")
-                .build();
+            boolean notNullTrashPresentations = presentationRepository.existsNotNullTrashPresentation(lesson.getId(), presentationRequest.getTitle());
+            if (notNullTrashPresentations)
+                throw new AlreadyExistsException("Презентация с названием " + presentationRequest.getTitle() + " уже есть в корзине!");
+            presentation.setTitle(presentationRequest.getTitle());
+            presentation.setDescription(presentationRequest.getDescription());
+            presentation.setFile(presentationRequest.getFile());
+            presentationRepository.save(presentation);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Презентация успешно обновлена!")
+                    .build();
+        } else throw new BadRequestException("Презентация может быть в корзине!");
     }
 
     @Override
     public PresentationResponse findById(Long presentationId) {
         Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + " не найден!"));
-        return PresentationResponse.builder()
-                .id(presentation.getId())
-                .title(presentation.getTitle())
-                .description(presentation.getDescription())
-                .file(presentation.getFile())
-                .build();
+        if (presentation.getTrash() == null) {
+            return PresentationResponse.builder()
+                    .id(presentation.getId())
+                    .title(presentation.getTitle())
+                    .description(presentation.getDescription())
+                    .file(presentation.getFile())
+                    .build();
+        } else throw new BadRequestException("Презентация может быть в корзине!");
     }
-
-//    @Override
-//    @Transactional
-//    public FindAllPresentationResponse findAllPresentationByLessonId(int page, int size, Long lessonId) {
-//        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
-//        Page<PresentationResponse> allPresentation = presentationRepository.findAllPresentationsByLesson(lessonId, pageable);
-//        return FindAllPresentationResponse.builder()
-//                .page(allPresentation.getNumber() + 1)
-//                .size(allPresentation.getSize())
-//                .presentationResponseList(allPresentation.getContent())
-//                .build();
-//    }
 
     @Override
     @Transactional
     public SimpleResponse deletePresentationById(Long presentationId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
-                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
-        Presentation presentation = presentationRepository.findById(presentationId).
-                orElseThrow(() -> new NotFoundException("презентация не найдена!"));
-        Trash trash = new Trash();
-        trash.setName(presentation.getTitle());
-        trash.setType(Type.PRESENTATION);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setPresentation(presentation);
-        trash.setInstructor(instructor);
-        instructor.getTrashes().add(trash);
-        presentation.setTrash(trash);
-        trashRepository.save(trash);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Презентация успешно удален!")
-                .build();
+        Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
+        if (presentation.getTrash() == null) {
+            presentationRepository.deletePresentation(presentationId);
+            Trash trash = new Trash();
+            trash.setName(presentation.getTitle());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setType(Type.PRESENTATION);
+            trash.setPresentation(presentation);
+            presentation.setTrash(trash);
+            trashRepository.save(trash);
+            presentationRepository.save(presentation);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Презентация успешно удален!")
+                    .build();
+        }else throw new BadRequestException("Презентация может быть в корзине!");
     }
 
     @Override

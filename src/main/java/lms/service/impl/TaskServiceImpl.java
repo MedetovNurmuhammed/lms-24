@@ -8,7 +8,6 @@ import lms.dto.request.TaskRequest;
 import lms.dto.response.TaskResponse;
 import lms.entities.*;
 import lms.enums.Type;
-import lms.exceptions.BadRequestException;
 import lms.repository.InstructorRepository;
 import lms.repository.LessonRepository;
 import lms.repository.TaskRepository;
@@ -20,18 +19,10 @@ import lms.service.NotificationService;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import lms.exceptions.NotFoundException;
-
-import java.time.ZonedDateTime;
-import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,23 +48,25 @@ public class TaskServiceImpl implements TaskService {
         Instructor instructor = getCurrentInstructor();
 
         Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new IllegalArgumentException("Урок не существует"));
-        Task task = new Task();
-        task.setLesson(lesson);
-        task.setTitle(taskRequest.title());
-        task.setCode(taskRequest.code());
-        task.setDescription(taskRequest.description());
-        task.setFile(taskRequest.file());
-        task.setImage(taskRequest.image());
-        task.setDeadline(taskRequest.deadline());
-        task.setLinks(taskRequest.links());
+        if (lesson.getTrash() == null) {
+            Task task = new Task();
+            task.setLesson(lesson);
+            task.setTitle(taskRequest.title());
+            task.setCode(taskRequest.code());
+            task.setDescription(taskRequest.description());
+            task.setFile(taskRequest.file());
+            task.setImage(taskRequest.image());
+            task.setDeadline(taskRequest.deadline());
+            task.setLinks(taskRequest.links());
 
-        Task savedTask = taskRepository.save(task);
-        String message = instructor.getUser().getFullName() + " добавил(a) новую задачу для урока " + lesson.getTitle();
-        getStudentsByCourse(lesson, savedTask, message);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Успешно создана")
-                .build();
+            Task savedTask = taskRepository.save(task);
+            String message = instructor.getUser().getFullName() + " добавил(a) новую задачу для урока " + lesson.getTitle();
+            getStudentsByCourse(lesson, savedTask, message);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Успешно создана")
+                    .build();
+        } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
     private void getStudentsByCourse(Lesson lesson, Task savedTask, String message) throws MessagingException {
@@ -94,29 +87,50 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public SimpleResponse updateTask(Long taskId, TaskRequest taskRequest) throws MessagingException {
         Task task = getById(taskId);
-        task.setTitle(taskRequest.title());
-        task.setCode(taskRequest.code());
-        task.setDescription(taskRequest.description());
-        task.setFile(taskRequest.file());
-        task.setImage(taskRequest.image());
-        task.setDeadline(LocalDateTime.from(taskRequest.deadline()));
-        task.setLinks(taskRequest.links());
+        if (task.getTrash() == null) {
+            task.setTitle(taskRequest.title());
+            task.setCode(taskRequest.code());
+            task.setDescription(taskRequest.description());
+            task.setFile(taskRequest.file());
+            task.setImage(taskRequest.image());
+            task.setDeadline(LocalDateTime.from(taskRequest.deadline()));
+            task.setLinks(taskRequest.links());
 
-        Instructor instructor = getCurrentInstructor();
-        Task savedTask = taskRepository.save(task);
-        Lesson lesson = savedTask.getLesson();
-        String message = instructor.getUser().getFullName() + " именил(a) задачу для урока " + lesson.getTitle();
-        getStudentsByCourse(lesson, savedTask, message);
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Успешно обновлено")
-                .build();
+            Instructor instructor = getCurrentInstructor();
+            Task savedTask = taskRepository.save(task);
+            Lesson lesson = savedTask.getLesson();
+            String message = instructor.getUser().getFullName() + " именил(a) задачу для урока " + lesson.getTitle();
+            getStudentsByCourse(lesson, savedTask, message);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Успешно обновлено")
+                    .build();
+        } else throw new BadRequestException("Задача может быть в корзине!");
     }
 
+    @Override
+    public SimpleResponse deleteTask(Long taskId) {
+        Task task = getById(taskId);
+        if (task.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setTask(task);
+            trash.setType(Type.TASK);
+            task.setTrash(trash);
+            trashRepository.save(trash);
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .message("Успешно удалено")
+                    .build();
+        } else throw new BadRequestException("Задача может быть в корзине!");
+    }
+
+    @Override
     public TaskResponse findById(Long taskId) {
         Task task = getById(taskId);
-        log.error(String.valueOf(task.getLinks()));
-        return convertToTaskResponse(task);
+        if (task.getTrash() == null) {
+            log.error(String.valueOf(task.getLinks()));
+            return convertToTaskResponse(task);
+        }else throw new BadRequestException("Задача может быть в корзине!");
     }
 
     @Override
@@ -131,31 +145,6 @@ public class TaskServiceImpl implements TaskService {
         return AllTaskResponse.builder()
                 .taskResponse(taskResponses)
                 .build();
-    }
-
-    @Override
-    public SimpleResponse deleteTask(Long taskId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
-                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
-
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Задача не найдена!"));
-        if (task.getTrash() == null) {
-            Trash trash = new Trash();
-            trash.setName(task.getTitle());
-            trash.setType(Type.TEST);
-            trash.setDateOfDelete(ZonedDateTime.now());
-            trash.setTask(task);
-            trash.setInstructor(instructor);
-            instructor.getTrashes().add(trash);
-            task.setTrash(trash);
-            trashRepository.save(trash);
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.OK)
-                    .message("Задача успешно добавлено в корзину!")
-                    .build();
-        }else throw new BadRequestException("Задача может быть в корзине!");
     }
 
 

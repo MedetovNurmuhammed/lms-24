@@ -14,7 +14,7 @@ public interface TestService {
 
     SimpleResponse accessToTest(Long testId);
 
-    SimpleResponse delete(Long testId);
+    SimpleResponse  delete(Long testId);
 
     TestResponseWithStudents findById(Long testId);
 
