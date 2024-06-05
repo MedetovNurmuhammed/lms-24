@@ -21,11 +21,13 @@ public class Trash {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trash_gen")
     @SequenceGenerator(name = "trash_gen", sequenceName = "trash_seq", allocationSize = 1)
     private Long id;
+
     private String name;
+
     @Enumerated(EnumType.STRING)
     private Type type;
-    private ZonedDateTime dateOfDelete;
 
+    private ZonedDateTime dateOfDelete;
 
     @OneToOne(mappedBy = "trash")
     private Student student;
@@ -39,9 +41,6 @@ public class Trash {
     @ManyToOne()
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
-
-    @OneToOne(mappedBy = "trash")
-    private Lesson lesson;
 
     @OneToOne(mappedBy = "trash")
     private Link link;

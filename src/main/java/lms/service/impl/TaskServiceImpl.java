@@ -8,6 +8,8 @@ import lms.dto.request.TaskRequest;
 import lms.dto.response.TaskResponse;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.BadRequestException;
+import lms.exceptions.NotFoundException;
 import lms.repository.InstructorRepository;
 import lms.repository.LessonRepository;
 import lms.repository.TaskRepository;
@@ -25,7 +27,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -130,7 +134,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getTrash() == null) {
             log.error(String.valueOf(task.getLinks()));
             return convertToTaskResponse(task);
-        }else throw new BadRequestException("Задача может быть в корзине!");
+        }else throw new lms.exceptions.BadRequestException("Задача может быть в корзине!");
     }
 
     @Override

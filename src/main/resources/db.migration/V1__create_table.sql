@@ -253,4 +253,3 @@
 --                                       FOREIGN KEY (announcement_id) REFERENCES announcements(id),
 --                                       FOREIGN KEY (group_id) REFERENCES groups(id)
 -- );
---

@@ -156,6 +156,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
+
         Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();

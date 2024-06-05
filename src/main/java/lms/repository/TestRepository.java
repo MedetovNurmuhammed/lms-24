@@ -1,7 +1,5 @@
 package lms.repository;
 
-import lms.dto.response.StudentResponse;
-import lms.dto.response.StudentTestResponse;
 import lms.dto.response.TestResponseForGetAll;
 import lms.entities.Test;
 import org.springframework.data.jpa.repository.JpaRepository;

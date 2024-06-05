@@ -58,31 +58,26 @@ public class TrashServiceImpl implements TrashService {
         return trash.getInstructor().getId().equals(instructor.getId());
     }
 
-    @Override
-    public AllTrashResponse findAll(int page, int size) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        System.out.println("test " + currentUser);
-        Pageable pageable = PageRequest.of(page - 1, size);// Пагинация начинается с 0
-        if (currentUser.getRole().equals(Role.ADMIN)) {
-            Page<TrashResponse> trashResponses = trashRepository.findAllTrashes(pageable);
-            AllTrashResponse allTrashResponse = new AllTrashResponse();
-            allTrashResponse.setPage(trashResponses.getNumber() + 1);
-            allTrashResponse.setSize(trashResponses.getNumberOfElements());
-            allTrashResponse.setTrashResponses(trashResponses.getContent());
-            return allTrashResponse;
-        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
-            Page<TrashResponse> allInstructorTrashes = trashRepository.findAllInstructorTrashes(pageable, currentUser.getId());
-            System.err.println("currentUser.getEmail() = " + currentUser.getEmail());
-            AllTrashResponse allTrashResponse = new AllTrashResponse();
-            allTrashResponse.setPage(allInstructorTrashes.getNumber() + 1);
-            allTrashResponse.setSize(allInstructorTrashes.getNumberOfElements());
-            allTrashResponse.setTrashResponses(allInstructorTrashes.getContent());
-            return allTrashResponse;
-        } else throw new ForbiddenException("Нет доступа!!!");
-    }
 
+    @Override
+    public AllTrashResponse findAll(int page, int size){
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if (authUser.getRole().equals(Role.ADMIN)){
+            Page<TrashResponse> allTrash = trashRepository.findAllTrash(pageable);
+            return AllTrashResponse.builder()
+                    .page(allTrash.getNumber() + 1)
+                    .size(allTrash.getNumberOfElements())
+                    .trashResponses(allTrash.getContent())
+                    .build();
+        }
+        Page<TrashResponse> instructorTrash = trashRepository.findAllTrashByInstructorId(authUser.getId(), pageable);
+        return AllTrashResponse.builder()
+                .page(instructorTrash.getNumber() + 1)
+                .size(instructorTrash.getNumberOfElements())
+                .trashResponses(instructorTrash.getContent())
+                .build();
+    }
 
     @Override
     @Transactional
