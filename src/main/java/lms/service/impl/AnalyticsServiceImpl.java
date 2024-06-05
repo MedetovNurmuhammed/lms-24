@@ -27,11 +27,11 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Override
     public StudentsAnalyticsResponse getAllStudentsCount() {
         int total = studentRepository.totalStudents();
-        List<Student> students = studentRepository.students(LocalDate.now());
+        int students = studentRepository.students(LocalDate.now());
         int graduated = studentRepository.graduated(LocalDate.now());
 
         return StudentsAnalyticsResponse.builder()
-                .students(students.size())
+                .students(students)
                 .graduated(graduated)
                 .total(total)
                 .build();

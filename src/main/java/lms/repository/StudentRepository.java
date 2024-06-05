@@ -66,9 +66,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("select count (s) from Student  s")
     int totalStudents();
 
-    @Query("SELECT s FROM Student s WHERE s.group.dateOfStart <= :currentDate AND s.group.dateOfEnd >= :currentDate")
-    List<Student> students(@Param("currentDate") LocalDate currentDate);
+    @Query("SELECT COUNT(s) FROM Student s WHERE  s.group.dateOfEnd > :currentDate")
+    int students(@Param("currentDate") LocalDate currentDate);
 
-    @Query("SELECT COUNT(s) FROM Student s WHERE s.group.dateOfEnd < :currentDate")
+    @Query("SELECT COUNT(s) FROM Student s WHERE s.group.dateOfEnd <= :currentDate")
     int graduated(@Param("currentDate") LocalDate currentDate);
 }
