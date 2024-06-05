@@ -61,4 +61,7 @@ public class Trash {
 
     @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
     private Test test;
+
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+    private Lesson lesson;
 }
