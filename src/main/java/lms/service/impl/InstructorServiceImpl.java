@@ -47,7 +47,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final TrashRepository trashRepository;
 
     @Override
-    public SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException {
+    public SimpleResponse addInstructor(InstructorRequest instructorRequest, String linkForPassword) throws MessagingException {
         boolean exists = userRepository.existsByEmail(instructorRequest.getEmail());
         if (exists)
             throw new AlreadyExistsException("Пользователь с электронной почтой " + instructorRequest.getEmail() + " уже существует");
@@ -63,8 +63,7 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setUser(user);
         userRepository.save(user);
         instructorRepository.save(instructor);
-        String link = instructorRequest.getLinkForPassword() ;
-        userService.emailSender(user.getEmail(), link);
+        userService.emailSender(user.getEmail(), linkForPassword);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Инструктор успешно добавлен")

@@ -18,8 +18,6 @@ public record StudentRequest(
         @NotNull
         @NotBlank
         String groupName,
-        StudyFormat studyFormat,
-        @NotBlank(message = "ссылка не может быть пустой.")
-        String linkForPassword
+        StudyFormat studyFormat
 ) {
 }
