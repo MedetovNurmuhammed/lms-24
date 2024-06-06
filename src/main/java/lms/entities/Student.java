@@ -23,6 +23,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,19 +50,16 @@ public class Student {
     private LocalDate updatedAt;
     private Type type;
 
-
-
     public Type getType() {
         return type = Type.STUDENT;
     }
 
-
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     private Group group;
 
     //********************************* ResultTest ****************************************
@@ -73,10 +72,12 @@ public class Student {
 
     //********************************* Notification ***************************************
     @ElementCollection
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************

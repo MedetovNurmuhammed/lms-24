@@ -15,6 +15,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TrashRepository extends JpaRepository<Trash, Long> {
 
@@ -54,8 +55,10 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
             """ )
     Page<TrashResponse> findAllTrashByInstructorId(Long id, Pageable pageRequest);
 
+    @Query("select t from Trash t where t.id = ?1")
+    Optional<Trash> findTrash(Long id);
     default Trash findByIdOrThrow(Long id){
-        return findById(id)
+        return findTrash(id)
                 .orElseThrow(() -> new NotFoundException("Trash with id %d not found".formatted(id)));
     }
 }
