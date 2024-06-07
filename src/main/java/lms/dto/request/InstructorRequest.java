@@ -19,4 +19,6 @@ public class InstructorRequest {
     private String email;
     @NotBlank(message = "Специализация не может быть пустой.")
     private String specialization;
+    @NotBlank(message = "ссылка не может быть пустой.")
+    private String linkForPassword;
 }

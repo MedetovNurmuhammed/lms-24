@@ -30,8 +30,8 @@ public class AuthApi {
 
     @Operation(summary = "забыли пароль")
     @PutMapping("/forgotPassword")
-    public SimpleResponse forgotPassword(@RequestParam String email) throws MessagingException {
-        return userService.emailSender(email);
+    public SimpleResponse forgotPassword(@RequestParam String email, @RequestParam String link) throws MessagingException {
+        return userService.emailSender(email , link);
     }
 
     @Operation(summary = "создать пароль")

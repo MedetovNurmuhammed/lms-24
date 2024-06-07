@@ -36,8 +36,8 @@ public class InstructorApi {
     @Secured("ADMIN")
     @Operation(summary = "добавляет инструктора.(Авторизация: администратор)")
     @PostMapping()
-    public SimpleResponse addInstructor(@RequestBody @Valid InstructorRequest instructorRequest) throws MessagingException {
-        return instructorService.addInstructor(instructorRequest);
+    public SimpleResponse addInstructor(@RequestBody @Valid InstructorRequest instructorRequest, @RequestParam String linkForPassword) throws MessagingException {
+        return instructorService.addInstructor(instructorRequest, linkForPassword);
     }
 
     @Secured("ADMIN")

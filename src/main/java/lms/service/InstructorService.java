@@ -11,7 +11,7 @@ import lms.dto.response.SimpleResponse;
 import java.util.List;
 
 public interface InstructorService {
-    SimpleResponse addInstructor(InstructorRequest instructorRequest) throws MessagingException;
+    SimpleResponse addInstructor(InstructorRequest instructorRequest, String linkForPassword) throws MessagingException;
 
     AllInstructorResponse findAll(int page, int size);
 
