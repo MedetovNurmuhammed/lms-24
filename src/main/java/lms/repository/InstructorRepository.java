@@ -11,14 +11,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     @Query(" select distinct new lms.dto.response.InstructorsOrStudentsOfCourse" +
-            "(i.id, c.title, i.user.fullName, i.specialization, i.user.phoneNumber, i.user.email) " +
+            "(i.id, c.title, i.user.fullName, i.specialization, i.user.phoneNumber, i.user.email, i.user.block) " +
             "from Instructor i join i.courses c " +
             "where c.id = :courseId and i.trashes is empty ")
     Page <InstructorsOrStudentsOfCourse> getInstructorsByCourseId(@Param("courseId")Long courseId, Pageable pageable);
@@ -32,6 +31,8 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     @Query("select i from Instructor i join i.courses c join c.lessons l join l.tasks t where t.id = :taskId")
     List<Instructor> findByAnswerTask(Long taskId);
+@Query("select count (i) from Instructor  i")
+    int getAllInstructorsCount();
 
 
 

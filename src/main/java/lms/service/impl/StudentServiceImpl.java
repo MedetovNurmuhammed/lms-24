@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public SimpleResponse save(StudentRequest studentRequest) throws MessagingException {
+    public SimpleResponse save(StudentRequest studentRequest, String linkForPassword) throws MessagingException {
         Group group = groupRepository.findByTitle(studentRequest.groupName()).orElseThrow(() ->
                 new NotFoundException("Группа с названием" + studentRequest.groupName() + "не найден"));
 
@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(user);
         userRepository.save(user);
         studentRepository.save(student);
-        userService.emailSender(user.getEmail());
+        userService.emailSender(user.getEmail(), linkForPassword);
         log.info("Успешно {} сохранен!", studentRequest.email());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -189,7 +189,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Validated
-    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file) {
+    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, String link) {
         Group group = groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
         try {
             Workbook workbook = WorkbookFactory.create(file.getInputStream());
@@ -248,7 +248,7 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-                userServiceImpl.emailSender(user.getEmail());
+                userServiceImpl.emailSender(user.getEmail(), link);
             }
         } catch (IOException e) {
             e.printStackTrace();

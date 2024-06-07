@@ -4,27 +4,30 @@ import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
+import lms.enums.StudyFormat;
 import lms.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import lms.enums.StudyFormat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface StudentRepository extends JpaRepository<Student,Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("select new lms.dto.response.InstructorsOrStudentsOfCourse(s.id, c.title, s.user.fullName," +
             " '', s.user.phoneNumber, s.user.email, u.block" +
             ") " +
             "from Student s " +
-            "join s.user u "+
+            "join s.user u " +
             "join s.group g " +
             "join g.courses c " +
             "where c.id = :courseId")
-    Page <InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId,Pageable pageable);
+    Page<InstructorsOrStudentsOfCourse> getStudentsByCourseId(@Param("courseId") Long courseId, Pageable pageable);
+
     @Query("""
             select  new lms.dto.response.StudentResponse(s.id, s.user.fullName, s.user.phoneNumber, s.group.title, s.studyFormat, s.user.email,s.user.block)
                from Student s
@@ -33,7 +36,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
                    and ( s.user.fullName ilike concat('%',:searchTerm,'%') or s.user.phoneNumber ilike concat('%',:searchTerm,'%') or s.user.email
                     ilike concat ('%',:searchTerm,'%') or s.group.title ilike concat('%',:searchTerm,'%') or :searchTerm is null ) and s.trash is null
             """)
-    Page<StudentResponse> findAllBySearchTerm(String searchTerm, List<StudyFormat> studyFormats, Long groupId,Pageable pageable);
+    Page<StudentResponse> findAllBySearchTerm(String searchTerm, List<StudyFormat> studyFormats, Long groupId, Pageable pageable);
 
     @Query("select new lms.dto.response.StudentResponse(s.id,s.user.fullName,s.user.phoneNumber,s.group.title,s.studyFormat,s.user.email,s.user.block) from Student s where s.group.id = :groupId and s.trash is null")
     Page<StudentResponse> findAllByGroupId(Pageable pageable, Long groupId);
@@ -66,4 +69,12 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Transactional
     @Query(value = "delete from students where id = :id", nativeQuery = true)
     void deleteStudentById(Long id);
+    @Query("select count (s) from Student  s")
+    int totalStudents();
+
+    @Query("SELECT COUNT(s) FROM Student s WHERE  s.group.dateOfEnd > :currentDate")
+    int students(@Param("currentDate") LocalDate currentDate);
+
+    @Query("SELECT COUNT(s) FROM Student s WHERE s.group.dateOfEnd <= :currentDate")
+    int graduated(@Param("currentDate") LocalDate currentDate);
 }

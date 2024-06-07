@@ -76,7 +76,7 @@ public class TestApi {
     @Operation(summary = "Найти все тесты ",
             description = "Метод для найти всех тестов." +
                     " Авторизация: инструктор!")
-    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
     @GetMapping("/findAll/{lessonId}")
      public AllTestResponse findAll(@PathVariable Long lessonId){
        return testService.findAll(lessonId);

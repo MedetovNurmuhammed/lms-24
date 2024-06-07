@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface StudentService {
 
-    SimpleResponse save(StudentRequest studentRequest) throws MessagingException;
+    SimpleResponse save(StudentRequest studentRequest, String linkForPassword) throws MessagingException;
 
     AllStudentResponse findAll(String keyword, String studyFormat, Long groupId, int page, int size);
 
@@ -21,7 +21,7 @@ public interface StudentService {
 
     StudentResponse findById(Long studId);
 
-    SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file);
+    SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, String link);
 
     void isValidPhoneNumber(String phoneNumber);
 
