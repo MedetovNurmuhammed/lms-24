@@ -14,5 +14,5 @@ public interface UserService {
 
     SimpleResponse createPassword(String uuid, String password, String confirm) throws BadRequestException;
 
-    SimpleResponse emailSender(String toEmail) throws MessagingException;
+    SimpleResponse emailSender(String toEmail, String Link) throws MessagingException;
 }

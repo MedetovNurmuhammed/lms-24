@@ -13,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
@@ -25,8 +27,9 @@ public class StudentApi {
     @Operation(summary = "Сохранить студента",
             description = "Метод для сохранение студента и отправка сообщение почту чтобы создать студент создал себе пароль! " +
                     " Авторизация: администратор!")
-    public SimpleResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) throws MessagingException {
-        return studentService.save(studentRequest);
+    public SimpleResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest, @RequestParam String linkForPassword) throws MessagingException {
+
+        return studentService.save(studentRequest, linkForPassword);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -84,8 +87,8 @@ public class StudentApi {
     @Operation(description = "Импортировать студентов в группу")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping(value = "/importStudents/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file) {
-        return studentService.importStudentsFromExcel(groupId, file);
+    public SimpleResponse importStudents(@PathVariable Long groupId, @RequestPart("file") @Valid MultipartFile file,  @RequestParam String link) {
+        return studentService.importStudentsFromExcel(groupId, file, link);
     }
 
     @Operation(summary = "Доступ к cтуденту",

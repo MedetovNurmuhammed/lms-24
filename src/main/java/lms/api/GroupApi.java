@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
+import lms.dto.response.GroupWithoutPagination;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.service.GroupService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
@@ -29,7 +32,7 @@ public class GroupApi {
 
     @Secured("ADMIN")
     @Operation(summary = "Сохранить группу", description = "Создание новой группы с предоставленными данными.Авторизация: Админ")
-    @PostMapping()
+    @PostMapping
     public SimpleResponse save(@RequestBody @Valid GroupRequest groupRequest) {
         return groupService.save(groupRequest);
     }
@@ -48,6 +51,14 @@ public class GroupApi {
                                     @RequestParam(required = false, defaultValue = "8") int size) {
         return groupService.findAllGroup(size, page);
     }
+
+    @Secured("ADMIN")
+    @Operation(summary = "Получить все группы без пагинации.", description = "Получение списка всех групп без пагинации.Авторизация: Админ")
+    @GetMapping("/getAll")
+    public List<GroupWithoutPagination> getAllGroupWithoutPagination(){
+        return groupService.getAll();
+    }
+
 
     @Secured("ADMIN")
     @Operation(summary = "Получить информацию о группе", description = "Получение данных группы по ID. Авторизация: Админ")

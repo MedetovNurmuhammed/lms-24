@@ -7,6 +7,7 @@ import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.enums.TaskAnswerStatus;
+
 import java.util.List;
 
 public interface AnswerTaskService {
@@ -23,4 +24,5 @@ public interface AnswerTaskService {
     SimpleResponse checkAnswer(Long answerId, CheckAnswerRequest checkAnswerRequest) throws MessagingException;
 
     List<String> getNotAnswered(Long taskId);
+
 }

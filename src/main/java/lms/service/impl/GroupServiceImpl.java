@@ -3,6 +3,7 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.GroupRequest;
 import lms.dto.response.AllGroupResponse;
+import lms.dto.response.GroupWithoutPagination;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +75,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public AllGroupResponse findAllGroup(int size, int page) {
         if (page < 1 && size < 1) throw new IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<GroupResponse> allGroup = groupRepository.findAllGroup(pageable);
 
         return AllGroupResponse.builder()
@@ -110,6 +112,11 @@ public class GroupServiceImpl implements GroupService {
                 .dateOfStart(group.getDateOfStart())
                 .dateOfEnd(group.getDateOfEnd())
                 .build();
+    }
+
+    @Override
+    public List<GroupWithoutPagination> getAll() {
+        return groupRepository.findAllGroupsWithoutTrash();
     }
 
     private Group getById(long id) {

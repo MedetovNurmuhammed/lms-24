@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,8 @@ public class TrashServiceImpl implements TrashService {
 
     @Override
     public AllTrashResponse findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<Trash> trashes = trashRepository.findAll(pageable);
         List<TrashResponse> trashResponses = new ArrayList<>();
         for (Trash trash : trashes) {

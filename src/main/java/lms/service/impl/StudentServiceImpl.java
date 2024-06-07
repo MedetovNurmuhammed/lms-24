@@ -14,7 +14,6 @@ import lms.enums.Role;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
-import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.exceptions.ValidationException;
@@ -31,6 +30,7 @@ import org.apache.poi.ss.util.NumberToTextConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public SimpleResponse save(StudentRequest studentRequest) throws MessagingException {
+    public SimpleResponse save(StudentRequest studentRequest, String linkForPassword) throws MessagingException {
         Group group = groupRepository.findByTitle(studentRequest.groupName()).orElseThrow(() ->
                 new NotFoundException("Группа с названием" + studentRequest.groupName() + "не найден"));
 
@@ -77,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
         student.setUser(user);
         userRepository.save(user);
         studentRepository.save(student);
-        userService.emailSender(user.getEmail());
+        userService.emailSender(user.getEmail(), linkForPassword);
         log.info("Успешно {} сохранен!", studentRequest.email());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -89,7 +88,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public AllStudentResponse findAll(String search, String studyFormat, Long groupId, int page, int size) {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         log.info(search);
         List<StudyFormat> studyFormats = new ArrayList<>();
         if (search.equalsIgnoreCase("ONLINE")) {
@@ -114,9 +113,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public AllStudentResponse findAllGroupStud(int page, int size, Long groupId) {
         if (page < 1 && size < 1) throw new BadRequestException("Page - size  страницы должен быть больше 0.");
-        groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
+        groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группа не найден"));
 
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Page<StudentResponse> studentResponses = studentRepository.findAllByGroupId(pageable, groupId);
         return AllStudentResponse.builder()
                 .page(studentResponses.getNumber() + 1)
@@ -128,7 +127,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse update(Long studId, StudentRequest studentRequest) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         User user = student.getUser();
         if (!user.getEmail().equals(studentRequest.email())) {
@@ -154,7 +153,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
@@ -173,7 +172,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse findById(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         if (student.getTrash() == null) {
             return StudentResponse.builder()
@@ -191,8 +190,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Validated
-    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
+    public SimpleResponse importStudentsFromExcel(Long groupId, MultipartFile file, String link) {
+        Group group = groupRepository.findGroupById(groupId).orElseThrow(() -> new NotFoundException("Группв с id: " + groupId + " не существует!"));
         try {
             Workbook workbook = WorkbookFactory.create(file.getInputStream());
             Sheet sheet = workbook.getSheetAt(0);
@@ -250,7 +249,7 @@ public class StudentServiceImpl implements StudentService {
                 User user = userRepository.save(newUser);
                 studentRepository.save(newStudent);
                 groupRepository.save(group);
-                userServiceImpl.emailSender(user.getEmail());
+                userServiceImpl.emailSender(user.getEmail(), link);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -292,7 +291,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentIsBlockResponse isBlock(Long studId) {
-        Student student = studentRepository.findById(studId).
+        Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден!"));
         if (student.getUser().getBlock().equals(false)) {
             student.getUser().setBlock(true);

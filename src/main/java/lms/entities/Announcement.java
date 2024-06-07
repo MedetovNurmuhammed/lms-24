@@ -37,11 +37,11 @@ public class Announcement {
     private LocalDate expirationDate;
 
     //******************************* User **********************************************
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User user;
 
     //******************************* Group **********************************************
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Group> groups = new ArrayList<>();
 
 }
