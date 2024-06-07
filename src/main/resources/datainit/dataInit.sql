@@ -1284,17 +1284,17 @@ where id = 13;
 
 
 
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 1, 1);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 2, 2);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 3, 3);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 4, 4);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 5, 5);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 6, 6);
 insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
 values ('FALSE', 7, 1);

@@ -1,6 +1,8 @@
 package lms.service.impl;
 
+import jakarta.transaction.Transactional;
 import lms.entities.Student;
+import lms.repository.NotificationRepository;
 import lms.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TrashDeleteService {
     private final StudentRepository studentRepository;
+    private final NotificationRepository notificationRepository;
 
+    @Transactional
     public void deleteStudent(Student student) {
-        studentRepository.clearNotificationState(student.getId());
+        student.getNotificationStates().clear();
+        notificationRepository.clearNotificationState(student.getId());
         studentRepository.delete(student);
     }
 }

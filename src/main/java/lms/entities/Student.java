@@ -1,21 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lombok.AllArgsConstructor;
@@ -72,8 +57,9 @@ public class Student {
 
     //********************************* Notification ***************************************
     @ElementCollection
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    private Map<Notification,Boolean> notificationStates = new HashMap<>();
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @MapKeyJoinColumn(name = "notification_id")
+    private Map< Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.LAZY)

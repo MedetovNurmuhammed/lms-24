@@ -66,7 +66,4 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     @Transactional
     @Query(value = "delete from students where id = :id", nativeQuery = true)
     void deleteStudentById(Long id);
-
-
-    void clearNotificationState(Long id);
 }

@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import org.springframework.data.repository.query.Param;
-
 import java.util.Optional;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
@@ -18,7 +16,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Transactional
     @Modifying
     @Query(value = "delete from instructor_notification_states where notification_states_key = :notificationId and instructor_id = :userId", nativeQuery = true)
-    void deleteNotificationFromExtraTableInstructor(@Param("notificationId")Long notificationId,@Param("userId") Long userId);
+    void deleteNotificationFromExtraTableInstructor(@Param("notificationId") Long notificationId, @Param("userId") Long userId);
 
     @Modifying
     @Transactional
@@ -33,7 +31,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM student_notification_states WHERE notification_states_key = :notificationId and student_id =:studentId", nativeQuery = true)
-    void deleteNotificationFromStudent(@Param("notificationId") Long notificationId,Long studentId);
+    void deleteNotificationFromStudent(@Param("notificationId") Long notificationId, Long studentId);
 
     @Modifying
     @Transactional
@@ -52,12 +50,12 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByAnswerTaskId(@Param("answerTaskId") Long answerTaskId);
 
     @Query("select new lms.dto.response.NotificationResponse(" +
-            "n.id, " +
-            "n.title, " +
-            "n.description, " +
-            "n.createdAt, " +
-            "n.answerTask.id, " +
-            "true) from Notification n where n.answerTask.id = :answerId")
+           "n.id, " +
+           "n.title, " +
+           "n.description, " +
+           "n.createdAt, " +
+           "n.answerTask.id, " +
+           "true) from Notification n where n.answerTask.id = :answerId")
     List<NotificationResponse> findAllNotificationResponseByAnswerTaskId(Long answerId);
 
     @Modifying
@@ -66,14 +64,15 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     void detachTaskFromNotification(@Param("taskId") Long taskId);
 
     @Transactional
+    @Modifying
     @Query("delete from Notification n where n.answerTask.id =:answerTaskId")
     void deleteByAnswerTaskId(@Param("answerTaskId") Long answerTaskId);
 
     @Modifying
     @Transactional
     @Query(value = "delete from student_notification_states sns inner join notification n on n.id = sns.notification_states_key" +
-            " inner join students s on s.id = sns.student_id" +
-            " where s.id = :studentId", nativeQuery = true)
+                   " inner join students s on s.id = sns.student_id" +
+                   " where s.id = :studentId", nativeQuery = true)
     void deleteByAnswerTaskIdAndExtraTable(Long studentId);
 
     @Modifying
@@ -86,13 +85,18 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query(value = "DELETE FROM notifications WHERE id = :notificationId", nativeQuery = true)
     void deleteNotificationById(@Param("notificationId") Long notificationId);
 
-    @Transactional
     @Query(value = "select notification_states_key from student_notification_states  where notification_states_key = :notificationId and student_id = :studentId", nativeQuery = true)
-    Optional<Long> findNotificationInExtraTable(@Param("studentId")Long studentId, @Param("notificationId") Long notificationId);
+    Optional<Long> findNotificationInExtraTable(@Param("studentId") Long studentId, @Param("notificationId") Long notificationId);
 
-    @Transactional
     @Query(value = "select notification_states_key from instructor_notification_states  where notification_states_key = :notificationId and instructor_id = :instructorId", nativeQuery = true)
-    Optional<Long> findNotificationInstructorInExtraTable(@Param("instructorId")Long studentId, @Param("notificationId") Long notificationId);
+    Optional<Long> findNotificationInstructorInExtraTable(@Param("instructorId") Long studentId, @Param("notificationId") Long notificationId);
+
     @Query("select s from Notification s where s.id =:notificationId")
     Optional<Notification> findNotificationById(Long notificationId);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from student_notification_states n where n.student_id = :id", nativeQuery = true)
+    void clearNotificationState(Long id);
 }
