@@ -16,10 +16,10 @@ public class ExamResult {
     @SequenceGenerator(name = "exam_result_gen", sequenceName = "exam_result_seq", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch =  FetchType.LAZY)
     private Student student;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch =  FetchType.LAZY)
     private Exam exam;
 
     private int point;

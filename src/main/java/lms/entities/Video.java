@@ -28,7 +28,7 @@ public class Video {
     @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY )
     private Link link;
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
     @ManyToOne(cascade = CascadeType.DETACH)
     private Lesson lesson;

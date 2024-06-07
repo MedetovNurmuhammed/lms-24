@@ -29,7 +29,7 @@ public class Presentation {
 
     @OneToOne
     private Trash trash;
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Lesson lesson;
     @PrePersist
     private void prePersist() {

@@ -35,7 +35,7 @@ public class Lesson {
     private List<Video> videos = new ArrayList<>();
 
     //*************************************** Presentation ********************************
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Presentation> presentations = new ArrayList<>();
 
     //*************************************** Link *****************************************
@@ -43,11 +43,11 @@ public class Lesson {
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Test> tests;
 
     //*************************************** Task *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Task> tasks = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)

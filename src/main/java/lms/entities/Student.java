@@ -56,7 +56,7 @@ public class Student {
 
 
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Group *********************************************
@@ -64,15 +64,15 @@ public class Student {
     private Group group;
 
     //********************************* ResultTest ****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @ElementCollection
+    @ElementCollection(fetch =  FetchType.LAZY)
     private Map<Notification,Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
@@ -80,7 +80,7 @@ public class Student {
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

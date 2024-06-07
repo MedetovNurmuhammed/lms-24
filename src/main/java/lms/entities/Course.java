@@ -52,9 +52,9 @@ public class Course {
     private List<Lesson> lessons = new ArrayList<>();
 
     //*************************************** Trash *******************************************
-    @OneToOne()
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Exam>exams = new ArrayList<>();
 
     @PrePersist

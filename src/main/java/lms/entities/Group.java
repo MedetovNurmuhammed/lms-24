@@ -1,15 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,11 +29,11 @@ public class Group {
     private LocalDate dateOfEnd;
 
     //*************************************** Course ******************************************
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private List<Course> courses = new ArrayList<>();
 
     //*************************************** Student ******************************************
-    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Student> students = new ArrayList<>();
 
     //*************************************** Trash ********************************************

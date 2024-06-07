@@ -47,7 +47,7 @@ public class ResultTest {
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Student ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Student student;
 
     @PrePersist
