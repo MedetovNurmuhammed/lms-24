@@ -31,4 +31,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select new lms.dto.response.GroupWithoutPagination(g.id, g.title) from Group g where g.trash is null")
     List<GroupWithoutPagination> findAllGroupsWithoutTrash();
+@Query("select count (c) from Course  c")
+    int getAllGroupsCount();
 }
