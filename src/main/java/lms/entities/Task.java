@@ -48,7 +48,7 @@ public class Task {
     private LocalDate updatedAt;
 
     //*************************************** AnswerTask ***********************************
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Lesson ****************************************

@@ -42,7 +42,7 @@ public class Instructor {
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Course *************************************
@@ -50,11 +50,11 @@ public class Instructor {
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @ElementCollection
+    @ElementCollection(fetch =  FetchType.LAZY)
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

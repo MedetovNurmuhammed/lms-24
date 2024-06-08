@@ -42,7 +42,7 @@ public class AnswerTask {
     @Enumerated(EnumType.STRING)
     private TaskAnswerStatus taskAnswerStatus;
     private int point = 0;
-    @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "answerTask", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
     private LocalDateTime dateOfSend;
     private LocalDateTime updatedAt;
