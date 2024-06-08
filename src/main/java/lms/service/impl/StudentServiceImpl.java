@@ -149,8 +149,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public SimpleResponse delete(Long studId) {
-        Instructor authInstructor =
-                instructorRepository.getInstructorByUserID(userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
@@ -159,8 +158,10 @@ public class StudentServiceImpl implements StudentService {
         trash.setType(Type.STUDENT);
         trash.setDateOfDelete(ZonedDateTime.now());
         trash.setStudent(student);
-        trash.setInstructor(authInstructor);
         student.setTrash(trash);
+        if (authUser.getRole().equals(Role.INSTRUCTOR)) {
+            trash.setInstructor(instructorRepository.getInstructorByUserID(authUser.getId()));
+        }
         trashRepository.save(trash);
         log.info("Успешно добавлено в корзину!");
         return SimpleResponse.builder()
