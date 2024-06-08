@@ -37,6 +37,6 @@ public class Group {
     private List<Student> students = new ArrayList<>();
 
     //*************************************** Trash ********************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
 }

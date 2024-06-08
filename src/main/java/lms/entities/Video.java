@@ -30,7 +30,7 @@ public class Video {
     //********************************* Trash ***************************************
     @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
     @PrePersist
     protected void onCreate() {

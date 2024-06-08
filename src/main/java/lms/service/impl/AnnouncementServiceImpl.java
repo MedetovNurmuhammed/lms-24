@@ -147,7 +147,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             throw new IllegalArgumentException("Дата окончания должна быть после даты публикации!");
 
         announcement.setAnnouncementContent(announcementRequest.announcementContent());
-        List<Group> groups = groupRepository.findAllById(announcementRequest.targetGroupIds());
+        List<Group> groups = groupRepository.allGroupById(announcementRequest.targetGroupIds());
         announcement.setGroups(groups);
         announcement.setExpirationDate(announcementRequest.expirationDate());
         announcement.setPublishedDate(announcementRequest.publishedDate());
