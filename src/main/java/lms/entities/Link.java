@@ -37,7 +37,7 @@ public class Link {
     private Lesson lesson;
 
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
 
     //********************************* Video ***************************************

@@ -22,9 +22,9 @@ public class Exam {
     private String title;
     private LocalDate examDate;
     private LocalDate updatedAt;
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     private Course course;
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ExamResult> examResults = new ArrayList<>();
 
     @PreUpdate

@@ -28,9 +28,9 @@ public class Video {
     @OneToOne(mappedBy = "video", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY )
     private Link link;
     //********************************* Trash ***************************************
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
     @PrePersist
     protected void onCreate() {

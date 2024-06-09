@@ -1,16 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lms.enums.QuestionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,11 +29,11 @@ public class Question {
     private double point;
 
     //*************************************** Option ***************************************
-    @OneToMany(cascade = {CascadeType.PERSIST,MERGE}, mappedBy = "question",orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST,MERGE}, mappedBy = "question",orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Option> options = new ArrayList<>();
 
     //*************************************** Test ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Test test;
 
 }
