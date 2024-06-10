@@ -114,15 +114,19 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public SimpleResponse deleteTask(Long taskId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Task task = getById(taskId);
         if (task.getTrash() == null) {
             Trash trash = new Trash();
             trash.setType(Type.TASK);
+            trash.setName(task.getTitle());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
             task.setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Успешно удалено")
+                    .message("Успешно добавлено в корзину!")
                     .build();
         } else throw new BadRequestException("Задача может быть в корзине!");
     }

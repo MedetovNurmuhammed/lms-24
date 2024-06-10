@@ -49,4 +49,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("select s from Group s where s.id in (:ids)")
     List<Group> allGroupById(@Param("ids") List<Long> ids);
 
+    @Modifying @Transactional
+    @Query("update Group g set g.trash = null where g.trash.id = :id")
+    void clearGroupTrash(Long id);
 }

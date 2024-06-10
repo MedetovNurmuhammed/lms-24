@@ -48,7 +48,7 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
     @Query("""
             select new lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) 
             from Trash t
-            where t.cleaner.id = :id
+            where t.cleanerId = :id
             """ )
     Page<TrashResponse> findAllTrashByAuthId(Long id, Pageable pageRequest);
 

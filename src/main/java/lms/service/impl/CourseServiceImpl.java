@@ -96,19 +96,16 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public SimpleResponse deleteCourseById(Long courseId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Course course = courseRepository.findCourseById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
         Trash trash = new Trash();
-
         trash.setName(course.getTitle());
         trash.setType(Type.COURSE);
         trash.setDateOfDelete(ZonedDateTime.now());
+        trash.setCleanerId(authUser.getId());
         course.setTrash(trash);
         trashRepository.save(trash);
-        for (Lesson lesson : course.getLessons()) {
-            lessonService.delete(lesson.getId());
-        }
-
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно добавлено в корзину!")

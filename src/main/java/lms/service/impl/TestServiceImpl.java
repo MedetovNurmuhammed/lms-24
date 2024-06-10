@@ -147,18 +147,16 @@ public class TestServiceImpl implements TestService {
     @Override
     public SimpleResponse delete(Long testId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
-                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
+        User authUser = userRepository.getByEmail(email);
         Test test = testRepository.findById(testId).
                 orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
         if (test.getTrash() == null) {
             Trash trash = new Trash();
             trash.setName(test.getTitle());
             trash.setType(Type.TEST);
-//            trash.setTest(test);
             trash.setDateOfDelete(ZonedDateTime.now());
             test.setTrash(trash);
+            trash.setCleanerId(authUser.getId());
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .message("Успешно добавлено в корзину!")

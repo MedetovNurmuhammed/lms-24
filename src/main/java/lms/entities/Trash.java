@@ -29,8 +29,8 @@ public class Trash {
     private Type type;
 
     private ZonedDateTime dateOfDelete;
-    @ManyToOne(cascade = CascadeType.DETACH)
-    private User cleaner;
+
+    private Long cleanerId;
 
 //    @OneToOne(mappedBy = "trash", cascade = CascadeType.DETACH)
 //    private Student student;

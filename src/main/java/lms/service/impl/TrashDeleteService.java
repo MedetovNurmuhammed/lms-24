@@ -23,7 +23,7 @@ public class TrashDeleteService {
     private final NotificationRepository notificationRepository;
 
     @Transactional
-    public void deleteStudent(Trash trash) {
+    public String deleteStudent(Trash trash) {
         Student student = studentRepository.getStudentByTrashId(trash.getId());
         Map<Notification, Boolean> notificationStates = student.getNotificationStates();
         if (notificationStates != null){
@@ -34,9 +34,14 @@ public class TrashDeleteService {
         };
         trashRepository.delete(trash);
         studentRepository.delete(student);
+        return null;
     }
 
-    public void deleteGroup(Trash trash) {
+    public String deleteGroup(Trash trash) {
+        return null;
+    }
 
+    public String deleteInstructor(Trash trash) {
+        return null;
     }
 }

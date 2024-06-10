@@ -29,4 +29,8 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     boolean existsTitle(@Param("id") Long id, @Param("title") String title);
     @Query("select s from Presentation s where s.id =:presentationId")
     Optional<Presentation> findPresentationById(Long presentationId);
+
+    @Modifying @Transactional
+    @Query("update Presentation p set p.trash = null where p.trash.id = :id")
+    void clearPresentationTrash(Long id);
 }

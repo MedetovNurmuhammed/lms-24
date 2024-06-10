@@ -5,12 +5,12 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
 import lms.entities.Trash;
 import lms.entities.User;
+import lms.enums.Messages;
 import lms.enums.Role;
-import lms.repository.StudentRepository;
-import lms.repository.TrashRepository;
-import lms.repository.UserRepository;
+import lms.repository.*;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TrashServiceImpl implements TrashService {
-
+    private final LessonRepository lessonRepository;
+    private final TaskRepository taskRepository;
+    private final TestRepository testRepository;
+    private final VideoRepository videoRepository;
+    private final PresentationRepository presentationRepository;
+    private final LinkRepository linkRepository;
+    private final CourseRepository courseRepository;
+    private final GroupRepository groupRepository;
+    private final InstructorRepository instructorRepository;
     private final TrashRepository trashRepository;
     private final UserRepository userRepository;
     private final TrashDeleteService trashDeleteService;
@@ -47,13 +56,13 @@ public class TrashServiceImpl implements TrashService {
                 .build();
     }
 
-
     @Override
     public SimpleResponse restoreData(Long trashId) {
-        Trash trash = trashRepository.findByIdOrThrow(trashId);
-        deleteTrash(trash, true);
-        trashRepository.deleteTrash(trashId);
-      return SimpleResponse.builder().httpStatus(HttpStatus.OK).message("Данные успешно восстановлены").build();
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message(deleteTrash(trashRepository.findByIdOrThrow(trashId),
+                        true))
+                .build();
     }
 
     @Override
@@ -66,20 +75,127 @@ public class TrashServiceImpl implements TrashService {
                 .build();
     }
 
-    private void deleteTrash(Trash trash, boolean isRestored) {
-        switch (trash.getType()) {
-            case COURSE -> trashDeleteService.deleteGroup(trash);
+
+    private String deleteTrash(Trash trash, boolean isRestored) {
+        return switch (trash.getType()) {
             case STUDENT -> {
                 if (isRestored) {
-                    studentRepository.getStudentByTrashId(trash.getId())
+                    studentRepository.clearStudentTrash(trash.getId());
                     trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
                 }
-                            trashDeleteService.deleteStudent(trash);
-                }
+                yield deleteStudent(trash);
             }
-        }
+            case INSTRUCTOR -> {
+                if (isRestored) {
+                    instructorRepository.clearInstructorTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteInstructor(trash);
+
+            }
+            case GROUP ->{
+                if (isRestored) {
+                    groupRepository.clearGroupTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteGroup(trash);
+            }
+            case COURSE -> {
+                if (isRestored) {
+                    courseRepository.clearCourseTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteCourse(trash);
+            }
+            case LINK -> {
+                if (isRestored) {
+                    linkRepository.clearLinkTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteLink(trash);
+            }
+            case PRESENTATION -> {
+                if (isRestored) {
+                    presentationRepository.clearPresentationTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteLink(trash);
+            }
+            case VIDEO -> {
+                if (isRestored) {
+                    videoRepository.clearVideoTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteVideo(trash);
+            }
+            case TEST -> {
+                if (isRestored) {
+                    testRepository.clearTestTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteTest(trash);
+            }
+            case TASK -> {
+                if (isRestored) {
+                    taskRepository.clearTaskTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteTask(trash);
+            }
+            case LESSON -> {
+                if (isRestored) {
+                    lessonRepository.clearLessonTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE_TRASH.getMessage();
+                }
+                yield deleteLesson(trash);
+            }
+        };
     }
 
-}
+    private String deleteLesson(Trash trash) {
+        return null;
+    }
 
+    private String deleteTask(Trash trash) {
+        return null;
+    }
+
+    private String deleteTest(Trash trash) {
+        return null;
+    }
+
+    private String deleteVideo(Trash trash) {
+        return null;
+    }
+
+    private String deleteLink(Trash trash) {
+        return null;
+    }
+
+    private String deleteCourse(Trash trash) {
+        return null;
+    }
+
+    private String deleteStudent(Trash trash) {
+        return null;
+    }
+
+    private String deleteInstructor(Trash trash) {
+        return null;
+    }
+
+    private String deleteGroup(Trash trash) {
+        return null;
+    }
+}
 

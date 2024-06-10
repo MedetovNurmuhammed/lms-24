@@ -96,6 +96,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Link link = linkRepository.findLinkById(linkId).
                 orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         if (link.getTrash() == null) {
@@ -103,7 +104,7 @@ public class LinkServiceImpl implements LinkService {
             trash.setName(link.getTitle());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.LINK);
-//            trash.setLink(link);
+            trash.setCleanerId(authUser.getId());
             link.setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()

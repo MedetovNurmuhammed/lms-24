@@ -27,4 +27,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query(value = "DELETE FROM lessons_presentations WHERE presentations_id = :id", nativeQuery = true)
     void deleteFromAdditionalTable(@Param("id") Long id);
 
+    @Modifying @Transactional
+    @Query("update Lesson l set l.trash = null where l.trash.id = :id")
+    void clearLessonTrash(Long id);
 }

@@ -80,4 +80,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("select s from Student s where s.trash.id = :trashID")
     Student getStudentByTrashId(Long trashID);
+
+    @Modifying @Transactional
+    @Query("update Student s set s.trash = null where s.trash.id = :id ")
+    void clearStudentTrash(Long id);
 }

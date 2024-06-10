@@ -8,6 +8,7 @@ import lms.dto.response.PresentationResponse;
 import lms.entities.Lesson;
 import lms.entities.Presentation;
 import lms.entities.Trash;
+import lms.entities.User;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
@@ -17,6 +18,7 @@ import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.ZonedDateTime;
@@ -27,6 +29,7 @@ import java.util.List;
 @Validated
 @Slf4j
 public class PresentationServiceImpl implements PresentationService {
+    private final UserRepository userRepository;
     private final LessonRepository lessonRepository;
     private final PresentationRepository presentationRepository;
     private final TrashRepository trashRepository;
@@ -103,20 +106,22 @@ public class PresentationServiceImpl implements PresentationService {
     @Override
     @Transactional
     public SimpleResponse deletePresentationById(Long presentationId) {
-        Presentation presentation = presentationRepository.findPresentationById(presentationId).orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Presentation presentation = presentationRepository.findPresentationById(presentationId)
+                .orElseThrow(() -> new NotFoundException("Презентация с id: " + presentationId + "не найден!"));
         if (presentation.getTrash() == null) {
             presentationRepository.deletePresentation(presentationId);
             Trash trash = new Trash();
             trash.setName(presentation.getTitle());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.PRESENTATION);
-//            trash.setPresentation(presentation);
+            trash.setCleanerId(authUser.getId());
             presentation.setTrash(trash);
             trashRepository.save(trash);
             presentationRepository.save(presentation);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Презентация успешно удален!")
+                    .message("Презентация, Успешно добавлено в корзину!")
                     .build();
         }else throw new BadRequestException("Презентация может быть в корзине!");
     }

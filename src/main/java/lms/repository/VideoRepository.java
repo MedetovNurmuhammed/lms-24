@@ -35,4 +35,8 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     @Transactional
     @Query(value = "DELETE FROM lessons_videos WHERE videos_id = :videoId", nativeQuery = true)
     void deleteFromAdditionalTable(@Param("videoId") Long videoId);
+
+    @Modifying @Transactional
+    @Query("update Video v set v.trash = null where v.trash.id = :id")
+    void clearVideoTrash(Long id);
 }

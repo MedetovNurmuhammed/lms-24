@@ -1,5 +1,6 @@
 package lms.repository;
 
+import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorNamesResponse;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.InstructorResponse;
@@ -7,6 +8,7 @@ import lms.entities.Instructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
@@ -39,6 +41,10 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select s from Instructor s where s.id =:instructorId")
     Optional<Instructor> findInstructorById(Long instructorId);
 
-    @Query("select i from Instructor i where i.user.id = :id")
-    Instructor getInstructorByUserID(Long id);
+    @Query("select i from Instructor i where i.trash.id = :id")
+    Instructor getInstructorByTrashID(Long id);
+    @Modifying
+    @Transactional
+    @Query("update Instructor i set i.trash = null where i.trash.id = :id")
+    void clearInstructorTrash(Long id);
 }

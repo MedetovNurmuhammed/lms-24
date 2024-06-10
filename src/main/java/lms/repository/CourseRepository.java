@@ -92,5 +92,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     void deleteCourseAndGroup(Long courseId);
 
 
+    @Modifying @Transactional
+    @Query("update Course c set c.trash = null where c.trash.id = :id")
+    void clearCourseTrash(Long id);
 }
 

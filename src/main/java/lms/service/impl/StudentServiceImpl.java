@@ -155,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
         trash.setType(Type.STUDENT);
-        trash.setCleaner(authUser);
+        trash.setCleanerId(authUser.getId());
         trash.setDateOfDelete(ZonedDateTime.now());
         student.setTrash(trash);
         trashRepository.save(trash);

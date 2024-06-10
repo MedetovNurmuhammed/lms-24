@@ -119,6 +119,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse delete(Long videoId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         if (video.getTrash() == null) {
@@ -126,10 +127,8 @@ public class VideoServiceImpl implements VideoService {
             trash.setName(video.getDescription());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.VIDEO);
-//            trash.setVideo(video);
+            trash.setCleanerId(authUser.getId());
             video.setTrash(trash);
-//            trash.setLink(video.getLink());
-            video.getLink().setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
