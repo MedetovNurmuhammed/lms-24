@@ -41,13 +41,13 @@ public class Link {
     private Task task;
 
     //********************************* Trash ***************************************
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch =  FetchType.LAZY)
     private Trash trash;
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Video video;
 
-    @OneToOne(mappedBy = "link",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "link",cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private AnswerTask answerTask;
 
 }

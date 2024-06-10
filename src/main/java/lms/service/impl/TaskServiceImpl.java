@@ -190,9 +190,9 @@ public class TaskServiceImpl implements TaskService {
         trash.setName(task.getTitle());
         trash.setType(Type.TASK);
         trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setTask(task);
-        trash.setInstructor(instructor);
-        instructor.getTrashes().add(trash);
+//        trash.setTask(task);
+//        trash.setInstructor(instructor);
+//        instructor.getTrashes().add(trash);
         task.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()

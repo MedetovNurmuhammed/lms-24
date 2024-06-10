@@ -126,9 +126,9 @@ public class VideoServiceImpl implements VideoService {
             trash.setName(video.getDescription());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.VIDEO);
-            trash.setVideo(video);
+//            trash.setVideo(video);
             video.setTrash(trash);
-            trash.setLink(video.getLink());
+//            trash.setLink(video.getLink());
             video.getLink().setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()

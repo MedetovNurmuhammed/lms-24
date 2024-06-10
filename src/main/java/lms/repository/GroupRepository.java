@@ -30,6 +30,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select g.id from Group g join g.courses c join c.instructors i where i.id = :id")
     List<Long> findAllByInstructorId(Long id);
+
     @Query("select s from Group s where s.id =:groupId")
     Optional<Group> findGroupById(Long groupId);
 
@@ -41,6 +42,11 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query(value = "delete from announcements_groups where groups_id =:groupId",nativeQuery = true)
     void deleteFromAdditionalTable(@Param("groupId") Long groupId);
 
-@Query("select count (c) from Course  c")
+
+    @Query("select count (c) from Course  c")
     int getAllGroupsCount();
+
+    @Query("select s from Group s where s.id in (:ids)")
+    List<Group> allGroupById(@Param("ids") List<Long> ids);
+
 }

@@ -28,35 +28,36 @@ public class Trash {
     private Type type;
 
     private ZonedDateTime dateOfDelete;
+//    @ManyToOne
+//    private User restorer;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash", cascade = {CascadeType.REMOVE}, optional = false)
     private Student student;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Group group;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Course course;
 
-    @ManyToOne()
-    @JoinColumn(name = "instructor_id")
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Instructor instructor;
 
-    @OneToOne(mappedBy = "trash")
-    private Link link;
-
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Video video;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+    private Link link;
+
+    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
     private Task task;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
     private Presentation presentation;
 
-    @OneToOne(mappedBy = "trash")
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
     private Test test;
 
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
     private Lesson lesson;
 }

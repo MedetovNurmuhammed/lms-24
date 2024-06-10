@@ -124,7 +124,7 @@ public class InstructorServiceImpl implements InstructorService {
         trash.setType(Type.INSTRUCTOR);
         trash.setName(instructor.getUser().getFullName());
         trash.setDateOfDelete(ZonedDateTime.now());
-        instructor.getTrashes().add(trash);
+        instructor.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)

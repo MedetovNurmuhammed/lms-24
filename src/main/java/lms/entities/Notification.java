@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,11 +34,11 @@ public class Notification {
     private LocalDate createdAt;
 
     //*************************************** Task ******************************************
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Task task;
 
     //*************************************** ResultTask *************************************
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.REMOVE})
+    @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private AnswerTask answerTask;
 
     @PrePersist

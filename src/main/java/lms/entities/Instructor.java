@@ -12,7 +12,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
-import lms.enums.Type;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +42,7 @@ public class Instructor {
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Course *************************************
@@ -50,12 +50,12 @@ public class Instructor {
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @ElementCollection
+    @ElementCollection(fetch =  FetchType.LAZY)
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
-    private List<Trash> trashes;
+    @OneToOne(fetch =  FetchType.LAZY)
+    private Trash trash;
 
     @PrePersist
     protected void onCreate() {

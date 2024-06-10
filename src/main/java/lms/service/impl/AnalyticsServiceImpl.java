@@ -3,7 +3,6 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.response.CourseAnalyticsResponse;
 import lms.dto.response.StudentsAnalyticsResponse;
-import lms.entities.Student;
 import lms.repository.CourseRepository;
 import lms.repository.GroupRepository;
 import lms.repository.InstructorRepository;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
