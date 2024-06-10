@@ -1,7 +1,8 @@
 package lms.repository;
 
-import lms.dto.response.GroupWithoutPagination;
+import lms.dto.response.DataResponses;
 import lms.dto.response.GroupResponse;
+import lms.dto.response.GroupWithoutPagination;
 import lms.entities.Group;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,5 +41,13 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select s from Group s where s.id in (:ids)")
     List<Group> allGroupById(@Param("ids") List<Long> ids);
+
+    @Query("SELECT new lms.dto.response.DataResponses(" +
+            "(SELECT COUNT(g) FROM Group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), " +
+            "(SELECT COUNT(s) FROM Student s JOIN s.group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), " +
+            "(SELECT COUNT(i) FROM Instructor i WHERE EXTRACT(YEAR FROM i.createdAt) = :year), " +
+            "(SELECT COUNT(c) FROM Course c WHERE EXTRACT(YEAR FROM c.dateOfEnd) = :year), " +
+            "(SELECT COUNT(s) FROM Student s JOIN s.group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), :year)")
+    List<DataResponses> getAnalyticsForYear(@Param("year") Integer year);
 
 }
