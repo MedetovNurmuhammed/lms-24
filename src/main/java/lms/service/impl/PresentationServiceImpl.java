@@ -110,7 +110,7 @@ public class PresentationServiceImpl implements PresentationService {
             trash.setName(presentation.getTitle());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.PRESENTATION);
-            trash.setPresentation(presentation);
+//            trash.setPresentation(presentation);
             presentation.setTrash(trash);
             trashRepository.save(trash);
             presentationRepository.save(presentation);

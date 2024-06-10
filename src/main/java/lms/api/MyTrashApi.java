@@ -27,7 +27,7 @@ public class MyTrashApi {
 
     @Operation(summary = "Возвращать из корзины.", description = "Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping("/return/{trashID}")
+    @DeleteMapping("/restore/{trashID}")
     public SimpleResponse restoreData(@PathVariable Long trashID) {
         return trashService.restoreData(trashID);
     }

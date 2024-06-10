@@ -120,7 +120,7 @@ public class InstructorServiceImpl implements InstructorService {
         Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
         Trash trash = new Trash();
-        trash.setInstructor(instructor);
+//        trash.setInstructor(instructor);
         trash.setType(Type.INSTRUCTOR);
         trash.setName(instructor.getUser().getFullName());
         trash.setDateOfDelete(ZonedDateTime.now());

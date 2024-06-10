@@ -103,7 +103,6 @@ public class CourseServiceImpl implements CourseService {
         trash.setName(course.getTitle());
         trash.setType(Type.COURSE);
         trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setCourse(course);
         course.setTrash(trash);
         trashRepository.save(trash);
         for (Lesson lesson : course.getLessons()) {

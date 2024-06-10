@@ -103,7 +103,7 @@ public class LinkServiceImpl implements LinkService {
             trash.setName(link.getTitle());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.LINK);
-            trash.setLink(link);
+//            trash.setLink(link);
             link.setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()

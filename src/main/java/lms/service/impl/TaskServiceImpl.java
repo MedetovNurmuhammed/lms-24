@@ -117,7 +117,6 @@ public class TaskServiceImpl implements TaskService {
         Task task = getById(taskId);
         if (task.getTrash() == null) {
             Trash trash = new Trash();
-            trash.setTask(task);
             trash.setType(Type.TASK);
             task.setTrash(trash);
             trashRepository.save(trash);

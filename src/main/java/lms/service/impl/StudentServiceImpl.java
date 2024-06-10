@@ -154,14 +154,10 @@ public class StudentServiceImpl implements StudentService {
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
         Trash trash = new Trash();
         trash.setName(student.getUser().getFullName());
-        trash.setStudent(student);
         trash.setType(Type.STUDENT);
+        trash.setCleaner(authUser);
         trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setStudent(student);
         student.setTrash(trash);
-        if (authUser.getRole().equals(Role.INSTRUCTOR)) {
-            trash.setInstructor(instructorRepository.getInstructorByUserID(authUser.getId()));
-        }
         trashRepository.save(trash);
         log.info("Успешно добавлено в корзину!");
         return SimpleResponse.builder()

@@ -95,7 +95,7 @@ public class GroupServiceImpl implements GroupService {
         trash.setName(group.getTitle());
         trash.setType(Type.GROUP);
         trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setGroup(group);
+//        trash.setGroup(group);
         group.setTrash(trash);
 
         for (Student student : group.getStudents()) {

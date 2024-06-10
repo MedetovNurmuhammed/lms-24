@@ -1,6 +1,7 @@
 package lms.entities;
 
 import jakarta.persistence.*;
+import lms.enums.Role;
 import lms.enums.Type;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,36 +29,36 @@ public class Trash {
     private Type type;
 
     private ZonedDateTime dateOfDelete;
-//    @ManyToOne
-//    private User restorer;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private User cleaner;
 
-    @OneToOne(mappedBy = "trash", cascade = {CascadeType.REMOVE}, optional = false)
-    private Student student;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Group group;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Course course;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Instructor instructor;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Video video;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Link link;
-
-    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
-    private Task task;
-
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
-    private Presentation presentation;
-
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
-    private Test test;
-
-    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false, fetch =  FetchType.LAZY)
-    private Lesson lesson;
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.DETACH)
+//    private Student student;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Group group;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Course course;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Instructor instructor;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Video video;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Link link;
+//
+//    @OneToOne(mappedBy = "trash", cascade = CascadeType.REMOVE, optional = false)
+//    private Task task;
+//
+//    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+//    private Presentation presentation;
+//
+//    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+//    private Test test;
+//
+//    @OneToOne(mappedBy = "trash",cascade = CascadeType.REMOVE, optional = false)
+//    private Lesson lesson;
 }

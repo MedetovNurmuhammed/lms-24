@@ -40,7 +40,7 @@ public class Student {
     }
 
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Group *********************************************
@@ -48,11 +48,11 @@ public class Student {
     private Group group;
 
     //********************************* ResultTest ****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
@@ -63,11 +63,11 @@ public class Student {
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     private Trash trash;
 
     @PrePersist

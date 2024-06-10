@@ -80,11 +80,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query("DELETE FROM Notification n WHERE n.answerTask.id = :answerTaskId")
     void deleteNotificationsByAnswerTaskId(@Param("answerTaskId") Long answerTaskId);
 
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM notifications WHERE id = :notificationId", nativeQuery = true)
-    void deleteNotificationById(@Param("notificationId") Long notificationId);
-
     @Query(value = "select notification_states_key from student_notification_states  where notification_states_key = :notificationId and student_id = :studentId", nativeQuery = true)
     Optional<Long> findNotificationInExtraTable(@Param("studentId") Long studentId, @Param("notificationId") Long notificationId);
 
@@ -94,9 +89,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query("select s from Notification s where s.id =:notificationId")
     Optional<Notification> findNotificationById(Long notificationId);
 
-
-    @Transactional
     @Modifying
-    @Query(value = "delete from student_notification_states n where n.student_id = :id", nativeQuery = true)
-    void clearNotificationState(Long id);
+    @Transactional
+    @Query(value = "delete from student_notification_states where notification_id = :notificationId", nativeQuery = true)
+    void deleteByNotificationId(Long notificationId);
+
 }
