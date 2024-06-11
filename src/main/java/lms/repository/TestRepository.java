@@ -1,6 +1,7 @@
 package lms.repository;
 
-import jakarta.transaction.Transactional;
+import
+        jakarta.transaction.Transactional;
 import lms.dto.response.TestResponseForGetAll;
 import lms.entities.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     @Query("update Test t set t.trash = null where t.trash.id = :id")
     void clearTestTrash(Long id);
 
+    @Query("select t from Test t where t.trash.id = :id")
+    Optional<Test> getTestByTrashId(Long id);
 }

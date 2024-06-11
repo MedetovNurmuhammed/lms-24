@@ -77,7 +77,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     studentRepository.clearStudentTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteStudent(trash);
             }
@@ -85,7 +85,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     instructorRepository.clearInstructorTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteInstructor(trash);
 
@@ -94,7 +94,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     groupRepository.clearGroupTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteGroup(trash);
             }
@@ -102,7 +102,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     courseRepository.clearCourseTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteCourse(trash);
             }
@@ -110,7 +110,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     linkRepository.clearLinkTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteLink(trash);
             }
@@ -118,7 +118,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     presentationRepository.clearPresentationTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteLink(trash);
             }
@@ -126,7 +126,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     videoRepository.clearVideoTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteVideo(trash);
             }
@@ -134,7 +134,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     testRepository.clearTestTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteTest(trash);
             }
@@ -142,7 +142,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     taskRepository.clearTaskTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteTask(trash);
             }
@@ -150,7 +150,7 @@ public class TrashServiceImpl implements TrashService {
                 if (isRestored) {
                     lessonRepository.clearLessonTrash(trash.getId());
                     trashRepository.delete(trash);
-                    yield Messages.RESTORE_TRASH.getMessage();
+                    yield Messages.RESTORE.getMessage();
                 }
                 yield deleteLesson(trash);
             }
@@ -166,14 +166,15 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteTest(Trash trash) {
-        testRepository.getTestByTrashId(trash.getId())
+        Test test = testRepository.getTestByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
-        return null;
+        testRepository.delete(test);
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteVideo(Trash trash) {
         Video video = videoRepository.getVideoByTrashId(trash.getId());
-        if (video == null) throw new NotFoundException("Video with trash id: %d not found");
+        if (video == null) throw new NotFoundException(Messages.NOT_FOUND.getMessage());
         if (video.getLesson() != null && !video.getLesson().getVideos().isEmpty()) {
             video.getLesson().getVideos()
                     .removeIf(v -> Objects.equals(v.getId(), video.getId()));
@@ -184,7 +185,7 @@ public class TrashServiceImpl implements TrashService {
 
     private String deleteLink(Trash trash) {
         Link link = linkRepository.getLinkByTrashId(trash.getId())
-                .orElseThrow(() -> new NotFoundException("Link with trash id: %d not found".formatted(trash.getId())));
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         linkRepository.delete(link);
         return Messages.DELETE.getMessage();
     }

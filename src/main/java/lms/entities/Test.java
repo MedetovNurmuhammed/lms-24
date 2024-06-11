@@ -51,7 +51,7 @@ public class Test {
     @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Lesson lesson;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Trash trash;
 
     @PrePersist
