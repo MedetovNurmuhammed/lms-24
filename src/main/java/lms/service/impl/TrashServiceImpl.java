@@ -188,7 +188,10 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteLink(Trash trash) {
-        return null;
+        Link link = linkRepository.getLinkByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException("Link with trash id: %d not found"));
+        linkRepository.delete(link);
+        return Messages.DELETE_TRASH.getMessage();
     }
 
     private String deleteCourse(Trash trash) {
