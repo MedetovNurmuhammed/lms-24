@@ -56,7 +56,7 @@ public class Student {
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @MapKeyJoinColumn(name = "notification_id")
     private Map< Notification, Boolean> notificationStates = new HashMap<>();

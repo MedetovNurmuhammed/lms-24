@@ -3,10 +3,10 @@ package lms.service.impl;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
-import lms.entities.Trash;
-import lms.entities.User;
+import lms.entities.*;
 import lms.enums.Messages;
 import lms.enums.Role;
+import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class TrashServiceImpl implements TrashService {
+    private final NotificationRepository notificationRepository;
     private final LessonRepository lessonRepository;
     private final TaskRepository taskRepository;
     private final TestRepository testRepository;
@@ -32,7 +36,6 @@ public class TrashServiceImpl implements TrashService {
     private final InstructorRepository instructorRepository;
     private final TrashRepository trashRepository;
     private final UserRepository userRepository;
-    private final TrashDeleteService trashDeleteService;
     private final StudentRepository studentRepository;
 
     @Override
@@ -66,12 +69,11 @@ public class TrashServiceImpl implements TrashService {
     }
 
     @Override
-    public SimpleResponse delete(Long trashID) {
-        Trash trash = trashRepository.findByIdOrThrow(trashID);
-        deleteTrash(trash, false);
+    public SimpleResponse deleteData(Long trashID) {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Trash with id: %d deleted".formatted(trash.getId()))
+                .message(deleteTrash(trashRepository.findByIdOrThrow(trashID),
+                        false))
                 .build();
     }
 
@@ -175,7 +177,14 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteVideo(Trash trash) {
-        return null;
+        Video video = videoRepository.getVideoByTrashId(trash.getId());
+        if (video == null) throw new NotFoundException("Video with trash id: %d not found");
+        if (video.getLesson() != null && !video.getLesson().getVideos().isEmpty()){
+            video.getLesson().getVideos()
+                    .removeIf(v -> Objects.equals(v.getId(), video.getId()));
+        }
+        videoRepository.delete(video);
+        return Messages.DELETE_TRASH.getMessage();
     }
 
     private String deleteLink(Trash trash) {
@@ -187,7 +196,18 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteStudent(Trash trash) {
-        return null;
+        Student student = studentRepository.getStudentByTrashId(trash.getId());
+        Set<Notification> notifications = student.getNotificationStates().keySet();
+        for (Notification notification : notifications) {
+            System.out.printf("Notification id: $%d%n", notification.getId());
+        }
+        notifications
+                .forEach(n -> {
+                    notificationRepository.deleteByNotificationId(n.getId());
+                    notificationRepository.deleteById(n.getId());
+                });
+        studentRepository.delete(student);
+        return Messages.DELETE_TRASH.getMessage();
     }
 
     private String deleteInstructor(Trash trash) {

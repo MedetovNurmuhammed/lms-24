@@ -41,7 +41,7 @@ public class Video {
     private Link link;
 
     //********************************* Trash ***************************************
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Trash trash;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

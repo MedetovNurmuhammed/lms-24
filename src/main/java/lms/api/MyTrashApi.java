@@ -35,6 +35,6 @@ public class MyTrashApi {
     @Operation(summary = "Удалить из корзины.")
     @DeleteMapping("{trashID}")
     public SimpleResponse deleteTrash(@PathVariable Long trashID){
-        return trashService.delete(trashID);
+        return trashService.deleteData(trashID);
     }
 }

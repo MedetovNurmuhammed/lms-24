@@ -59,18 +59,9 @@ public class PresentationApi {
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
-    @Operation(description = "Возвращает все презентации урока по id")
+    @Operation(description = "Возвращает все презентации урока по id. Авторизация:  инструктор")
     @GetMapping("All/{lessonId}")
     public List<PresentationResponse> findAll(@PathVariable Long lessonId) {
         return presentationService.findAllPresentationByLessonId(lessonId);
     }
-
-    @Operation(summary = "Удалить презентацию",
-            description = "Метод для удаления презентацию по его идентификатору." +
-                    " Авторизация:  инструктор!")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping("/delete/{presentationId}")
-    public SimpleResponse delete(@PathVariable Long presentationId) {
-        return presentationService.deletePresentationById(presentationId);
-            }
-        }
+}

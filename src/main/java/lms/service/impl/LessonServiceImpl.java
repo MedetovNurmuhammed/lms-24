@@ -102,6 +102,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse delete(Long lessonId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Lesson lesson = lessonRepository.findLessonById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         if (lesson.getTrash() == null) {
@@ -110,10 +111,11 @@ public class LessonServiceImpl implements LessonService {
             trash.setName(lesson.getTitle());
             trash.setType(Type.LESSON);
             trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Урок и связанные задачи успешно добавлено в корзину!")
+                    .message("Урок успешно добавлено в корзину!")
                     .build();
         }else throw new BadRequestException("Урок может быть в корзине!");
     }

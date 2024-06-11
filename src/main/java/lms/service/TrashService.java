@@ -11,5 +11,5 @@ public interface TrashService {
 
     SimpleResponse restoreData(Long trashId);
 
-    SimpleResponse delete(Long trashID);
+    SimpleResponse deleteData(Long trashID);
 }

@@ -16,33 +16,6 @@ import java.util.Optional;
 
 public interface TrashRepository extends JpaRepository<Trash, Long> {
 
-    List<Trash> findByDateOfDeleteBefore(ZonedDateTime now);
-
-    @Query("select t from Trash t where t.id = ?1")
-    Trash findTrashById(Long trashId);
-
-//    @Query("SELECT NEW lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) " +
-//            "FROM Trash t  where (t.type = lms.enums.Type.COURSE or t.type = lms.enums.Type.STUDENT or t.type = lms.enums.Type.INSTRUCTOR or t.type = lms.enums.Type.GROUP)" )
-//    Page<TrashResponse> findAllTrashes(Pageable pageable);
-
-
-//    @Query("SELECT NEW lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) " +
-//            "FROM Trash t " +
-//            "WHERE t.type IN (lms.enums.Type.VIDEO, lms.enums.Type.PRESENTATION, lms.enums.Type.LINK, " +
-//            "lms.enums.Type.TEST, lms.enums.Type.TASK, lms.enums.Type.LESSON) " +
-//            "AND t.instructor.id = :currentUserId")
-//    Page<TrashResponse> findAllInstructorTrashes(Pageable pageable, @Param("currentUserId") Long currentUserId);
-
-//    @Modifying
-//    @Transactional
-//    @Query("delete from Trash t where t.task.id =:taskId")
-//    void deleteTrashLessons(Long taskId);
-
-//    @Modifying
-//    @Transactional
-//    @Query("update Trash t set t.student.id = null where t.student.id = :studentId")
-//    void deleteTrashById(Long studentId);
-
     @Query("select new lms.dto.response.TrashResponse(t.id, t.type, t.name, t.dateOfDelete) from Trash t")
     Page<TrashResponse> findAllTrash(Pageable pageable);
     @Query("""
@@ -58,8 +31,4 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
         return findTrash(id)
                 .orElseThrow(() -> new NotFoundException("Trash with id %d not found".formatted(id)));
     }
-
-    @Modifying @Transactional
-    @Query("delete from Trash t where t.id = :trashId")
-    void deleteTrash(Long trashId);
 }

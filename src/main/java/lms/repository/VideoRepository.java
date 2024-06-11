@@ -2,7 +2,9 @@ package lms.repository;
 
 import jakarta.transaction.Transactional;
 import lms.dto.response.VideoResponse;
+import lms.entities.Trash;
 import lms.entities.Video;
+import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,19 +26,15 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     @Query("select count(v) > 0 from Lesson s join s.videos v where v.link.title = :title and s.id = :id and v.trash.id is null")
     boolean existsTitle(@Param("id") Long id, @Param("title") String title);
 
-//    default Page<VideoResponse> findAllVideosByLessonId(Long lessonId, Pageable pageable) {
-//        List<VideoResponse> videos = findAllVideo(lessonId);
-//        int start = (int) pageable.getOffset();
-//        int end = Math.min((start + pageable.getPageSize()), videos.size());
-//        return new PageImpl<>(videos.subList(start, end), pageable, videos.size());
-//    }
-
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM lessons_videos WHERE videos_id = :videoId", nativeQuery = true)
-    void deleteFromAdditionalTable(@Param("videoId") Long videoId);
-
     @Modifying @Transactional
     @Query("update Video v set v.trash = null where v.trash.id = :id")
     void clearVideoTrash(Long id);
+    @Query("select v from Video v where v.id = ?1")
+    Optional<Video> findTrash(Long id);
+    default Video findByIdOrThrow(Long id){
+        return findTrash(id)
+                .orElseThrow(() -> new NotFoundException("Video with id %d not found".formatted(id)));
+    }
+    @Query("select v from Video v where v.trash.id = :id")
+    Video getVideoByTrashId(Long id);
 }
