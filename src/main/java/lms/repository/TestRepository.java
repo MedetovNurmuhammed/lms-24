@@ -23,4 +23,5 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     @Modifying @Transactional
     @Query("update Test t set t.trash = null where t.trash.id = :id")
     void clearTestTrash(Long id);
+
 }

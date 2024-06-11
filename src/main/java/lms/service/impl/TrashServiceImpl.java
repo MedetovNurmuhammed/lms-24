@@ -42,7 +42,8 @@ public class TrashServiceImpl implements TrashService {
     public AllTrashResponse findAll(int page, int size) {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Page<TrashResponse> trashResponses;
-        if (authUser.getRole().equals(Role.ADMIN)) trashResponses = trashRepository.findAllTrash(PageRequest.of(page - 1, size));
+        if (authUser.getRole().equals(Role.ADMIN))
+            trashResponses = trashRepository.findAllTrash(PageRequest.of(page - 1, size));
         else trashResponses = trashRepository.findAllTrashByAuthId(authUser.getId(), PageRequest.of(page - 1, size));
         return AllTrashResponse.builder()
                 .page(trashResponses.getNumber() + 1)
@@ -89,7 +90,7 @@ public class TrashServiceImpl implements TrashService {
                 yield deleteInstructor(trash);
 
             }
-            case GROUP ->{
+            case GROUP -> {
                 if (isRestored) {
                     groupRepository.clearGroupTrash(trash.getId());
                     trashRepository.delete(trash);
@@ -165,25 +166,27 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteTest(Trash trash) {
+        testRepository.getTestByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         return null;
     }
 
     private String deleteVideo(Trash trash) {
         Video video = videoRepository.getVideoByTrashId(trash.getId());
         if (video == null) throw new NotFoundException("Video with trash id: %d not found");
-        if (video.getLesson() != null && !video.getLesson().getVideos().isEmpty()){
+        if (video.getLesson() != null && !video.getLesson().getVideos().isEmpty()) {
             video.getLesson().getVideos()
                     .removeIf(v -> Objects.equals(v.getId(), video.getId()));
         }
         videoRepository.delete(video);
-        return Messages.DELETE_TRASH.getMessage();
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteLink(Trash trash) {
         Link link = linkRepository.getLinkByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException("Link with trash id: %d not found".formatted(trash.getId())));
         linkRepository.delete(link);
-        return Messages.DELETE_TRASH.getMessage();
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteCourse(Trash trash) {
@@ -202,7 +205,7 @@ public class TrashServiceImpl implements TrashService {
                     notificationRepository.deleteById(n.getId());
                 });
         studentRepository.delete(student);
-        return Messages.DELETE_TRASH.getMessage();
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteInstructor(Trash trash) {
@@ -212,5 +215,6 @@ public class TrashServiceImpl implements TrashService {
     private String deleteGroup(Trash trash) {
         return null;
     }
+
 }
 
