@@ -41,21 +41,13 @@ public class TrashServiceImpl implements TrashService {
     @Override
     public AllTrashResponse findAll(int page, int size) {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (authUser.getRole().equals(Role.ADMIN)) {
-            Page<TrashResponse> instructorTrash =
-                    trashRepository.findAllTrash(PageRequest.of(page - 1, size));
-            return AllTrashResponse.builder()
-                    .page(instructorTrash.getNumber() + 1)
-                    .size(instructorTrash.getNumberOfElements())
-                    .trashResponses(instructorTrash.getContent())
-                    .build();
-        }
-        Page<TrashResponse> instructorTrash =
-                trashRepository.findAllTrashByAuthId(authUser.getId(), PageRequest.of(page - 1, size));
+        Page<TrashResponse> trashResponses;
+        if (authUser.getRole().equals(Role.ADMIN)) trashResponses = trashRepository.findAllTrash(PageRequest.of(page - 1, size));
+        else trashResponses = trashRepository.findAllTrashByAuthId(authUser.getId(), PageRequest.of(page - 1, size));
         return AllTrashResponse.builder()
-                .page(instructorTrash.getNumber() + 1)
-                .size(instructorTrash.getNumberOfElements())
-                .trashResponses(instructorTrash.getContent())
+                .page(trashResponses.getNumber() + 1)
+                .size(trashResponses.getNumberOfElements())
+                .trashResponses(trashResponses.getContent())
                 .build();
     }
 
