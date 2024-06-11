@@ -20,4 +20,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Modifying @Transactional
     @Query("update Task t set t.trash = null ")
     void clearTaskTrash(Long id);
+
+    @Query("select t from Task t where t.trash.id = :trashId")
+    Optional<Task> getTaskByTrashId(Long trashId);
 }

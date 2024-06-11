@@ -67,14 +67,14 @@ public class Task {
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //*************************************** Lesson ****************************************
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

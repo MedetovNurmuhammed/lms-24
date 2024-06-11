@@ -120,7 +120,7 @@ public class TrashServiceImpl implements TrashService {
                     trashRepository.delete(trash);
                     yield Messages.RESTORE.getMessage();
                 }
-                yield deleteLink(trash);
+                yield deletePresentation(trash);
             }
             case VIDEO -> {
                 if (isRestored) {
@@ -157,12 +157,30 @@ public class TrashServiceImpl implements TrashService {
         };
     }
 
+    private String deletePresentation(Trash trash) {
+        Presentation presentation =
+                presentationRepository.getByTrashId(trash.getId())
+                        .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        presentationRepository.delete(presentation);
+        return Messages.DELETE.getMessage();
+    }
+
     private String deleteLesson(Trash trash) {
         return null;
     }
 
-    private String deleteTask(Trash trash) {
-        return null;
+    private String deleteTask(Trash trash) { //todo: надо переделать
+        Task task = taskRepository.getTaskByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        Notification notification = notificationRepository.getNotificationByTaskId(task.getId()).orElse(null);
+        if (notification != null){
+            notificationRepository.clearTaskFromNotification(task.getId());
+            notificationRepository.deleteNotStatInsByNotificationId(notification.getId());
+            notificationRepository.deleteByNotificationId(notification.getId());
+            notificationRepository.delete(notification);
+        }
+        taskRepository.delete(task);
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteTest(Trash trash) {

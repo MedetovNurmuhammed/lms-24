@@ -33,7 +33,7 @@ public class Presentation {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Trash trash;
     @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Lesson lesson;

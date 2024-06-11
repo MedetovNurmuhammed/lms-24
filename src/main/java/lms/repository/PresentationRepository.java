@@ -33,4 +33,7 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
     @Modifying @Transactional
     @Query("update Presentation p set p.trash = null where p.trash.id = :id")
     void clearPresentationTrash(Long id);
+
+    @Query("select p from Presentation p where p.trash.id = ?1")
+    Optional<Presentation> getByTrashId(Long trashID);
 }
