@@ -101,10 +101,13 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationResponse mapToNotificationResponse(Notification notification, Boolean isView) {
         return NotificationResponse.builder()
                 .notificationId(notification.getId())
+                .taskId(notification.getTask().getId())
+                .lessonId(notification.getTask().getLesson().getId())
+                .courseId(notification.getTask().getLesson().getCourse().getId())
                 .notificationTitle(notification.getTitle())
                 .notificationDescription(notification.getDescription())
                 .notificationSendDate(notification.getCreatedAt())
-                .notificationTaskId(notification.getTask().getId())
+                .answerTaskId(notification.getTask().getId())
                 .isView(isView)
                 .build();
     }
