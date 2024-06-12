@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -95,5 +94,17 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Modifying @Transactional
     @Query("update Course c set c.trash = null where c.trash.id = :id")
     void clearCourseTrash(Long id);
+
+    @Query("select c from Course c where c.trash.id = :trashId")
+    Optional<Course> getByTrashId(Long trashId);
+
+    @Modifying @Transactional
+    @Query(value = "delete from instructors_courses ic where ic.courses_id = :courseId ", nativeQuery = true)
+    void clearInstructorsByCourseId(Long courseId);
+
+    @Modifying @Transactional
+    @Query(value = "delete from courses_groups cg where cg.courses_id = :courseId ", nativeQuery = true)
+    void clearGroupsByCourseId(Long courseId);
+
 }
 

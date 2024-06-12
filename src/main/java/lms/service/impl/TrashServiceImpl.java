@@ -1,5 +1,6 @@
 package lms.service.impl;
 
+import jakarta.transaction.Transactional;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
@@ -165,15 +166,22 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteLesson(Trash trash) {
-        return null;
+    @Transactional
+    public String deleteLesson(Trash trash) { //todo: надо переделать
+        Lesson lesson = lessonRepository.getLessonByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        Course course = lesson.getCourse();
+        course.getLessons().removeIf(l -> Objects.equals(l.getId(), lesson.getId()));
+        lesson.setCourse(null);
+        lessonRepository.delete(lesson);
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteTask(Trash trash) { //todo: надо переделать
         Task task = taskRepository.getTaskByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         Notification notification = notificationRepository.getNotificationByTaskId(task.getId()).orElse(null);
-        if (notification != null){
+        if (notification != null) {
             notificationRepository.clearTaskFromNotification(task.getId());
             notificationRepository.deleteNotStatInsByNotificationId(notification.getId());
             notificationRepository.deleteByNotificationId(notification.getId());
@@ -208,8 +216,13 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteCourse(Trash trash) {
-        return null;
+    private String deleteCourse(Trash trash) { //todo: надо переделать
+        Course course = courseRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        courseRepository.clearInstructorsByCourseId(course.getId());
+        courseRepository.clearGroupsByCourseId(course.getId());
+        courseRepository.delete(course);
+        return Messages.DELETE.getMessage();
     }
 
     private String deleteStudent(Trash trash) {
@@ -232,7 +245,11 @@ public class TrashServiceImpl implements TrashService {
     }
 
     private String deleteGroup(Trash trash) {
-        return null;
+        Group group = groupRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+
+        groupRepository.delete(group);
+        return Messages.DELETE.getMessage();
     }
 
 }

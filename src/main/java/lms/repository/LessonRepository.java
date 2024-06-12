@@ -30,5 +30,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Modifying @Transactional
     @Query("update Lesson l set l.trash = null where l.trash.id = :id")
     void clearLessonTrash(Long id);
+
+    Optional<Lesson> getLessonByTrashId(Long trashId);
+
 }
 

@@ -52,4 +52,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Modifying @Transactional
     @Query("update Group g set g.trash = null where g.trash.id = :id")
     void clearGroupTrash(Long id);
+
+    @Query("select g from Group g where g.trash.id = :trashId")
+    Optional<Group> getByTrashId(Long trashId);
 }

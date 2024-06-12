@@ -35,22 +35,22 @@ public class Lesson {
     private List<Video> videos = new ArrayList<>();
 
     //*************************************** Presentation ********************************
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Presentation> presentations = new ArrayList<>();
 
     //*************************************** Link *****************************************
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Link> links = new ArrayList<>();
 
     //*************************************** Test *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Test> tests;
 
     //*************************************** Task *****************************************
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lesson", orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Task> tasks = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Trash trash;
 
 
