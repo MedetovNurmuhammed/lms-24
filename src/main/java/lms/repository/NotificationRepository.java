@@ -32,7 +32,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Modifying
     @Transactional
-    @Query(value = "delete from student_notification_states where notification_id = :notificationId", nativeQuery = true)
+    @Query(value = "delete from student_notification_states s where s.notification_states_key = :notificationId", nativeQuery = true)
     void deleteByNotificationId(Long notificationId);
 
     @Modifying
@@ -47,4 +47,11 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Transactional
     @Query(value = "delete from instructor_notification_states where notification_states_key = ?1", nativeQuery = true)
     void deleteNotStatInsByNotificationId(Long id);
+
+    @Modifying @Transactional
+    @Query(value = """
+            delete from student_notification_states sn
+            where student_id = (select id from students where id = ?)
+            """, nativeQuery = true)
+    void deleteNotificationToStudent(Long studentId);
 }

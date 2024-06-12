@@ -99,13 +99,15 @@ public class CourseServiceImpl implements CourseService {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Course course = courseRepository.findCourseById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
-        Trash trash = new Trash();
-        trash.setName(course.getTitle());
-        trash.setType(Type.COURSE);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setCleanerId(authUser.getId());
-        course.setTrash(trash);
-        trashRepository.save(trash);
+        if (course.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(course.getTitle());
+            trash.setType(Type.COURSE);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            course.setTrash(trash);
+            trashRepository.save(trash);
+        }else throw new BadRequestException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно добавлено в корзину!")

@@ -42,7 +42,7 @@ public class Instructor {
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Course *************************************
@@ -54,7 +54,7 @@ public class Instructor {
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

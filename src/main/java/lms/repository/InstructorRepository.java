@@ -49,4 +49,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Transactional
     @Query("update Instructor i set i.trash = null where i.trash.id = :id")
     void clearInstructorTrash(Long id);
+
+    @Query("select i from Instructor i where i.trash.id = :trashId")
+    Optional<Instructor> getByTrashId(Long trashId);
 }

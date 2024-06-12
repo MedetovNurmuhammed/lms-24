@@ -19,11 +19,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class TrashServiceImpl implements TrashService {
     private final NotificationRepository notificationRepository;
     private final LessonRepository lessonRepository;
@@ -70,6 +70,7 @@ public class TrashServiceImpl implements TrashService {
                         false))
                 .build();
     }
+
 
 
     private String deleteTrash(Trash trash, boolean isRestored) {
@@ -166,8 +167,8 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    @Transactional
-    public String deleteLesson(Trash trash) { //todo: надо переделать
+
+    private String deleteLesson(Trash trash) { //todo: надо переделать
         Lesson lesson = lessonRepository.getLessonByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         Course course = lesson.getCourse();
@@ -225,26 +226,26 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteStudent(Trash trash) {
+
+    public String deleteStudent(Trash trash) {
         Student student = studentRepository.getStudentByTrashId(trash.getId());
-        Set<Notification> notifications = student.getNotificationStates().keySet();
-        for (Notification notification : notifications) {
-            System.out.printf("Notification id: $%d%n", notification.getId());
-        }
-        notifications
-                .forEach(n -> {
-                    notificationRepository.deleteByNotificationId(n.getId());
-                    notificationRepository.deleteById(n.getId());
-                });
+        student.getNotificationStates().keySet().forEach(notification -> {
+            student.getNotificationStates().remove(notification);
+            notificationRepository.delete(notification);
+        });
         studentRepository.delete(student);
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteInstructor(Trash trash) {
-        return null;
+
+    public String deleteInstructor(Trash trash) {
+        Instructor instructor = instructorRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        instructorRepository.delete(instructor);
+        return Messages.DELETE.getMessage();
     }
 
-    private String deleteGroup(Trash trash) {
+    public String deleteGroup(Trash trash) {
         Group group = groupRepository.getByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
 

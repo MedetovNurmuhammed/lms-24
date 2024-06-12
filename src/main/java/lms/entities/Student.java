@@ -40,7 +40,7 @@ public class Student {
     }
 
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Group *********************************************
@@ -52,13 +52,12 @@ public class Student {
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
     @ElementCollection(fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @MapKeyJoinColumn(name = "notification_id")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Map< Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
