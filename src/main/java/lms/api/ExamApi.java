@@ -21,6 +21,7 @@ import java.util.List;
 public class ExamApi {
 
     private final ExamService examService;
+    @Secured("INSTRUCTOR")
     @PostMapping("/{courseId}")
     @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
             "                    \" Авторизация: инструктор!")
