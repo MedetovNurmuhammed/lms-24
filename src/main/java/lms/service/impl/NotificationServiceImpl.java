@@ -107,7 +107,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .notificationTitle(notification.getTitle())
                 .notificationDescription(notification.getDescription())
                 .notificationSendDate(notification.getCreatedAt())
-                .answerTaskId(notification.getTask().getId())
+                .answerTaskId(notification.getAnswerTask().getId())
                 .isView(isView)
                 .build();
     }
