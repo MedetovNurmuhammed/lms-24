@@ -120,13 +120,17 @@ public class InstructorServiceImpl implements InstructorService {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
-        Trash trash = new Trash();
-        trash.setType(Type.INSTRUCTOR);
-        trash.setName(instructor.getUser().getFullName());
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setCleanerId(authUser.getId());
-        instructor.setTrash(trash);
-        trashRepository.save(trash);
+        if (instructor.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setType(Type.INSTRUCTOR);
+            trash.setName(instructor.getUser().getFullName());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            instructor.setTrash(trash);
+            trashRepository.save(trash);
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Инструктор успешно добавлен в корзину!")

@@ -5,7 +5,7 @@ import lms.dto.request.CourseRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.CourseResponse;
-//import lms.dto.response.AllInstructorsOrStudentsOfCourse;
+//import lms.dto.response.AllInstructorsAndStudentsOfCourse;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.entities.Course;
 import lms.entities.Trash;
@@ -107,7 +107,7 @@ public class CourseServiceImpl implements CourseService {
             trash.setCleanerId(authUser.getId());
             course.setTrash(trash);
             trashRepository.save(trash);
-        }else throw new BadRequestException("Данные уже в корзине");
+        } else throw new BadRequestException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно добавлено в корзину!")

@@ -51,8 +51,9 @@ public class Instructor {
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @ElementCollection(fetch =  FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "notification_id")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************

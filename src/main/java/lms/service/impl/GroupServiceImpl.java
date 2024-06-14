@@ -96,13 +96,15 @@ public class GroupServiceImpl implements GroupService {
     public SimpleResponse delete(long groupId) {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Group group = getById(groupId);
-        Trash trash = new Trash();
-        trash.setName(group.getTitle());
-        trash.setType(Type.GROUP);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setCleanerId(authUser.getId());
-        group.setTrash(trash);
-        trashRepository.save(trash);
+        if (group.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(group.getTitle());
+            trash.setType(Type.GROUP);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            group.setTrash(trash);
+            trashRepository.save(trash);
+        } else throw new AlreadyExistsException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Группа успешно добавлено в корзину!")

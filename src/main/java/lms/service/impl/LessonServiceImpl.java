@@ -11,6 +11,7 @@ import lms.entities.Trash;
 import lms.enums.Type;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
@@ -58,7 +59,7 @@ public class LessonServiceImpl implements LessonService {
                     .httpStatus(HttpStatus.OK)
                     .message("Урок " + lesson.getTitle() + " успешно сохранено")
                     .build();
-        } else throw new BadRequestException("Курс может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override

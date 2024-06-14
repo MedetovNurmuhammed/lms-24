@@ -152,14 +152,17 @@ public class StudentServiceImpl implements StudentService {
         User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Student student = studentRepository.findStudentById(studId).
                 orElseThrow(() -> new NotFoundException("Студент не найден! "));
-        Trash trash = new Trash();
-        trash.setName(student.getUser().getFullName());
-        trash.setType(Type.STUDENT);
-        trash.setCleanerId(authUser.getId());
-        trash.setDateOfDelete(ZonedDateTime.now());
-        student.setTrash(trash);
-        trashRepository.save(trash);
-        log.info("Успешно добавлено в корзину!");
+        if (student.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(student.getUser().getFullName());
+            trash.setType(Type.STUDENT);
+            trash.setCleanerId(authUser.getId());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            student.setTrash(trash);
+            trashRepository.save(trash);
+            log.info("Успешно добавлено в корзину!");
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно добавлено в корзину!")

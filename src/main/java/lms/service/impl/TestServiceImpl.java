@@ -5,6 +5,7 @@ import lms.dto.request.*;
 import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
@@ -34,7 +35,6 @@ public class TestServiceImpl implements TestService {
     private final TrashRepository trashRepository;
     private final TestJDBCTemplate testJDBCTemplate;
     private final UserRepository userRepository;
-    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
@@ -162,7 +162,7 @@ public class TestServiceImpl implements TestService {
                     .message("Успешно добавлено в корзину!")
                     .httpStatus(HttpStatus.OK)
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override

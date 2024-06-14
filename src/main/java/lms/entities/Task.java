@@ -63,7 +63,7 @@ public class Task {
     private LocalDate updatedAt;
 
     //*************************************** Instructor ***********************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Instructor instructor;
 
     //*************************************** AnswerTask ***********************************

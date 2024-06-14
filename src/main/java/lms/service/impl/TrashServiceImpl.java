@@ -25,7 +25,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional
 public class TrashServiceImpl implements TrashService {
-    private final NotificationRepository notificationRepository;
+    private final AnnouncementRepository announcementRepository;
     private final LessonRepository lessonRepository;
     private final TaskRepository taskRepository;
     private final TestRepository testRepository;
@@ -70,8 +70,6 @@ public class TrashServiceImpl implements TrashService {
                         false))
                 .build();
     }
-
-
 
     private String deleteTrash(Trash trash, boolean isRestored) {
         return switch (trash.getType()) {
@@ -168,7 +166,7 @@ public class TrashServiceImpl implements TrashService {
     }
 
 
-    private String deleteLesson(Trash trash) { //todo: надо переделать
+    private String deleteLesson(Trash trash) {
         Lesson lesson = lessonRepository.getLessonByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         Course course = lesson.getCourse();
@@ -178,16 +176,9 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteTask(Trash trash) { //todo: надо переделать
+    private String deleteTask(Trash trash) {
         Task task = taskRepository.getTaskByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
-        Notification notification = notificationRepository.getNotificationByTaskId(task.getId()).orElse(null);
-        if (notification != null) {
-            notificationRepository.clearTaskFromNotification(task.getId());
-            notificationRepository.deleteNotStatInsByNotificationId(notification.getId());
-            notificationRepository.deleteByNotificationId(notification.getId());
-            notificationRepository.delete(notification);
-        }
         taskRepository.delete(task);
         return Messages.DELETE.getMessage();
     }
@@ -217,7 +208,7 @@ public class TrashServiceImpl implements TrashService {
         return Messages.DELETE.getMessage();
     }
 
-    private String deleteCourse(Trash trash) { //todo: надо переделать
+    private String deleteCourse(Trash trash) {
         Course course = courseRepository.getByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
         courseRepository.clearInstructorsByCourseId(course.getId());
@@ -229,10 +220,6 @@ public class TrashServiceImpl implements TrashService {
 
     public String deleteStudent(Trash trash) {
         Student student = studentRepository.getStudentByTrashId(trash.getId());
-        student.getNotificationStates().keySet().forEach(notification -> {
-            student.getNotificationStates().remove(notification);
-            notificationRepository.delete(notification);
-        });
         studentRepository.delete(student);
         return Messages.DELETE.getMessage();
     }
@@ -248,7 +235,10 @@ public class TrashServiceImpl implements TrashService {
     public String deleteGroup(Trash trash) {
         Group group = groupRepository.getByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
-
+        announcementRepository.getByGroupsContains(group.getId())
+                        .forEach(a -> a.getGroups().remove(group));
+        courseRepository.getByGroupsContains(group.getId())
+                        .forEach(c -> c.getGroups().remove(group));
         groupRepository.delete(group);
         return Messages.DELETE.getMessage();
     }

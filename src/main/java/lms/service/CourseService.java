@@ -21,7 +21,7 @@ public interface CourseService {
 
     SimpleResponse assignInstructorsToCourse(Long courseId, List<Long> instructorIds);
 
-//    AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);
+//    AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);
 
     FindAllResponseCourse findMyCourse(int page, int size);
     AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role);

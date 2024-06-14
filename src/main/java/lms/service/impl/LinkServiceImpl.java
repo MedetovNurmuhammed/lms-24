@@ -7,6 +7,7 @@ import lms.dto.response.LinkResponse;
 import lms.dto.response.AllLinkResponse;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
@@ -50,7 +51,8 @@ public class LinkServiceImpl implements LinkService {
                     .httpStatus(HttpStatus.OK)
                     .message("Ccылка с названием " + link.getTitle() + " успешно сохранен!")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override

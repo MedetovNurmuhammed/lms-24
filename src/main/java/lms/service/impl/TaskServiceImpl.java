@@ -8,6 +8,7 @@ import lms.dto.request.TaskRequest;
 import lms.dto.response.TaskResponse;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.InstructorRepository;
@@ -70,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
                     .httpStatus(HttpStatus.OK)
                     .message("Успешно создана")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     private void getStudentsByCourse(Lesson lesson, Task savedTask, String message) throws MessagingException {

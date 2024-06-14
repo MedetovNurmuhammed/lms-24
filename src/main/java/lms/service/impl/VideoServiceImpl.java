@@ -38,7 +38,6 @@ public class VideoServiceImpl implements VideoService {
     private final LinkRepository linkRepository;
     private final TrashRepository trashRepository;
     private final UserRepository userRepository;
-    private final InstructorRepository instructorRepository;
 
     @Override
     @Transactional
@@ -46,7 +45,6 @@ public class VideoServiceImpl implements VideoService {
         Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
         if (lesson.getTrash() == null) {
             existByVideoTitle(videoRequest, lesson);
-
             Video video = new Video();
             Link link = new Link();
             video.setDescription(videoRequest.description());
@@ -61,7 +59,7 @@ public class VideoServiceImpl implements VideoService {
                     .httpStatus(HttpStatus.OK)
                     .message("видео с названием " + link.getTitle() + " успешно сохранён")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     private void existByVideoTitle(VideoRequest videoRequest, Lesson lesson) {

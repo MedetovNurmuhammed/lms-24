@@ -123,7 +123,8 @@ public class PresentationServiceImpl implements PresentationService {
                     .httpStatus(HttpStatus.OK)
                     .message("Презентация, Успешно добавлено в корзину!")
                     .build();
-        }else throw new BadRequestException("Презентация может быть в корзине!");
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override

@@ -2,10 +2,7 @@ package lms.repository;
 
 import jakarta.transaction.Transactional;
 import lms.dto.response.CourseResponse;
-import lms.entities.Course;
-import lms.entities.Lesson;
-import lms.entities.Student;
-import lms.entities.Task;
+import lms.entities.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,40 +52,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             "JOIN g.courses c " +
             "WHERE c.id = :courseId")
     List<Student> findAllStudentsByCourseId(@Param("courseId") Long courseId);
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM courses_groups WHERE courses_id = :courseId", nativeQuery = true)
-    void detachFromExtraTable(@Param("courseId") Long courseId);
 
-    @Modifying
-    @Transactional
-    @Query(value = "delete from instructors_courses where courses_id =:courseId ;",nativeQuery = true)
-    void detachFromCoursesInstructors(@Param("courseId") Long courseId);
-    @Modifying
-    @Transactional
-    @Query(value = "delete from courses_groups where course_id = :courseId", nativeQuery = true)
-    void deleteCourseGroups(@Param("courseId") Long courseId);
-
-    @Modifying
-    @Transactional
-    @Query(value = "delete from instructor_notification_states where course_id = :courseId", nativeQuery = true)
-    void deleteInstructorNotificationStates(@Param("courseId") Long courseId);
-
-    @Modifying
-    @Transactional
-    @Query(value = "delete from instructor_courses where course_id = :courseId", nativeQuery = true)
-    void deleteInstructorCourses(@Param("courseId") Long courseId);
-
-
-    @Transactional
-    @Modifying
-    @Query(value = "delete from student_notification_states where notification_states_key = :notificationId and student_id = :userId", nativeQuery = true)
-    void deleteNotificationFromExtraTableStudent(@Param("notificationId")Long notificationId,@Param("userId") Long userId);
-
-    @Modifying
-    @Transactional
-    @Query(value = "delete from courses_groups where courses_id = :courseId", nativeQuery = true)
-    void deleteCourseAndGroup(Long courseId);
 
 
     @Modifying @Transactional
@@ -106,5 +70,12 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(value = "delete from courses_groups cg where cg.courses_id = :courseId ", nativeQuery = true)
     void clearGroupsByCourseId(Long courseId);
 
+    @Query(value = """
+            select c.* from courses c
+            join courses_groups cg
+            on c.id = cg.courses_id
+            where cg.groups_id = :groupId
+            """, nativeQuery = true)
+    List<Course> getByGroupsContains(Long groupId);
 }
 

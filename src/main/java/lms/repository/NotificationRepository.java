@@ -54,4 +54,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
             where student_id = (select id from students where id = ?)
             """, nativeQuery = true)
     void deleteNotificationToStudent(Long studentId);
+
 }

@@ -28,8 +28,11 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     @Query("select a from Announcement a join a.groups g where g.id in(:ids)")
     Page<Announcement> findAllInstructorAnnouncement(List<Long> ids, Pageable pageable);
 
-    @Modifying
-    @Transactional
-    @Query(value = "delete from announcements where user_id = :id", nativeQuery = true)
-    List<Announcement> deleteByUserId(Long id);
+    @Query(value = """
+            select a.* from announcements a 
+            join announcements_groups ag
+            on a.id = ag.announcement_id
+            where ag.groups_id = :groupId
+            """, nativeQuery = true)
+    List<Announcement> getByGroupsContains(Long groupId);
 }
