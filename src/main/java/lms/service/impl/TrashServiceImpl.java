@@ -25,6 +25,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional
 public class TrashServiceImpl implements TrashService {
+    private final OptionRepository optionRepository;
     private final AnnouncementRepository announcementRepository;
     private final LessonRepository lessonRepository;
     private final TaskRepository taskRepository;
