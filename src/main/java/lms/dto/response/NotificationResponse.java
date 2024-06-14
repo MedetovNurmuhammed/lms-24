@@ -7,9 +7,12 @@ import java.time.LocalDate;
 @Builder
 public record NotificationResponse(
         Long notificationId,
+        Long courseId,
+        Long lessonId,
+        Long taskId,
         String notificationTitle,
         String notificationDescription,
         LocalDate notificationSendDate,
-        Long notificationTaskId,
+        Long answerTaskId,
         Boolean isView) {
 }
