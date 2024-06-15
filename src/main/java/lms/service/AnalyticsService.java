@@ -1,10 +1,9 @@
 package lms.service;
 
-import lms.dto.response.CourseAnalyticsResponse;
-import lms.dto.response.StudentsAnalyticsResponse;
+import lms.dto.response.DataResponses;
+
+import java.util.List;
 
 public interface AnalyticsService {
-    StudentsAnalyticsResponse getAllStudentsCount();
-
-    CourseAnalyticsResponse getAllCoursesCount();
+    List<DataResponses> getAllAnalyticsCount();
 }

@@ -2,6 +2,7 @@ package lms.dto.response;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 @Data
 public class StudentExamResponse {
@@ -13,6 +14,8 @@ public class StudentExamResponse {
     public static class ExamInfo {
         private Long examId;
         private String examTitle;
+        private LocalDate examDate;
         private int point;
+
     }
 }
