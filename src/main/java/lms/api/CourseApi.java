@@ -88,9 +88,9 @@ public class CourseApi {
         return courseService.assignInstructorsToCourse(courseId, instructorIds);
     }
 
-    @Secured("ADMIN")
+    @Secured({"ADMIN","INSTRUCTOR"})
     @Operation(summary = "Возвращает пагинированный список всех инструкторов одного курса.",
-            description = "(Авторизация: администратор)")
+            description = "(Авторизация: администратор, инструктор)")
     @GetMapping("/findAllInstructorsAndStudentsOfCourse/{courseId}")
     public AllInstructorsOrStudentsOfCourse findAllInstructorsAndStudentsOfCourse(
             @RequestParam(required = false, defaultValue = "1") int page,

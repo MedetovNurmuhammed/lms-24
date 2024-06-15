@@ -7,6 +7,8 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import lms.service.ExamService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -20,12 +22,14 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ExamApi {
 
+    private static final Logger log = LoggerFactory.getLogger(ExamApi.class);
     private final ExamService examService;
     @Secured("INSTRUCTOR")
     @PostMapping("/{courseId}")
     @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
             "                    \" Авторизация: инструктор!")
     public SimpleResponse createExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long courseId) {
+        log.info("CREARE EXAM WORK");
         return examService.createExam(examRequest, courseId);
     }
     @Secured("INSTRUCTOR")
@@ -40,13 +44,14 @@ public class ExamApi {
     @DeleteMapping("/{examId}")
     @Operation(summary = "Удалить экзамен",description = "метод для удаление  экзамена! \"+\n"+
             "\" Авторизация: Инструктор!")
-    private SimpleResponse deleteExam(@PathVariable Long examId) {
+    public SimpleResponse deleteExam(@PathVariable Long examId) {
+        log.info("DELETE EXAM WORK");
         System.out.println("\"api\" = Mukhammed " + "api");
         System.out.println("examId = " + examId);
         return examService.deleteExam(examId);
     }
 
-    @Secured({"INSTRUCTOR"})
+    @Secured({"INSTRUCTOR","STUDENT"})
     @GetMapping("/{courseId}")
     @Operation(summary = "Получить студенты курса с экзаменами и баллами!",description = "метод для получение студентов с баллами экзамена! \"+\n"+
             "\" Авторизация: Инструктор!")

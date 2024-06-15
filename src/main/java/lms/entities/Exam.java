@@ -24,7 +24,7 @@ public class Exam {
     private LocalDate updatedAt;
     @ManyToOne(fetch =  FetchType.LAZY)
     private Course course;
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ExamResult> examResults = new ArrayList<>();
 
     @PreUpdate

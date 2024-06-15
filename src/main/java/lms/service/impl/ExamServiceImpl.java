@@ -16,6 +16,7 @@ import lms.repository.ExamResultRepository;
 import lms.repository.StudentRepository;
 import lms.service.ExamService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExamServiceImpl implements ExamService {
     private final CourseRepository courseRepository;
     private final ExamRepository examRepository;
@@ -74,8 +76,12 @@ public class ExamServiceImpl implements ExamService {
                 .build();
     }
 
+
+
     @Override
+    @Transactional
     public SimpleResponse deleteExam(Long examId) {
+        log.info("DELETE EXAM ICHI SERVICE IMPL ICHI ");
         System.out.println("\"test\" = " + "test");
         Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);
@@ -131,4 +137,5 @@ public class ExamServiceImpl implements ExamService {
                 .message("Балл успешно добавлен!")
                 .build();
     }
+
 }
