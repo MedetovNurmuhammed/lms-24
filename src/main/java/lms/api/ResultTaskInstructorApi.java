@@ -21,7 +21,7 @@ public class ResultTaskInstructorApi {
 
     private final AnswerTaskService answerTaskService;
 
-    @Secured("INSTRUCTOR")
+    @Secured({"INSTRUCTOR","STUDENT"})
     @Operation(summary = "Получение ответа на задание по идентификатору ответа",
             description = "Возвращает ответ на задание для указанного идентификатора ответа." +
                     " Авторизация: инструктор!")
