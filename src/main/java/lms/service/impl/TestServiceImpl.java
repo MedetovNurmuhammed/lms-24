@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lms.dto.request.*;
 import lms.dto.response.*;
 import lms.entities.*;
+import lms.enums.Role;
 import lms.enums.Type;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
@@ -12,11 +13,14 @@ import lms.repository.jdbcTemplateService.TestJDBCTemplate;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +33,8 @@ public class TestServiceImpl implements TestService {
     private final OptionRepository optionRepository;
     private final TrashRepository trashRepository;
     private final TestJDBCTemplate testJDBCTemplate;
+    private final UserRepository userRepository;
+    private final UserServiceImpl userServiceImpl;
 
     @Override
     @Transactional
@@ -66,7 +72,7 @@ public class TestServiceImpl implements TestService {
                     .httpStatus(HttpStatus.OK)
                     .message("Тест успешно создан!")
                     .build();
-        }else throw new BadRequestException("Урок может быть в корзину!");
+        } else throw new BadRequestException("Урок может быть в корзину!");
     }
 
 
@@ -170,23 +176,6 @@ public class TestServiceImpl implements TestService {
         } else throw new BadRequestException("Урок может быть в корзине!");
     }
 
-    public TestResponse findTestByIdForEdit(Long testId) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
-        if (test.getTrash() == null) {
-            List<Question> questions = test.getQuestions();
-            List<QuestionResponse> questionResponses = questions.stream()
-                    .map(this::mapToQuestionResponse)
-                    .collect(Collectors.toList());
-
-            return TestResponse.builder().testId(test.getId())
-                    .title(test.getTitle())
-                    .hour(test.getHour())
-                    .minute(test.getMinute())
-                    .questionResponseList(questionResponses)
-                    .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
-    }
 
     @Override
     public AllTestResponse findAll(Long lessonId) {
@@ -198,6 +187,35 @@ public class TestServiceImpl implements TestService {
                     .testResponseForGetAll(testResponseForGetAll)
                     .build();
         } else throw new BadRequestException("Урок может быть в корзине!");
+    }
+
+    @Override
+    public TestResponse findTestById(Long testId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+
+        Test test = testRepository.findById(testId).orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+
+        if (test.getTrash() != null) throw new BadRequestException("Урок может быть в корзине!");
+        List<QuestionResponse> questionResponses = new ArrayList<>();
+        List<Question> questions = test.getQuestions();
+        if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
+            questionResponses = questions.stream()
+                    .map(this::mapToQuestionResponse)
+                    .collect(Collectors.toList());
+
+        } else {
+            questionResponses = questions.stream()
+                    .map(this::getQuestionResponse)
+                    .collect(Collectors.toList());
+        }
+        return TestResponse.builder().testId(test.getId())
+                .title(test.getTitle())
+                .hour(test.getHour())
+                .minute(test.getMinute())
+                .questionResponseList(questionResponses)
+                .build();
     }
 
     private QuestionResponse mapToQuestionResponse(Question question) {
@@ -213,4 +231,19 @@ public class TestServiceImpl implements TestService {
                 optionResponses
         );
     }
+
+    private QuestionResponse getQuestionResponse(Question question) {
+        List<OptionResponse> optionResponses = question.getOptions().stream()
+                .map(option -> new OptionResponse(option.getId(), option.getOption(), false))
+                .collect(Collectors.toList());
+
+        return new QuestionResponse(
+                question.getId(),
+                question.getTitle(),
+                question.getPoint(),
+                question.getQuestionType(),
+                optionResponses
+        );
+    }
+
 }
