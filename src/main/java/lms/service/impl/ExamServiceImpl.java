@@ -3,12 +3,14 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.ExamPointRequest;
 import lms.dto.request.ExamRequest;
+import lms.dto.response.ExamResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import lms.entities.Course;
 import lms.entities.Exam;
 import lms.entities.ExamResult;
 import lms.entities.Student;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.ExamRepository;
@@ -81,11 +83,8 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public SimpleResponse deleteExam(Long examId) {
-        log.info("DELETE EXAM ICHI SERVICE IMPL ICHI ");
-        System.out.println("\"test\" = " + "test");
         Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);
-        System.out.println("\"deleted\" = " + "deleted");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удалено!")
@@ -135,6 +134,15 @@ public class ExamServiceImpl implements ExamService {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Балл успешно добавлен!")
+                .build();
+    }
+
+    @Override
+    public ExamResponse getById(Long examId) {
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: "+examId+" не существует!"));
+        return ExamResponse.builder()
+                .examTitle(exam.getTitle())
+                .examDate(exam.getExamDate())
                 .build();
     }
 

@@ -3,6 +3,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.ExamPointRequest;
 import lms.dto.request.ExamRequest;
+import lms.dto.response.ExamResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import lms.service.ExamService;
@@ -29,7 +30,6 @@ public class ExamApi {
     @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
             "                    \" Авторизация: инструктор!")
     public SimpleResponse createExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long courseId) {
-        log.info("CREARE EXAM WORK");
         return examService.createExam(examRequest, courseId);
     }
     @Secured("INSTRUCTOR")
@@ -45,9 +45,6 @@ public class ExamApi {
     @Operation(summary = "Удалить экзамен",description = "метод для удаление  экзамена! \"+\n"+
             "\" Авторизация: Инструктор!")
     public SimpleResponse deleteExam(@PathVariable Long examId) {
-        log.info("DELETE EXAM WORK");
-        System.out.println("\"api\" = Mukhammed " + "api");
-        System.out.println("examId = " + examId);
         return examService.deleteExam(examId);
     }
 
@@ -65,5 +62,11 @@ public class ExamApi {
             "\" Ывторизация: Инструктор!")
     public SimpleResponse editExamPoint(@RequestBody ExamPointRequest examPointRequest, @PathVariable Long examResultId) {
         return examService.editExamPoint(examPointRequest, examResultId);
+    }
+
+    @Secured("INSTRUCTOR")
+    @GetMapping("/findExamForEdit/{examId}")
+    public ExamResponse getById(@PathVariable Long examId){
+        return examService.getById(examId);
     }
 }

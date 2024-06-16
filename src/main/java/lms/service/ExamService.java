@@ -2,6 +2,7 @@ package lms.service;
 
 import lms.dto.request.ExamPointRequest;
 import lms.dto.request.ExamRequest;
+import lms.dto.response.ExamResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,5 @@ public interface ExamService {
 
     SimpleResponse editExamPoint(ExamPointRequest examPointRequest, Long examResultId);
 
+    ExamResponse getById(Long examId);
 }
