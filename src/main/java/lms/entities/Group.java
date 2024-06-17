@@ -33,10 +33,10 @@ public class Group {
     private List<Course> courses = new ArrayList<>();
 
     //*************************************** Student ******************************************
-    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Student> students = new ArrayList<>();
 
     //*************************************** Trash ********************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Trash trash;
 }

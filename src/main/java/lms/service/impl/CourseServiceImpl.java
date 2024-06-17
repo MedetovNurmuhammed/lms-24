@@ -5,7 +5,6 @@ import lms.dto.request.CourseRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.CourseResponse;
-import lms.dto.response.AllInstructorsOrStudentsOfCourse;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.entities.Course;
 import lms.entities.Trash;
@@ -13,18 +12,14 @@ import lms.entities.Group;
 import lms.entities.User;
 import lms.entities.Instructor;
 import lms.entities.Student;
+import lms.dto.response.*;
 import lms.enums.Role;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.IllegalArgumentException;
 import lms.exceptions.NotFoundException;
-import lms.repository.CourseRepository;
-import lms.repository.GroupRepository;
-import lms.repository.InstructorRepository;
-import lms.repository.TrashRepository;
-import lms.repository.StudentRepository;
-import lms.repository.UserRepository;
+import lms.repository.*;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -96,17 +91,21 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public SimpleResponse deleteCourseById(Long courseId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Course course = courseRepository.findCourseById(courseId).orElseThrow(()
                 -> new NotFoundException("Курс с id: " + courseId + " не существует!"));
-        Trash trash = new Trash();
-        course.setTrash(trash);
-        trash.setName(course.getTitle());
-        trash.setType(Type.COURSE);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trashRepository.save(trash);
+        if (course.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(course.getTitle());
+            trash.setType(Type.COURSE);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            course.setTrash(trash);
+            trashRepository.save(trash);
+        } else throw new BadRequestException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Успешно удалено!")
+                .message("Успешно добавлено в корзину!")
                 .build();
     }
 
@@ -200,7 +199,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public AllInstructorsOrStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
+    public AllInstructorsAndStudentsOfCourse findAllInstructorsOrStudentsByCourseId(int page, int size, Long courseId, Role role) {
         if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
         Course course = courseRepository.findById(courseId).orElseThrow(
@@ -208,14 +207,14 @@ public class CourseServiceImpl implements CourseService {
         );
         if (role.equals(Role.STUDENT)) {
             Page<InstructorsOrStudentsOfCourse> allStudentByCourseId = studentRepository.getStudentsByCourseId(course.getId(), pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allStudentByCourseId.getNumber() + 1)
                     .size(allStudentByCourseId.getNumberOfElements())
                     .getAllStudentsOfCourses(allStudentByCourseId.getContent())
                     .build();
         } else if (role.equals(Role.INSTRUCTOR)) {
             Page<InstructorsOrStudentsOfCourse> allInstructorsByCourseId = instructorRepository.getInstructorsByCourseId(courseId, pageable);
-            return AllInstructorsOrStudentsOfCourse.builder()
+            return AllInstructorsAndStudentsOfCourse.builder()
                     .page(allInstructorsByCourseId.getNumber() + 1)
                     .size(allInstructorsByCourseId.getNumberOfElements())
                     .getAllInstructorsOfCourses(allInstructorsByCourseId.getContent())

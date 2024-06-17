@@ -13,8 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
@@ -46,7 +44,7 @@ public class StudentApi {
         return studentService.findAll(search, studyFormat, groupId, page, size);
     }
 
-    @Operation(summary = "Получить все студенты!", description = "Метод для получение всe студенты по " +
+    @Operation(summary = "Получить все студенты одной группы!", description = "Метод для получение всe студенты одной группы по " +
             "их group_id с пагинацией! Авторизация: администратор и инструктор!")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("studentsOfGroup/{groupId}")

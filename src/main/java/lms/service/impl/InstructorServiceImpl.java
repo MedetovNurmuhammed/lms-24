@@ -30,6 +30,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.time.ZonedDateTime;
@@ -116,18 +117,23 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     @Transactional
     public SimpleResponse delete(Long instructorId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Instructor instructor = instructorRepository.findInstructorById(instructorId)
                 .orElseThrow(() -> new NotFoundException("Инструктор не найден!!!"));
-        Trash trash = new Trash();
-        trash.setInstructor(instructor);
-        trash.setType(Type.INSTRUCTOR);
-        trash.setName(instructor.getUser().getFullName());
-        trash.setDateOfDelete(ZonedDateTime.now());
-        instructor.setTrash(trash);
-        trashRepository.save(trash);
+        if (instructor.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setType(Type.INSTRUCTOR);
+            trash.setName(instructor.getUser().getFullName());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            instructor.setTrash(trash);
+            trashRepository.save(trash);
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
+
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Инструктор успешно удалено!")
+                .message("Инструктор успешно добавлен в корзину!")
                 .build();
     }
 

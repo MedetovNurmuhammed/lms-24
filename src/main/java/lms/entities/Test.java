@@ -40,19 +40,20 @@ public class Test {
     private int minute;
 
     //*************************************** ResultTest **************************************
-    @OneToMany(mappedBy = "test", orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //*************************************** Question ****************************************
-    @OneToMany(mappedBy = "test",cascade = {CascadeType.PERSIST, CascadeType.MERGE},orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "test",cascade = {CascadeType.ALL},orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<Question> questions = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
     @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Lesson lesson;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Trash trash;
+
     @PrePersist
     protected void onCreate() {
         creationDate = LocalDate.now();

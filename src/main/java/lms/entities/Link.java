@@ -36,13 +36,18 @@ public class Link {
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private Lesson lesson;
 
+    //***************************************** Task *********************************
+    @ManyToOne( cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    private Task task;
+
     //********************************* Trash ***************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     private Trash trash;
 
-    //********************************* Video ***************************************
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Video video;
 
+    @OneToOne(mappedBy = "link",cascade = CascadeType.DETACH)
+    private AnswerTask answerTask;
 
 }

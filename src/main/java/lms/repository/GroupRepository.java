@@ -1,12 +1,15 @@
 package lms.repository;
 
+import lms.dto.response.GroupWithoutPagination;
+import jakarta.transaction.Transactional;
 import lms.dto.response.DataResponses;
 import lms.dto.response.GroupResponse;
-import lms.dto.response.GroupWithoutPagination;
+
 import lms.entities.Group;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -41,6 +44,13 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select s from Group s where s.id in (:ids)")
     List<Group> allGroupById(@Param("ids") List<Long> ids);
+
+    @Modifying @Transactional
+    @Query("update Group g set g.trash = null where g.trash.id = :id")
+    void clearGroupTrash(Long id);
+
+    @Query("select g from Group g where g.trash.id = :trashId")
+    Optional<Group> getByTrashId(Long trashId);
 
     @Query("SELECT new lms.dto.response.DataResponses(" +
             "(SELECT COUNT(g) FROM Group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), " +

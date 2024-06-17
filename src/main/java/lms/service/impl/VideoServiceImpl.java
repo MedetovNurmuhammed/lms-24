@@ -8,17 +8,17 @@ import lms.entities.Lesson;
 import lms.entities.Video;
 import lms.entities.Link;
 import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.LessonRepository;
-import lms.repository.LinkRepository;
-import lms.repository.TrashRepository;
-import lms.repository.VideoRepository;
+import lms.repository.*;
 import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -26,13 +26,15 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
-@Validated
 @RequiredArgsConstructor
+@Validated
+@Slf4j
 public class VideoServiceImpl implements VideoService {
     private final VideoRepository videoRepository;
     private final LessonRepository lessonRepository;
     private final LinkRepository linkRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -40,7 +42,6 @@ public class VideoServiceImpl implements VideoService {
         Lesson lesson = lessonRepository.findLessonById(lessonId).orElseThrow(() -> new NotFoundException("урок с id " + lessonId + " не найден"));
         if (lesson.getTrash() == null) {
             existByVideoTitle(videoRequest, lesson);
-
             Video video = new Video();
             Link link = new Link();
             video.setDescription(videoRequest.description());
@@ -55,7 +56,7 @@ public class VideoServiceImpl implements VideoService {
                     .httpStatus(HttpStatus.OK)
                     .message("видео с названием " + link.getTitle() + " успешно сохранён")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     private void existByVideoTitle(VideoRequest videoRequest, Lesson lesson) {
@@ -113,6 +114,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     @Transactional
     public SimpleResponse delete(Long videoId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Video video = videoRepository.findVideoById(videoId)
                 .orElseThrow(() -> new NotFoundException("Видео с id " + videoId + " не найдено"));
         if (video.getTrash() == null) {
@@ -120,10 +122,8 @@ public class VideoServiceImpl implements VideoService {
             trash.setName(video.getDescription());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.VIDEO);
-            trash.setVideo(video);
+            trash.setCleanerId(authUser.getId());
             video.setTrash(trash);
-            trash.setLink(video.getLink());
-            video.getLink().setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)

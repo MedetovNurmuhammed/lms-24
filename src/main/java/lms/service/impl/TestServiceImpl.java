@@ -6,12 +6,14 @@ import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Role;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.repository.jdbcTemplateService.TestJDBCTemplate;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final LessonRepository lessonRepository;
@@ -35,6 +39,7 @@ public class TestServiceImpl implements TestService {
     private final TestJDBCTemplate testJDBCTemplate;
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -72,7 +77,7 @@ public class TestServiceImpl implements TestService {
                     .httpStatus(HttpStatus.OK)
                     .message("Тест успешно создан!")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзину!");
+        }else throw new BadRequestException("Урок может быть в корзину!");
     }
 
 
@@ -146,15 +151,15 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public SimpleResponse delete(Long testId) {
-        Test test = testRepository.findTestById(testId).
-                orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Test test = testRepository.findByIdOrThrow(testId);
         if (test.getTrash() == null) {
             Trash trash = new Trash();
             trash.setName(test.getTitle());
             trash.setType(Type.TEST);
-            trash.setTest(test);
             trash.setDateOfDelete(ZonedDateTime.now());
             test.setTrash(trash);
+            trash.setCleanerId(authUser.getId());
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .message("Успешно добавлено в корзину!")
