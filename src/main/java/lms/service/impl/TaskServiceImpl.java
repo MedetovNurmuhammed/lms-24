@@ -1,21 +1,16 @@
 package lms.service.impl;
 
-import com.amazonaws.services.ec2.model.IdFormat;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lms.dto.response.AllTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.request.TaskRequest;
 import lms.dto.response.TaskResponse;
-import lms.entities.Instructor;
-import lms.entities.Lesson;
-import lms.entities.Task;
-import lms.entities.User;
-import lms.entities.Student;
-import lms.entities.Notification;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
+import lms.exceptions.NotFoundException;
 import lms.repository.InstructorRepository;
 import lms.repository.LessonRepository;
 import lms.repository.TaskRepository;
@@ -27,15 +22,13 @@ import lms.service.NotificationService;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -78,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
                     .httpStatus(HttpStatus.OK)
                     .message("Успешно создана")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     private void getStudentsByCourse(Lesson lesson, Task savedTask, String message) throws MessagingException {
@@ -122,16 +115,19 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public SimpleResponse deleteTask(Long taskId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Task task = getById(taskId);
         if (task.getTrash() == null) {
             Trash trash = new Trash();
-            trash.setTask(task);
             trash.setType(Type.TASK);
+            trash.setName(task.getTitle());
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
             task.setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Успешно удалено")
+                    .message("Успешно добавлено в корзину!")
                     .build();
         } else throw new BadRequestException("Задача может быть в корзине!");
     }
@@ -142,7 +138,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getTrash() == null) {
             log.error(String.valueOf(task.getLinks()));
             return convertToTaskResponse(task);
-        }else throw new BadRequestException("Задача может быть в корзине!");
+        }else throw new lms.exceptions.BadRequestException("Задача может быть в корзине!");
     }
 
     @Override
@@ -182,5 +178,31 @@ public class TaskServiceImpl implements TaskService {
                 .image(task.getImage())
                 .file(task.getFile())
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public SimpleResponse delete(Long taskId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Task task = taskRepository.findById(taskId).
+                orElseThrow(() -> new NotFoundException("Задача не найдена!"));
+        Trash trash = new Trash();
+        trash.setName(task.getTitle());
+        trash.setType(Type.TASK);
+        trash.setDateOfDelete(ZonedDateTime.now());
+        task.setTrash(trash);
+        trashRepository.save(trash);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("Успешно добавлено в корзину")
+                .build();
+    }
+
+    public void deleteTaskById(Long taskId) {
+        Task task = taskRepository.findById(taskId).
+                orElseThrow(() -> new NotFoundException("Not found"));
+
+        taskRepository.deleteById(task.getId());
+        taskRepository.deleteById(taskId);
     }
 }

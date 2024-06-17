@@ -12,12 +12,13 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
-import lms.enums.Type;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Instructor {
     private LocalDate updatedAt;
 
     //********************************* User *************************************
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Course *************************************
@@ -50,11 +51,13 @@ public class Instructor {
     private List<Course> courses = new ArrayList<>();
 
     //********************************* Notification *******************************
-    @ElementCollection(fetch =  FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "notification_id")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Map<Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Trash ***************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Trash trash;
 
     @PrePersist

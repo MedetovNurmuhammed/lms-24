@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PhoneNumberValidation {
-    String message() default "{Phone number must be start with +996 and length 13}";
+    String message() default "{Номер телефона должен состоять только из цифр и символа '+'}";
 
     Class<?>[] groups() default {};
 

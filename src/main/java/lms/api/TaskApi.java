@@ -1,6 +1,7 @@
 package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lms.dto.request.TaskRequest;
@@ -9,6 +10,7 @@ import lms.dto.response.SimpleResponse;
 import lms.dto.response.TaskResponse;
 import lms.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +56,6 @@ public class TaskApi {
     public AllTaskResponse findTaskByLessonId(@PathVariable("lessonId") Long lessonId) {
         return taskService.findAllTaskByLessonId(lessonId);
     }
-
 }
 
 

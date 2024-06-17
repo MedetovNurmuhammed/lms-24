@@ -20,4 +20,5 @@ public interface OptionRepository extends JpaRepository<Option, Long> {
     void deleteOptionById(@Param("optionId") Long optionId);
     @Query("select s from Option s where s.id =:id")
     Optional<Option> findOptionById(Long id);
+
 }

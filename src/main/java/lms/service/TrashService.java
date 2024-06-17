@@ -9,7 +9,7 @@ public interface TrashService {
 
     AllTrashResponse findAll(int page, int size);
 
-    SimpleResponse delete(Long trashId);
+    SimpleResponse restoreData(Long trashId);
 
-    SimpleResponse returnToBase(Long trashId);
+    SimpleResponse deleteData(Long trashID);
 }

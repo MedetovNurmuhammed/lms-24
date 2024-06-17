@@ -1,12 +1,18 @@
 package lms.entities;
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.io.File;
+import lombok.*;
 import java.time.LocalDate;
 
 @Entity
@@ -27,7 +33,7 @@ public class Presentation {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Trash trash;
     @ManyToOne(cascade = CascadeType.DETACH, fetch =  FetchType.LAZY)
     private Lesson lesson;

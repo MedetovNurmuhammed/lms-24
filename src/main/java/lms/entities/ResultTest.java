@@ -39,7 +39,7 @@ public class ResultTest {
 
 
     //*************************************** Test ********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Test test;
 
     //*************************************** Options ******************************************

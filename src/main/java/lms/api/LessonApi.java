@@ -10,6 +10,7 @@ import lms.dto.response.SimpleResponse;
 import lms.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
