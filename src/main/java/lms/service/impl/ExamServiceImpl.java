@@ -101,13 +101,16 @@ public class ExamServiceImpl implements ExamService {
                 StudentExamResponse.ExamInfo examInfo = new StudentExamResponse.ExamInfo();
                 examInfo.setExamId(examResult.getId());
                 examInfo.setExamTitle(examResult.getExam().getTitle());
+                //
+                examInfo.setExamDate(examResult.getExam().getExamDate());
+                //
                 examInfo.setPoint(examResult.getPoint());
                 return examInfo;
             }).collect(Collectors.toList());
 
             StudentExamResponse response = new StudentExamResponse();
             response.setStudentId(student.getId());
-            response.setStudentName(student.getUser().getFullName()); // Предположим, у студента есть связанный объект User с именем
+            response.setStudentName(student.getUser().getFullName());
             response.setExams(examInfos);
             return response;
         }).collect(Collectors.toList());

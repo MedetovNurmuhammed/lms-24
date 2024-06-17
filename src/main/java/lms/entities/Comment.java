@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "comments")
 @Getter
@@ -30,6 +32,7 @@ public class Comment {
     @SequenceGenerator(name = "comment_gen", sequenceName = "comment_seq", allocationSize = 1, initialValue = 21)
     private Long id;
     private String content;
+    private LocalDateTime dateTime;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User user;
