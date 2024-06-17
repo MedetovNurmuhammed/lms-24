@@ -2,7 +2,6 @@ package lms.repository;
 
 import jakarta.transaction.Transactional;
 import lms.dto.response.VideoResponse;
-import lms.entities.Trash;
 import lms.entities.Video;
 import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,8 +28,10 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     @Modifying @Transactional
     @Query("update Video v set v.trash = null where v.trash.id = :id")
     void clearVideoTrash(Long id);
+
     @Query("select v from Video v where v.id = ?1")
     Optional<Video> findTrash(Long id);
+
     default Video findByIdOrThrow(Long id){
         return findTrash(id)
                 .orElseThrow(() -> new NotFoundException("Video with id %d not found".formatted(id)));

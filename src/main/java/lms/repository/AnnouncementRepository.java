@@ -15,12 +15,9 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     @Query("select a from Announcement a join a.groups g where g.id =:groupId ")
     Page<Announcement> findAllByGroupId(Long groupId, Pageable pageable);
 
-    @Query("select a from Announcement a join a.groups g where g.id = :groupId")
-    List<Announcement> findAllByGroupId(Long groupId);
-
     @Transactional
     @Modifying
-    @Query(value = "delete from student_announcements where announcements_key = :announcementId", nativeQuery = true)
+    @Query(value = "delete from student_announcements where announcement_id = :announcementId", nativeQuery = true)
     void deleteByAnnouncementIdNative(Long announcementId);
 
     List<Announcement> findByExpirationDateBefore(LocalDate publishedDate);

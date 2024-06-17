@@ -5,7 +5,6 @@ import lms.dto.request.CourseRequest;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.FindAllResponseCourse;
 import lms.dto.response.CourseResponse;
-//import lms.dto.response.AllInstructorsAndStudentsOfCourse;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.entities.Course;
 import lms.entities.Trash;
@@ -14,14 +13,12 @@ import lms.entities.User;
 import lms.entities.Instructor;
 import lms.entities.Student;
 import lms.dto.response.*;
-import lms.entities.*;
 import lms.enums.Role;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.IllegalArgumentException;
 import lms.exceptions.NotFoundException;
-import lms.repository.*;
 import lms.repository.*;
 import lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +44,6 @@ public class CourseServiceImpl implements CourseService {
     private final StudentRepository studentRepository;
     private final TrashRepository trashRepository;
     private final UserRepository userRepository;
-    private final LessonRepository lessonRepository;
-    private final LessonServiceImpl lessonService;
 
     private void checkTitle(String courseTitle) {
         boolean exists = courseRepository.existsByTitle(courseTitle);

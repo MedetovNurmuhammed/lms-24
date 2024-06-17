@@ -7,7 +7,6 @@ import lms.dto.response.GroupWithoutPagination;
 import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
-import lms.entities.Student;
 import lms.entities.Trash;
 import lms.entities.User;
 import lms.enums.Type;
@@ -37,7 +36,6 @@ import java.util.NoSuchElementException;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final TrashRepository trashRepository;
-    private final StudentService studentService;
     private final UserRepository userRepository;
 
     @Override

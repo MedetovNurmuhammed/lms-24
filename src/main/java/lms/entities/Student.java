@@ -64,6 +64,7 @@ public class Student {
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "announcement_id")
     @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 

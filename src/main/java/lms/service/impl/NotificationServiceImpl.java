@@ -121,17 +121,8 @@ public class NotificationServiceImpl implements NotificationService {
     public SimpleResponse delete(Long notificationId) {
         Notification notification = notificationRepository.findNotificationById(notificationId)
                 .orElseThrow(() -> new NoSuchElementException("Уведомление не найдено"));
-
-        User currentUser = getCurrentUser();
-        if (currentUser.getRole().equals(Role.STUDENT)) {
-            Student student = studentRepository.findByUserId(currentUser.getId())
-                    .orElseThrow(() -> new NoSuchElementException("Студент не найден"));
-            notificationRepository.deleteNotificationFromExtraTableStudent(notification.getId(), student.getId());
-        } else if (currentUser.getRole().equals(Role.INSTRUCTOR)) {
-            Instructor instructor = instructorRepository.findByUserId(currentUser.getId())
-                    .orElseThrow(() -> new NoSuchElementException("Инструктор не найден"));
-            notificationRepository.deleteNotificationFromExtraTableInstructor(notification.getId(), instructor.getId());
-        }
+        notificationRepository.clearTasksFromNotificationById(notification.getId());
+        notificationRepository.delete(notification);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Уведомление успешно удалено")

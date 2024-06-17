@@ -33,7 +33,6 @@ public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final LessonRepository lessonRepository;
     private final UserRepository userRepository;
-    private final InstructorRepository instructorRepository;
     private final TrashRepository trashRepository;
 
     @Override

@@ -65,10 +65,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT s FROM Student s WHERE s.user = :user")
     Optional<Student> findByUser(@Param("user") User user);
 
-    @Modifying
-    @Transactional
-    @Query(value = "delete from students where id = :id", nativeQuery = true)
-    void deleteStudentById(Long id);
     @Query("select count (s) from Student  s")
     int totalStudents();
 

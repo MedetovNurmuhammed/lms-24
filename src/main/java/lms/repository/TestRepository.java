@@ -4,6 +4,8 @@ import
         jakarta.transaction.Transactional;
 import lms.dto.response.TestResponseForGetAll;
 import lms.entities.Test;
+import lms.entities.Video;
+import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +29,12 @@ public interface TestRepository extends JpaRepository<Test, Long> {
 
     @Query("select t from Test t where t.trash.id = :id")
     Optional<Test> getTestByTrashId(Long id);
+
+    @Query("select t from Test t where t.id = ?1")
+    Optional<Test> findTest(Long id);
+
+    default Test findByIdOrThrow(Long id){
+        return findTest(id)
+                .orElseThrow(() -> new NotFoundException("Test with id %d not found".formatted(id)));
+    }
 }

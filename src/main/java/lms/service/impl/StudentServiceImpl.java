@@ -41,7 +41,6 @@ import java.util.List;
 @Slf4j
 
 public class StudentServiceImpl implements StudentService {
-    private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;

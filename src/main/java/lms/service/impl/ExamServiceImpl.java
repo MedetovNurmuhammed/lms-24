@@ -75,7 +75,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public SimpleResponse deleteExam(Long examId) {
+    public SimpleResponse deleteExam(Long examId) { //todo: Bugfix Nurmuhammed
         System.out.println("\"test\" = " + "test");
         Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);

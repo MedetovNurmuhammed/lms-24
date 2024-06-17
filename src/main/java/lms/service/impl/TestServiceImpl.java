@@ -146,10 +146,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public SimpleResponse delete(Long testId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User authUser = userRepository.getByEmail(email);
-        Test test = testRepository.findById(testId).
-                orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Test test = testRepository.findByIdOrThrow(testId);
         if (test.getTrash() == null) {
             Trash trash = new Trash();
             trash.setName(test.getTitle());

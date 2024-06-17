@@ -10,7 +10,6 @@ import lms.entities.Course;
 import lms.entities.Trash;
 import lms.enums.Type;
 import lms.entities.*;
-import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
@@ -29,11 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.time.ZonedDateTime;
-
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +39,6 @@ public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
     private final TrashRepository trashRepository;
     private final UserRepository userRepository;
-    private final InstructorRepository instructorRepository;
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {

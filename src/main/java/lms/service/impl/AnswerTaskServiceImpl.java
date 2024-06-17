@@ -9,7 +9,6 @@ import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.*;
-import lms.enums.Role;
 import lms.enums.TaskAnswerStatus;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.*;

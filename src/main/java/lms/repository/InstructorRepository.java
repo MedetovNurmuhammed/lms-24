@@ -42,9 +42,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("select s from Instructor s where s.id =:instructorId")
     Optional<Instructor> findInstructorById(Long instructorId);
 
-    @Query("select i from Instructor i where i.trash.id = :id")
-    Instructor getInstructorByTrashID(Long id);
-
     @Modifying
     @Transactional
     @Query("update Instructor i set i.trash = null where i.trash.id = :id")
@@ -52,4 +49,8 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     @Query("select i from Instructor i where i.trash.id = :trashId")
     Optional<Instructor> getByTrashId(Long trashId);
+
+    @Modifying @Transactional
+    @Query(value = "delete from instructors_courses ic where ic.instructors_id = :instructorId ", nativeQuery = true)
+    void clearCoursesByInstructorId(Long instructorId);
 }

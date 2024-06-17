@@ -23,6 +23,7 @@ public interface TrashRepository extends JpaRepository<Trash, Long> {
 
     @Query("select t from Trash t where t.id = ?1")
     Optional<Trash> findTrash(Long id);
+
     default Trash findByIdOrThrow(Long id){
         return findTrash(id)
                 .orElseThrow(() -> new NotFoundException("Trash with id %d not found".formatted(id)));

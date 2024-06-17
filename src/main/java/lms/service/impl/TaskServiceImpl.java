@@ -183,20 +183,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public SimpleResponse delete(Long taskId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.getByEmail(email);
-        Instructor instructor = instructorRepository.findByUserId(currentUser.getId()).
-                orElseThrow(() -> new NotFoundException("Инструктор не найден!"));
-        taskRepository.findAll();
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Task task = taskRepository.findById(taskId).
                 orElseThrow(() -> new NotFoundException("Задача не найдена!"));
         Trash trash = new Trash();
         trash.setName(task.getTitle());
         trash.setType(Type.TASK);
         trash.setDateOfDelete(ZonedDateTime.now());
-//        trash.setTask(task);
-//        trash.setInstructor(instructor);
-//        instructor.getTrashes().add(trash);
         task.setTrash(trash);
         trashRepository.save(trash);
         return SimpleResponse.builder()

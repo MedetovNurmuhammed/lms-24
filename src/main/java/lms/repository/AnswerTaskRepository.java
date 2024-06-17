@@ -1,14 +1,10 @@
 package lms.repository;
 
-import jakarta.transaction.Transactional;
 import lms.dto.response.FilterAnswerOfTaskResponse;
 import lms.entities.AnswerTask;
 import lms.enums.TaskAnswerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -25,16 +21,4 @@ public interface AnswerTaskRepository extends JpaRepository<AnswerTask, Long> {
     Boolean existsByTaskId(Long taskId, Long studentId);
     @Query("select s from AnswerTask s where s.id =:answerId")
     Optional<AnswerTask> findAnswerTaskById(Long answerId);
-    @Query("select a from AnswerTask a join Link l on a.id = l.answerTask.id where l.id =:linkId")
-    AnswerTask findByLinkId(Long linkId);
-
-    @Modifying
-    @Transactional
-    @Query("delete from AnswerTask a where a.student.id =:studId")
-    void deleteAnswerTaskByStudId(@Param("studId") Long studId);
-
-    @Modifying
-    @Transactional
-    @Query("delete from AnswerTask a where a.id =:id and a.student.id =:id1")
-    void deleteByIdStudent(long id, Long id1);
 }

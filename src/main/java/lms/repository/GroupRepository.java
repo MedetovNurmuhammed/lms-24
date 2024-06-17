@@ -39,12 +39,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("select new lms.dto.response.GroupWithoutPagination(g.id, g.title) from Group g where g.trash is null")
     List<GroupWithoutPagination> findAllGroupsWithoutTrash();
 
-    @Modifying
-    @Transactional
-    @Query(value = "delete from announcements_groups where groups_id =:groupId",nativeQuery = true)
-    void deleteFromAdditionalTable(@Param("groupId") Long groupId);
-
-
     @Query("select count (c) from Course  c")
     int getAllGroupsCount();
 
@@ -57,6 +51,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("select g from Group g where g.trash.id = :trashId")
     Optional<Group> getByTrashId(Long trashId);
+
     @Query("SELECT new lms.dto.response.DataResponses(" +
             "(SELECT COUNT(g) FROM Group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), " +
             "(SELECT COUNT(s) FROM Student s JOIN s.group g WHERE EXTRACT(YEAR FROM g.dateOfEnd) = :year), " +

@@ -16,3 +16,13 @@ create table if not exists instructor_notification_states (
     foreign key (instructor_id) references instructors(id) on delete cascade ,
     foreign key (notification_id) references notifications(id) on delete cascade
     );
+
+
+create table if not exists student_announcements (
+                                                     student_id BIGINT not null,
+                                                     announcement_id BIGINT not null,
+                                                     announcement_state boolean,
+                                                     primary key (student_id, announcement_id),
+    foreign key (student_id) references students(id) on delete cascade,
+    foreign key (announcement_id) references announcements(id) on delete cascade
+    );

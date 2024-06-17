@@ -25,8 +25,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional
 public class TrashServiceImpl implements TrashService {
-    private final NotificationRepository notificationRepository;
-    private final OptionRepository optionRepository;
+    private final CommentRepository commentRepository;
     private final AnnouncementRepository announcementRepository;
     private final LessonRepository lessonRepository;
     private final TaskRepository taskRepository;
@@ -222,6 +221,8 @@ public class TrashServiceImpl implements TrashService {
 
     public String deleteStudent(Trash trash) {
         Student student = studentRepository.getStudentByTrashId(trash.getId());
+        Long userId = student.getUser().getId();
+        commentRepository.deleteByUserId(userId);
         studentRepository.delete(student);
         return Messages.DELETE.getMessage();
     }
@@ -230,6 +231,8 @@ public class TrashServiceImpl implements TrashService {
     public String deleteInstructor(Trash trash) {
         Instructor instructor = instructorRepository.getByTrashId(trash.getId())
                 .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        instructorRepository.clearCoursesByInstructorId(instructor.getId());
+        commentRepository.deleteByUserId(instructor.getUser().getId());
         instructorRepository.delete(instructor);
         return Messages.DELETE.getMessage();
     }
@@ -244,6 +247,5 @@ public class TrashServiceImpl implements TrashService {
         groupRepository.delete(group);
         return Messages.DELETE.getMessage();
     }
-
 }
 

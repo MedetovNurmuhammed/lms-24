@@ -1387,7 +1387,7 @@ values (14, 14, 14,  'Нужно больше усердия и внимания
 insert into comments (answer_task_id, id, user_id, content)
 values (15, 15, 15, 'Нужно больше практики для успешного выполнения задания.');
 
-insert into student_announcements(announcements, announcements_key, student_id)
+insert into student_announcements(announcement_state, announcement_id, student_id)
 values (true, 1, 1),
        (false, 1, 2),
        (true, 1, 3),
