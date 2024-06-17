@@ -60,8 +60,8 @@ public class ExamApi {
 
     @Secured("INSTRUCTOR")
     @PatchMapping("editExamPoint/{studentId}/{examId}")
-    @Operation(summary = "Редактивироват балл студента!", description = "метод для редактивирование балл экзамена! \"+\n" +
-            "\" Ывторизация: Инструктор!")
+    @Operation(summary = "Редактивировать балл студента!", description = "метод для редактивирование балл экзамена! \"+\n" +
+            "\" Авторизация: Инструктор!")
     public SimpleResponse editExamPoint(@PathVariable Long studentId, @PathVariable Long examId, @RequestBody ExamPointRequest examPointRequest) {
         return examService.editExamPoint(studentId, examId, examPointRequest);
     }
