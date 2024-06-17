@@ -3,12 +3,14 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.ExamPointRequest;
 import lms.dto.request.ExamRequest;
+import lms.dto.response.ExamResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import lms.entities.Course;
 import lms.entities.Exam;
 import lms.entities.ExamResult;
 import lms.entities.Student;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.ExamRepository;
@@ -16,6 +18,7 @@ import lms.repository.ExamResultRepository;
 import lms.repository.StudentRepository;
 import lms.service.ExamService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExamServiceImpl implements ExamService {
     private final CourseRepository courseRepository;
     private final ExamRepository examRepository;
@@ -64,10 +68,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public SimpleResponse editExam(ExamRequest examRequest, Long examId) {
-        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: " + examId + " не существует!"));
+        Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         exam.setTitle(examRequest.getTitle());
         exam.setExamDate(examRequest.getExamDate());
-        Course course = exam.getCourse();
+        Course course =  exam.getCourse();
         examRepository.save(exam);
         courseRepository.save(course);
         return SimpleResponse.builder()
@@ -76,12 +80,13 @@ public class ExamServiceImpl implements ExamService {
                 .build();
     }
 
+
+
     @Override
-    public SimpleResponse deleteExam(Long examId) { //todo: Bugfix Nurmuhammed
-        System.out.println("\"test\" = " + "test");
-        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: " + examId + " не существует!"));
+    @Transactional
+    public SimpleResponse deleteExam(Long examId) {
+        Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);
-        System.out.println("\"deleted\" = " + "deleted");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удалено!")
@@ -103,7 +108,9 @@ public class ExamServiceImpl implements ExamService {
                 StudentExamResponse.ExamInfo examInfo = new StudentExamResponse.ExamInfo();
                 examInfo.setExamId(examResult.getId());
                 examInfo.setExamTitle(examResult.getExam().getTitle());
+                //
                 examInfo.setExamDate(examResult.getExam().getExamDate());
+                //
                 examInfo.setPoint(examResult.getPoint());
                 return examInfo;
             }).collect(Collectors.toList());
@@ -130,7 +137,14 @@ public class ExamServiceImpl implements ExamService {
 
         return new SimpleResponse(HttpStatus.OK, "Балл успешно добавлен!");
     }
+
+    @Override
+    public ExamResponse getById(Long examId) {
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: "+examId+" не существует!"));
+        return ExamResponse.builder()
+                .examTitle(exam.getTitle())
+                .examDate(exam.getExamDate())
+                .build();
+    }
+
 }
-
-
-

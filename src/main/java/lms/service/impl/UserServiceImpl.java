@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
         } else {
             User user = userRepository.findByUuid(uuid).orElseThrow(() -> new NoSuchElementException("User not found"));
             user.setPassword(passwordEncoder.encode(password));
+            user.setUuid(null);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
                     .message("Пароль успешно создан!")
