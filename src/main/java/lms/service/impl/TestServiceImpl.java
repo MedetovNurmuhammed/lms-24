@@ -5,13 +5,16 @@ import lms.dto.request.*;
 import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
 import lms.repository.jdbcTemplateService.TestJDBCTemplate;
 import lms.service.TestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,9 +22,11 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final LessonRepository lessonRepository;
@@ -29,6 +34,7 @@ public class TestServiceImpl implements TestService {
     private final OptionRepository optionRepository;
     private final TrashRepository trashRepository;
     private final TestJDBCTemplate testJDBCTemplate;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -140,21 +146,21 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public SimpleResponse delete(Long testId) {
-        Test test = testRepository.findTestById(testId).
-                orElseThrow(() -> new NotFoundException("Тест не найден!!!"));
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Test test = testRepository.findByIdOrThrow(testId);
         if (test.getTrash() == null) {
             Trash trash = new Trash();
             trash.setName(test.getTitle());
             trash.setType(Type.TEST);
-            trash.setTest(test);
             trash.setDateOfDelete(ZonedDateTime.now());
             test.setTrash(trash);
+            trash.setCleanerId(authUser.getId());
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .message("Успешно добавлено в корзину!")
                     .httpStatus(HttpStatus.OK)
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override

@@ -9,6 +9,8 @@ import lms.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/videos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class VideoApi {
     private final VideoService videoService;
 
@@ -47,7 +49,7 @@ public class VideoApi {
     @Operation(summary = "найти все видео урока")
     @GetMapping("/All/{lessonId}")
     public List<VideoResponse> findAll(
-                                    @PathVariable Long lessonId) {
+            @PathVariable Long lessonId) {
         return videoService.findAllVideoByLessonId(lessonId);
     }
 
@@ -59,11 +61,12 @@ public class VideoApi {
     }
 
 
-    @Secured("INSTRUCTOR")
-    @Operation(summary = "удалить видео по id")
-    @DeleteMapping("/{videoId}")
-    public SimpleResponse delete(@PathVariable Long videoId) {
-        return videoService.delete(videoId);
+    @Operation(summary = "Удалить видеоурока",
+            description = "Метод для удаления видеоурока по его идентификатору." +
+                    " Авторизация:  инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @DeleteMapping("/delete/{studId}")
+    public SimpleResponse delete(@PathVariable Long studId) {
+        return videoService.delete(studId);
     }
-
 }

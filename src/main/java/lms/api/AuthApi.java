@@ -22,6 +22,7 @@ import java.nio.file.AccessDeniedException;
 public class AuthApi {
     private final UserService userService;
 
+
     @Operation(summary = "Войти")
     @PostMapping("/signIn")
     public SignInResponse signIn(@RequestBody @Valid SignInRequest signInRequest) throws AccessDeniedException {

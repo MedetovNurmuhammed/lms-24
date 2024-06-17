@@ -40,22 +40,23 @@ public class Course {
     private LocalDate dateOfEnd;
 
     //*************************************** Instructor *************************************
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Instructor> instructors = new ArrayList<>();
 
     //*************************************** Group ******************************************
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Group> groups = new ArrayList<>();
 
     //*************************************** Lesson ******************************************
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 
     //*************************************** Trash *******************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Trash trash;
+
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,orphanRemoval = true, fetch =  FetchType.LAZY)
-    private List<Exam>exams = new ArrayList<>();
+    private List<Exam> exams = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

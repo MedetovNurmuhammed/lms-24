@@ -4,134 +4,248 @@ import jakarta.transaction.Transactional;
 import lms.dto.response.AllTrashResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.TrashResponse;
-import lms.entities.Trash;
-import lms.entities.Course;
-import lms.entities.Instructor;
-import lms.entities.Group;
-import lms.entities.Student;
-import lms.enums.Type;
-import lms.repository.TrashRepository;
+import lms.entities.*;
+import lms.enums.Messages;
+import lms.enums.Role;
+import lms.exceptions.NotFoundException;
+import lms.repository.*;
 import lms.service.TrashService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class TrashServiceImpl implements TrashService {
-
+    private final CommentRepository commentRepository;
+    private final AnnouncementRepository announcementRepository;
+    private final LessonRepository lessonRepository;
+    private final TaskRepository taskRepository;
+    private final TestRepository testRepository;
+    private final VideoRepository videoRepository;
+    private final PresentationRepository presentationRepository;
+    private final LinkRepository linkRepository;
+    private final CourseRepository courseRepository;
+    private final GroupRepository groupRepository;
+    private final InstructorRepository instructorRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
 
     @Override
     public AllTrashResponse findAll(int page, int size) {
-        if (page < 1 && size < 1) throw new java.lang.IllegalArgumentException("Индекс страницы не должен быть меньше нуля");
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("id"));
-        Page<Trash> trashes = trashRepository.findAll(pageable);
-        List<TrashResponse> trashResponses = new ArrayList<>();
-        for (Trash trash : trashes) {
-            trashResponses.add(new TrashResponse(trash.getId(), trash.getType(), trash.getName(), trash.getDateOfDelete()));
-        }
-        AllTrashResponse allTrashResponse = new AllTrashResponse();
-        allTrashResponse.setPage(page);
-        allTrashResponse.setSize(size);
-        allTrashResponse.setTrashResponses(trashResponses);
-        return allTrashResponse;
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        Page<TrashResponse> trashResponses;
+        if (authUser.getRole().equals(Role.ADMIN))
+            trashResponses = trashRepository.findAllTrash(PageRequest.of(page - 1, size));
+        else trashResponses = trashRepository.findAllTrashByAuthId(authUser.getId(), PageRequest.of(page - 1, size));
+        return AllTrashResponse.builder()
+                .page(trashResponses.getNumber() + 1)
+                .size(trashResponses.getNumberOfElements())
+                .trashResponses(trashResponses.getContent())
+                .build();
     }
 
     @Override
-    public SimpleResponse delete(Long trashId) {
-        Trash trash = trashRepository.findTrashById(trashId);
-        if (trash == null) {
-            return SimpleResponse.builder()
-                    .httpStatus(HttpStatus.NOT_FOUND)
-                    .message(trashId + " ID не найден!")
-                    .build();
-        }
-        if (trash.getType().equals(Type.COURSE)) {
-            Course course1 = trash.getCourse();
-            for (Instructor instructor1 : course1.getInstructors()) {
-                instructor1.setCourses(null);
-            }
-            course1.setInstructors(null);
-        }
-        if (trash.getType().equals(Type.GROUP)) {
-            Group group1 = trash.getGroup();
-            for (Course course : group1.getCourses()) {
-                course.setGroups(null);
-            }
-            group1.setCourses(null);
-        }
-        if (trash.getType().equals(Type.INSTRUCTOR)) {
-            for (Course course : trash.getInstructor().getCourses()) {
-                course.setInstructors(null);
-                trash.getInstructor().setNotificationStates(null);
-                trash.getInstructor().setCourses(null);
-            }
-        }
-        if(trash.getType().equals(Type.STUDENT)) {
-            Student student = trash.getStudent();
-            student.setNotificationStates(null);
-            student.setGroup(null);
-        }
-            trashRepository.delete(trash);
+    public SimpleResponse restoreData(Long trashId) {
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Удален!")
+                .message(deleteTrash(trashRepository.findByIdOrThrow(trashId),
+                        true))
                 .build();
-}
+    }
 
-@Override
-@Transactional
-public SimpleResponse returnToBase(Long trashId) {
-    Trash trash = trashRepository.findTrashById(trashId);
-    if (trash == null) {
+    @Override
+    public SimpleResponse deleteData(Long trashID) {
         return SimpleResponse.builder()
-                .httpStatus(HttpStatus.NOT_FOUND)
-                .message(trashId + " ID не найден!")
+                .httpStatus(HttpStatus.OK)
+                .message(deleteTrash(trashRepository.findByIdOrThrow(trashID),
+                        false))
                 .build();
     }
-    if (trash.getStudent() != null) {
-        Student student = trash.getStudent();
-        student.setTrash(null);
-        trash.setStudent(null);
-    } else if (trash.getGroup() != null) {
-        Group group = trash.getGroup();
-        group.setTrash(null);
-        trash.setGroup(null);
-    } else if (trash.getCourse() != null) {
-        Course course = trash.getCourse();
-        course.setTrash(null);
-        trash.setCourse(null);
-    } else if (trash.getInstructor() != null) {
-        Instructor instructor = trash.getInstructor();
-        instructor.setTrash(null);
-        trash.setInstructor(null);
-    }
-    trashRepository.delete(trash);
-    return SimpleResponse.builder()
-            .httpStatus(HttpStatus.OK)
-            .message(trashId + " удален!")
-            .build();
-}
 
-@Transactional
-//@Scheduled(fixedDelay = 60000)
-public void cleanupExpiredTrash() {
-    ZonedDateTime fiveMinutesAgo = ZonedDateTime.now().minusMinutes(500);
-    List<Trash> expiredTrashes = trashRepository.findByDateOfDeleteBefore(ZonedDateTime.now());
-    for (Trash expiredTrash : expiredTrashes) {
-        if (expiredTrash.getDateOfDelete().isBefore(fiveMinutesAgo)) {
-            trashRepository.delete(expiredTrash);
-        }
+    private String deleteTrash(Trash trash, boolean isRestored) {
+        return switch (trash.getType()) {
+            case STUDENT -> {
+                if (isRestored) {
+                    studentRepository.clearStudentTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteStudent(trash);
+            }
+            case INSTRUCTOR -> {
+                if (isRestored) {
+                    instructorRepository.clearInstructorTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteInstructor(trash);
+
+            }
+            case GROUP -> {
+                if (isRestored) {
+                    groupRepository.clearGroupTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteGroup(trash);
+            }
+            case COURSE -> {
+                if (isRestored) {
+                    courseRepository.clearCourseTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteCourse(trash);
+            }
+            case LINK -> {
+                if (isRestored) {
+                    linkRepository.clearLinkTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteLink(trash);
+            }
+            case PRESENTATION -> {
+                if (isRestored) {
+                    presentationRepository.clearPresentationTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deletePresentation(trash);
+            }
+            case VIDEO -> {
+                if (isRestored) {
+                    videoRepository.clearVideoTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteVideo(trash);
+            }
+            case TEST -> {
+                if (isRestored) {
+                    testRepository.clearTestTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteTest(trash);
+            }
+            case TASK -> {
+                if (isRestored) {
+                    taskRepository.clearTaskTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteTask(trash);
+            }
+            case LESSON -> {
+                if (isRestored) {
+                    lessonRepository.clearLessonTrash(trash.getId());
+                    trashRepository.delete(trash);
+                    yield Messages.RESTORE.getMessage();
+                }
+                yield deleteLesson(trash);
+            }
+        };
     }
-}
+
+    private String deletePresentation(Trash trash) {
+        Presentation presentation =
+                presentationRepository.getByTrashId(trash.getId())
+                        .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        presentationRepository.delete(presentation);
+        return Messages.DELETE.getMessage();
+    }
+
+
+    private String deleteLesson(Trash trash) {
+        Lesson lesson = lessonRepository.getLessonByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        Course course = lesson.getCourse();
+        course.getLessons().removeIf(l -> Objects.equals(l.getId(), lesson.getId()));
+        lesson.setCourse(null);
+        lessonRepository.delete(lesson);
+        return Messages.DELETE.getMessage();
+    }
+
+    private String deleteTask(Trash trash) {
+        Task task = taskRepository.getTaskByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        taskRepository.delete(task);
+        return Messages.DELETE.getMessage();
+    }
+
+    private String deleteTest(Trash trash) {
+        Test test = testRepository.getTestByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        testRepository.delete(test);
+        return Messages.DELETE.getMessage();
+    }
+
+    private String deleteVideo(Trash trash) {
+        Video video = videoRepository.getVideoByTrashId(trash.getId());
+        if (video == null) throw new NotFoundException(Messages.NOT_FOUND.getMessage());
+        if (video.getLesson() != null && !video.getLesson().getVideos().isEmpty()) {
+            video.getLesson().getVideos()
+                    .removeIf(v -> Objects.equals(v.getId(), video.getId()));
+        }
+        videoRepository.delete(video);
+        return Messages.DELETE.getMessage();
+    }
+
+    private String deleteLink(Trash trash) {
+        Link link = linkRepository.getLinkByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        linkRepository.delete(link);
+        return Messages.DELETE.getMessage();
+    }
+
+    private String deleteCourse(Trash trash) {
+        Course course = courseRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        courseRepository.clearInstructorsByCourseId(course.getId());
+        courseRepository.clearGroupsByCourseId(course.getId());
+        courseRepository.delete(course);
+        return Messages.DELETE.getMessage();
+    }
+
+
+    public String deleteStudent(Trash trash) {
+        Student student = studentRepository.getStudentByTrashId(trash.getId());
+        Long userId = student.getUser().getId();
+        commentRepository.deleteByUserId(userId);
+        studentRepository.delete(student);
+        return Messages.DELETE.getMessage();
+    }
+
+
+    public String deleteInstructor(Trash trash) {
+        Instructor instructor = instructorRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        instructorRepository.clearCoursesByInstructorId(instructor.getId());
+        commentRepository.deleteByUserId(instructor.getUser().getId());
+        instructorRepository.delete(instructor);
+        return Messages.DELETE.getMessage();
+    }
+
+    public String deleteGroup(Trash trash) {
+        Group group = groupRepository.getByTrashId(trash.getId())
+                .orElseThrow(() -> new NotFoundException(Messages.NOT_FOUND.getMessage()));
+        announcementRepository.getByGroupsContains(group.getId())
+                        .forEach(a -> a.getGroups().remove(group));
+        courseRepository.getByGroupsContains(group.getId())
+                        .forEach(c -> c.getGroups().remove(group));
+        groupRepository.delete(group);
+        return Messages.DELETE.getMessage();
+    }
 }
 
