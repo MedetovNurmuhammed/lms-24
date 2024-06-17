@@ -48,10 +48,10 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("select s from Student s join s.group.courses c where c.id = :courseId and s.trash is null ")
     List<Student> findByCourseId(Long courseId);
 
-    @Query("select s.id from Student s join s.group.courses c where c.id = :id and s.trash is null ")
+    @Query("select distinct s.id from Student s join s.group.courses c where c.id = :id and s.trash is null ")
     List<Long> findStudentIdByCourseId(Long id);
 
-    @Query("select  s.user.fullName " +
+    @Query("select distinct s.user.fullName " +
             "from Task t join t.lesson.course.groups g join  g.students s " +
             "where t.id = :taskId and s.id not in (:studentIds)")
     List<String> findUserNamesByTask(@Param("studentIds") List<Long> studentIds,
