@@ -155,6 +155,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
     private Comment saveComment(String comment, User author) {
         Comment newComment = new Comment();
         newComment.setContent(comment);
+        newComment.setDateTime(LocalDateTime.now());
         newComment.setUser(author);
         return commentRepository.save(newComment);
     }
@@ -202,6 +203,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
         List<Comment> comments = answer.getComments();
         comments.forEach(comment -> {
             comment.setContent(answerTaskRequest.comment());
+            comment.setDateTime(LocalDateTime.now());
             commentRepository.save(comment);
         });
     }
@@ -240,7 +242,10 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
             commentResponses.add(CommentResponse.builder()
                     .author(comment.getUser().getFullName())
                     .role(comment.getUser().getRole())
-                    .content(comment.getContent())
+                    .dateTime(comment.getDateTime())
+                    .content(comment.getContent()
+                    )
+
                     .build());
         });
         return AnswerTaskResponse.builder()
