@@ -25,6 +25,7 @@ public class ExamApi {
 
     private static final Logger log = LoggerFactory.getLogger(ExamApi.class);
     private final ExamService examService;
+
     @Secured("INSTRUCTOR")
     @PostMapping("/{courseId}")
     @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
@@ -32,6 +33,7 @@ public class ExamApi {
     public SimpleResponse createExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long courseId) {
         return examService.createExam(examRequest, courseId);
     }
+
     @Secured("INSTRUCTOR")
     @PatchMapping("/{examId}")
     @Operation(summary = "Редактивировать  экзамен",description = "метод для редактивирование  экзамена! \"+\n"+
@@ -57,11 +59,11 @@ public class ExamApi {
     }
 
     @Secured("INSTRUCTOR")
-    @PatchMapping("editExamPoint/{examResultId}")
-    @Operation(summary = "Редактивироват балл студента!",description = "метод для редактивирование балл экзамена! \"+\n"+
-            "\" Ывторизация: Инструктор!")
-    public SimpleResponse editExamPoint(@RequestBody ExamPointRequest examPointRequest, @PathVariable Long examResultId) {
-        return examService.editExamPoint(examPointRequest, examResultId);
+    @PatchMapping("editExamPoint/{studentId}/{examId}")
+    @Operation(summary = "Редактивировать балл студента!", description = "метод для редактивирование балл экзамена! \"+\n" +
+            "\" Авторизация: Инструктор!")
+    public SimpleResponse editExamPoint(@PathVariable Long studentId, @PathVariable Long examId, @RequestBody ExamPointRequest examPointRequest) {
+        return examService.editExamPoint(studentId, examId, examPointRequest);
     }
 
     @Secured("INSTRUCTOR")
