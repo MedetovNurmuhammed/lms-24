@@ -17,5 +17,6 @@ public interface ExamService {
 
     List<StudentExamResponse> getStudentsAndExamsByCourseId(Long courseId);
 
-    SimpleResponse editExamPoint(ExamPointRequest examPointRequest, Long examResultId);
+
+    SimpleResponse editExamPoint(Long studentId, Long examId, ExamPointRequest examPointRequest);
 }

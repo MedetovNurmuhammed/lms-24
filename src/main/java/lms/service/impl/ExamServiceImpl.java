@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,7 @@ public class ExamServiceImpl implements ExamService {
     private final ExamRepository examRepository;
     private final StudentRepository studentRepository;
     private final ExamResultRepository examResultRepository;
+
     @Override
     @Transactional
     public SimpleResponse createExam(ExamRequest examRequest, Long courseId) {
@@ -62,10 +64,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public SimpleResponse editExam(ExamRequest examRequest, Long examId) {
-        Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: " + examId + " не существует!"));
         exam.setTitle(examRequest.getTitle());
         exam.setExamDate(examRequest.getExamDate());
-        Course course =  exam.getCourse();
+        Course course = exam.getCourse();
         examRepository.save(exam);
         courseRepository.save(course);
         return SimpleResponse.builder()
@@ -77,7 +79,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public SimpleResponse deleteExam(Long examId) { //todo: Bugfix Nurmuhammed
         System.out.println("\"test\" = " + "test");
-        Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: " + examId + " не существует!"));
         examRepository.delete(exam);
         System.out.println("\"deleted\" = " + "deleted");
         return SimpleResponse.builder()
@@ -101,9 +103,7 @@ public class ExamServiceImpl implements ExamService {
                 StudentExamResponse.ExamInfo examInfo = new StudentExamResponse.ExamInfo();
                 examInfo.setExamId(examResult.getId());
                 examInfo.setExamTitle(examResult.getExam().getTitle());
-                //
                 examInfo.setExamDate(examResult.getExam().getExamDate());
-                //
                 examInfo.setPoint(examResult.getPoint());
                 return examInfo;
             }).collect(Collectors.toList());
@@ -117,18 +117,20 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public SimpleResponse editExamPoint(ExamPointRequest examPointRequest, Long examResultId) {
-        ExamResult examResult = examResultRepository.findById(examResultId).orElseThrow(()->new NotFoundException("Результат с таким id: "+examResultId+" не существует!"));
-        examResult.setPoint(examPointRequest.getPoint());
-        Exam exam = examResult.getExam();
-        Student student = examResult.getStudent();
-        examRepository.save(exam);
-        studentRepository.save(student);
-        examResultRepository.save(examResult);
+    public SimpleResponse editExamPoint(Long studentId, Long examId, ExamPointRequest examPointRequest) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new NotFoundException("Студент с id: " + studentId + " не найден!"));
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: " + examId + " не найден!"));
+        Optional<ExamResult> examResult = examResultRepository.findByStudentAndExam(student, exam);
+        if (examResult.isEmpty()) {
+            return new SimpleResponse(HttpStatus.NOT_FOUND, "Результат экзамена не найден!");
+        }
+        ExamResult examResult2 = examResult.get();
+        examResult2.setPoint(examPointRequest.getPoint());
+        examResultRepository.save(examResult2);
 
-        return SimpleResponse.builder()
-                .httpStatus(HttpStatus.OK)
-                .message("Балл успешно добавлен!")
-                .build();
+        return new SimpleResponse(HttpStatus.OK, "Балл успешно добавлен!");
     }
 }
+
+
+

@@ -1,4 +1,5 @@
 package lms.api;
+
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lms.dto.request.ExamPointRequest;
@@ -19,18 +20,19 @@ import java.util.List;
 @RequestMapping("/api/exam")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ExamApi {
-
     private final ExamService examService;
+
     @Secured("INSTRUCTOR")
     @PostMapping("/{courseId}")
-    @Operation(summary = "Создать экзамен",description = "Метод для создание экзамена \" +\n" +
+    @Operation(summary = "Создать экзамен", description = "Метод для создание экзамена \" +\n" +
             "                    \" Авторизация: инструктор!")
     public SimpleResponse createExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long courseId) {
         return examService.createExam(examRequest, courseId);
     }
+
     @Secured("INSTRUCTOR")
     @PatchMapping("/{examId}")
-    @Operation(summary = "Редактивировать  экзамен",description = "метод для редактивирование  экзамена! \"+\n"+
+    @Operation(summary = "Редактивировать  экзамен", description = "метод для редактивирование  экзамена! \"+\n" +
             "\" Авторизация: Инструктор!")
     public SimpleResponse editExam(@RequestBody @Valid ExamRequest examRequest, @PathVariable Long examId) {
         return examService.editExam(examRequest, examId);
@@ -38,9 +40,9 @@ public class ExamApi {
 
     @Secured("INSTRUCTOR")
     @DeleteMapping("/{examId}")
-    @Operation(summary = "Удалить экзамен",description = "метод для удаление  экзамена! \"+\n"+
+    @Operation(summary = "Удалить экзамен", description = "метод для удаление  экзамена! \"+\n" +
             "\" Авторизация: Инструктор!")
-    private SimpleResponse deleteExam(@PathVariable Long examId) {
+    public SimpleResponse deleteExam(@PathVariable Long examId) {
         System.out.println("\"api\" = Mukhammed " + "api");
         System.out.println("examId = " + examId);
         return examService.deleteExam(examId);
@@ -48,17 +50,17 @@ public class ExamApi {
 
     @Secured({"INSTRUCTOR"})
     @GetMapping("/{courseId}")
-    @Operation(summary = "Получить студенты курса с экзаменами и баллами!",description = "метод для получение студентов с баллами экзамена! \"+\n"+
+    @Operation(summary = "Получить студенты курса с экзаменами и баллами!", description = "метод для получение студентов с баллами экзамена! \"+\n" +
             "\" Авторизация: Инструктор!")
     public ResponseEntity<List<StudentExamResponse>> getStudentsAndExamsByCourseId(@Valid @PathVariable Long courseId) {
         return new ResponseEntity<>(examService.getStudentsAndExamsByCourseId(courseId), HttpStatus.OK);
     }
 
     @Secured("INSTRUCTOR")
-    @PatchMapping("editExamPoint/{examResultId}")
-    @Operation(summary = "Редактивироват балл студента!",description = "метод для редактивирование балл экзамена! \"+\n"+
+    @PatchMapping("editExamPoint/{studentId}/{examId}")
+    @Operation(summary = "Редактивироват балл студента!", description = "метод для редактивирование балл экзамена! \"+\n" +
             "\" Ывторизация: Инструктор!")
-    public SimpleResponse editExamPoint(@RequestBody ExamPointRequest examPointRequest, @PathVariable Long examResultId) {
-        return examService.editExamPoint(examPointRequest, examResultId);
+    public SimpleResponse editExamPoint(@PathVariable Long studentId, @PathVariable Long examId, @RequestBody ExamPointRequest examPointRequest) {
+        return examService.editExamPoint(studentId, examId, examPointRequest);
     }
 }
