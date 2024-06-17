@@ -6,7 +6,6 @@ import lms.dto.response.*;
 import lms.entities.*;
 import lms.enums.Role;
 import lms.enums.Type;
-import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.*;
@@ -39,7 +38,6 @@ public class TestServiceImpl implements TestService {
     private final TestJDBCTemplate testJDBCTemplate;
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
-    private final UserRepository userRepository;
 
     @Override
     @Transactional

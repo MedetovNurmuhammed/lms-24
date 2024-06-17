@@ -55,7 +55,7 @@ public class TestApi {
         return testService.accessToTest(testId);
     }
 
-    @Operation(summary = "Найти теста",
+    @Operation(summary = "Найти все результаты теста",
             description = "Метод для найти теста по его идентификатору." +
                     " Авторизация: инструктор!")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
