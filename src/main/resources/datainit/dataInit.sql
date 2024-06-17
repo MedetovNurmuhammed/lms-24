@@ -1284,25 +1284,25 @@ where id = 13;
 
 
 
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 1, 1);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 2, 2);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 3, 3);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 4, 4);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 5, 5);
-insert into student_notification_states (notification_states, notification_states_key, student_id)
+insert into student_notification_states (notification_states, notification_id, student_id)
 values ('FALSE', 6, 6);
-insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
+insert into instructor_notification_states (notification_states, notification_id, instructor_id)
 values ('FALSE', 7, 1);
-insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
+insert into instructor_notification_states (notification_states, notification_id, instructor_id)
 values ('TRUE', 8, 2);
-insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
+insert into instructor_notification_states (notification_states, notification_id, instructor_id)
 values ('FALSE', 9, 3);
-insert into instructor_notification_states (notification_states, notification_states_key, instructor_id)
+insert into instructor_notification_states (notification_states, notification_id, instructor_id)
 values ('FALSE', 10, 4);
 
 insert into announcements (id, announcement_content, user_id, published_date, expiration_date, is_published)
@@ -1387,7 +1387,7 @@ values (14, 14, 14,  'Нужно больше усердия и внимания
 insert into comments (answer_task_id, id, user_id, content)
 values (15, 15, 15, 'Нужно больше практики для успешного выполнения задания.');
 
-insert into student_announcements(announcements, announcements_key, student_id)
+insert into student_announcements(announcement_state, announcement_id, student_id)
 values (true, 1, 1),
        (false, 1, 2),
        (true, 1, 3),

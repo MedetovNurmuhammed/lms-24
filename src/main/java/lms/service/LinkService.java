@@ -13,6 +13,5 @@ public interface LinkService {
     LinkResponse findById(Long linkId);
 
     SimpleResponse update(LinkRequest linkRequest, Long linkId);
-
     SimpleResponse delete(Long linkId);
 }

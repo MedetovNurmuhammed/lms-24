@@ -1,5 +1,6 @@
 package lms.repository;
 
+import jakarta.transaction.Transactional;
 import lms.dto.response.InstructorsOrStudentsOfCourse;
 import lms.dto.response.StudentResponse;
 import lms.entities.Student;
@@ -8,6 +9,7 @@ import lms.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -71,4 +73,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("SELECT COUNT(s) FROM Student s WHERE s.group.dateOfEnd <= :currentDate")
     int graduated(@Param("currentDate") LocalDate currentDate);
+
+    @Query("select s from Student s where s.trash.id = :trashID")
+    Student getStudentByTrashId(Long trashID);
+
+    @Modifying @Transactional
+    @Query("update Student s set s.trash = null where s.trash.id = :id ")
+    void clearStudentTrash(Long id);
 }

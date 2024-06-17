@@ -9,6 +9,8 @@ import lms.dto.response.SimpleResponse;
 import lms.service.PresentationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,7 +59,7 @@ public class PresentationApi {
     }
 
     @Secured({"INSTRUCTOR", "STUDENT"})
-    @Operation(description = "Возвращает все презентации урока по id")
+    @Operation(description = "Возвращает все презентации урока по id. Авторизация:  инструктор")
     @GetMapping("All/{lessonId}")
     public List<PresentationResponse> findAll(@PathVariable Long lessonId) {
         return presentationService.findAllPresentationByLessonId(lessonId);

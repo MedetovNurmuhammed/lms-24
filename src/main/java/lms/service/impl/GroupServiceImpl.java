@@ -8,17 +8,21 @@ import lms.dto.response.GroupResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.Group;
 import lms.entities.Trash;
+import lms.entities.User;
 import lms.enums.Type;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.GroupRepository;
 import lms.repository.TrashRepository;
+import lms.repository.UserRepository;
 import lms.service.GroupService;
+import lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,6 +36,7 @@ import java.util.NoSuchElementException;
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
 
     @Override
     public SimpleResponse save(GroupRequest groupRequest) {
@@ -87,17 +92,20 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public SimpleResponse delete(long groupId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Group group = getById(groupId);
-        Trash trash = new Trash();
-        trash.setName(group.getTitle());
-        trash.setType(Type.GROUP);
-        trash.setDateOfDelete(ZonedDateTime.now());
-        trash.setGroup(group);
-        group.setTrash(trash);
-        trashRepository.save(trash);
+        if (group.getTrash() == null) {
+            Trash trash = new Trash();
+            trash.setName(group.getTitle());
+            trash.setType(Type.GROUP);
+            trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
+            group.setTrash(trash);
+            trashRepository.save(trash);
+        } else throw new AlreadyExistsException("Данные уже в корзине");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("Группа успешно удалено!")
+                .message("Группа успешно добавлено в корзину!")
                 .build();
     }
 

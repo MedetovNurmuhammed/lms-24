@@ -9,7 +9,6 @@ import lms.dto.request.AnswerTaskRequest;
 import lms.dto.response.AnswerTaskResponse;
 import lms.dto.response.SimpleResponse;
 import lms.entities.*;
-import lms.enums.Role;
 import lms.enums.TaskAnswerStatus;
 import lms.exceptions.AlreadyExistsException;
 import lms.repository.*;
@@ -128,7 +127,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
                 new NoSuchElementException("Инструктор не найден"));
         String message = instructor.getUser().getFullName() + " оценил(a) вашу работу по " + answer.getTask().getTitle();
         Notification notification = createNotification(answer, message);
-        student.getNotificationStates().put(notification, false);
+//        student.getNotificationStates().put(notification, false);
         notificationService.emailMessage(message, student.getUser().getEmail());
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -224,7 +223,7 @@ public class AnswerTaskServiceImpl implements AnswerTaskService {
     }
 
     private void sendNotification(Notification notification, Instructor instructor, String message) throws MessagingException {
-        instructor.getNotificationStates().put(notification, false);
+//        instructor.getNotificationStates().put(notification, false);
         notificationService.emailMessage(message, instructor.getUser().getEmail());
     }
 

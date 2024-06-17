@@ -12,4 +12,6 @@ public record InstructorsOrStudentsOfCourse(
         String email,
         Boolean isBlock
 ) {
+
+
 }

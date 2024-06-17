@@ -1,19 +1,16 @@
 package lms.service.impl;
 
 import jakarta.transaction.Transactional;
+import lms.dto.response.SimpleResponse;
 import lms.dto.request.LinkRequest;
 import lms.dto.response.LinkResponse;
 import lms.dto.response.AllLinkResponse;
-import lms.dto.response.SimpleResponse;
-import lms.entities.Lesson;
-import lms.entities.Link;
-import lms.entities.Trash;
+import lms.entities.*;
 import lms.enums.Type;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
-import lms.repository.LessonRepository;
-import lms.repository.LinkRepository;
-import lms.repository.TrashRepository;
+import lms.repository.*;
 import lms.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -34,6 +32,7 @@ import java.time.ZonedDateTime;
 public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final LessonRepository lessonRepository;
+    private final UserRepository userRepository;
     private final TrashRepository trashRepository;
 
     @Override
@@ -51,7 +50,8 @@ public class LinkServiceImpl implements LinkService {
                     .httpStatus(HttpStatus.OK)
                     .message("Ccылка с названием " + link.getTitle() + " успешно сохранен!")
                     .build();
-        } else throw new BadRequestException("Урок может быть в корзине!");
+        }
+        else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override
@@ -97,6 +97,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional
     public SimpleResponse delete(Long linkId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Link link = linkRepository.findLinkById(linkId).
                 orElseThrow(() -> new NotFoundException("ссылка с " + linkId + " не найден"));
         if (link.getTrash() == null) {
@@ -104,7 +105,7 @@ public class LinkServiceImpl implements LinkService {
             trash.setName(link.getTitle());
             trash.setDateOfDelete(ZonedDateTime.now());
             trash.setType(Type.LINK);
-            trash.setLink(link);
+            trash.setCleanerId(authUser.getId());
             link.setTrash(trash);
             trashRepository.save(trash);
             return SimpleResponse.builder()

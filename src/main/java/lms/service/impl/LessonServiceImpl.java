@@ -9,11 +9,14 @@ import lms.entities.Lesson;
 import lms.entities.Course;
 import lms.entities.Trash;
 import lms.enums.Type;
+import lms.entities.*;
+import lms.exceptions.AlreadyExistsException;
 import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.LessonRepository;
 import lms.repository.TrashRepository;
+import lms.repository.*;
 import lms.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +25,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 @Service
@@ -36,6 +38,7 @@ public class LessonServiceImpl implements LessonService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final TrashRepository trashRepository;
+    private final UserRepository userRepository;
 
     @Override
     public SimpleResponse addLesson(LessonRequest lessonRequest, Long courseId) {
@@ -50,7 +53,7 @@ public class LessonServiceImpl implements LessonService {
                     .httpStatus(HttpStatus.OK)
                     .message("Урок " + lesson.getTitle() + " успешно сохранено")
                     .build();
-        } else throw new BadRequestException("Курс может быть в корзине!");
+        } else throw new AlreadyExistsException("Данные уже в корзине");
     }
 
     @Override
@@ -94,6 +97,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     @Transactional
     public SimpleResponse delete(Long lessonId) {
+        User authUser = userRepository.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Lesson lesson = lessonRepository.findLessonById(lessonId)
                 .orElseThrow(() -> new NotFoundException("Урок c " + lessonId + " не найден"));
         if (lesson.getTrash() == null) {
@@ -102,10 +106,11 @@ public class LessonServiceImpl implements LessonService {
             trash.setName(lesson.getTitle());
             trash.setType(Type.LESSON);
             trash.setDateOfDelete(ZonedDateTime.now());
+            trash.setCleanerId(authUser.getId());
             trashRepository.save(trash);
             return SimpleResponse.builder()
                     .httpStatus(HttpStatus.OK)
-                    .message("Урок и связанные задачи успешно добавлено в корзину!")
+                    .message("Урок успешно добавлено в корзину!")
                     .build();
         }else throw new BadRequestException("Урок может быть в корзине!");
     }

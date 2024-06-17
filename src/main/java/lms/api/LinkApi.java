@@ -1,7 +1,6 @@
 package lms.api;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lms.dto.request.LinkRequest;
 import lms.dto.response.AllLinkResponse;
@@ -18,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*",maxAge = 3600)
 public class LinkApi {
+
     private final LinkService linkService;
+
     @Secured("INSTRUCTOR")
     @Operation(summary = "добавляет ссылку.(Авторизация: инструктор)")
     @PostMapping("/addLink/{lessonId}")
-    public SimpleResponse addLesson(@RequestBody @Valid LinkRequest linkRequest, @PathVariable Long lessonId) throws MessagingException {
+    public SimpleResponse addLesson(@RequestBody @Valid LinkRequest linkRequest, @PathVariable Long lessonId) {
         return linkService.addLink(linkRequest, lessonId);
     }
 
@@ -31,7 +32,7 @@ public class LinkApi {
     @GetMapping("/findAll/{lessonId}")
     public AllLinkResponse findAll(@RequestParam(required = false, defaultValue = "1") int page,
                                    @RequestParam(required = false, defaultValue = "6") int size, @PathVariable Long lessonId) {
-        return linkService.findAll(page, size,lessonId);
+        return linkService.findAll(page, size, lessonId);
     }
 
     @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
@@ -48,10 +49,14 @@ public class LinkApi {
             @RequestBody @Valid LinkRequest linkRequest, @PathVariable Long linkId) {
         return linkService.update(linkRequest, linkId);
     }
-    @Secured("INSTRUCTOR")
+
+    @Operation(summary = "Удалить ссылку",
+            description = "Метод для удаления ссылку по его идентификатору." +
+                    " Авторизация:  инструктор!")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/delete/{linkId}")
-    @Operation(summary = "Удаляет текущую ссылку.(Авторизация: инструктор)")
     public SimpleResponse delete(@PathVariable Long linkId) {
         return linkService.delete(linkId);
     }
 }
+

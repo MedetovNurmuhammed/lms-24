@@ -9,11 +9,13 @@ import lms.dto.response.TaskResponse;
 public interface TaskService {
     SimpleResponse createTask(Long lessonId, TaskRequest taskRequest) throws MessagingException;
 
-    SimpleResponse updateTask( Long taskId, TaskRequest taskRequest) throws MessagingException;
+    SimpleResponse delete(Long taskId);
 
-    SimpleResponse deleteTask(Long taskId);
+    SimpleResponse updateTask( Long taskId, TaskRequest taskRequest) throws MessagingException;
 
     TaskResponse findById(Long taskId);
 
     AllTaskResponse findAllTaskByLessonId(Long lessonId);
+
+    SimpleResponse deleteTask(Long taskId);
 }

@@ -51,7 +51,7 @@ public class TestApi {
             description = "Метод для доступ к тесту." +
                     " Авторизация: администратор!")
     @PatchMapping("/enableToStart/{testId}")
-    public SimpleResponse AccessToTest(@PathVariable Long testId){
+    public SimpleResponse accessToTest(@PathVariable Long testId){
         return testService.accessToTest(testId);
     }
 

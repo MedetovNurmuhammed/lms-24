@@ -25,10 +25,11 @@ public class StorageConfig {
                 credentials.getAwsAccessKeyId(),
                 credentials.getAwsAccessSecretKey()
         );
-
+        
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .withRegion(bucket.getRegion())
                 .build();
     }
+
 }

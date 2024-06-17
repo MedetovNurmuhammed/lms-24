@@ -1,10 +1,13 @@
 package lms.repository;
 
-import lms.dto.response.StudentResponse;
-import lms.dto.response.StudentTestResponse;
+import
+        jakarta.transaction.Transactional;
 import lms.dto.response.TestResponseForGetAll;
 import lms.entities.Test;
+import lms.entities.Video;
+import lms.exceptions.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -16,6 +19,22 @@ public interface TestRepository extends JpaRepository<Test, Long> {
             from Test t where t.lesson.id =:lessonId and t.trash is null 
             """)
     List<TestResponseForGetAll> findAllTestsByLessonId(Long lessonId);
-@Query("select s from Test s where s.id =:testId")
+
+    @Query("select s from Test s where s.id =:testId")
     Optional<Test> findTestById(Long testId);
+
+    @Modifying @Transactional
+    @Query("update Test t set t.trash = null where t.trash.id = :id")
+    void clearTestTrash(Long id);
+
+    @Query("select t from Test t where t.trash.id = :id")
+    Optional<Test> getTestByTrashId(Long id);
+
+    @Query("select t from Test t where t.id = ?1")
+    Optional<Test> findTest(Long id);
+
+    default Test findByIdOrThrow(Long id){
+        return findTest(id)
+                .orElseThrow(() -> new NotFoundException("Test with id %d not found".formatted(id)));
+    }
 }

@@ -1,21 +1,6 @@
 package lms.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import lms.enums.StudyFormat;
 import lms.enums.Type;
 import lombok.AllArgsConstructor;
@@ -23,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,39 +35,41 @@ public class Student {
     private LocalDate updatedAt;
     private Type type;
 
-
-
     public Type getType() {
         return type = Type.STUDENT;
     }
 
-
     //********************************* User **********************************************
-    @OneToOne(cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private User user;
 
     //********************************* Group *********************************************
-    @ManyToOne(cascade = CascadeType.DETACH,optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     private Group group;
 
     //********************************* ResultTest ****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<ResultTest> resultTests = new ArrayList<>();
 
     //********************************* AnswerTask *****************************************
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch =  FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch =  FetchType.LAZY)
     private List<AnswerTask> answerTasks = new ArrayList<>();
 
     //********************************* Notification ***************************************
-    @ElementCollection(fetch =  FetchType.LAZY)
-    private Map<Notification,Boolean> notificationStates = new HashMap<>();
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "notification_id")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
+    private Map< Notification, Boolean> notificationStates = new HashMap<>();
 
     //********************************* Announcement ***************************************
     @ElementCollection(fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "announcement_id")
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
     private Map<Announcement,Boolean> announcements = new LinkedHashMap<>();
 
     //********************************* Trash *********************************************
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     private Trash trash;
 
     @PrePersist
