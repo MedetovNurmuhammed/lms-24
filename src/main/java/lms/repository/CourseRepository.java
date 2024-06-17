@@ -19,26 +19,23 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("""
                 select new lms.dto.response.CourseResponse
                 (c.id, c.title, c.description, c.image,c.dateOfStart)
-                from Course c where c.trash.id is null 
+                from Course c where c.trash.id is null order by c.dateOfStart asc
             """)
     Page<CourseResponse> findAllCourse(Pageable pageable);
 
     @Query("""
                 select new lms.dto.response.CourseResponse
                 (c.id, c.title, c.description, c.image,c.dateOfStart)
-                from Course c join c.instructors i where i.id =:id and c.trash.id is null 
+                from Course c join c.instructors i where i.id =:id and c.trash.id is null order by c.dateOfStart asc
             """)
     Page<CourseResponse> findByInstructorId(Long id, Pageable pageable);
 
     @Query("""
                 select new lms.dto.response.CourseResponse
                 (c.id, c.title, c.description, c.image,c.dateOfStart)
-                from Student s join s.group g join g.courses c  where s.id =:id and c.trash.id is null 
+                from Student s join s.group g join g.courses c  where s.id =:id and c.trash.id is null order by c.dateOfStart asc
             """)
     Page<CourseResponse> findByStudentId(Long id, Pageable pageable);
-
-    @Query("SELECT COUNT(c) FROM Course c")
-    int getAllCourseCount();
 
     @Query("select s from Course s where s.id =:courseId")
     Optional<Course> findCourseById(Long courseId);
