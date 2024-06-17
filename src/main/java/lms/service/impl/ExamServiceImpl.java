@@ -3,12 +3,14 @@ package lms.service.impl;
 import jakarta.transaction.Transactional;
 import lms.dto.request.ExamPointRequest;
 import lms.dto.request.ExamRequest;
+import lms.dto.response.ExamResponse;
 import lms.dto.response.SimpleResponse;
 import lms.dto.response.StudentExamResponse;
 import lms.entities.Course;
 import lms.entities.Exam;
 import lms.entities.ExamResult;
 import lms.entities.Student;
+import lms.exceptions.BadRequestException;
 import lms.exceptions.NotFoundException;
 import lms.repository.CourseRepository;
 import lms.repository.ExamRepository;
@@ -16,6 +18,7 @@ import lms.repository.ExamResultRepository;
 import lms.repository.StudentRepository;
 import lms.service.ExamService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExamServiceImpl implements ExamService {
     private final CourseRepository courseRepository;
     private final ExamRepository examRepository;
@@ -74,12 +78,13 @@ public class ExamServiceImpl implements ExamService {
                 .build();
     }
 
+
+
     @Override
-    public SimpleResponse deleteExam(Long examId) { //todo: Bugfix Nurmuhammed
-        System.out.println("\"test\" = " + "test");
+    @Transactional
+    public SimpleResponse deleteExam(Long examId) {
         Exam exam = examRepository.findById(examId).orElseThrow(()->new NotFoundException("Экзамен с id: "+examId+" не существует!"));
         examRepository.delete(exam);
-        System.out.println("\"deleted\" = " + "deleted");
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Успешно удалено!")
@@ -131,4 +136,14 @@ public class ExamServiceImpl implements ExamService {
                 .message("Балл успешно добавлен!")
                 .build();
     }
+
+    @Override
+    public ExamResponse getById(Long examId) {
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new NotFoundException("Экзамен с id: "+examId+" не существует!"));
+        return ExamResponse.builder()
+                .examTitle(exam.getTitle())
+                .examDate(exam.getExamDate())
+                .build();
+    }
+
 }

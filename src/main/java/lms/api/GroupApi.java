@@ -54,7 +54,7 @@ public class GroupApi {
         return groupService.findAllGroup(size, page);
     }
 
-    @Secured("ADMIN")
+    @Secured({"ADMIN","INSTRUCTOR"})
     @Operation(summary = "Получить все группы без пагинации.", description = "Получение списка всех групп без пагинации.Авторизация: Админ")
     @GetMapping("/getAll")
     public List<GroupWithoutPagination> getAllGroupWithoutPagination(){
