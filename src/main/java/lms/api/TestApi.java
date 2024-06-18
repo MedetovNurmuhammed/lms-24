@@ -51,11 +51,11 @@ public class TestApi {
             description = "Метод для доступ к тесту." +
                     " Авторизация: администратор!")
     @PatchMapping("/enableToStart/{testId}")
-    public SimpleResponse accessToTest(@PathVariable Long testId){
+    public SimpleResponse AccessToTest(@PathVariable Long testId){
         return testService.accessToTest(testId);
     }
 
-    @Operation(summary = "Найти теста",
+    @Operation(summary = "Найти все результаты теста",
             description = "Метод для найти теста по его идентификатору." +
                     " Авторизация: инструктор!")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
@@ -64,13 +64,13 @@ public class TestApi {
         return testService.findById(testId);
     }
 
-    @Operation(summary = "Найти теста для редактирования",
+    @Operation(summary = "Найти теста",
             description = "Метод для найти теста по его идентификатору." +
-                    " Авторизация: инструктор!")
-    @PreAuthorize("hasAuthority('INSTRUCTOR')")
-    @GetMapping("/findByIdForEdit/{testId}")
-    public TestResponse findTestByIForEdit(@PathVariable Long testId){
-        return testService.findTestByIdForEdit(testId);
+                    " Авторизация: инструктор и студент!")
+    @Secured({"INSTRUCTOR","STUDENT"})
+    @GetMapping("/{testId}")
+    public TestResponse findTestById(@PathVariable Long testId) {
+        return testService.findTestById(testId);
     }
 
     @Operation(summary = "Найти все тесты ",
