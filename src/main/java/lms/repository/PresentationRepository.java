@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
     @Query("SELECT new lms.dto.response.PresentationResponse(p.id, p.title, p.description, p.file) " +
             "FROM Lesson l join l.presentations p  " +
-            "WHERE l.id = :lessonId and p.trash is null order by p.createdAt asc")
+            "WHERE l.id = :lessonId and p.trash is null order by p.createdAt desc")
     List<PresentationResponse> findAllPresentationsByLesson(@Param("lessonId") Long lessonId);
 
     @Transactional
