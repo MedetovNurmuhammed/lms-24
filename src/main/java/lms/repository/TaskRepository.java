@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Query("select t from Task t where t.lesson.id=:lessonId and t.trash.id is null")
+    @Query("select t from Task t where t.lesson.id=:lessonId and t.trash.id is null order by t.createdAt desc")
     List<Task> findAll(Long lessonId);
 
     @Query("select s from Task s where s.id = :taskId")

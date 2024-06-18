@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    @Query("select new lms.dto.response.LessonResponse(i.id, i.title, i.createdAt) from Lesson i where i.course.id = :courseId and i.trash is null order by i.createdAt asc")
+    @Query("select new lms.dto.response.LessonResponse(i.id, i.title, i.createdAt) from Lesson i where i.course.id = :courseId and i.trash is null order by i.createdAt desc")
     Page<LessonResponse> findAllLessons(@Param("courseId") Long courseId, Pageable pageable);
 
     @Query("select s from Lesson s join s.presentations p where p.id =:id")

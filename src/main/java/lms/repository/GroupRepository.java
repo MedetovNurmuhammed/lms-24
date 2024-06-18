@@ -26,23 +26,20 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("""
                 select new lms.dto.response.GroupResponse
                 (g.id, g.title, g.description, g.image, g.dateOfStart, g.dateOfEnd)
-                from Group g where g.trash.id is null 
+                from Group g where g.trash.id is null order by g.dateOfStart desc
             """)
     Page<GroupResponse> findAllGroup(Pageable pageable);
 
-    @Query("select g.id from Group g join g.courses c join c.instructors i where i.id = :id")
+    @Query("select g.id from Group g join g.courses c join c.instructors i where i.id = :id order by g.dateOfStart desc")
     List<Long> findAllByInstructorId(Long id);
 
     @Query("select s from Group s where s.id =:groupId")
     Optional<Group> findGroupById(Long groupId);
 
-    @Query("select new lms.dto.response.GroupWithoutPagination(g.id, g.title) from Group g where g.trash is null")
+    @Query("select new lms.dto.response.GroupWithoutPagination(g.id, g.title) from Group g where g.trash is null order by g.dateOfStart desc")
     List<GroupWithoutPagination> findAllGroupsWithoutTrash();
 
-    @Query("select count (c) from Course  c")
-    int getAllGroupsCount();
-
-    @Query("select s from Group s where s.id in (:ids)")
+    @Query("select s from Group s where s.id in (:ids) order by s.dateOfStart desc")
     List<Group> allGroupById(@Param("ids") List<Long> ids);
 
     @Modifying @Transactional

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface VideoRepository extends JpaRepository<Video, Long> {
     @Query("select new lms.dto.response.VideoResponse(v.id, v.link.title,v.description, v.link.url, v.createdAt) " +
-            "from Lesson l  join l.videos v where l.id = :lessonId and v.trash is null order by v.createdAt asc")
+            "from Lesson l  join l.videos v where l.id = :lessonId and v.trash is null order by v.createdAt desc")
     List<VideoResponse> findAllVideo(@Param("lessonId") Long lessonId);
 
     @Query("select s from Video s where s.id =:videoId and s.trash is null")
